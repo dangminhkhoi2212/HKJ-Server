@@ -806,9 +806,9 @@
                 <!-- default Spring profiles -->
                 <spring.profiles.active>dev${profile.tls}${profile.no-liquibase}</spring.profiles.active>
                 <profile.test>testdev</profile.test>
-                <liquibase-plugin.url>jdbc:postgresql://localhost:5432/server</liquibase-plugin.url>
-                <liquibase-plugin.username>server</liquibase-plugin.username>
-                <liquibase-plugin.password/>
+                <liquibase-plugin.url>jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?prepareThreshold=0</liquibase-plugin.url>
+                <liquibase-plugin.username>postgres.idjqfqnlknncdwemqlnf</liquibase-plugin.username>
+                <liquibase-plugin.password>GTeXmTaNk1jeeOyi</liquibase-plugin.password>
             </properties>
             <dependencies>
                 <dependency>
