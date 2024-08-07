@@ -20,6 +20,8 @@ spring:
   config:
     activate:
       on-profile: '!api-docs'
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 springdoc:
   api-docs:
     enabled: false
