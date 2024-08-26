@@ -1,0 +1,9 @@
+entity ApplicationUser  {
+  phoneNumber String minlength(10) maxlength(10) pattern(/^(84|0[3|5|7|8|9])[0-9]{8}$/)
+}
+
+relationship OneToOne {
+  ApplicationUser {internalUser(login)} to @OnDelete("CASCADE") @Id User with builtInEntity
+}
+paginate ApplicationUser with pagination
+service all with serviceImpl except ApplicationUsera

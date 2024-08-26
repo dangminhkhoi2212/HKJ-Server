@@ -1,0 +1,33 @@
+{
+  "annotations": {
+    "changelogDate": "20240807152306"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "phoneNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength", "pattern"],
+      "fieldValidateRulesMaxlength": "10",
+      "fieldValidateRulesMinlength": "10",
+      "fieldValidateRulesPattern": "^(84|0[3|5|7|8|9])[0-9]{8}$"
+    }
+  ],
+  "name": "ApplicationUser",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "options": {
+        "id": true,
+        "onDelete": "CASCADE"
+      },
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "internalUser",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no"
+}
