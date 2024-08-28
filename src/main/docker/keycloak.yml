@@ -8,7 +8,12 @@ services:
       - ./realm-config:/opt/keycloak/data/import
       - ./realm-config/keycloak-health-check.sh:/opt/keycloak/health-check.sh
     environment:
-      - KC_DB=dev-file
+      - KC_DB=postgres
+      #add your supabase credentials
+      - KC_DB_URL=jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?user=postgres.idjqfqnlknncdwemqlnf&password=GTeXmTaNk1jeeOyi&prepareThreshold=0
+      - KC_DB_USERNAME=postgres.idjqfqnlknncdwemqlnf
+      - KC_DB_PASSWORD=GTeXmTaNk1jeeOyi
+      #
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
       - KC_FEATURES=scripts
