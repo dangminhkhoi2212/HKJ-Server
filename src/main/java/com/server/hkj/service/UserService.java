@@ -3,7 +3,9 @@ package com.server.hkj.service;
 import com.server.hkj.config.Constants;
 import com.server.hkj.domain.Authority;
 import com.server.hkj.domain.User;
+import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.AuthorityRepository;
+import com.server.hkj.repository.UserExtraRepository;
 import com.server.hkj.repository.UserRepository;
 import com.server.hkj.security.SecurityUtils;
 import com.server.hkj.service.dto.AdminUserDTO;
@@ -11,8 +13,7 @@ import com.server.hkj.service.dto.UserDTO;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,19 +29,26 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
+@Slf4j
 public class UserService {
-
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
 
     private final AuthorityRepository authorityRepository;
 
+    private final UserExtraRepository userExtraRepository;
+
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(
+        UserRepository userRepository,
+        AuthorityRepository authorityRepository,
+        CacheManager cacheManager,
+        UserExtraRepository userExtraRepository
+    ) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
+        this.userExtraRepository = userExtraRepository;
         this.cacheManager = cacheManager;
     }
 
@@ -53,7 +61,8 @@ public class UserService {
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, String phoneNumber) {
+        // #dang minh khoi
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
@@ -64,9 +73,28 @@ public class UserService {
                 }
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
+
                 userRepository.save(user);
                 this.clearUserCaches(user);
-                log.debug("Changed Information for User: {}", user);
+                // log.debug("Changed Information for User: {}", user);
+                // Retrieve the associated ApplicationUser and update the phone number
+                // Check if UserExtra already exists for the user
+                if (phoneNumber != null) {
+                    Optional<UserExtra> userExtraOptional = userExtraRepository.findOneByUserLogin(user.getLogin());
+                    UserExtra userExtra;
+                    if (userExtraOptional.isPresent()) {
+                        userExtra = userExtraOptional.get(); // Retrieve existing UserExtra
+                        // log.debug("Updating existing UserExtra for user: {}", user.getLogin());
+                    } else {
+                        userExtra = new UserExtra(); // Create a new UserExtra if not exists
+                        userExtra.setUser(user);
+                        // log.debug("Creating new UserExtra for user: {}", user.getLogin());
+                    }
+
+                    // Update phone number
+                    userExtra.setPhone(phoneNumber);
+                    userExtraRepository.save(userExtra);
+                }
             });
     }
 
@@ -94,18 +122,19 @@ public class UserService {
         return authorityRepository.findAll().stream().map(Authority::getName).toList();
     }
 
-    private User syncUserWithIdP(Map<String, Object> details, User user) {
+    private UserExtra syncUserWithIdP(Map<String, Object> details, User user) {
         // save authorities in to sync user roles/groups between IdP and JHipster's local database
         Collection<String> dbAuthorities = getAuthorities();
         Collection<String> userAuthorities = user.getAuthorities().stream().map(Authority::getName).toList();
         for (String authority : userAuthorities) {
             if (!dbAuthorities.contains(authority)) {
-                log.debug("Saving authority '{}' in local database", authority);
+                // log.debug("Saving authority '{}' in local database", authority);
                 Authority authorityToSave = new Authority();
                 authorityToSave.setName(authority);
                 authorityRepository.save(authorityToSave);
             }
         }
+        // log.debug("details: {}", details);
         // save account in to sync users between IdP and JHipster's local database
         Optional<User> existingUser = userRepository.findOneByLogin(user.getLogin());
         if (existingUser.isPresent()) {
@@ -119,20 +148,38 @@ public class UserService {
                     idpModifiedDate = Instant.ofEpochSecond((Integer) details.get("updated_at"));
                 }
                 if (idpModifiedDate.isAfter(dbModifiedDate)) {
-                    log.debug("Updating user '{}' in local database", user.getLogin());
-                    updateUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getLangKey(), user.getImageUrl());
+                    // log.debug("Updating user '{}' in local database", user.getLogin());
+                    updateUser(
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getEmail(),
+                        user.getLangKey(),
+                        user.getImageUrl(),
+                        details.get("phone_number").toString()
+                    );
                 }
                 // no last updated info, blindly update
             } else {
                 log.debug("Updating user '{}' in local database", user.getLogin());
-                updateUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getLangKey(), user.getImageUrl());
+                updateUser(
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    user.getLangKey(),
+                    user.getImageUrl(),
+                    details.get("phone_number").toString()
+                );
             }
         } else {
             log.debug("Saving user '{}' in local database", user.getLogin());
             userRepository.save(user);
             this.clearUserCaches(user);
         }
-        return user;
+
+        UserExtra userExtra = new UserExtra();
+        userExtra.setUser(user);
+        userExtra.setPhone(details.get("phone_number").toString());
+        return userExtra;
     }
 
     /**
@@ -152,7 +199,8 @@ public class UserService {
         } else {
             throw new IllegalArgumentException("AuthenticationToken is not OAuth2 or JWT!");
         }
-        User user = getUser(attributes);
+        UserExtra userExtra = getUser(attributes);
+        User user = userExtra.getUser();
         user.setAuthorities(
             authToken
                 .getAuthorities()
@@ -169,8 +217,9 @@ public class UserService {
         return new AdminUserDTO(syncUserWithIdP(attributes, user));
     }
 
-    private static User getUser(Map<String, Object> details) {
+    private static UserExtra getUser(Map<String, Object> details) {
         User user = new User();
+        UserExtra userExtra = new UserExtra();
         Boolean activated = Boolean.TRUE;
         String sub = String.valueOf(details.get("sub"));
         String username = null;
@@ -197,6 +246,9 @@ public class UserService {
         if (details.get("family_name") != null) {
             user.setLastName((String) details.get("family_name"));
         }
+        // if (details.get("phone_number") != null) {
+        //     user.setEmail((String) details.get("family_name"));
+        // }
         if (details.get("email_verified") != null) {
             activated = (Boolean) details.get("email_verified");
         }
@@ -227,7 +279,9 @@ public class UserService {
             user.setImageUrl((String) details.get("picture"));
         }
         user.setActivated(activated);
-        return user;
+        userExtra.setPhone((String) details.get("phone_number"));
+        userExtra.setUser(user);
+        return userExtra;
     }
 
     private void clearUserCaches(User user) {
