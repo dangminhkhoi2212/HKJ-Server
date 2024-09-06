@@ -12,6 +12,7 @@ public class SpaWebFilter extends OncePerRequestFilter {
     /**
      * Forwards any unmapped paths (except those containing a period) to the client {@code index.html}.
      */
+    @SuppressWarnings("null")
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {

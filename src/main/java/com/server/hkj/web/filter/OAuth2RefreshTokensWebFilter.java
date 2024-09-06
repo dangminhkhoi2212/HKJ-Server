@@ -46,6 +46,7 @@ public class OAuth2RefreshTokensWebFilter extends OncePerRequestFilter {
         );
     }
 
+    @SuppressWarnings("null")
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
         throws IOException, ServletException {
