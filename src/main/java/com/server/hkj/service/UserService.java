@@ -155,7 +155,7 @@ public class UserService {
                         user.getEmail(),
                         user.getLangKey(),
                         user.getImageUrl(),
-                        details.get("phone_number").toString()
+                        details.get("phone_number") != null ? details.get("phone_number").toString() : ""
                     );
                 }
                 // no last updated info, blindly update
@@ -167,7 +167,7 @@ public class UserService {
                     user.getEmail(),
                     user.getLangKey(),
                     user.getImageUrl(),
-                    details.get("phone_number").toString()
+                    details.get("phone_number") != null ? details.get("phone_number").toString() : ""
                 );
             }
         } else {
@@ -178,7 +178,7 @@ public class UserService {
 
         UserExtra userExtra = new UserExtra();
         userExtra.setUser(user);
-        userExtra.setPhone(details.get("phone_number").toString());
+        userExtra.setPhone(details.get("phone_number") != null ? details.get("phone_number").toString() : "");
         return userExtra;
     }
 

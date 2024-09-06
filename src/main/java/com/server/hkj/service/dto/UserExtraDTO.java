@@ -1,6 +1,5 @@
 package com.server.hkj.service.dto;
 
-import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,7 +11,7 @@ public class UserExtraDTO implements Serializable {
 
     private Long id;
 
-    @Pattern(regexp = "^(0)(3|5|7|8|9)([0-9]{8})$")
+    // @Pattern(regexp = "^(0)(3|5|7|8|9)([0-9]{8})$")
     private String phone;
 
     private UserDTO user;
