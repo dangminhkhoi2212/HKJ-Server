@@ -79,7 +79,7 @@ public class UserService {
 
                 userRepository.save(user);
                 this.clearUserCaches(user);
-                // log.info();("Changed Information for User: {}", user);
+                // log.info("Changed Information for User: {}", user);
                 // Retrieve the associated ApplicationUser and update the phone number
                 // Check if UserExtra already exists for the user
                 if (phoneNumber != null) {
@@ -87,11 +87,11 @@ public class UserService {
                     UserExtra userExtra;
                     if (userExtraOptional.isPresent()) {
                         userExtra = userExtraOptional.get(); // Retrieve existing UserExtra
-                        // log.info();("Updating existing UserExtra for user: {}", user.getLogin());
+                        log.info("Updating existing UserExtra for user: {}", user.getLogin());
                     } else {
                         userExtra = new UserExtra(); // Create a new UserExtra if not exists
                         userExtra.setUser(user);
-                        // log.info();("Creating new UserExtra for user: {}", user.getLogin());
+                        log.info("Creating new UserExtra for user: {}", user.getLogin());
                     }
 
                     // Update phone number
@@ -127,17 +127,19 @@ public class UserService {
 
     private UserExtra syncUserWithIdP(Map<String, Object> details, User user) {
         // save authorities in to sync user roles/groups between IdP and JHipster's local database
-        Collection<String> dbAuthorities = getAuthorities();
-        Collection<String> userAuthorities = user.getAuthorities().stream().map(Authority::getName).toList();
-        for (String authority : userAuthorities) {
-            if (!dbAuthorities.contains(authority) && AuthoritiesConstants.AUTHORITIES.contains(authority)) {
+        Set<String> dbAuthoritiesSet = getAuthorities().stream().collect(Collectors.toSet());
+        user
+            .getAuthorities()
+            .stream()
+            .map(Authority::getName)
+            .filter(authority -> !dbAuthoritiesSet.contains(authority) && AuthoritiesConstants.AUTHORITIES.contains(authority))
+            .forEach(authority -> {
                 log.info("Saving authority '{}' in local database", authority);
                 Authority authorityToSave = new Authority();
                 authorityToSave.setName(authority);
                 authorityRepository.save(authorityToSave);
-            }
-        }
-        // log.info();("details: {}", details);
+            });
+        // log.info("details: {}", details);
         // save account in to sync users between IdP and JHipster's local database
         Optional<User> existingUser = userRepository.findOneByLogin(user.getLogin());
         if (existingUser.isPresent()) {
@@ -151,7 +153,7 @@ public class UserService {
                     idpModifiedDate = Instant.ofEpochSecond((Integer) details.get("updated_at"));
                 }
                 if (idpModifiedDate.isAfter(dbModifiedDate)) {
-                    // log.info();("Updating user '{}' in local database", user.getLogin());
+                    log.info("Updating user '{}' in local database", user.getLogin());
                     updateUser(
                         user.getFirstName(),
                         user.getLastName(),
@@ -218,6 +220,7 @@ public class UserService {
                 })
                 .collect(Collectors.toSet())
         );
+        userRepository.save(user);
         UserExtra userExtraSync = syncUserWithIdP(attributes, user);
         return new AdminUserDTO(userExtraSync);
     }
@@ -251,9 +254,7 @@ public class UserService {
         if (details.get("family_name") != null) {
             user.setLastName((String) details.get("family_name"));
         }
-        // if (details.get("phone_number") != null) {
-        //     user.setEmail((String) details.get("family_name"));
-        // }
+
         if (details.get("email_verified") != null) {
             activated = (Boolean) details.get("email_verified");
         }
@@ -284,6 +285,7 @@ public class UserService {
             user.setImageUrl((String) details.get("picture"));
         }
         user.setActivated(activated);
+
         userExtra.setPhone((String) details.get("phone_number"));
         userExtra.setUser(user);
         return userExtra;
