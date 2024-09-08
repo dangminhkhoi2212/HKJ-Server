@@ -1,6 +1,8 @@
 package com.server.hkj.service.mapper;
 
 import com.server.hkj.domain.UserExtra;
-import com.server.hkj.service.dto.UserExtraDTO;
+import com.server.hkj.service.dto.AdminUserDTO;
+import org.mapstruct.Mapper;
 
-public interface AdminUserMapper extends EntityMapper<UserExtraDTO, UserExtra> {}
+@Mapper(componentModel = "spring")
+public interface AdminUserMapper extends EntityMapper<AdminUserDTO, UserExtra> {}

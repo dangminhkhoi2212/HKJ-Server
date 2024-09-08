@@ -1,5 +1,7 @@
 package com.server.hkj.security;
 
+import java.util.List;
+
 /**
  * Constants for Spring Security authorities.
  */
@@ -14,6 +16,8 @@ public final class AuthoritiesConstants {
     public static final String EMPLOYEE = "ROLE_EMPLOYEE";
 
     public static final String MANAGER = "ROLE_MANAGER";
+
+    public static final List<String> AUTHORITIES = List.of(ADMIN, USER, ANONYMOUS, EMPLOYEE, MANAGER);
 
     private AuthoritiesConstants() {}
 }

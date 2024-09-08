@@ -7,12 +7,14 @@ import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.AuthorityRepository;
 import com.server.hkj.repository.UserExtraRepository;
 import com.server.hkj.repository.UserRepository;
+import com.server.hkj.security.AuthoritiesConstants;
 import com.server.hkj.security.SecurityUtils;
 import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
@@ -36,6 +38,7 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
+    @Inject
     private final UserExtraRepository userExtraRepository;
 
     private final CacheManager cacheManager;
@@ -76,7 +79,7 @@ public class UserService {
 
                 userRepository.save(user);
                 this.clearUserCaches(user);
-                // log.debug("Changed Information for User: {}", user);
+                // log.info();("Changed Information for User: {}", user);
                 // Retrieve the associated ApplicationUser and update the phone number
                 // Check if UserExtra already exists for the user
                 if (phoneNumber != null) {
@@ -84,11 +87,11 @@ public class UserService {
                     UserExtra userExtra;
                     if (userExtraOptional.isPresent()) {
                         userExtra = userExtraOptional.get(); // Retrieve existing UserExtra
-                        // log.debug("Updating existing UserExtra for user: {}", user.getLogin());
+                        // log.info();("Updating existing UserExtra for user: {}", user.getLogin());
                     } else {
                         userExtra = new UserExtra(); // Create a new UserExtra if not exists
                         userExtra.setUser(user);
-                        // log.debug("Creating new UserExtra for user: {}", user.getLogin());
+                        // log.info();("Creating new UserExtra for user: {}", user.getLogin());
                     }
 
                     // Update phone number
@@ -127,14 +130,14 @@ public class UserService {
         Collection<String> dbAuthorities = getAuthorities();
         Collection<String> userAuthorities = user.getAuthorities().stream().map(Authority::getName).toList();
         for (String authority : userAuthorities) {
-            if (!dbAuthorities.contains(authority)) {
-                // log.debug("Saving authority '{}' in local database", authority);
+            if (!dbAuthorities.contains(authority) && AuthoritiesConstants.AUTHORITIES.contains(authority)) {
+                log.info("Saving authority '{}' in local database", authority);
                 Authority authorityToSave = new Authority();
                 authorityToSave.setName(authority);
                 authorityRepository.save(authorityToSave);
             }
         }
-        // log.debug("details: {}", details);
+        // log.info();("details: {}", details);
         // save account in to sync users between IdP and JHipster's local database
         Optional<User> existingUser = userRepository.findOneByLogin(user.getLogin());
         if (existingUser.isPresent()) {
@@ -148,7 +151,7 @@ public class UserService {
                     idpModifiedDate = Instant.ofEpochSecond((Integer) details.get("updated_at"));
                 }
                 if (idpModifiedDate.isAfter(dbModifiedDate)) {
-                    // log.debug("Updating user '{}' in local database", user.getLogin());
+                    // log.info();("Updating user '{}' in local database", user.getLogin());
                     updateUser(
                         user.getFirstName(),
                         user.getLastName(),
@@ -160,7 +163,7 @@ public class UserService {
                 }
                 // no last updated info, blindly update
             } else {
-                log.debug("Updating user '{}' in local database", user.getLogin());
+                log.info("Updating user '{}' in local database", user.getLogin());
                 updateUser(
                     user.getFirstName(),
                     user.getLastName(),
@@ -171,7 +174,7 @@ public class UserService {
                 );
             }
         } else {
-            log.debug("Saving user '{}' in local database", user.getLogin());
+            log.info("Saving user '{}' in local database", user.getLogin());
             userRepository.save(user);
             this.clearUserCaches(user);
         }
@@ -191,6 +194,7 @@ public class UserService {
      */
     @Transactional
     public AdminUserDTO getUserFromAuthentication(AbstractAuthenticationToken authToken) {
+        log.info("Fetching user for authentication token {}", authToken);
         Map<String, Object> attributes;
         if (authToken instanceof OAuth2AuthenticationToken) {
             attributes = ((OAuth2AuthenticationToken) authToken).getPrincipal().getAttributes();
@@ -206,6 +210,7 @@ public class UserService {
                 .getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
+                .filter(AuthoritiesConstants.AUTHORITIES::contains)
                 .map(authority -> {
                     Authority auth = new Authority();
                     auth.setName(authority);
@@ -213,8 +218,8 @@ public class UserService {
                 })
                 .collect(Collectors.toSet())
         );
-
-        return new AdminUserDTO(syncUserWithIdP(attributes, user));
+        UserExtra userExtraSync = syncUserWithIdP(attributes, user);
+        return new AdminUserDTO(userExtraSync);
     }
 
     private static UserExtra getUser(Map<String, Object> details) {
