@@ -4,7 +4,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.oauth2.core.oidc.StandardClaimNames.PREFERRED_USERNAME;
 
 import com.server.hkj.security.*;
-import com.server.hkj.security.SecurityUtils;
 import com.server.hkj.security.oauth2.AudienceValidator;
 import com.server.hkj.security.oauth2.CustomClaimConverter;
 import com.server.hkj.web.filter.SpaWebFilter;
@@ -12,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.function.Supplier;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +31,8 @@ import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUserAuthority;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.*;
@@ -43,6 +45,7 @@ import tech.jhipster.web.filter.CookieCsrfFilter;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
+@Slf4j
 public class SecurityConfiguration {
 
     private final JHipsterProperties jHipsterProperties;
@@ -52,6 +55,17 @@ public class SecurityConfiguration {
 
     public SecurityConfiguration(JHipsterProperties jHipsterProperties) {
         this.jHipsterProperties = jHipsterProperties;
+    }
+
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("roles"); // Use the claim containing the roles
+        grantedAuthoritiesConverter.setAuthorityPrefix("");
+        JwtAuthenticationConverter authenticationConverter = new JwtAuthenticationConverter();
+        authenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+
+        return authenticationConverter;
     }
 
     @Bean
@@ -103,7 +117,7 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
             )
             .oauth2Login(oauth2 -> oauth2.loginPage("/").userInfoEndpoint(userInfo -> userInfo.oidcUserService(this.oidcUserService())))
-            .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
             .oauth2Client(withDefaults());
         return http.build();
     }
