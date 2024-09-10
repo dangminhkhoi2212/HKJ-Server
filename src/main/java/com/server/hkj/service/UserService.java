@@ -14,7 +14,6 @@ import com.server.hkj.service.dto.UserDTO;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
-import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
@@ -38,7 +37,6 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    @Inject
     private final UserExtraRepository userExtraRepository;
 
     private final CacheManager cacheManager;

@@ -8,7 +8,6 @@ import com.server.hkj.service.dto.UserExtraDTO;
 import com.server.hkj.service.dto.response.ResponseCT;
 import com.server.hkj.service.dto.response.ResponseCTBuilder;
 import com.server.hkj.service.dto.response.ResponseErrorCT;
-import com.server.hkj.service.mapper.AdminUserMapper;
 import com.server.hkj.service.mapper.UserExtraMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -44,15 +43,8 @@ public class AccountResource {
     UserService userService;
     UserExtraService userExtraService;
     UserExtraMapper userExtraMapper;
-    AdminUserMapper adminUserMapper;
 
-    public AccountResource(
-        UserService userService,
-        UserExtraService userExtraService,
-        UserExtraMapper userExtraMapper,
-        AdminUserMapper adminUserMapper
-    ) {
-        this.adminUserMapper = adminUserMapper;
+    public AccountResource(UserService userService, UserExtraService userExtraService, UserExtraMapper userExtraMapper) {
         this.userExtraMapper = userExtraMapper;
         this.userService = userService;
         this.userExtraService = userExtraService;
@@ -86,17 +78,16 @@ public class AccountResource {
         log.debug("REST request to check if the current user is authenticated");
         return request.getRemoteUser();
     }
-
-    @GetMapping("/accounts")
-    public ResponseCT<List<AdminUserDTO>> getAccounts(Pageable pageable) {
-        try {
-            List<UserExtraDTO> users = userExtraService.findAll(pageable).getContent();
-            List<UserExtra> userExtras = userExtraMapper.toEntity(users);
-            return new ResponseCTBuilder<List<AdminUserDTO>>().addData(adminUserMapper.toDto(userExtras)).build();
-        } catch (Exception e) {
-            return new ResponseCTBuilder<List<AdminUserDTO>>()
-                .error(new ResponseErrorCT("500", "Internal Server Error", e.getMessage()))
-                .build();
-        }
-    }
+    // @GetMapping("/accounts")
+    // public ResponseCT<List<AdminUserDTO>> getAccounts(Pageable pageable) {
+    //     try {
+    //         List<UserExtraDTO> users = userExtraService.findAll(pageable).getContent();
+    //         List<UserExtra> userExtras = userExtraMapper.toEntity(users);
+    //         return new ResponseCTBuilder<List<AdminUserDTO>>().addData(adminUserMapper.toDto(userExtras)).build();
+    //     } catch (Exception e) {
+    //         return new ResponseCTBuilder<List<AdminUserDTO>>()
+    //             .error(new ResponseErrorCT("500", "Internal Server Error", e.getMessage()))
+    //             .build();
+    //     }
+    // }
 }
