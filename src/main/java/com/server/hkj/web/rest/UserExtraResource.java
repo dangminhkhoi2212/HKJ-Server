@@ -1,7 +1,9 @@
 package com.server.hkj.web.rest;
 
 import com.server.hkj.repository.UserExtraRepository;
+import com.server.hkj.service.UserExtraQueryService;
 import com.server.hkj.service.UserExtraService;
+import com.server.hkj.service.criteria.UserExtraCriteria;
 import com.server.hkj.service.dto.UserExtraDTO;
 import com.server.hkj.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -42,9 +44,16 @@ public class UserExtraResource {
 
     private final UserExtraRepository userExtraRepository;
 
-    public UserExtraResource(UserExtraService userExtraService, UserExtraRepository userExtraRepository) {
+    private final UserExtraQueryService userExtraQueryService;
+
+    public UserExtraResource(
+        UserExtraService userExtraService,
+        UserExtraRepository userExtraRepository,
+        UserExtraQueryService userExtraQueryService
+    ) {
         this.userExtraService = userExtraService;
         this.userExtraRepository = userExtraRepository;
+        this.userExtraQueryService = userExtraQueryService;
     }
 
     /**
@@ -139,14 +148,31 @@ public class UserExtraResource {
      * {@code GET  /user-extras} : get all the userExtras.
      *
      * @param pageable the pagination information.
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userExtras in body.
      */
     @GetMapping("")
-    public ResponseEntity<List<UserExtraDTO>> getAllUserExtras(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of UserExtras");
-        Page<UserExtraDTO> page = userExtraService.findAll(pageable);
+    public ResponseEntity<List<UserExtraDTO>> getAllUserExtras(
+        UserExtraCriteria criteria,
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable
+    ) {
+        log.debug("REST request to get UserExtras by criteria: {}", criteria);
+
+        Page<UserExtraDTO> page = userExtraQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /user-extras/count} : count all the userExtras.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/count")
+    public ResponseEntity<Long> countUserExtras(UserExtraCriteria criteria) {
+        log.debug("REST request to count UserExtras by criteria: {}", criteria);
+        return ResponseEntity.ok().body(userExtraQueryService.countByCriteria(criteria));
     }
 
     /**
