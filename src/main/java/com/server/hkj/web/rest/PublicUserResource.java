@@ -48,7 +48,10 @@ public class PublicUserResource {
     }
 
     @GetMapping("/users/role")
-    public ResponseCT<List<AdminUserDTO>> getAllPublicUsersByRole(Pageable pageable, @Param(value = "role") String role) {
+    public ResponseCT<List<AdminUserDTO>> getAllPublicUsersByRole(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @Param(value = "role") String role
+    ) {
         try {
             final Page<AdminUserDTO> page = userExtraService.getUsersByRole(pageable, role);
             return new ResponseCTBuilder<List<AdminUserDTO>>().addData(page.getContent()).build();
