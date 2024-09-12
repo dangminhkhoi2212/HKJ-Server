@@ -1,0 +1,3 @@
+jhipster-entity-audit ./jhipster-jdl.jdl --incremental-changelog
+jhipster liquibase:clearCheckSums
+jhipster liquibase:update
