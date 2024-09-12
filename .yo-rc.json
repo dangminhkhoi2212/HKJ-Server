@@ -19,6 +19,7 @@
     "entities": ["UserExtra"],
     "feignClient": null,
     "jhipsterVersion": "8.6.0",
+    "jpaMetamodelFiltering": true,
     "languages": ["vi"],
     "lastLiquibaseTimestamp": 1724861312000,
     "messageBroker": false,
