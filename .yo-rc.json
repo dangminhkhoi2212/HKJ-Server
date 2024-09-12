@@ -3,6 +3,12 @@
     "applicationType": "monolith",
     "authenticationType": "oauth2",
     "baseName": "server",
+    "blueprints": [
+      {
+        "name": "generator-jhipster-entity-audit",
+        "version": "5.5.0"
+      }
+    ],
     "buildTool": "maven",
     "cacheProvider": "ehcache",
     "clientFramework": "react",
@@ -16,12 +22,25 @@
     "enableHibernateCache": true,
     "enableSwaggerCodegen": false,
     "enableTranslation": true,
-    "entities": ["UserExtra"],
+    "entities": [
+      "UserExtra",
+      "Employee",
+      "Hire",
+      "JewelryImage",
+      "JewelryModel",
+      "Material",
+      "MaterialUsage",
+      "Order",
+      "Position",
+      "Project",
+      "ProjectImage"
+    ],
     "feignClient": null,
+    "incrementalChangelog": true,
     "jhipsterVersion": "8.6.0",
     "jpaMetamodelFiltering": true,
     "languages": ["vi"],
-    "lastLiquibaseTimestamp": 1724861312000,
+    "lastLiquibaseTimestamp": 1726124585000,
     "messageBroker": false,
     "microfrontend": null,
     "microfrontends": [],
@@ -38,5 +57,10 @@
     "testFrameworks": [],
     "websocket": false,
     "withAdminUi": true
+  },
+  "generator-jhipster-entity-audit": {
+    "auditFramework": "custom",
+    "auditPage": true,
+    "entityAuditEventChangelogDate": "20240912070158"
   }
 }
