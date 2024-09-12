@@ -1,3 +1,4 @@
+pom.xml skip
 src/main/java/com/server/hkj/service/UserService.java skip
 src/main/java/com/server/hkj/service/dto/AdminUserDTO.java
 src/main/java/com/server/hkj/security/AuthoritiesConstants.java skip
