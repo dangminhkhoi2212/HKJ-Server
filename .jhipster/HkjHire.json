@@ -1,0 +1,69 @@
+{
+  "annotations": {
+    "changelogDate": "20240914093104"
+  },
+  "applications": ["server"],
+  "dto": "mapstruct",
+  "enableAudit": true,
+  "fields": [
+    {
+      "fieldName": "hireDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "columnType": "varchar(50)",
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "fieldName": "createdDate",
+      "fieldType": "Instant",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "columnType": "varchar(50)",
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "fieldName": "lastModifiedDate",
+      "fieldType": "Instant",
+      "nullable": false,
+      "readonly": true
+    }
+  ],
+  "incrementalChangelog": true,
+  "jpaMetamodelFiltering": true,
+  "name": "HkjHire",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "hkjPosition",
+      "relationshipName": "position",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "hkjEmployee",
+      "relationshipName": "employees",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

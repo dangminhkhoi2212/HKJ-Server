@@ -1,5 +1,6 @@
 package com.server.hkj.domain;
 
+import static com.server.hkj.domain.HkjEmployeeTestSamples.*;
 import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,5 +21,19 @@ class UserExtraTest {
 
         userExtra2 = getUserExtraSample2();
         assertThat(userExtra1).isNotEqualTo(userExtra2);
+    }
+
+    @Test
+    void hkjEmployeeTest() {
+        UserExtra userExtra = getUserExtraRandomSampleGenerator();
+        HkjEmployee hkjEmployeeBack = getHkjEmployeeRandomSampleGenerator();
+
+        userExtra.setHkjEmployee(hkjEmployeeBack);
+        assertThat(userExtra.getHkjEmployee()).isEqualTo(hkjEmployeeBack);
+        assertThat(hkjEmployeeBack.getUserExtra()).isEqualTo(userExtra);
+
+        userExtra.hkjEmployee(null);
+        assertThat(userExtra.getHkjEmployee()).isNull();
+        assertThat(hkjEmployeeBack.getUserExtra()).isNull();
     }
 }

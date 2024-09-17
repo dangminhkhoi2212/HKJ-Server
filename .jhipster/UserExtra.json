@@ -2,16 +2,56 @@
   "annotations": {
     "changelogDate": "20240828160832"
   },
-  "applications": "*",
+  "applications": ["server"],
   "dto": "mapstruct",
+  "enableAudit": true,
   "fields": [
     {
       "fieldName": "phone",
       "fieldType": "String",
-      "fieldValidateRules": ["pattern"],
+      "fieldValidateRules": ["required", "pattern"],
       "fieldValidateRulesPattern": "^(0)(3|5|7|8|9)([0-9]{8})$"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "columnType": "varchar(50)",
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "fieldName": "createdDate",
+      "fieldType": "Instant",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "columnType": "varchar(50)",
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "fieldName": "lastModifiedDate",
+      "fieldType": "Instant",
+      "nullable": false,
+      "readonly": true
     }
   ],
+  "incrementalChangelog": false,
   "jpaMetamodelFiltering": true,
   "name": "UserExtra",
   "pagination": "pagination",

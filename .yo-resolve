@@ -7,3 +7,4 @@ src/main/java/com/server/hkj/config/SecurityConfiguration.java skip
 src/main/java/com/server/hkj/service/dto/UserExtraDTO.java skip
 src/main/java/com/server/hkj/repository/UserExtraRepository.java skip
 src/main/java/com/server/hkj/service/UserExtraService.java skip
+src/main/java/com/server/hkj/web/rest/PublicUserResource.java skip

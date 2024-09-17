@@ -1,0 +1,392 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1726306930816-6">
+        <addColumn tableName="hkj_category">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-7">
+        <addColumn tableName="hkj_employee">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-8">
+        <addColumn tableName="hkj_hire">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-9">
+        <addColumn tableName="hkj_jewelry_image">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-10">
+        <addColumn tableName="hkj_jewelry_model">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-11">
+        <addColumn tableName="hkj_material">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-12">
+        <addColumn tableName="hkj_material_usage">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-13">
+        <addColumn tableName="hkj_order">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-14">
+        <addColumn tableName="hkj_position">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-15">
+        <addColumn tableName="hkj_project">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-16">
+        <addColumn tableName="hkj_salary">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-17">
+        <addColumn tableName="hkj_task">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-18">
+        <addColumn tableName="hkj_task_image">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-19">
+        <addColumn tableName="hkj_temp_image">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-20">
+        <addColumn tableName="hkj_template">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-21">
+        <addColumn tableName="hkj_template_step">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-22">
+        <addColumn tableName="user_extra">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-23">
+        <addColumn tableName="hkj_category">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-24">
+        <addColumn tableName="hkj_employee">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-25">
+        <addColumn tableName="hkj_hire">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-26">
+        <addColumn tableName="hkj_jewelry_image">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-27">
+        <addColumn tableName="hkj_jewelry_model">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-28">
+        <addColumn tableName="hkj_material">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-29">
+        <addColumn tableName="hkj_material_usage">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-30">
+        <addColumn tableName="hkj_order">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-31">
+        <addColumn tableName="hkj_position">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-32">
+        <addColumn tableName="hkj_project">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-33">
+        <addColumn tableName="hkj_salary">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-34">
+        <addColumn tableName="hkj_task">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-35">
+        <addColumn tableName="hkj_task_image">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-36">
+        <addColumn tableName="hkj_temp_image">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-37">
+        <addColumn tableName="hkj_template">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-38">
+        <addColumn tableName="hkj_template_step">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-39">
+        <addColumn tableName="user_extra">
+            <column name="created_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-40">
+        <addColumn tableName="hkj_category">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-41">
+        <addColumn tableName="hkj_employee">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-42">
+        <addColumn tableName="hkj_hire">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-43">
+        <addColumn tableName="hkj_jewelry_image">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-44">
+        <addColumn tableName="hkj_jewelry_model">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-45">
+        <addColumn tableName="hkj_material">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-46">
+        <addColumn tableName="hkj_material_usage">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-47">
+        <addColumn tableName="hkj_order">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-48">
+        <addColumn tableName="hkj_position">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-49">
+        <addColumn tableName="hkj_project">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-50">
+        <addColumn tableName="hkj_salary">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-51">
+        <addColumn tableName="hkj_task">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-52">
+        <addColumn tableName="hkj_task_image">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-53">
+        <addColumn tableName="hkj_temp_image">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-54">
+        <addColumn tableName="hkj_template">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-55">
+        <addColumn tableName="hkj_template_step">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-56">
+        <addColumn tableName="user_extra">
+            <column name="last_modified_by" type="varchar(50)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-57">
+        <addColumn tableName="hkj_category">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-58">
+        <addColumn tableName="hkj_employee">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-59">
+        <addColumn tableName="hkj_hire">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-60">
+        <addColumn tableName="hkj_jewelry_image">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-61">
+        <addColumn tableName="hkj_jewelry_model">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-62">
+        <addColumn tableName="hkj_material">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-63">
+        <addColumn tableName="hkj_material_usage">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-64">
+        <addColumn tableName="hkj_order">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-65">
+        <addColumn tableName="hkj_position">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-66">
+        <addColumn tableName="hkj_project">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-67">
+        <addColumn tableName="hkj_salary">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-68">
+        <addColumn tableName="hkj_task">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-69">
+        <addColumn tableName="hkj_task_image">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-70">
+        <addColumn tableName="hkj_temp_image">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-71">
+        <addColumn tableName="hkj_template">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-72">
+        <addColumn tableName="hkj_template_step">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-73">
+        <addColumn tableName="user_extra">
+            <column name="last_modified_date" type="timestamp(6)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-1">
+        <modifyDataType columnName="email" newDataType="varchar(254)" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-2">
+        <modifyDataType columnName="entity_id" newDataType="varchar(255)" tableName="jhi_entity_audit_event"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-3">
+        <modifyDataType columnName="id" newDataType="varchar(255)" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-4">
+        <modifyDataType columnName="user_id" newDataType="varchar(255)" tableName="jhi_user_authority"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1726306930816-5">
+        <modifyDataType columnName="user_id" newDataType="varchar(255)" tableName="user_extra"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity HkjMaterialUsage.
+    -->
+    <changeSet id="20240914093118-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="material_id"
+                                 baseTableName="hkj_material_usage"
+                                 constraintName="fk_hkj_material_usage__material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_material"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="hkj_task_id"
+                                 baseTableName="hkj_material_usage"
+                                 constraintName="fk_hkj_material_usage__hkj_task_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_task"
+                                 />
+    </changeSet>
+</databaseChangeLog>

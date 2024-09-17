@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity HkjMaterialUsage.
+    -->
+    <changeSet id="20240914093118-1" author="jhipster">
+        <createTable tableName="hkj_material_usage">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="quantity" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="loss_quantity" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="usage_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="notes" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="weight" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="price" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="material_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_material_usage__material_id" />
+            </column>
+            <column name="hkj_task_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="hkj_material_usage" columnName="usage_date" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

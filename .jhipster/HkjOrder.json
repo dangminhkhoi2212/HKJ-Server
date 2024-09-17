@@ -1,0 +1,116 @@
+{
+  "annotations": {
+    "changelogDate": "20240914093114"
+  },
+  "applications": ["server"],
+  "dto": "mapstruct",
+  "enableAudit": true,
+  "fields": [
+    {
+      "fieldName": "orderDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "expectedDeliveryDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "actualDeliveryDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "specialRequests",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "HkjOrderStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "NEW,PROCESSING,COMPLETED,DELIVERED,LATED"
+    },
+    {
+      "fieldName": "customerRating",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "5",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "totalPrice",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "depositAmount",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "notes",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "1000"
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "columnType": "varchar(50)",
+      "fieldName": "createdBy",
+      "fieldType": "String",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "fieldName": "createdDate",
+      "fieldType": "Instant",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "columnType": "varchar(50)",
+      "fieldName": "lastModifiedBy",
+      "fieldType": "String",
+      "nullable": false,
+      "readonly": true
+    },
+    {
+      "auditField": true,
+      "autoGenerate": true,
+      "fieldName": "lastModifiedDate",
+      "fieldType": "Instant",
+      "nullable": false,
+      "readonly": true
+    }
+  ],
+  "incrementalChangelog": true,
+  "jpaMetamodelFiltering": true,
+  "name": "HkjOrder",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "hkjProject",
+      "relationshipName": "project",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "hkjJewelryModel",
+      "relationshipName": "customOrder",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "userExtra",
+      "relationshipName": "customer",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

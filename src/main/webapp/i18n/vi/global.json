@@ -8,8 +8,23 @@
       "entities": {
         "main": "Thực thể",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "applicationUser": "Application User",
-        "userExtra": "User Extra"
+        "userExtra": "User Extra",
+        "hkjPosition": "Hkj Position",
+        "hkjHire": "Hkj Hire",
+        "hkjSalary": "Hkj Salary",
+        "hkjEmployee": "Hkj Employee",
+        "hkjProject": "Hkj Project",
+        "hkjTask": "Hkj Task",
+        "hkjCategory": "Hkj Category",
+        "hkjJewelryModel": "Hkj Jewelry Model",
+        "hkjJewelryImage": "Hkj Jewelry Image",
+        "hkjTaskImage": "Hkj Task Image",
+        "hkjTempImage": "Hkj Temp Image",
+        "hkjOrder": "Hkj Order",
+        "hkjTemplate": "Hkj Template",
+        "hkjTemplateStep": "Hkj Template Step",
+        "hkjMaterial": "Hkj Material",
+        "hkjMaterialUsage": "Hkj Material Usage"
       },
       "account": {
         "main": "Tài khoản",

@@ -1,134 +1,32 @@
-enum OrderStatus {
-    NEW, PROCESSING, COMPLETED, DELIVERED
+application {
+  config {
+    applicationType monolith
+    authenticationType oauth2
+    baseName server
+    blueprints [generator-jhipster-entity-audit]
+    buildTool maven
+    cacheProvider ehcache
+    clientFramework react
+    clientTheme cosmo
+    clientThemeVariant light
+    databaseType sql
+    devDatabaseType postgresql
+    enableHibernateCache true
+    enableSwaggerCodegen false
+    enableTranslation true
+    languages [vi]
+    messageBroker false
+    microfrontends []
+    nativeLanguage vi
+    packageName com.server.hkj
+    prodDatabaseType postgresql
+    reactive false
+    searchEngine false
+    serviceDiscoveryType false
+    skipUserManagement true
+    syncUserWithIdp true
+    testFrameworks []
+    websocket false
+    withAdminUi true
+  }
 }
-
-enum UserRole {
-    ADMIN, EMPLOYEE, CUSTOMER
-}
-
-enum ProductionStepStatus {
-    PENDING, IN_PROGRESS, COMPLETED
-}
-
-enum Priority {
-    LOW, MEDIUM, HIGH
-}
-
-entity UserExtra {
-    phone String required pattern(/^(0)(3|5|7|8|9)([0-9]{8})$/)
-    address String
-}
-entity Position{
-    name String required
-}
-entity Hire{
-	hireDate Instant required
-}
-entity Employee {
-    salary BigDecimal required
-    performanceRating Integer min(1) max(5)
-    notes String maxlength(1000)
-}
-
-entity Project {
-    name String required
-    description String maxlength(1000)
-    startDate Instant required
-    endDate Instant
-    status OrderStatus required
-    priority Priority required
-    isMainProject Boolean required
-    budget BigDecimal
-    actualCost BigDecimal
-    progress Integer min(0) max(100)
-    qualityCheck Boolean
-    notes String maxlength(1000)
-}
-
-entity JewelryModel {
-    name String required
-    description String maxlength(1000)
-    isCustom Boolean required
-    category String
-    weight Double
-    metalType String
-    gemstones String
-    price BigDecimal
-}
-
-entity JewelryImage {
-    imageUrl String required
-    uploadDate Instant required
-    isSearchImage Boolean required
-    description String
-    tags String
-}
-
-entity ProjectImage {
-    imageUrl String required
-    uploadDate Instant required
-    description String
-}
-
-entity Order {
-    orderDate Instant required
-    expectedDeliveryDate Instant
-    actualDeliveryDate Instant
-    specialRequests String maxlength(1000)
-    status OrderStatus required
-    customerRating Integer min(1) max(5)
-    totalPrice BigDecimal
-    depositAmount BigDecimal
-    notes String maxlength(1000)
-}
-
-
-
-entity Material {
-    name String required
-    quantity Integer required
-    unit String required
-    unitPrice BigDecimal
-    supplier String
-    reorderPoint Integer
-    leadTime Integer
-}
-
-entity MaterialUsage {
-    quantity Integer required
-    lossQuantity Integer
-    usageDate Instant required
-    notes String
-}
-
-relationship OneToOne {
-    UserExtra{user} to User with builtInEntity
-    Employee{userExtra} to UserExtra
-    Hire{position} to Position
-    Order{project} to Project
-}
-
-relationship ManyToOne {
-    Project{manager} to Employee
-    MaterialUsage{material} to Material
-    JewelryImage{uploadedBy} to Employee
-    ProjectImage{uploadedBy} to Employee
-}
-
-relationship OneToMany {
-    Project{subProjects} to Project
-    JewelryModel{images} to JewelryImage{jewelryModel}
-    Project{images} to ProjectImage
-    Hire{employees} to Employee
-    Order{customOrders} to JewelryModel
-}
-
-relationship ManyToMany {
-    JewelryModel{materials} to Material{jewelryModels}
-    Project{materials} to Material{projects}
-}
-
-dto * with mapstruct
-service * with serviceClass
-paginate * with pagination
-filter *

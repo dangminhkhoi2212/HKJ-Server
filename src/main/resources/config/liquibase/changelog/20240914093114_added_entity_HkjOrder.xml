@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity HkjOrder.
+    -->
+    <changeSet id="20240914093114-1" author="jhipster">
+        <createTable tableName="hkj_order">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="order_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="expected_delivery_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="actual_delivery_date" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="special_requests" type="varchar(1000)">
+                <constraints nullable="true" />
+            </column>
+            <column name="status" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="customer_rating" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_price" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="deposit_amount" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="notes" type="varchar(1000)">
+                <constraints nullable="true" />
+            </column>
+            <column name="project_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_order__project_id" />
+            </column>
+            <column name="custom_order_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_order__custom_order_id" />
+            </column>
+            <column name="customer_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="hkj_order" columnName="order_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_order" columnName="expected_delivery_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_order" columnName="actual_delivery_date" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

@@ -1,0 +1,12 @@
+{
+  "serverApp": {
+    "HkjOrderStatus": {
+      "null": "",
+      "NEW": "NEW",
+      "PROCESSING": "PROCESSING",
+      "COMPLETED": "COMPLETED",
+      "DELIVERED": "DELIVERED",
+      "LATED": "LATED"
+    }
+  }
+}

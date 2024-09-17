@@ -2,8 +2,12 @@ package com.server.hkj;
 
 import static com.tngtech.archunit.base.DescribedPredicate.alwaysTrue;
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.belongToAnyOf;
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideInAPackage;
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.type;
 import static com.tngtech.archunit.library.Architectures.layeredArchitecture;
 
+import com.server.hkj.audit.EntityAuditEventListener;
+import com.server.hkj.domain.AbstractAuditingEntity;
 import com.tngtech.archunit.core.importer.ImportOption.DoNotIncludeTests;
 import com.tngtech.archunit.junit.AnalyzeClasses;
 import com.tngtech.archunit.junit.ArchTest;
@@ -30,6 +34,8 @@ class TechnicalStructureTest {
         .whereLayer("Persistence").mayOnlyBeAccessedByLayers("Service", "Security", "Web", "Config")
         .whereLayer("Domain").mayOnlyBeAccessedByLayers("Persistence", "Service", "Security", "Web", "Config")
 
+        .ignoreDependency(resideInAPackage("com.server.hkj.audit"), alwaysTrue())
+        .ignoreDependency(type(AbstractAuditingEntity.class), type(EntityAuditEventListener.class))
         .ignoreDependency(belongToAnyOf(ServerApp.class), alwaysTrue())
         .ignoreDependency(alwaysTrue(), belongToAnyOf(
             com.server.hkj.config.Constants.class,

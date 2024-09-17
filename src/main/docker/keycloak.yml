@@ -10,7 +10,7 @@ services:
     environment:
       - KC_DB=postgres
       #add your supabase credentials
-      - KC_DB_URL=jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?user=postgres.jgkqijlmhezfhbzxtnbi&password=5W4WJYTu3Lza5ud8
+      - KC_DB_URL=jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?user=postgres.jgkqijlmhezfhbzxtnbi&password=5W4WJYTu3Lza5ud8&prepareThreshold=0
       - KC_DB_USERNAME=postgres.jgkqijlmhezfhbzxtnbi
       - KC_DB_PASSWORD=5W4WJYTu3Lza5ud8
       #

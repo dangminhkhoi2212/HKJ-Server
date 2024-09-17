@@ -80,9 +80,32 @@ public class UserExtraQueryService extends QueryService<UserExtra> {
             if (criteria.getPhone() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getPhone(), UserExtra_.phone));
             }
+            if (criteria.getAddress() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getAddress(), UserExtra_.address));
+            }
+            if (criteria.getCreatedBy() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), UserExtra_.createdBy));
+            }
+            if (criteria.getCreatedDate() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getCreatedDate(), UserExtra_.createdDate));
+            }
+            if (criteria.getLastModifiedBy() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getLastModifiedBy(), UserExtra_.lastModifiedBy));
+            }
+            if (criteria.getLastModifiedDate() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), UserExtra_.lastModifiedDate));
+            }
             if (criteria.getUserId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getUserId(), root -> root.join(UserExtra_.user, JoinType.LEFT).get(User_.id))
+                );
+            }
+            if (criteria.getHkjEmployeeId() != null) {
+                specification = specification.and(
+                    buildSpecification(
+                        criteria.getHkjEmployeeId(),
+                        root -> root.join(UserExtra_.hkjEmployee, JoinType.LEFT).get(HkjEmployee_.id)
+                    )
                 );
             }
         }

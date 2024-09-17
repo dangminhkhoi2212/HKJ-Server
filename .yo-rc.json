@@ -1,66 +1,7 @@
 {
   "generator-jhipster": {
-    "applicationType": "monolith",
-    "authenticationType": "oauth2",
-    "baseName": "server",
-    "blueprints": [
-      {
-        "name": "generator-jhipster-entity-audit",
-        "version": "5.5.0"
-      }
-    ],
-    "buildTool": "maven",
-    "cacheProvider": "ehcache",
-    "clientFramework": "react",
-    "clientTestFrameworks": [],
-    "clientTheme": "cosmo",
-    "clientThemeVariant": "light",
     "creationTimestamp": 1722581706163,
-    "databaseType": "sql",
-    "devDatabaseType": "postgresql",
-    "devServerPort": 9060,
-    "enableHibernateCache": true,
-    "enableSwaggerCodegen": false,
-    "enableTranslation": true,
-    "entities": [
-      "UserExtra",
-      "Employee",
-      "Hire",
-      "JewelryImage",
-      "JewelryModel",
-      "Material",
-      "MaterialUsage",
-      "Order",
-      "Position",
-      "Project",
-      "ProjectImage"
-    ],
-    "feignClient": null,
-    "incrementalChangelog": true,
-    "jhipsterVersion": "8.6.0",
-    "jpaMetamodelFiltering": true,
-    "languages": ["vi"],
-    "lastLiquibaseTimestamp": 1726124585000,
-    "messageBroker": false,
-    "microfrontend": null,
-    "microfrontends": [],
-    "nativeLanguage": "vi",
-    "packageName": "com.server.hkj",
-    "prodDatabaseType": "postgresql",
-    "reactive": false,
-    "searchEngine": false,
-    "serverPort": null,
-    "serverSideOptions": [],
-    "serviceDiscoveryType": false,
-    "skipUserManagement": true,
-    "syncUserWithIdp": true,
-    "testFrameworks": [],
-    "websocket": false,
-    "withAdminUi": true
-  },
-  "generator-jhipster-entity-audit": {
-    "auditFramework": "custom",
-    "auditPage": true,
-    "entityAuditEventChangelogDate": "20240912070158"
+    "jdlStore": "./jhipster-jdl.jdl",
+    "jhipsterVersion": "8.6.0"
   }
 }

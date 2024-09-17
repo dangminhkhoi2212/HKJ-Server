@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, getPaginationState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Translate, TextFormat, getPaginationState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -117,6 +118,26 @@ export const UserExtra = () => {
                   <Translate contentKey="serverApp.userExtra.phone">Phone</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('phone')} />
                 </th>
+                <th className="hand" onClick={sort('address')}>
+                  <Translate contentKey="serverApp.userExtra.address">Address</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('address')} />
+                </th>
+                <th className="hand" onClick={sort('createdBy')}>
+                  <Translate contentKey="serverApp.userExtra.createdBy">Created By</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
+                </th>
+                <th className="hand" onClick={sort('createdDate')}>
+                  <Translate contentKey="serverApp.userExtra.createdDate">Created Date</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('createdDate')} />
+                </th>
+                <th className="hand" onClick={sort('lastModifiedBy')}>
+                  <Translate contentKey="serverApp.userExtra.lastModifiedBy">Last Modified By</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedBy')} />
+                </th>
+                <th className="hand" onClick={sort('lastModifiedDate')}>
+                  <Translate contentKey="serverApp.userExtra.lastModifiedDate">Last Modified Date</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
+                </th>
                 <th>
                   <Translate contentKey="serverApp.userExtra.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -132,6 +153,17 @@ export const UserExtra = () => {
                     </Button>
                   </td>
                   <td>{userExtra.phone}</td>
+                  <td>{userExtra.address}</td>
+                  <td>{userExtra.createdBy}</td>
+                  <td>
+                    {userExtra.createdDate ? <TextFormat type="date" value={userExtra.createdDate} format={APP_DATE_FORMAT} /> : null}
+                  </td>
+                  <td>{userExtra.lastModifiedBy}</td>
+                  <td>
+                    {userExtra.lastModifiedDate ? (
+                      <TextFormat type="date" value={userExtra.lastModifiedDate} format={APP_DATE_FORMAT} />
+                    ) : null}
+                  </td>
                   <td>{userExtra.user ? userExtra.user.id : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

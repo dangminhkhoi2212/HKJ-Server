@@ -52,6 +52,8 @@ export const UserExtraUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
+    values.createdDate = convertDateTimeToServer(values.createdDate);
+    values.lastModifiedDate = convertDateTimeToServer(values.lastModifiedDate);
 
     const entity = {
       ...userExtraEntity,
@@ -68,9 +70,14 @@ export const UserExtraUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {
+          createdDate: displayDefaultDateTime(),
+          lastModifiedDate: displayDefaultDateTime(),
+        }
       : {
           ...userExtraEntity,
+          createdDate: convertDateTimeFromServer(userExtraEntity.createdDate),
+          lastModifiedDate: convertDateTimeFromServer(userExtraEntity.lastModifiedDate),
           user: userExtraEntity?.user?.id,
         };
 
@@ -106,11 +113,49 @@ export const UserExtraUpdate = () => {
                 data-cy="phone"
                 type="text"
                 validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
                   pattern: {
                     value: /^(0)(3|5|7|8|9)([0-9]{8})$/,
                     message: translate('entity.validation.pattern', { pattern: '^(0)(3|5|7|8|9)([0-9]{8})$' }),
                   },
                 }}
+              />
+              <ValidatedField
+                label={translate('serverApp.userExtra.address')}
+                id="user-extra-address"
+                name="address"
+                data-cy="address"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('serverApp.userExtra.createdBy')}
+                id="user-extra-createdBy"
+                name="createdBy"
+                data-cy="createdBy"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('serverApp.userExtra.createdDate')}
+                id="user-extra-createdDate"
+                name="createdDate"
+                data-cy="createdDate"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+              <ValidatedField
+                label={translate('serverApp.userExtra.lastModifiedBy')}
+                id="user-extra-lastModifiedBy"
+                name="lastModifiedBy"
+                data-cy="lastModifiedBy"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('serverApp.userExtra.lastModifiedDate')}
+                id="user-extra-lastModifiedDate"
+                name="lastModifiedDate"
+                data-cy="lastModifiedDate"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField id="user-extra-user" name="user" data-cy="user" label={translate('serverApp.userExtra.user')} type="select">
                 <option value="" key="0" />

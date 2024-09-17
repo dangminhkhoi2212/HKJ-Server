@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity HkjHire.
+    -->
+    <changeSet id="20240914093104-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="position_id"
+                                 baseTableName="hkj_hire"
+                                 constraintName="fk_hkj_hire__position_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_position"
+                                 />
+    </changeSet>
+</databaseChangeLog>

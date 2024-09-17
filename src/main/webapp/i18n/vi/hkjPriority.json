@@ -1,0 +1,10 @@
+{
+  "serverApp": {
+    "HkjPriority": {
+      "null": "",
+      "LOW": "LOW",
+      "MEDIUM": "MEDIUM",
+      "HIGH": "HIGH"
+    }
+  }
+}

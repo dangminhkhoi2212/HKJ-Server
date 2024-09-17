@@ -37,8 +37,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class UserExtraResourceIT {
 
-    private static final String DEFAULT_PHONE = "0873676963";
-    private static final String UPDATED_PHONE = "0519321022";
+    private static final String DEFAULT_PHONE = "0811951438";
+    private static final String UPDATED_PHONE = "0707273086";
+
+    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/user-extras";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -75,7 +78,7 @@ class UserExtraResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static UserExtra createEntity(EntityManager em) {
-        UserExtra userExtra = new UserExtra().phone(DEFAULT_PHONE);
+        UserExtra userExtra = new UserExtra().phone(DEFAULT_PHONE).address(DEFAULT_ADDRESS);
         return userExtra;
     }
 
@@ -86,7 +89,7 @@ class UserExtraResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static UserExtra createUpdatedEntity(EntityManager em) {
-        UserExtra userExtra = new UserExtra().phone(UPDATED_PHONE);
+        UserExtra userExtra = new UserExtra().phone(UPDATED_PHONE).address(UPDATED_ADDRESS);
         return userExtra;
     }
 
@@ -150,6 +153,23 @@ class UserExtraResourceIT {
 
     @Test
     @Transactional
+    void checkPhoneIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        userExtra.setPhone(null);
+
+        // Create the UserExtra, which fails.
+        UserExtraDTO userExtraDTO = userExtraMapper.toDto(userExtra);
+
+        restUserExtraMockMvc
+            .perform(post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(userExtraDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllUserExtras() throws Exception {
         // Initialize the database
         insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
@@ -160,7 +180,8 @@ class UserExtraResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userExtra.getId().intValue())))
-            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)));
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)));
     }
 
     @Test
@@ -175,7 +196,8 @@ class UserExtraResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(userExtra.getId().intValue()))
-            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE));
+            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
+            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS));
     }
 
     @Test
@@ -245,6 +267,56 @@ class UserExtraResourceIT {
 
     @Test
     @Transactional
+    void getAllUserExtrasByAddressIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
+
+        // Get all the userExtraList where address equals to
+        defaultUserExtraFiltering("address.equals=" + DEFAULT_ADDRESS, "address.equals=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserExtrasByAddressIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
+
+        // Get all the userExtraList where address in
+        defaultUserExtraFiltering("address.in=" + DEFAULT_ADDRESS + "," + UPDATED_ADDRESS, "address.in=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserExtrasByAddressIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
+
+        // Get all the userExtraList where address is not null
+        defaultUserExtraFiltering("address.specified=true", "address.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllUserExtrasByAddressContainsSomething() throws Exception {
+        // Initialize the database
+        insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
+
+        // Get all the userExtraList where address contains
+        defaultUserExtraFiltering("address.contains=" + DEFAULT_ADDRESS, "address.contains=" + UPDATED_ADDRESS);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserExtrasByAddressNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
+
+        // Get all the userExtraList where address does not contain
+        defaultUserExtraFiltering("address.doesNotContain=" + UPDATED_ADDRESS, "address.doesNotContain=" + DEFAULT_ADDRESS);
+    }
+
+    @Test
+    @Transactional
     void getAllUserExtrasByUserIsEqualToSomething() throws Exception {
         User user;
         if (TestUtil.findAll(em, User.class).isEmpty()) {
@@ -279,7 +351,8 @@ class UserExtraResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userExtra.getId().intValue())))
-            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)));
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)));
 
         // Check, that the count call also returns 1
         restUserExtraMockMvc
@@ -327,7 +400,7 @@ class UserExtraResourceIT {
         UserExtra updatedUserExtra = userExtraRepository.findById(userExtra.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedUserExtra are not directly saved in db
         em.detach(updatedUserExtra);
-        updatedUserExtra.phone(UPDATED_PHONE);
+        updatedUserExtra.phone(UPDATED_PHONE).address(UPDATED_ADDRESS);
         UserExtraDTO userExtraDTO = userExtraMapper.toDto(updatedUserExtra);
 
         restUserExtraMockMvc
@@ -450,7 +523,7 @@ class UserExtraResourceIT {
         UserExtra partialUpdatedUserExtra = new UserExtra();
         partialUpdatedUserExtra.setId(userExtra.getId());
 
-        partialUpdatedUserExtra.phone(UPDATED_PHONE);
+        partialUpdatedUserExtra.phone(UPDATED_PHONE).address(UPDATED_ADDRESS);
 
         restUserExtraMockMvc
             .perform(

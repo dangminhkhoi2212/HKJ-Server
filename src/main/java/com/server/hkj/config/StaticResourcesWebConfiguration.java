@@ -23,7 +23,6 @@ public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
         this.jhipsterProperties = jHipsterProperties;
     }
 
-    @SuppressWarnings("null")
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         ResourceHandlerRegistration resourceHandlerRegistration = appendResourceHandler(registry);

@@ -7,7 +7,6 @@ import com.server.hkj.service.dto.UserDTO;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
  * support is still in beta, and requires a manual step with an IDE.
  */
 @Service
-@Mapper(componentModel = "spring")
 public class UserMapper {
 
     public List<UserDTO> usersToUserDTOs(List<User> users) {
