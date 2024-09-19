@@ -38,6 +38,8 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     private StringFilter notes;
 
+    private BooleanFilter isDeleted;
+
     private StringFilter createdBy;
 
     private InstantFilter createdDate;
@@ -46,9 +48,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter imagesId;
+    private LongFilter projectId;
 
-    private LongFilter hkjOrderId;
+    private LongFilter imagesId;
 
     private Boolean distinct;
 
@@ -63,12 +65,13 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.price = other.optionalPrice().map(BigDecimalFilter::copy).orElse(null);
         this.color = other.optionalColor().map(StringFilter::copy).orElse(null);
         this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
+        this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
+        this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
         this.imagesId = other.optionalImagesId().map(LongFilter::copy).orElse(null);
-        this.hkjOrderId = other.optionalHkjOrderId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -229,6 +232,25 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.notes = notes;
     }
 
+    public BooleanFilter getIsDeleted() {
+        return isDeleted;
+    }
+
+    public Optional<BooleanFilter> optionalIsDeleted() {
+        return Optional.ofNullable(isDeleted);
+    }
+
+    public BooleanFilter isDeleted() {
+        if (isDeleted == null) {
+            setIsDeleted(new BooleanFilter());
+        }
+        return isDeleted;
+    }
+
+    public void setIsDeleted(BooleanFilter isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public StringFilter getCreatedBy() {
         return createdBy;
     }
@@ -305,6 +327,25 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public LongFilter getProjectId() {
+        return projectId;
+    }
+
+    public Optional<LongFilter> optionalProjectId() {
+        return Optional.ofNullable(projectId);
+    }
+
+    public LongFilter projectId() {
+        if (projectId == null) {
+            setProjectId(new LongFilter());
+        }
+        return projectId;
+    }
+
+    public void setProjectId(LongFilter projectId) {
+        this.projectId = projectId;
+    }
+
     public LongFilter getImagesId() {
         return imagesId;
     }
@@ -322,25 +363,6 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     public void setImagesId(LongFilter imagesId) {
         this.imagesId = imagesId;
-    }
-
-    public LongFilter getHkjOrderId() {
-        return hkjOrderId;
-    }
-
-    public Optional<LongFilter> optionalHkjOrderId() {
-        return Optional.ofNullable(hkjOrderId);
-    }
-
-    public LongFilter hkjOrderId() {
-        if (hkjOrderId == null) {
-            setHkjOrderId(new LongFilter());
-        }
-        return hkjOrderId;
-    }
-
-    public void setHkjOrderId(LongFilter hkjOrderId) {
-        this.hkjOrderId = hkjOrderId;
     }
 
     public Boolean getDistinct() {
@@ -380,12 +402,13 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             Objects.equals(price, that.price) &&
             Objects.equals(color, that.color) &&
             Objects.equals(notes, that.notes) &&
+            Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
+            Objects.equals(projectId, that.projectId) &&
             Objects.equals(imagesId, that.imagesId) &&
-            Objects.equals(hkjOrderId, that.hkjOrderId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -401,12 +424,13 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             price,
             color,
             notes,
+            isDeleted,
             createdBy,
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
+            projectId,
             imagesId,
-            hkjOrderId,
             distinct
         );
     }
@@ -423,12 +447,13 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             optionalPrice().map(f -> "price=" + f + ", ").orElse("") +
             optionalColor().map(f -> "color=" + f + ", ").orElse("") +
             optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
+            optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
+            optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
             optionalImagesId().map(f -> "imagesId=" + f + ", ").orElse("") +
-            optionalHkjOrderId().map(f -> "hkjOrderId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

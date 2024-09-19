@@ -41,6 +41,9 @@ public class HkjJewelryImage extends AbstractAuditingEntity<Long> implements Ser
     @Column(name = "tags")
     private String tags;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -49,11 +52,7 @@ public class HkjJewelryImage extends AbstractAuditingEntity<Long> implements Ser
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
-    private HkjEmployee uploadedBy;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
     private HkjJewelryModel jewelryModel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -123,6 +122,19 @@ public class HkjJewelryImage extends AbstractAuditingEntity<Long> implements Ser
         this.tags = tags;
     }
 
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjJewelryImage isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     // Inherited createdBy methods
     public HkjJewelryImage createdBy(String createdBy) {
         this.setCreatedBy(createdBy);
@@ -161,19 +173,6 @@ public class HkjJewelryImage extends AbstractAuditingEntity<Long> implements Ser
 
     public HkjJewelryImage setIsPersisted() {
         this.isPersisted = true;
-        return this;
-    }
-
-    public HkjEmployee getUploadedBy() {
-        return this.uploadedBy;
-    }
-
-    public void setUploadedBy(HkjEmployee hkjEmployee) {
-        this.uploadedBy = hkjEmployee;
-    }
-
-    public HkjJewelryImage uploadedBy(HkjEmployee hkjEmployee) {
-        this.setUploadedBy(hkjEmployee);
         return this;
     }
 
@@ -218,6 +217,7 @@ public class HkjJewelryImage extends AbstractAuditingEntity<Long> implements Ser
             ", isSearchImage='" + getIsSearchImage() + "'" +
             ", description='" + getDescription() + "'" +
             ", tags='" + getTags() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

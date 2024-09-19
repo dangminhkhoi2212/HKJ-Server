@@ -12,7 +12,11 @@ import com.server.hkj.security.SecurityUtils;
 import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
 import java.time.Instant;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
@@ -182,6 +186,7 @@ public class UserService {
         UserExtra userExtra = new UserExtra();
         userExtra.setUser(user);
         userExtra.setPhone(details.get("phone_number") != null ? details.get("phone_number").toString() : "");
+        userExtra.setAddress(details.get("address") != null ? details.get("address").toString() : "");
         return userExtra;
     }
 
@@ -284,7 +289,12 @@ public class UserService {
         }
         user.setActivated(activated);
 
-        userExtra.setPhone((String) details.get("phone_number"));
+        if (details.get("phone_number") != null) {
+            userExtra.setPhone(details.get("phone_number").toString());
+        }
+        if (details.get("address") != null) {
+            userExtra.setAddress(details.get("address").toString());
+        }
         userExtra.setUser(user);
         return userExtra;
     }

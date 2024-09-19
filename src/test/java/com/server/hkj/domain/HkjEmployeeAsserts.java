@@ -49,7 +49,8 @@ public class HkjEmployeeAsserts {
     public static void assertHkjEmployeeUpdatableFieldsEquals(HkjEmployee expected, HkjEmployee actual) {
         assertThat(expected)
             .as("Verify HkjEmployee relevant properties")
-            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()));
+            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**
@@ -61,7 +62,6 @@ public class HkjEmployeeAsserts {
     public static void assertHkjEmployeeUpdatableRelationshipsEquals(HkjEmployee expected, HkjEmployee actual) {
         assertThat(expected)
             .as("Verify HkjEmployee relationships")
-            .satisfies(e -> assertThat(e.getUserExtra()).as("check userExtra").isEqualTo(actual.getUserExtra()))
-            .satisfies(e -> assertThat(e.getHkjHire()).as("check hkjHire").isEqualTo(actual.getHkjHire()));
+            .satisfies(e -> assertThat(e.getUserExtra()).as("check userExtra").isEqualTo(actual.getUserExtra()));
     }
 }

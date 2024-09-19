@@ -110,6 +110,14 @@ export const HkjPositionUpdate = () => {
                 }}
               />
               <ValidatedField
+                label={translate('serverApp.hkjPosition.isDeleted')}
+                id="hkj-position-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjPosition.createdBy')}
                 id="hkj-position-createdBy"
                 name="createdBy"

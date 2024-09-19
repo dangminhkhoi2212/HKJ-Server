@@ -18,13 +18,16 @@
         "title": "Hkj Hire"
       },
       "id": "ID",
-      "hireDate": "Hire Date",
+      "beginDate": "Begin Date",
+      "endDate": "End Date",
+      "beginSalary": "Begin Salary",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
       "position": "Position",
-      "employees": "Employees"
+      "employee": "Employee"
     }
   }
 }

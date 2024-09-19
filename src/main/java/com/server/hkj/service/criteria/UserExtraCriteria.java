@@ -28,6 +28,8 @@ public class UserExtraCriteria implements Serializable, Criteria {
 
     private StringFilter address;
 
+    private BooleanFilter isDeleted;
+
     private StringFilter createdBy;
 
     private InstantFilter createdDate;
@@ -48,6 +50,7 @@ public class UserExtraCriteria implements Serializable, Criteria {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.phone = other.optionalPhone().map(StringFilter::copy).orElse(null);
         this.address = other.optionalAddress().map(StringFilter::copy).orElse(null);
+        this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
@@ -117,6 +120,25 @@ public class UserExtraCriteria implements Serializable, Criteria {
 
     public void setAddress(StringFilter address) {
         this.address = address;
+    }
+
+    public BooleanFilter getIsDeleted() {
+        return isDeleted;
+    }
+
+    public Optional<BooleanFilter> optionalIsDeleted() {
+        return Optional.ofNullable(isDeleted);
+    }
+
+    public BooleanFilter isDeleted() {
+        if (isDeleted == null) {
+            setIsDeleted(new BooleanFilter());
+        }
+        return isDeleted;
+    }
+
+    public void setIsDeleted(BooleanFilter isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public StringFilter getCreatedBy() {
@@ -265,6 +287,7 @@ public class UserExtraCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(phone, that.phone) &&
             Objects.equals(address, that.address) &&
+            Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
@@ -277,7 +300,19 @@ public class UserExtraCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, phone, address, createdBy, createdDate, lastModifiedBy, lastModifiedDate, userId, hkjEmployeeId, distinct);
+        return Objects.hash(
+            id,
+            phone,
+            address,
+            isDeleted,
+            createdBy,
+            createdDate,
+            lastModifiedBy,
+            lastModifiedDate,
+            userId,
+            hkjEmployeeId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -287,6 +322,7 @@ public class UserExtraCriteria implements Serializable, Criteria {
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalPhone().map(f -> "phone=" + f + ", ").orElse("") +
             optionalAddress().map(f -> "address=" + f + ", ").orElse("") +
+            optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +

@@ -42,6 +42,9 @@ class HkjSalaryResourceIT {
     private static final BigDecimal UPDATED_SALARY = new BigDecimal(2);
     private static final BigDecimal SMALLER_SALARY = new BigDecimal(1 - 1);
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-salaries";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -74,7 +77,7 @@ class HkjSalaryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjSalary createEntity(EntityManager em) {
-        HkjSalary hkjSalary = new HkjSalary().salary(DEFAULT_SALARY);
+        HkjSalary hkjSalary = new HkjSalary().salary(DEFAULT_SALARY).isDeleted(DEFAULT_IS_DELETED);
         return hkjSalary;
     }
 
@@ -85,7 +88,7 @@ class HkjSalaryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjSalary createUpdatedEntity(EntityManager em) {
-        HkjSalary hkjSalary = new HkjSalary().salary(UPDATED_SALARY);
+        HkjSalary hkjSalary = new HkjSalary().salary(UPDATED_SALARY).isDeleted(UPDATED_IS_DELETED);
         return hkjSalary;
     }
 
@@ -158,7 +161,8 @@ class HkjSalaryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjSalary.getId().intValue())))
-            .andExpect(jsonPath("$.[*].salary").value(hasItem(sameNumber(DEFAULT_SALARY))));
+            .andExpect(jsonPath("$.[*].salary").value(hasItem(sameNumber(DEFAULT_SALARY))))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -173,7 +177,8 @@ class HkjSalaryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjSalary.getId().intValue()))
-            .andExpect(jsonPath("$.salary").value(sameNumber(DEFAULT_SALARY)));
+            .andExpect(jsonPath("$.salary").value(sameNumber(DEFAULT_SALARY)))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -263,6 +268,36 @@ class HkjSalaryResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjSalariesByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjSalary = hkjSalaryRepository.saveAndFlush(hkjSalary);
+
+        // Get all the hkjSalaryList where isDeleted equals to
+        defaultHkjSalaryFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjSalariesByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjSalary = hkjSalaryRepository.saveAndFlush(hkjSalary);
+
+        // Get all the hkjSalaryList where isDeleted in
+        defaultHkjSalaryFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjSalariesByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjSalary = hkjSalaryRepository.saveAndFlush(hkjSalary);
+
+        // Get all the hkjSalaryList where isDeleted is not null
+        defaultHkjSalaryFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjSalariesByHkjEmployeeIsEqualToSomething() throws Exception {
         HkjEmployee hkjEmployee;
         if (TestUtil.findAll(em, HkjEmployee.class).isEmpty()) {
@@ -297,7 +332,8 @@ class HkjSalaryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjSalary.getId().intValue())))
-            .andExpect(jsonPath("$.[*].salary").value(hasItem(sameNumber(DEFAULT_SALARY))));
+            .andExpect(jsonPath("$.[*].salary").value(hasItem(sameNumber(DEFAULT_SALARY))))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjSalaryMockMvc
@@ -345,7 +381,7 @@ class HkjSalaryResourceIT {
         HkjSalary updatedHkjSalary = hkjSalaryRepository.findById(hkjSalary.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjSalary are not directly saved in db
         em.detach(updatedHkjSalary);
-        updatedHkjSalary.salary(UPDATED_SALARY);
+        updatedHkjSalary.salary(UPDATED_SALARY).isDeleted(UPDATED_IS_DELETED);
         HkjSalaryDTO hkjSalaryDTO = hkjSalaryMapper.toDto(updatedHkjSalary);
 
         restHkjSalaryMockMvc
@@ -438,6 +474,8 @@ class HkjSalaryResourceIT {
         HkjSalary partialUpdatedHkjSalary = new HkjSalary();
         partialUpdatedHkjSalary.setId(hkjSalary.getId());
 
+        partialUpdatedHkjSalary.isDeleted(UPDATED_IS_DELETED);
+
         restHkjSalaryMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedHkjSalary.getId())
@@ -468,7 +506,7 @@ class HkjSalaryResourceIT {
         HkjSalary partialUpdatedHkjSalary = new HkjSalary();
         partialUpdatedHkjSalary.setId(hkjSalary.getId());
 
-        partialUpdatedHkjSalary.salary(UPDATED_SALARY);
+        partialUpdatedHkjSalary.salary(UPDATED_SALARY).isDeleted(UPDATED_IS_DELETED);
 
         restHkjSalaryMockMvc
             .perform(

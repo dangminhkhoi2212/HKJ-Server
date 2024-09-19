@@ -80,6 +80,9 @@ public class HkjEmployeeQueryService extends QueryService<HkjEmployee> {
             if (criteria.getNotes() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjEmployee_.notes));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjEmployee_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjEmployee_.createdBy));
             }

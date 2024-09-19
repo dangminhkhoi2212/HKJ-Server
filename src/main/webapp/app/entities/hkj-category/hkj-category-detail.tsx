@@ -39,6 +39,12 @@ export const HkjCategoryDetail = () => {
           </dt>
           <dd>{hkjCategoryEntity.name}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjCategory.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjCategoryEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjCategory.createdBy">Created By</Translate>
             </span>

@@ -39,6 +39,9 @@ class HkjTemplateStepResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-template-steps";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -71,7 +74,7 @@ class HkjTemplateStepResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjTemplateStep createEntity(EntityManager em) {
-        HkjTemplateStep hkjTemplateStep = new HkjTemplateStep().name(DEFAULT_NAME);
+        HkjTemplateStep hkjTemplateStep = new HkjTemplateStep().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
         return hkjTemplateStep;
     }
 
@@ -82,7 +85,7 @@ class HkjTemplateStepResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjTemplateStep createUpdatedEntity(EntityManager em) {
-        HkjTemplateStep hkjTemplateStep = new HkjTemplateStep().name(UPDATED_NAME);
+        HkjTemplateStep hkjTemplateStep = new HkjTemplateStep().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
         return hkjTemplateStep;
     }
 
@@ -160,7 +163,8 @@ class HkjTemplateStepResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTemplateStep.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -175,7 +179,8 @@ class HkjTemplateStepResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjTemplateStep.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -245,6 +250,39 @@ class HkjTemplateStepResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjTemplateStepsByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjTemplateStep = hkjTemplateStepRepository.saveAndFlush(hkjTemplateStep);
+
+        // Get all the hkjTemplateStepList where isDeleted equals to
+        defaultHkjTemplateStepFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTemplateStepsByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjTemplateStep = hkjTemplateStepRepository.saveAndFlush(hkjTemplateStep);
+
+        // Get all the hkjTemplateStepList where isDeleted in
+        defaultHkjTemplateStepFiltering(
+            "isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED,
+            "isDeleted.in=" + UPDATED_IS_DELETED
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTemplateStepsByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjTemplateStep = hkjTemplateStepRepository.saveAndFlush(hkjTemplateStep);
+
+        // Get all the hkjTemplateStepList where isDeleted is not null
+        defaultHkjTemplateStepFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjTemplateStepsByHkjTemplateIsEqualToSomething() throws Exception {
         HkjTemplate hkjTemplate;
         if (TestUtil.findAll(em, HkjTemplate.class).isEmpty()) {
@@ -279,7 +317,8 @@ class HkjTemplateStepResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTemplateStep.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjTemplateStepMockMvc
@@ -327,7 +366,7 @@ class HkjTemplateStepResourceIT {
         HkjTemplateStep updatedHkjTemplateStep = hkjTemplateStepRepository.findById(hkjTemplateStep.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjTemplateStep are not directly saved in db
         em.detach(updatedHkjTemplateStep);
-        updatedHkjTemplateStep.name(UPDATED_NAME);
+        updatedHkjTemplateStep.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
         HkjTemplateStepDTO hkjTemplateStepDTO = hkjTemplateStepMapper.toDto(updatedHkjTemplateStep);
 
         restHkjTemplateStepMockMvc
@@ -422,7 +461,7 @@ class HkjTemplateStepResourceIT {
         HkjTemplateStep partialUpdatedHkjTemplateStep = new HkjTemplateStep();
         partialUpdatedHkjTemplateStep.setId(hkjTemplateStep.getId());
 
-        partialUpdatedHkjTemplateStep.name(UPDATED_NAME);
+        partialUpdatedHkjTemplateStep.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTemplateStepMockMvc
             .perform(
@@ -454,7 +493,7 @@ class HkjTemplateStepResourceIT {
         HkjTemplateStep partialUpdatedHkjTemplateStep = new HkjTemplateStep();
         partialUpdatedHkjTemplateStep.setId(hkjTemplateStep.getId());
 
-        partialUpdatedHkjTemplateStep.name(UPDATED_NAME);
+        partialUpdatedHkjTemplateStep.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTemplateStepMockMvc
             .perform(

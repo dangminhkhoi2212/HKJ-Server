@@ -5,6 +5,7 @@ export interface IHkjTaskImage {
   id?: number;
   url?: string;
   description?: string | null;
+  isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
@@ -12,4 +13,6 @@ export interface IHkjTaskImage {
   hkjTask?: IHkjTask | null;
 }
 
-export const defaultValue: Readonly<IHkjTaskImage> = {};
+export const defaultValue: Readonly<IHkjTaskImage> = {
+  isDeleted: false,
+};

@@ -4,6 +4,7 @@ import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
 export interface IHkjSalary {
   id?: number;
   salary?: number | null;
+  isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
@@ -11,4 +12,6 @@ export interface IHkjSalary {
   hkjEmployee?: IHkjEmployee | null;
 }
 
-export const defaultValue: Readonly<IHkjSalary> = {};
+export const defaultValue: Readonly<IHkjSalary> = {
+  isDeleted: false,
+};

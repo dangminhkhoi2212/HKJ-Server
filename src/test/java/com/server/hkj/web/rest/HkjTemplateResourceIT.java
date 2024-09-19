@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
 import com.server.hkj.domain.HkjCategory;
+import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjTemplate;
 import com.server.hkj.repository.HkjTemplateRepository;
 import com.server.hkj.service.dto.HkjTemplateDTO;
@@ -38,6 +39,9 @@ class HkjTemplateResourceIT {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
 
     private static final String ENTITY_API_URL = "/api/hkj-templates";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -71,7 +75,7 @@ class HkjTemplateResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjTemplate createEntity(EntityManager em) {
-        HkjTemplate hkjTemplate = new HkjTemplate().name(DEFAULT_NAME);
+        HkjTemplate hkjTemplate = new HkjTemplate().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
         return hkjTemplate;
     }
 
@@ -82,7 +86,7 @@ class HkjTemplateResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjTemplate createUpdatedEntity(EntityManager em) {
-        HkjTemplate hkjTemplate = new HkjTemplate().name(UPDATED_NAME);
+        HkjTemplate hkjTemplate = new HkjTemplate().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
         return hkjTemplate;
     }
 
@@ -157,7 +161,8 @@ class HkjTemplateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTemplate.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -172,7 +177,8 @@ class HkjTemplateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjTemplate.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -242,6 +248,36 @@ class HkjTemplateResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjTemplatesByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjTemplate = hkjTemplateRepository.saveAndFlush(hkjTemplate);
+
+        // Get all the hkjTemplateList where isDeleted equals to
+        defaultHkjTemplateFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTemplatesByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjTemplate = hkjTemplateRepository.saveAndFlush(hkjTemplate);
+
+        // Get all the hkjTemplateList where isDeleted in
+        defaultHkjTemplateFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTemplatesByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjTemplate = hkjTemplateRepository.saveAndFlush(hkjTemplate);
+
+        // Get all the hkjTemplateList where isDeleted is not null
+        defaultHkjTemplateFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjTemplatesByCategoryIsEqualToSomething() throws Exception {
         HkjCategory category;
         if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
@@ -262,6 +298,28 @@ class HkjTemplateResourceIT {
         defaultHkjTemplateShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
     }
 
+    @Test
+    @Transactional
+    void getAllHkjTemplatesByCreaterIsEqualToSomething() throws Exception {
+        HkjEmployee creater;
+        if (TestUtil.findAll(em, HkjEmployee.class).isEmpty()) {
+            hkjTemplateRepository.saveAndFlush(hkjTemplate);
+            creater = HkjEmployeeResourceIT.createEntity(em);
+        } else {
+            creater = TestUtil.findAll(em, HkjEmployee.class).get(0);
+        }
+        em.persist(creater);
+        em.flush();
+        hkjTemplate.setCreater(creater);
+        hkjTemplateRepository.saveAndFlush(hkjTemplate);
+        Long createrId = creater.getId();
+        // Get all the hkjTemplateList where creater equals to createrId
+        defaultHkjTemplateShouldBeFound("createrId.equals=" + createrId);
+
+        // Get all the hkjTemplateList where creater equals to (createrId + 1)
+        defaultHkjTemplateShouldNotBeFound("createrId.equals=" + (createrId + 1));
+    }
+
     private void defaultHkjTemplateFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjTemplateShouldBeFound(shouldBeFound);
         defaultHkjTemplateShouldNotBeFound(shouldNotBeFound);
@@ -276,7 +334,8 @@ class HkjTemplateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTemplate.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjTemplateMockMvc
@@ -324,7 +383,7 @@ class HkjTemplateResourceIT {
         HkjTemplate updatedHkjTemplate = hkjTemplateRepository.findById(hkjTemplate.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjTemplate are not directly saved in db
         em.detach(updatedHkjTemplate);
-        updatedHkjTemplate.name(UPDATED_NAME);
+        updatedHkjTemplate.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
         HkjTemplateDTO hkjTemplateDTO = hkjTemplateMapper.toDto(updatedHkjTemplate);
 
         restHkjTemplateMockMvc
@@ -417,7 +476,7 @@ class HkjTemplateResourceIT {
         HkjTemplate partialUpdatedHkjTemplate = new HkjTemplate();
         partialUpdatedHkjTemplate.setId(hkjTemplate.getId());
 
-        partialUpdatedHkjTemplate.name(UPDATED_NAME);
+        partialUpdatedHkjTemplate.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTemplateMockMvc
             .perform(
@@ -449,7 +508,7 @@ class HkjTemplateResourceIT {
         HkjTemplate partialUpdatedHkjTemplate = new HkjTemplate();
         partialUpdatedHkjTemplate.setId(hkjTemplate.getId());
 
-        partialUpdatedHkjTemplate.name(UPDATED_NAME);
+        partialUpdatedHkjTemplate.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTemplateMockMvc
             .perform(

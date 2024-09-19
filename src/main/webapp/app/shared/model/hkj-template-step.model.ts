@@ -4,6 +4,7 @@ import { IHkjTemplate } from 'app/shared/model/hkj-template.model';
 export interface IHkjTemplateStep {
   id?: number;
   name?: string | null;
+  isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
@@ -11,4 +12,6 @@ export interface IHkjTemplateStep {
   hkjTemplate?: IHkjTemplate | null;
 }
 
-export const defaultValue: Readonly<IHkjTemplateStep> = {};
+export const defaultValue: Readonly<IHkjTemplateStep> = {
+  isDeleted: false,
+};

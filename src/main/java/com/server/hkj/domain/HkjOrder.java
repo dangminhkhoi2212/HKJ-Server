@@ -7,6 +7,8 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
@@ -63,6 +65,9 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Column(name = "notes", length = 1000)
     private String notes;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -70,19 +75,23 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "template", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjProject project;
 
-    @JsonIgnoreProperties(value = { "images", "hkjOrder" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private HkjJewelryModel customOrder;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjOrder")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "hkjOrder" }, allowSetters = true)
+    private Set<HkjOrderImage> orderImages = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "user", "hkjEmployee" }, allowSetters = true)
     private UserExtra customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
+    private HkjJewelryModel jewelry;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -216,6 +225,19 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         this.notes = notes;
     }
 
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjOrder isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     // Inherited createdBy methods
     public HkjOrder createdBy(String createdBy) {
         this.setCreatedBy(createdBy);
@@ -270,16 +292,34 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         return this;
     }
 
-    public HkjJewelryModel getCustomOrder() {
-        return this.customOrder;
+    public Set<HkjOrderImage> getOrderImages() {
+        return this.orderImages;
     }
 
-    public void setCustomOrder(HkjJewelryModel hkjJewelryModel) {
-        this.customOrder = hkjJewelryModel;
+    public void setOrderImages(Set<HkjOrderImage> hkjOrderImages) {
+        if (this.orderImages != null) {
+            this.orderImages.forEach(i -> i.setHkjOrder(null));
+        }
+        if (hkjOrderImages != null) {
+            hkjOrderImages.forEach(i -> i.setHkjOrder(this));
+        }
+        this.orderImages = hkjOrderImages;
     }
 
-    public HkjOrder customOrder(HkjJewelryModel hkjJewelryModel) {
-        this.setCustomOrder(hkjJewelryModel);
+    public HkjOrder orderImages(Set<HkjOrderImage> hkjOrderImages) {
+        this.setOrderImages(hkjOrderImages);
+        return this;
+    }
+
+    public HkjOrder addOrderImages(HkjOrderImage hkjOrderImage) {
+        this.orderImages.add(hkjOrderImage);
+        hkjOrderImage.setHkjOrder(this);
+        return this;
+    }
+
+    public HkjOrder removeOrderImages(HkjOrderImage hkjOrderImage) {
+        this.orderImages.remove(hkjOrderImage);
+        hkjOrderImage.setHkjOrder(null);
         return this;
     }
 
@@ -293,6 +333,19 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public HkjOrder customer(UserExtra userExtra) {
         this.setCustomer(userExtra);
+        return this;
+    }
+
+    public HkjJewelryModel getJewelry() {
+        return this.jewelry;
+    }
+
+    public void setJewelry(HkjJewelryModel hkjJewelryModel) {
+        this.jewelry = hkjJewelryModel;
+    }
+
+    public HkjOrder jewelry(HkjJewelryModel hkjJewelryModel) {
+        this.setJewelry(hkjJewelryModel);
         return this;
     }
 
@@ -329,6 +382,7 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
             ", totalPrice=" + getTotalPrice() +
             ", depositAmount=" + getDepositAmount() +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

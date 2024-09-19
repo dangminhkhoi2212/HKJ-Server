@@ -22,11 +22,11 @@
       "isSearchImage": "Is Search Image",
       "description": "Description",
       "tags": "Tags",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "uploadedBy": "Uploaded By",
       "jewelryModel": "Jewelry Model"
     }
   }

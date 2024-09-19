@@ -14,6 +14,8 @@ public class HkjCategoryDTO implements Serializable {
 
     private String name;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -36,6 +38,14 @@ public class HkjCategoryDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -97,6 +107,7 @@ public class HkjCategoryDTO implements Serializable {
         return "HkjCategoryDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

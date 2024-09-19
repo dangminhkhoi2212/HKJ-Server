@@ -16,6 +16,8 @@ public class HkjPositionDTO implements Serializable {
     @NotNull
     private String name;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -38,6 +40,14 @@ public class HkjPositionDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -99,6 +109,7 @@ public class HkjPositionDTO implements Serializable {
         return "HkjPositionDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

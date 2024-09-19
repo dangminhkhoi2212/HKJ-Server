@@ -28,12 +28,14 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
     private Long id;
 
     @NotNull
-    // @Pattern(regexp = "^(0)(3|5|7|8|9)([0-9]{8})$")
     @Column(name = "phone", nullable = false)
     private String phone;
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
     // Inherited createdBy definition
     // Inherited createdDate definition
@@ -89,6 +91,19 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public UserExtra isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -190,6 +205,7 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
             "id=" + getId() +
             ", phone='" + getPhone() + "'" +
             ", address='" + getAddress() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

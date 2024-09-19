@@ -17,18 +17,18 @@
                                  referencedTableName="hkj_project"
                                  />
 
-        <addForeignKeyConstraint baseColumnNames="custom_order_id"
-                                 baseTableName="hkj_order"
-                                 constraintName="fk_hkj_order__custom_order_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="hkj_jewelry_model"
-                                 />
-
         <addForeignKeyConstraint baseColumnNames="customer_id"
                                  baseTableName="hkj_order"
                                  constraintName="fk_hkj_order__customer_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_extra"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="jewelry_id"
+                                 baseTableName="hkj_order"
+                                 constraintName="fk_hkj_order__jewelry_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_jewelry_model"
                                  />
     </changeSet>
 </databaseChangeLog>

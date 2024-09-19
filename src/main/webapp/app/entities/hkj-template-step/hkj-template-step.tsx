@@ -119,6 +119,10 @@ export const HkjTemplateStep = () => {
                   <Translate contentKey="serverApp.hkjTemplateStep.name">Name</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjTemplateStep.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjTemplateStep.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -150,6 +154,7 @@ export const HkjTemplateStep = () => {
                     </Button>
                   </td>
                   <td>{hkjTemplateStep.name}</td>
+                  <td>{hkjTemplateStep.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjTemplateStep.createdBy}</td>
                   <td>
                     {hkjTemplateStep.createdDate ? (

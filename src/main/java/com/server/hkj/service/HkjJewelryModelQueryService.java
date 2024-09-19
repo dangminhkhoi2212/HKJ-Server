@@ -98,6 +98,9 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
             if (criteria.getNotes() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjJewelryModel_.notes));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjJewelryModel_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjJewelryModel_.createdBy));
             }
@@ -112,19 +115,19 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
                     buildRangeSpecification(criteria.getLastModifiedDate(), HkjJewelryModel_.lastModifiedDate)
                 );
             }
+            if (criteria.getProjectId() != null) {
+                specification = specification.and(
+                    buildSpecification(
+                        criteria.getProjectId(),
+                        root -> root.join(HkjJewelryModel_.project, JoinType.LEFT).get(HkjProject_.id)
+                    )
+                );
+            }
             if (criteria.getImagesId() != null) {
                 specification = specification.and(
                     buildSpecification(
                         criteria.getImagesId(),
                         root -> root.join(HkjJewelryModel_.images, JoinType.LEFT).get(HkjJewelryImage_.id)
-                    )
-                );
-            }
-            if (criteria.getHkjOrderId() != null) {
-                specification = specification.and(
-                    buildSpecification(
-                        criteria.getHkjOrderId(),
-                        root -> root.join(HkjJewelryModel_.hkjOrder, JoinType.LEFT).get(HkjOrder_.id)
                     )
                 );
             }

@@ -73,6 +73,12 @@ export const HkjMaterialUsageDetail = () => {
           </dt>
           <dd>{hkjMaterialUsageEntity.price}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjMaterialUsage.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjMaterialUsageEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjMaterialUsage.createdBy">Created By</Translate>
             </span>

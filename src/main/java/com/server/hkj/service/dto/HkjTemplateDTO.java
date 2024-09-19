@@ -14,6 +14,8 @@ public class HkjTemplateDTO implements Serializable {
 
     private String name;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -23,6 +25,8 @@ public class HkjTemplateDTO implements Serializable {
     private Instant lastModifiedDate;
 
     private HkjCategoryDTO category;
+
+    private HkjEmployeeDTO creater;
 
     public Long getId() {
         return id;
@@ -38,6 +42,14 @@ public class HkjTemplateDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -80,6 +92,14 @@ public class HkjTemplateDTO implements Serializable {
         this.category = category;
     }
 
+    public HkjEmployeeDTO getCreater() {
+        return creater;
+    }
+
+    public void setCreater(HkjEmployeeDTO creater) {
+        this.creater = creater;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -107,11 +127,13 @@ public class HkjTemplateDTO implements Serializable {
         return "HkjTemplateDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", category=" + getCategory() +
+            ", creater=" + getCreater() +
             "}";
     }
 }

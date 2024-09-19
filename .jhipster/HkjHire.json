@@ -7,9 +7,22 @@
   "enableAudit": true,
   "fields": [
     {
-      "fieldName": "hireDate",
+      "fieldName": "beginDate",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "endDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "beginSalary",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean"
     },
     {
       "auditField": true,
@@ -59,9 +72,9 @@
     },
     {
       "otherEntityName": "hkjEmployee",
-      "relationshipName": "employees",
+      "relationshipName": "employee",
       "relationshipSide": "left",
-      "relationshipType": "one-to-many"
+      "relationshipType": "one-to-one"
     }
   ],
   "searchEngine": "no",

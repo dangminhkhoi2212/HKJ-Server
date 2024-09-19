@@ -49,7 +49,8 @@ public class HkjTemplateAsserts {
     public static void assertHkjTemplateUpdatableFieldsEquals(HkjTemplate expected, HkjTemplate actual) {
         assertThat(expected)
             .as("Verify HkjTemplate relevant properties")
-            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()));
+            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**
@@ -61,6 +62,7 @@ public class HkjTemplateAsserts {
     public static void assertHkjTemplateUpdatableRelationshipsEquals(HkjTemplate expected, HkjTemplate actual) {
         assertThat(expected)
             .as("Verify HkjTemplate relationships")
-            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()));
+            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
+            .satisfies(e -> assertThat(e.getCreater()).as("check creater").isEqualTo(actual.getCreater()));
     }
 }

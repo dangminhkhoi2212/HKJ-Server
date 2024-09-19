@@ -144,6 +144,10 @@ export const HkjMaterialUsage = () => {
                   <Translate contentKey="serverApp.hkjMaterialUsage.price">Price</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('price')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjMaterialUsage.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjMaterialUsage.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -187,6 +191,7 @@ export const HkjMaterialUsage = () => {
                   <td>{hkjMaterialUsage.notes}</td>
                   <td>{hkjMaterialUsage.weight}</td>
                   <td>{hkjMaterialUsage.price}</td>
+                  <td>{hkjMaterialUsage.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjMaterialUsage.createdBy}</td>
                   <td>
                     {hkjMaterialUsage.createdDate ? (

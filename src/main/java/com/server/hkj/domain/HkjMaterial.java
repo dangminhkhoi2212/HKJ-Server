@@ -46,6 +46,9 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
     @Column(name = "supplier")
     private String supplier;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -137,6 +140,19 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
         this.supplier = supplier;
     }
 
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjMaterial isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     // Inherited createdBy methods
     public HkjMaterial createdBy(String createdBy) {
         this.setCreatedBy(createdBy);
@@ -226,6 +242,7 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
             ", unit='" + getUnit() + "'" +
             ", unitPrice=" + getUnitPrice() +
             ", supplier='" + getSupplier() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

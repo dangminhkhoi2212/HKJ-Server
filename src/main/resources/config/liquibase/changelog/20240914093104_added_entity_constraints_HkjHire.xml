@@ -16,5 +16,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="hkj_position"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="hkj_hire"
+                                 constraintName="fk_hkj_hire__employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_employee"
+                                 />
     </changeSet>
 </databaseChangeLog>

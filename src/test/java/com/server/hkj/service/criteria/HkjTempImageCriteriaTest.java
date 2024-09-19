@@ -77,6 +77,7 @@ class HkjTempImageCriteriaTest {
         hkjTempImageCriteria.id();
         hkjTempImageCriteria.url();
         hkjTempImageCriteria.isUsed();
+        hkjTempImageCriteria.isDeleted();
         hkjTempImageCriteria.createdBy();
         hkjTempImageCriteria.createdDate();
         hkjTempImageCriteria.lastModifiedBy();
@@ -90,6 +91,7 @@ class HkjTempImageCriteriaTest {
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getUrl()) &&
                 condition.apply(criteria.getIsUsed()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -108,6 +110,7 @@ class HkjTempImageCriteriaTest {
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getUrl(), copy.getUrl()) &&
                 condition.apply(criteria.getIsUsed(), copy.getIsUsed()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

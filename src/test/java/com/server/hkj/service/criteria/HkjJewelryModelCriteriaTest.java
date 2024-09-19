@@ -82,12 +82,13 @@ class HkjJewelryModelCriteriaTest {
         hkjJewelryModelCriteria.price();
         hkjJewelryModelCriteria.color();
         hkjJewelryModelCriteria.notes();
+        hkjJewelryModelCriteria.isDeleted();
         hkjJewelryModelCriteria.createdBy();
         hkjJewelryModelCriteria.createdDate();
         hkjJewelryModelCriteria.lastModifiedBy();
         hkjJewelryModelCriteria.lastModifiedDate();
+        hkjJewelryModelCriteria.projectId();
         hkjJewelryModelCriteria.imagesId();
-        hkjJewelryModelCriteria.hkjOrderId();
         hkjJewelryModelCriteria.distinct();
     }
 
@@ -102,12 +103,13 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getPrice()) &&
                 condition.apply(criteria.getColor()) &&
                 condition.apply(criteria.getNotes()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
+                condition.apply(criteria.getProjectId()) &&
                 condition.apply(criteria.getImagesId()) &&
-                condition.apply(criteria.getHkjOrderId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -127,12 +129,13 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getPrice(), copy.getPrice()) &&
                 condition.apply(criteria.getColor(), copy.getColor()) &&
                 condition.apply(criteria.getNotes(), copy.getNotes()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
+                condition.apply(criteria.getProjectId(), copy.getProjectId()) &&
                 condition.apply(criteria.getImagesId(), copy.getImagesId()) &&
-                condition.apply(criteria.getHkjOrderId(), copy.getHkjOrderId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

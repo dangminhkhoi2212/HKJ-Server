@@ -54,6 +54,9 @@ class HkjMaterialResourceIT {
     private static final String DEFAULT_SUPPLIER = "AAAAAAAAAA";
     private static final String UPDATED_SUPPLIER = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-materials";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -91,7 +94,8 @@ class HkjMaterialResourceIT {
             .quantity(DEFAULT_QUANTITY)
             .unit(DEFAULT_UNIT)
             .unitPrice(DEFAULT_UNIT_PRICE)
-            .supplier(DEFAULT_SUPPLIER);
+            .supplier(DEFAULT_SUPPLIER)
+            .isDeleted(DEFAULT_IS_DELETED);
         return hkjMaterial;
     }
 
@@ -107,7 +111,8 @@ class HkjMaterialResourceIT {
             .quantity(UPDATED_QUANTITY)
             .unit(UPDATED_UNIT)
             .unitPrice(UPDATED_UNIT_PRICE)
-            .supplier(UPDATED_SUPPLIER);
+            .supplier(UPDATED_SUPPLIER)
+            .isDeleted(UPDATED_IS_DELETED);
         return hkjMaterial;
     }
 
@@ -243,7 +248,8 @@ class HkjMaterialResourceIT {
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
             .andExpect(jsonPath("$.[*].unit").value(hasItem(DEFAULT_UNIT)))
             .andExpect(jsonPath("$.[*].unitPrice").value(hasItem(sameNumber(DEFAULT_UNIT_PRICE))))
-            .andExpect(jsonPath("$.[*].supplier").value(hasItem(DEFAULT_SUPPLIER)));
+            .andExpect(jsonPath("$.[*].supplier").value(hasItem(DEFAULT_SUPPLIER)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -262,7 +268,8 @@ class HkjMaterialResourceIT {
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
             .andExpect(jsonPath("$.unit").value(DEFAULT_UNIT))
             .andExpect(jsonPath("$.unitPrice").value(sameNumber(DEFAULT_UNIT_PRICE)))
-            .andExpect(jsonPath("$.supplier").value(DEFAULT_SUPPLIER));
+            .andExpect(jsonPath("$.supplier").value(DEFAULT_SUPPLIER))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -573,6 +580,36 @@ class HkjMaterialResourceIT {
         defaultHkjMaterialFiltering("supplier.doesNotContain=" + UPDATED_SUPPLIER, "supplier.doesNotContain=" + DEFAULT_SUPPLIER);
     }
 
+    @Test
+    @Transactional
+    void getAllHkjMaterialsByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
+
+        // Get all the hkjMaterialList where isDeleted equals to
+        defaultHkjMaterialFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjMaterialsByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
+
+        // Get all the hkjMaterialList where isDeleted in
+        defaultHkjMaterialFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjMaterialsByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
+
+        // Get all the hkjMaterialList where isDeleted is not null
+        defaultHkjMaterialFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
     private void defaultHkjMaterialFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjMaterialShouldBeFound(shouldBeFound);
         defaultHkjMaterialShouldNotBeFound(shouldNotBeFound);
@@ -591,7 +628,8 @@ class HkjMaterialResourceIT {
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
             .andExpect(jsonPath("$.[*].unit").value(hasItem(DEFAULT_UNIT)))
             .andExpect(jsonPath("$.[*].unitPrice").value(hasItem(sameNumber(DEFAULT_UNIT_PRICE))))
-            .andExpect(jsonPath("$.[*].supplier").value(hasItem(DEFAULT_SUPPLIER)));
+            .andExpect(jsonPath("$.[*].supplier").value(hasItem(DEFAULT_SUPPLIER)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjMaterialMockMvc
@@ -644,7 +682,8 @@ class HkjMaterialResourceIT {
             .quantity(UPDATED_QUANTITY)
             .unit(UPDATED_UNIT)
             .unitPrice(UPDATED_UNIT_PRICE)
-            .supplier(UPDATED_SUPPLIER);
+            .supplier(UPDATED_SUPPLIER)
+            .isDeleted(UPDATED_IS_DELETED);
         HkjMaterialDTO hkjMaterialDTO = hkjMaterialMapper.toDto(updatedHkjMaterial);
 
         restHkjMaterialMockMvc
@@ -774,7 +813,8 @@ class HkjMaterialResourceIT {
             .quantity(UPDATED_QUANTITY)
             .unit(UPDATED_UNIT)
             .unitPrice(UPDATED_UNIT_PRICE)
-            .supplier(UPDATED_SUPPLIER);
+            .supplier(UPDATED_SUPPLIER)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjMaterialMockMvc
             .perform(

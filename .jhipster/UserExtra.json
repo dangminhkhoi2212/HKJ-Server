@@ -9,12 +9,15 @@
     {
       "fieldName": "phone",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "pattern"],
-      "fieldValidateRulesPattern": "^(0)(3|5|7|8|9)([0-9]{8})$"
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "address",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean"
     },
     {
       "auditField": true,

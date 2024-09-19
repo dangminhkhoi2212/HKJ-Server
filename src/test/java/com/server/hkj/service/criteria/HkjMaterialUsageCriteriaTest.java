@@ -81,6 +81,7 @@ class HkjMaterialUsageCriteriaTest {
         hkjMaterialUsageCriteria.notes();
         hkjMaterialUsageCriteria.weight();
         hkjMaterialUsageCriteria.price();
+        hkjMaterialUsageCriteria.isDeleted();
         hkjMaterialUsageCriteria.createdBy();
         hkjMaterialUsageCriteria.createdDate();
         hkjMaterialUsageCriteria.lastModifiedBy();
@@ -100,6 +101,7 @@ class HkjMaterialUsageCriteriaTest {
                 condition.apply(criteria.getNotes()) &&
                 condition.apply(criteria.getWeight()) &&
                 condition.apply(criteria.getPrice()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -124,6 +126,7 @@ class HkjMaterialUsageCriteriaTest {
                 condition.apply(criteria.getNotes(), copy.getNotes()) &&
                 condition.apply(criteria.getWeight(), copy.getWeight()) &&
                 condition.apply(criteria.getPrice(), copy.getPrice()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

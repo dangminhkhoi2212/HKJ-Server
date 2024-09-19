@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
@@ -30,8 +29,18 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
     private Long id;
 
     @NotNull
-    @Column(name = "hire_date", nullable = false)
-    private Instant hireDate;
+    @Column(name = "begin_date", nullable = false)
+    private Instant beginDate;
+
+    @NotNull
+    @Column(name = "end_date", nullable = false)
+    private Instant endDate;
+
+    @Column(name = "begin_salary", precision = 21, scale = 2)
+    private BigDecimal beginSalary;
+
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
     // Inherited createdBy definition
     // Inherited createdDate definition
@@ -45,10 +54,10 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
     @JoinColumn(unique = true)
     private HkjPosition position;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjHire")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
-    private Set<HkjEmployee> employees = new HashSet<>();
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private HkjEmployee employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -65,17 +74,56 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
         this.id = id;
     }
 
-    public Instant getHireDate() {
-        return this.hireDate;
+    public Instant getBeginDate() {
+        return this.beginDate;
     }
 
-    public HkjHire hireDate(Instant hireDate) {
-        this.setHireDate(hireDate);
+    public HkjHire beginDate(Instant beginDate) {
+        this.setBeginDate(beginDate);
         return this;
     }
 
-    public void setHireDate(Instant hireDate) {
-        this.hireDate = hireDate;
+    public void setBeginDate(Instant beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public Instant getEndDate() {
+        return this.endDate;
+    }
+
+    public HkjHire endDate(Instant endDate) {
+        this.setEndDate(endDate);
+        return this;
+    }
+
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
+    }
+
+    public BigDecimal getBeginSalary() {
+        return this.beginSalary;
+    }
+
+    public HkjHire beginSalary(BigDecimal beginSalary) {
+        this.setBeginSalary(beginSalary);
+        return this;
+    }
+
+    public void setBeginSalary(BigDecimal beginSalary) {
+        this.beginSalary = beginSalary;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjHire isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -132,34 +180,16 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
-    public Set<HkjEmployee> getEmployees() {
-        return this.employees;
+    public HkjEmployee getEmployee() {
+        return this.employee;
     }
 
-    public void setEmployees(Set<HkjEmployee> hkjEmployees) {
-        if (this.employees != null) {
-            this.employees.forEach(i -> i.setHkjHire(null));
-        }
-        if (hkjEmployees != null) {
-            hkjEmployees.forEach(i -> i.setHkjHire(this));
-        }
-        this.employees = hkjEmployees;
+    public void setEmployee(HkjEmployee hkjEmployee) {
+        this.employee = hkjEmployee;
     }
 
-    public HkjHire employees(Set<HkjEmployee> hkjEmployees) {
-        this.setEmployees(hkjEmployees);
-        return this;
-    }
-
-    public HkjHire addEmployees(HkjEmployee hkjEmployee) {
-        this.employees.add(hkjEmployee);
-        hkjEmployee.setHkjHire(this);
-        return this;
-    }
-
-    public HkjHire removeEmployees(HkjEmployee hkjEmployee) {
-        this.employees.remove(hkjEmployee);
-        hkjEmployee.setHkjHire(null);
+    public HkjHire employee(HkjEmployee hkjEmployee) {
+        this.setEmployee(hkjEmployee);
         return this;
     }
 
@@ -187,7 +217,10 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
     public String toString() {
         return "HkjHire{" +
             "id=" + getId() +
-            ", hireDate='" + getHireDate() + "'" +
+            ", beginDate='" + getBeginDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            ", beginSalary=" + getBeginSalary() +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

@@ -122,6 +122,10 @@ export const HkjTaskImage = () => {
                   <Translate contentKey="serverApp.hkjTaskImage.description">Description</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('description')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjTaskImage.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjTaskImage.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -154,6 +158,7 @@ export const HkjTaskImage = () => {
                   </td>
                   <td>{hkjTaskImage.url}</td>
                   <td>{hkjTaskImage.description}</td>
+                  <td>{hkjTaskImage.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjTaskImage.createdBy}</td>
                   <td>
                     {hkjTaskImage.createdDate ? <TextFormat type="date" value={hkjTaskImage.createdDate} format={APP_DATE_FORMAT} /> : null}

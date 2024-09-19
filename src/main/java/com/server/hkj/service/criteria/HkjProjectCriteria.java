@@ -82,6 +82,8 @@ public class HkjProjectCriteria implements Serializable, Criteria {
 
     private StringFilter notes;
 
+    private BooleanFilter isDeleted;
+
     private StringFilter createdBy;
 
     private InstantFilter createdDate;
@@ -90,11 +92,13 @@ public class HkjProjectCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter categoryId;
+    private LongFilter templateId;
 
     private LongFilter tasksId;
 
     private LongFilter managerId;
+
+    private LongFilter hkjJewelryModelId;
 
     private LongFilter hkjOrderId;
 
@@ -115,13 +119,15 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.actualCost = other.optionalActualCost().map(BigDecimalFilter::copy).orElse(null);
         this.qualityCheck = other.optionalQualityCheck().map(BooleanFilter::copy).orElse(null);
         this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
+        this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
+        this.templateId = other.optionalTemplateId().map(LongFilter::copy).orElse(null);
         this.tasksId = other.optionalTasksId().map(LongFilter::copy).orElse(null);
         this.managerId = other.optionalManagerId().map(LongFilter::copy).orElse(null);
+        this.hkjJewelryModelId = other.optionalHkjJewelryModelId().map(LongFilter::copy).orElse(null);
         this.hkjOrderId = other.optionalHkjOrderId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -359,6 +365,25 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.notes = notes;
     }
 
+    public BooleanFilter getIsDeleted() {
+        return isDeleted;
+    }
+
+    public Optional<BooleanFilter> optionalIsDeleted() {
+        return Optional.ofNullable(isDeleted);
+    }
+
+    public BooleanFilter isDeleted() {
+        if (isDeleted == null) {
+            setIsDeleted(new BooleanFilter());
+        }
+        return isDeleted;
+    }
+
+    public void setIsDeleted(BooleanFilter isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public StringFilter getCreatedBy() {
         return createdBy;
     }
@@ -435,23 +460,23 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getCategoryId() {
-        return categoryId;
+    public LongFilter getTemplateId() {
+        return templateId;
     }
 
-    public Optional<LongFilter> optionalCategoryId() {
-        return Optional.ofNullable(categoryId);
+    public Optional<LongFilter> optionalTemplateId() {
+        return Optional.ofNullable(templateId);
     }
 
-    public LongFilter categoryId() {
-        if (categoryId == null) {
-            setCategoryId(new LongFilter());
+    public LongFilter templateId() {
+        if (templateId == null) {
+            setTemplateId(new LongFilter());
         }
-        return categoryId;
+        return templateId;
     }
 
-    public void setCategoryId(LongFilter categoryId) {
-        this.categoryId = categoryId;
+    public void setTemplateId(LongFilter templateId) {
+        this.templateId = templateId;
     }
 
     public LongFilter getTasksId() {
@@ -490,6 +515,25 @@ public class HkjProjectCriteria implements Serializable, Criteria {
 
     public void setManagerId(LongFilter managerId) {
         this.managerId = managerId;
+    }
+
+    public LongFilter getHkjJewelryModelId() {
+        return hkjJewelryModelId;
+    }
+
+    public Optional<LongFilter> optionalHkjJewelryModelId() {
+        return Optional.ofNullable(hkjJewelryModelId);
+    }
+
+    public LongFilter hkjJewelryModelId() {
+        if (hkjJewelryModelId == null) {
+            setHkjJewelryModelId(new LongFilter());
+        }
+        return hkjJewelryModelId;
+    }
+
+    public void setHkjJewelryModelId(LongFilter hkjJewelryModelId) {
+        this.hkjJewelryModelId = hkjJewelryModelId;
     }
 
     public LongFilter getHkjOrderId() {
@@ -552,13 +596,15 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             Objects.equals(actualCost, that.actualCost) &&
             Objects.equals(qualityCheck, that.qualityCheck) &&
             Objects.equals(notes, that.notes) &&
+            Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(categoryId, that.categoryId) &&
+            Objects.equals(templateId, that.templateId) &&
             Objects.equals(tasksId, that.tasksId) &&
             Objects.equals(managerId, that.managerId) &&
+            Objects.equals(hkjJewelryModelId, that.hkjJewelryModelId) &&
             Objects.equals(hkjOrderId, that.hkjOrderId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -579,13 +625,15 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             actualCost,
             qualityCheck,
             notes,
+            isDeleted,
             createdBy,
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
-            categoryId,
+            templateId,
             tasksId,
             managerId,
+            hkjJewelryModelId,
             hkjOrderId,
             distinct
         );
@@ -607,13 +655,15 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             optionalActualCost().map(f -> "actualCost=" + f + ", ").orElse("") +
             optionalQualityCheck().map(f -> "qualityCheck=" + f + ", ").orElse("") +
             optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
+            optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
+            optionalTemplateId().map(f -> "templateId=" + f + ", ").orElse("") +
             optionalTasksId().map(f -> "tasksId=" + f + ", ").orElse("") +
             optionalManagerId().map(f -> "managerId=" + f + ", ").orElse("") +
+            optionalHkjJewelryModelId().map(f -> "hkjJewelryModelId=" + f + ", ").orElse("") +
             optionalHkjOrderId().map(f -> "hkjOrderId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

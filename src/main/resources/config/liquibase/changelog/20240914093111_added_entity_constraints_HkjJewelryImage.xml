@@ -10,13 +10,6 @@
     -->
     <changeSet id="20240914093111-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="uploaded_by_id"
-                                 baseTableName="hkj_jewelry_image"
-                                 constraintName="fk_hkj_jewelry_image__uploaded_by_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="hkj_employee"
-                                 />
-
         <addForeignKeyConstraint baseColumnNames="jewelry_model_id"
                                  baseTableName="hkj_jewelry_image"
                                  constraintName="fk_hkj_jewelry_image__jewelry_model_id"

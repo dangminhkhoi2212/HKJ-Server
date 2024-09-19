@@ -15,6 +15,7 @@ import hkjTemplate from 'app/entities/hkj-template/hkj-template.reducer';
 import hkjTemplateStep from 'app/entities/hkj-template-step/hkj-template-step.reducer';
 import hkjMaterial from 'app/entities/hkj-material/hkj-material.reducer';
 import hkjMaterialUsage from 'app/entities/hkj-material-usage/hkj-material-usage.reducer';
+import hkjOrderImage from 'app/entities/hkj-order-image/hkj-order-image.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -35,6 +36,7 @@ const entitiesReducers = {
   hkjTemplateStep,
   hkjMaterial,
   hkjMaterialUsage,
+  hkjOrderImage,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 

@@ -44,6 +44,8 @@ public class HkjProjectDTO implements Serializable {
     @Size(max = 1000)
     private String notes;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -52,7 +54,7 @@ public class HkjProjectDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjCategoryDTO category;
+    private HkjTemplateDTO template;
 
     private HkjEmployeeDTO manager;
 
@@ -152,6 +154,14 @@ public class HkjProjectDTO implements Serializable {
         this.notes = notes;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -184,12 +194,12 @@ public class HkjProjectDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjCategoryDTO getCategory() {
-        return category;
+    public HkjTemplateDTO getTemplate() {
+        return template;
     }
 
-    public void setCategory(HkjCategoryDTO category) {
-        this.category = category;
+    public void setTemplate(HkjTemplateDTO template) {
+        this.template = template;
     }
 
     public HkjEmployeeDTO getManager() {
@@ -237,11 +247,12 @@ public class HkjProjectDTO implements Serializable {
             ", actualCost=" + getActualCost() +
             ", qualityCheck='" + getQualityCheck() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", category=" + getCategory() +
+            ", template=" + getTemplate() +
             ", manager=" + getManager() +
             "}";
     }

@@ -49,7 +49,8 @@ public class HkjTemplateStepAsserts {
     public static void assertHkjTemplateStepUpdatableFieldsEquals(HkjTemplateStep expected, HkjTemplateStep actual) {
         assertThat(expected)
             .as("Verify HkjTemplateStep relevant properties")
-            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()));
+            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**

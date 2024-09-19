@@ -23,6 +23,7 @@
       "unit": "Unit",
       "unitPrice": "Unit Price",
       "supplier": "Supplier",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",

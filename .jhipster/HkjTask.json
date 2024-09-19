@@ -57,6 +57,10 @@
       "fieldValidateRulesMaxlength": "1000"
     },
     {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean"
+    },
+    {
       "auditField": true,
       "autoGenerate": true,
       "columnType": "varchar(50)",

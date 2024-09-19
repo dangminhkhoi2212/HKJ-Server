@@ -78,6 +78,8 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     private StringFilter notes;
 
+    private BooleanFilter isDeleted;
+
     private StringFilter createdBy;
 
     private InstantFilter createdDate;
@@ -111,6 +113,7 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         this.priority = other.optionalPriority().map(HkjPriorityFilter::copy).orElse(null);
         this.point = other.optionalPoint().map(IntegerFilter::copy).orElse(null);
         this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
+        this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
@@ -316,6 +319,25 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     public void setNotes(StringFilter notes) {
         this.notes = notes;
+    }
+
+    public BooleanFilter getIsDeleted() {
+        return isDeleted;
+    }
+
+    public Optional<BooleanFilter> optionalIsDeleted() {
+        return Optional.ofNullable(isDeleted);
+    }
+
+    public BooleanFilter isDeleted() {
+        if (isDeleted == null) {
+            setIsDeleted(new BooleanFilter());
+        }
+        return isDeleted;
+    }
+
+    public void setIsDeleted(BooleanFilter isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public StringFilter getCreatedBy() {
@@ -528,6 +550,7 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             Objects.equals(priority, that.priority) &&
             Objects.equals(point, that.point) &&
             Objects.equals(notes, that.notes) &&
+            Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
@@ -554,6 +577,7 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             priority,
             point,
             notes,
+            isDeleted,
             createdBy,
             createdDate,
             lastModifiedBy,
@@ -581,6 +605,7 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             optionalPriority().map(f -> "priority=" + f + ", ").orElse("") +
             optionalPoint().map(f -> "point=" + f + ", ").orElse("") +
             optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
+            optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +

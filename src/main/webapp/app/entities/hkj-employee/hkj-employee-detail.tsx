@@ -39,6 +39,12 @@ export const HkjEmployeeDetail = () => {
           </dt>
           <dd>{hkjEmployeeEntity.notes}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjEmployee.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjEmployeeEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjEmployee.createdBy">Created By</Translate>
             </span>
@@ -74,10 +80,6 @@ export const HkjEmployeeDetail = () => {
             <Translate contentKey="serverApp.hkjEmployee.userExtra">User Extra</Translate>
           </dt>
           <dd>{hkjEmployeeEntity.userExtra ? hkjEmployeeEntity.userExtra.id : ''}</dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjEmployee.hkjHire">Hkj Hire</Translate>
-          </dt>
-          <dd>{hkjEmployeeEntity.hkjHire ? hkjEmployeeEntity.hkjHire.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-employee" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

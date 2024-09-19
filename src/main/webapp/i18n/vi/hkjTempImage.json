@@ -20,6 +20,7 @@
       "id": "ID",
       "url": "Url",
       "isUsed": "Is Used",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",

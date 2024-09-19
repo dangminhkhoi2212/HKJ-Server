@@ -61,6 +61,10 @@
       "fieldValidateRulesMaxlength": "1000"
     },
     {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean"
+    },
+    {
       "auditField": true,
       "autoGenerate": true,
       "columnType": "varchar(50)",
@@ -101,8 +105,8 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjCategory",
-      "relationshipName": "category",
+      "otherEntityName": "hkjTemplate",
+      "relationshipName": "template",
       "relationshipSide": "left",
       "relationshipType": "one-to-one"
     },

@@ -1,5 +1,6 @@
 package com.server.hkj.domain;
 
+import static com.server.hkj.domain.AssertUtils.bigDecimalCompareTo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HkjHireAsserts {
@@ -49,7 +50,16 @@ public class HkjHireAsserts {
     public static void assertHkjHireUpdatableFieldsEquals(HkjHire expected, HkjHire actual) {
         assertThat(expected)
             .as("Verify HkjHire relevant properties")
-            .satisfies(e -> assertThat(e.getHireDate()).as("check hireDate").isEqualTo(actual.getHireDate()));
+            .satisfies(e -> assertThat(e.getBeginDate()).as("check beginDate").isEqualTo(actual.getBeginDate()))
+            .satisfies(e -> assertThat(e.getEndDate()).as("check endDate").isEqualTo(actual.getEndDate()))
+            .satisfies(
+                e ->
+                    assertThat(e.getBeginSalary())
+                        .as("check beginSalary")
+                        .usingComparator(bigDecimalCompareTo)
+                        .isEqualTo(actual.getBeginSalary())
+            )
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**
@@ -61,6 +71,7 @@ public class HkjHireAsserts {
     public static void assertHkjHireUpdatableRelationshipsEquals(HkjHire expected, HkjHire actual) {
         assertThat(expected)
             .as("Verify HkjHire relationships")
-            .satisfies(e -> assertThat(e.getPosition()).as("check position").isEqualTo(actual.getPosition()));
+            .satisfies(e -> assertThat(e.getPosition()).as("check position").isEqualTo(actual.getPosition()))
+            .satisfies(e -> assertThat(e.getEmployee()).as("check employee").isEqualTo(actual.getEmployee()));
     }
 }

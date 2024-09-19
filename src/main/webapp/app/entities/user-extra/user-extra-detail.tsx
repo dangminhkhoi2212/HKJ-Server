@@ -45,6 +45,12 @@ export const UserExtraDetail = () => {
           </dt>
           <dd>{userExtraEntity.address}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.userExtra.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{userExtraEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.userExtra.createdBy">Created By</Translate>
             </span>

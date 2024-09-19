@@ -77,6 +77,7 @@ class HkjTaskImageCriteriaTest {
         hkjTaskImageCriteria.id();
         hkjTaskImageCriteria.url();
         hkjTaskImageCriteria.description();
+        hkjTaskImageCriteria.isDeleted();
         hkjTaskImageCriteria.createdBy();
         hkjTaskImageCriteria.createdDate();
         hkjTaskImageCriteria.lastModifiedBy();
@@ -91,6 +92,7 @@ class HkjTaskImageCriteriaTest {
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getUrl()) &&
                 condition.apply(criteria.getDescription()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -110,6 +112,7 @@ class HkjTaskImageCriteriaTest {
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getUrl(), copy.getUrl()) &&
                 condition.apply(criteria.getDescription(), copy.getDescription()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

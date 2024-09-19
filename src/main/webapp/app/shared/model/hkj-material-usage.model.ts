@@ -10,6 +10,7 @@ export interface IHkjMaterialUsage {
   notes?: string | null;
   weight?: number | null;
   price?: number | null;
+  isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
@@ -18,4 +19,6 @@ export interface IHkjMaterialUsage {
   hkjTask?: IHkjTask | null;
 }
 
-export const defaultValue: Readonly<IHkjMaterialUsage> = {};
+export const defaultValue: Readonly<IHkjMaterialUsage> = {
+  isDeleted: false,
+};

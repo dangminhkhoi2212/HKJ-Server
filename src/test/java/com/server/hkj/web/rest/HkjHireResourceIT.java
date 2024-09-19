@@ -2,6 +2,7 @@ package com.server.hkj.web.rest;
 
 import static com.server.hkj.domain.HkjHireAsserts.*;
 import static com.server.hkj.web.rest.TestUtil.createUpdateProxyForBean;
+import static com.server.hkj.web.rest.TestUtil.sameNumber;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -10,12 +11,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
+import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjHire;
 import com.server.hkj.domain.HkjPosition;
 import com.server.hkj.repository.HkjHireRepository;
 import com.server.hkj.service.dto.HkjHireDTO;
 import com.server.hkj.service.mapper.HkjHireMapper;
 import jakarta.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
@@ -38,8 +41,18 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class HkjHireResourceIT {
 
-    private static final Instant DEFAULT_HIRE_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_HIRE_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Instant DEFAULT_BEGIN_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_BEGIN_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Instant DEFAULT_END_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final BigDecimal DEFAULT_BEGIN_SALARY = new BigDecimal(1);
+    private static final BigDecimal UPDATED_BEGIN_SALARY = new BigDecimal(2);
+    private static final BigDecimal SMALLER_BEGIN_SALARY = new BigDecimal(1 - 1);
+
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
 
     private static final String ENTITY_API_URL = "/api/hkj-hires";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -73,7 +86,11 @@ class HkjHireResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjHire createEntity(EntityManager em) {
-        HkjHire hkjHire = new HkjHire().hireDate(DEFAULT_HIRE_DATE);
+        HkjHire hkjHire = new HkjHire()
+            .beginDate(DEFAULT_BEGIN_DATE)
+            .endDate(DEFAULT_END_DATE)
+            .beginSalary(DEFAULT_BEGIN_SALARY)
+            .isDeleted(DEFAULT_IS_DELETED);
         return hkjHire;
     }
 
@@ -84,7 +101,11 @@ class HkjHireResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjHire createUpdatedEntity(EntityManager em) {
-        HkjHire hkjHire = new HkjHire().hireDate(UPDATED_HIRE_DATE);
+        HkjHire hkjHire = new HkjHire()
+            .beginDate(UPDATED_BEGIN_DATE)
+            .endDate(UPDATED_END_DATE)
+            .beginSalary(UPDATED_BEGIN_SALARY)
+            .isDeleted(UPDATED_IS_DELETED);
         return hkjHire;
     }
 
@@ -147,10 +168,27 @@ class HkjHireResourceIT {
 
     @Test
     @Transactional
-    void checkHireDateIsRequired() throws Exception {
+    void checkBeginDateIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        hkjHire.setHireDate(null);
+        hkjHire.setBeginDate(null);
+
+        // Create the HkjHire, which fails.
+        HkjHireDTO hkjHireDTO = hkjHireMapper.toDto(hkjHire);
+
+        restHkjHireMockMvc
+            .perform(post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(hkjHireDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkEndDateIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        hkjHire.setEndDate(null);
 
         // Create the HkjHire, which fails.
         HkjHireDTO hkjHireDTO = hkjHireMapper.toDto(hkjHire);
@@ -174,7 +212,10 @@ class HkjHireResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjHire.getId().intValue())))
-            .andExpect(jsonPath("$.[*].hireDate").value(hasItem(DEFAULT_HIRE_DATE.toString())));
+            .andExpect(jsonPath("$.[*].beginDate").value(hasItem(DEFAULT_BEGIN_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].beginSalary").value(hasItem(sameNumber(DEFAULT_BEGIN_SALARY))))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -189,7 +230,10 @@ class HkjHireResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjHire.getId().intValue()))
-            .andExpect(jsonPath("$.hireDate").value(DEFAULT_HIRE_DATE.toString()));
+            .andExpect(jsonPath("$.beginDate").value(DEFAULT_BEGIN_DATE.toString()))
+            .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
+            .andExpect(jsonPath("$.beginSalary").value(sameNumber(DEFAULT_BEGIN_SALARY)))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -209,32 +253,171 @@ class HkjHireResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjHiresByHireDateIsEqualToSomething() throws Exception {
+    void getAllHkjHiresByBeginDateIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
 
-        // Get all the hkjHireList where hireDate equals to
-        defaultHkjHireFiltering("hireDate.equals=" + DEFAULT_HIRE_DATE, "hireDate.equals=" + UPDATED_HIRE_DATE);
+        // Get all the hkjHireList where beginDate equals to
+        defaultHkjHireFiltering("beginDate.equals=" + DEFAULT_BEGIN_DATE, "beginDate.equals=" + UPDATED_BEGIN_DATE);
     }
 
     @Test
     @Transactional
-    void getAllHkjHiresByHireDateIsInShouldWork() throws Exception {
+    void getAllHkjHiresByBeginDateIsInShouldWork() throws Exception {
         // Initialize the database
         insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
 
-        // Get all the hkjHireList where hireDate in
-        defaultHkjHireFiltering("hireDate.in=" + DEFAULT_HIRE_DATE + "," + UPDATED_HIRE_DATE, "hireDate.in=" + UPDATED_HIRE_DATE);
+        // Get all the hkjHireList where beginDate in
+        defaultHkjHireFiltering("beginDate.in=" + DEFAULT_BEGIN_DATE + "," + UPDATED_BEGIN_DATE, "beginDate.in=" + UPDATED_BEGIN_DATE);
     }
 
     @Test
     @Transactional
-    void getAllHkjHiresByHireDateIsNullOrNotNull() throws Exception {
+    void getAllHkjHiresByBeginDateIsNullOrNotNull() throws Exception {
         // Initialize the database
         insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
 
-        // Get all the hkjHireList where hireDate is not null
-        defaultHkjHireFiltering("hireDate.specified=true", "hireDate.specified=false");
+        // Get all the hkjHireList where beginDate is not null
+        defaultHkjHireFiltering("beginDate.specified=true", "beginDate.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByEndDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where endDate equals to
+        defaultHkjHireFiltering("endDate.equals=" + DEFAULT_END_DATE, "endDate.equals=" + UPDATED_END_DATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByEndDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where endDate in
+        defaultHkjHireFiltering("endDate.in=" + DEFAULT_END_DATE + "," + UPDATED_END_DATE, "endDate.in=" + UPDATED_END_DATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByEndDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where endDate is not null
+        defaultHkjHireFiltering("endDate.specified=true", "endDate.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByBeginSalaryIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where beginSalary equals to
+        defaultHkjHireFiltering("beginSalary.equals=" + DEFAULT_BEGIN_SALARY, "beginSalary.equals=" + UPDATED_BEGIN_SALARY);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByBeginSalaryIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where beginSalary in
+        defaultHkjHireFiltering(
+            "beginSalary.in=" + DEFAULT_BEGIN_SALARY + "," + UPDATED_BEGIN_SALARY,
+            "beginSalary.in=" + UPDATED_BEGIN_SALARY
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByBeginSalaryIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where beginSalary is not null
+        defaultHkjHireFiltering("beginSalary.specified=true", "beginSalary.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByBeginSalaryIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where beginSalary is greater than or equal to
+        defaultHkjHireFiltering(
+            "beginSalary.greaterThanOrEqual=" + DEFAULT_BEGIN_SALARY,
+            "beginSalary.greaterThanOrEqual=" + UPDATED_BEGIN_SALARY
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByBeginSalaryIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where beginSalary is less than or equal to
+        defaultHkjHireFiltering(
+            "beginSalary.lessThanOrEqual=" + DEFAULT_BEGIN_SALARY,
+            "beginSalary.lessThanOrEqual=" + SMALLER_BEGIN_SALARY
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByBeginSalaryIsLessThanSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where beginSalary is less than
+        defaultHkjHireFiltering("beginSalary.lessThan=" + UPDATED_BEGIN_SALARY, "beginSalary.lessThan=" + DEFAULT_BEGIN_SALARY);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByBeginSalaryIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where beginSalary is greater than
+        defaultHkjHireFiltering("beginSalary.greaterThan=" + SMALLER_BEGIN_SALARY, "beginSalary.greaterThan=" + DEFAULT_BEGIN_SALARY);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where isDeleted equals to
+        defaultHkjHireFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where isDeleted in
+        defaultHkjHireFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where isDeleted is not null
+        defaultHkjHireFiltering("isDeleted.specified=true", "isDeleted.specified=false");
     }
 
     @Test
@@ -259,6 +442,28 @@ class HkjHireResourceIT {
         defaultHkjHireShouldNotBeFound("positionId.equals=" + (positionId + 1));
     }
 
+    @Test
+    @Transactional
+    void getAllHkjHiresByEmployeeIsEqualToSomething() throws Exception {
+        HkjEmployee employee;
+        if (TestUtil.findAll(em, HkjEmployee.class).isEmpty()) {
+            hkjHireRepository.saveAndFlush(hkjHire);
+            employee = HkjEmployeeResourceIT.createEntity(em);
+        } else {
+            employee = TestUtil.findAll(em, HkjEmployee.class).get(0);
+        }
+        em.persist(employee);
+        em.flush();
+        hkjHire.setEmployee(employee);
+        hkjHireRepository.saveAndFlush(hkjHire);
+        Long employeeId = employee.getId();
+        // Get all the hkjHireList where employee equals to employeeId
+        defaultHkjHireShouldBeFound("employeeId.equals=" + employeeId);
+
+        // Get all the hkjHireList where employee equals to (employeeId + 1)
+        defaultHkjHireShouldNotBeFound("employeeId.equals=" + (employeeId + 1));
+    }
+
     private void defaultHkjHireFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjHireShouldBeFound(shouldBeFound);
         defaultHkjHireShouldNotBeFound(shouldNotBeFound);
@@ -273,7 +478,10 @@ class HkjHireResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjHire.getId().intValue())))
-            .andExpect(jsonPath("$.[*].hireDate").value(hasItem(DEFAULT_HIRE_DATE.toString())));
+            .andExpect(jsonPath("$.[*].beginDate").value(hasItem(DEFAULT_BEGIN_DATE.toString())))
+            .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
+            .andExpect(jsonPath("$.[*].beginSalary").value(hasItem(sameNumber(DEFAULT_BEGIN_SALARY))))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjHireMockMvc
@@ -321,7 +529,11 @@ class HkjHireResourceIT {
         HkjHire updatedHkjHire = hkjHireRepository.findById(hkjHire.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjHire are not directly saved in db
         em.detach(updatedHkjHire);
-        updatedHkjHire.hireDate(UPDATED_HIRE_DATE);
+        updatedHkjHire
+            .beginDate(UPDATED_BEGIN_DATE)
+            .endDate(UPDATED_END_DATE)
+            .beginSalary(UPDATED_BEGIN_SALARY)
+            .isDeleted(UPDATED_IS_DELETED);
         HkjHireDTO hkjHireDTO = hkjHireMapper.toDto(updatedHkjHire);
 
         restHkjHireMockMvc
@@ -414,6 +626,8 @@ class HkjHireResourceIT {
         HkjHire partialUpdatedHkjHire = new HkjHire();
         partialUpdatedHkjHire.setId(hkjHire.getId());
 
+        partialUpdatedHkjHire.isDeleted(UPDATED_IS_DELETED);
+
         restHkjHireMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedHkjHire.getId())
@@ -441,7 +655,11 @@ class HkjHireResourceIT {
         HkjHire partialUpdatedHkjHire = new HkjHire();
         partialUpdatedHkjHire.setId(hkjHire.getId());
 
-        partialUpdatedHkjHire.hireDate(UPDATED_HIRE_DATE);
+        partialUpdatedHkjHire
+            .beginDate(UPDATED_BEGIN_DATE)
+            .endDate(UPDATED_END_DATE)
+            .beginSalary(UPDATED_BEGIN_SALARY)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjHireMockMvc
             .perform(

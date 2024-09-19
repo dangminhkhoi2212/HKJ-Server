@@ -82,6 +82,9 @@ public class HkjTempImageQueryService extends QueryService<HkjTempImage> {
             if (criteria.getIsUsed() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsUsed(), HkjTempImage_.isUsed));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjTempImage_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjTempImage_.createdBy));
             }

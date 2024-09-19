@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IHkjPosition } from 'app/shared/model/hkj-position.model';
 import { getEntities as getHkjPositions } from 'app/entities/hkj-position/hkj-position.reducer';
+import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
+import { getEntities as getHkjEmployees } from 'app/entities/hkj-employee/hkj-employee.reducer';
 import { IHkjHire } from 'app/shared/model/hkj-hire.model';
 import { getEntity, updateEntity, createEntity, reset } from './hkj-hire.reducer';
 
@@ -22,6 +24,7 @@ export const HkjHireUpdate = () => {
   const isNew = id === undefined;
 
   const hkjPositions = useAppSelector(state => state.hkjPosition.entities);
+  const hkjEmployees = useAppSelector(state => state.hkjEmployee.entities);
   const hkjHireEntity = useAppSelector(state => state.hkjHire.entity);
   const loading = useAppSelector(state => state.hkjHire.loading);
   const updating = useAppSelector(state => state.hkjHire.updating);
@@ -39,6 +42,7 @@ export const HkjHireUpdate = () => {
     }
 
     dispatch(getHkjPositions({}));
+    dispatch(getHkjEmployees({}));
   }, []);
 
   useEffect(() => {
@@ -52,7 +56,11 @@ export const HkjHireUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
-    values.hireDate = convertDateTimeToServer(values.hireDate);
+    values.beginDate = convertDateTimeToServer(values.beginDate);
+    values.endDate = convertDateTimeToServer(values.endDate);
+    if (values.beginSalary !== undefined && typeof values.beginSalary !== 'number') {
+      values.beginSalary = Number(values.beginSalary);
+    }
     values.createdDate = convertDateTimeToServer(values.createdDate);
     values.lastModifiedDate = convertDateTimeToServer(values.lastModifiedDate);
 
@@ -60,6 +68,7 @@ export const HkjHireUpdate = () => {
       ...hkjHireEntity,
       ...values,
       position: hkjPositions.find(it => it.id.toString() === values.position?.toString()),
+      employee: hkjEmployees.find(it => it.id.toString() === values.employee?.toString()),
     };
 
     if (isNew) {
@@ -72,16 +81,19 @@ export const HkjHireUpdate = () => {
   const defaultValues = () =>
     isNew
       ? {
-          hireDate: displayDefaultDateTime(),
+          beginDate: displayDefaultDateTime(),
+          endDate: displayDefaultDateTime(),
           createdDate: displayDefaultDateTime(),
           lastModifiedDate: displayDefaultDateTime(),
         }
       : {
           ...hkjHireEntity,
-          hireDate: convertDateTimeFromServer(hkjHireEntity.hireDate),
+          beginDate: convertDateTimeFromServer(hkjHireEntity.beginDate),
+          endDate: convertDateTimeFromServer(hkjHireEntity.endDate),
           createdDate: convertDateTimeFromServer(hkjHireEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjHireEntity.lastModifiedDate),
           position: hkjHireEntity?.position?.id,
+          employee: hkjHireEntity?.employee?.id,
         };
 
   return (
@@ -110,15 +122,41 @@ export const HkjHireUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('serverApp.hkjHire.hireDate')}
-                id="hkj-hire-hireDate"
-                name="hireDate"
-                data-cy="hireDate"
+                label={translate('serverApp.hkjHire.beginDate')}
+                id="hkj-hire-beginDate"
+                name="beginDate"
+                data-cy="beginDate"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                 }}
+              />
+              <ValidatedField
+                label={translate('serverApp.hkjHire.endDate')}
+                id="hkj-hire-endDate"
+                name="endDate"
+                data-cy="endDate"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+              />
+              <ValidatedField
+                label={translate('serverApp.hkjHire.beginSalary')}
+                id="hkj-hire-beginSalary"
+                name="beginSalary"
+                data-cy="beginSalary"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('serverApp.hkjHire.isDeleted')}
+                id="hkj-hire-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
               />
               <ValidatedField
                 label={translate('serverApp.hkjHire.createdBy')}
@@ -160,6 +198,22 @@ export const HkjHireUpdate = () => {
                 <option value="" key="0" />
                 {hkjPositions
                   ? hkjPositions.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-hire-employee"
+                name="employee"
+                data-cy="employee"
+                label={translate('serverApp.hkjHire.employee')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjEmployees
+                  ? hkjEmployees.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

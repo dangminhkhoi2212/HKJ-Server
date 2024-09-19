@@ -83,6 +83,9 @@ public class HkjTaskImageQueryService extends QueryService<HkjTaskImage> {
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), HkjTaskImage_.description));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjTaskImage_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjTaskImage_.createdBy));
             }

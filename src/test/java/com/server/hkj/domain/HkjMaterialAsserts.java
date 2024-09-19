@@ -57,7 +57,8 @@ public class HkjMaterialAsserts {
                 e ->
                     assertThat(e.getUnitPrice()).as("check unitPrice").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getUnitPrice())
             )
-            .satisfies(e -> assertThat(e.getSupplier()).as("check supplier").isEqualTo(actual.getSupplier()));
+            .satisfies(e -> assertThat(e.getSupplier()).as("check supplier").isEqualTo(actual.getSupplier()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**

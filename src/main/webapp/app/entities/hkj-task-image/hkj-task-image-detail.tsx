@@ -45,6 +45,12 @@ export const HkjTaskImageDetail = () => {
           </dt>
           <dd>{hkjTaskImageEntity.description}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjTaskImage.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjTaskImageEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjTaskImage.createdBy">Created By</Translate>
             </span>

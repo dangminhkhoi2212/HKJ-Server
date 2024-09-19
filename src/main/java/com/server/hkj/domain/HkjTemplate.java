@@ -31,6 +31,9 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
     @Column(name = "name")
     private String name;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -38,7 +41,7 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "hkjProject", "hkjTemplate" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "hkjTemplate" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjCategory category;
@@ -47,6 +50,14 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "hkjTask", "hkjTemplate" }, allowSetters = true)
     private Set<HkjTemplateStep> steps = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
+    private HkjEmployee creater;
+
+    @JsonIgnoreProperties(value = { "template", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "template")
+    private HkjProject hkjProject;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -74,6 +85,19 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjTemplate isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -161,6 +185,38 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
         return this;
     }
 
+    public HkjEmployee getCreater() {
+        return this.creater;
+    }
+
+    public void setCreater(HkjEmployee hkjEmployee) {
+        this.creater = hkjEmployee;
+    }
+
+    public HkjTemplate creater(HkjEmployee hkjEmployee) {
+        this.setCreater(hkjEmployee);
+        return this;
+    }
+
+    public HkjProject getHkjProject() {
+        return this.hkjProject;
+    }
+
+    public void setHkjProject(HkjProject hkjProject) {
+        if (this.hkjProject != null) {
+            this.hkjProject.setTemplate(null);
+        }
+        if (hkjProject != null) {
+            hkjProject.setTemplate(this);
+        }
+        this.hkjProject = hkjProject;
+    }
+
+    public HkjTemplate hkjProject(HkjProject hkjProject) {
+        this.setHkjProject(hkjProject);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -186,6 +242,7 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
         return "HkjTemplate{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

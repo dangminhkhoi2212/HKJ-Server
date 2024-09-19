@@ -89,6 +89,9 @@ public class HkjJewelryImageQueryService extends QueryService<HkjJewelryImage> {
             if (criteria.getTags() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTags(), HkjJewelryImage_.tags));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjJewelryImage_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjJewelryImage_.createdBy));
             }
@@ -101,14 +104,6 @@ public class HkjJewelryImageQueryService extends QueryService<HkjJewelryImage> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(
                     buildRangeSpecification(criteria.getLastModifiedDate(), HkjJewelryImage_.lastModifiedDate)
-                );
-            }
-            if (criteria.getUploadedById() != null) {
-                specification = specification.and(
-                    buildSpecification(
-                        criteria.getUploadedById(),
-                        root -> root.join(HkjJewelryImage_.uploadedBy, JoinType.LEFT).get(HkjEmployee_.id)
-                    )
                 );
             }
             if (criteria.getJewelryModelId() != null) {

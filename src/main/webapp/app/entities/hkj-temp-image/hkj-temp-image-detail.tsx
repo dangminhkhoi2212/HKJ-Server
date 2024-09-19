@@ -45,6 +45,12 @@ export const HkjTempImageDetail = () => {
           </dt>
           <dd>{hkjTempImageEntity.isUsed ? 'true' : 'false'}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjTempImage.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjTempImageEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjTempImage.createdBy">Created By</Translate>
             </span>

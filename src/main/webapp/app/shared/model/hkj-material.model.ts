@@ -7,10 +7,13 @@ export interface IHkjMaterial {
   unit?: string;
   unitPrice?: number | null;
   supplier?: string | null;
+  isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
 }
 
-export const defaultValue: Readonly<IHkjMaterial> = {};
+export const defaultValue: Readonly<IHkjMaterial> = {
+  isDeleted: false,
+};

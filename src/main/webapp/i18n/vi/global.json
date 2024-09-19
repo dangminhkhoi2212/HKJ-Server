@@ -24,7 +24,8 @@
         "hkjTemplate": "Hkj Template",
         "hkjTemplateStep": "Hkj Template Step",
         "hkjMaterial": "Hkj Material",
-        "hkjMaterialUsage": "Hkj Material Usage"
+        "hkjMaterialUsage": "Hkj Material Usage",
+        "hkjOrderImage": "Hkj Order Image"
       },
       "account": {
         "main": "Tài khoản",

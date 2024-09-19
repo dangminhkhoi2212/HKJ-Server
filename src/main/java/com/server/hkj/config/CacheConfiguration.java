@@ -54,7 +54,6 @@ public class CacheConfiguration {
             createCache(cm, com.server.hkj.domain.UserExtra.class.getName());
             createCache(cm, com.server.hkj.domain.HkjPosition.class.getName());
             createCache(cm, com.server.hkj.domain.HkjHire.class.getName());
-            createCache(cm, com.server.hkj.domain.HkjHire.class.getName() + ".employees");
             createCache(cm, com.server.hkj.domain.HkjSalary.class.getName());
             createCache(cm, com.server.hkj.domain.HkjEmployee.class.getName());
             createCache(cm, com.server.hkj.domain.HkjEmployee.class.getName() + ".salarys");
@@ -70,11 +69,13 @@ public class CacheConfiguration {
             createCache(cm, com.server.hkj.domain.HkjTaskImage.class.getName());
             createCache(cm, com.server.hkj.domain.HkjTempImage.class.getName());
             createCache(cm, com.server.hkj.domain.HkjOrder.class.getName());
+            createCache(cm, com.server.hkj.domain.HkjOrder.class.getName() + ".orderImages");
             createCache(cm, com.server.hkj.domain.HkjTemplate.class.getName());
             createCache(cm, com.server.hkj.domain.HkjTemplate.class.getName() + ".steps");
             createCache(cm, com.server.hkj.domain.HkjTemplateStep.class.getName());
             createCache(cm, com.server.hkj.domain.HkjMaterial.class.getName());
             createCache(cm, com.server.hkj.domain.HkjMaterialUsage.class.getName());
+            createCache(cm, com.server.hkj.domain.HkjOrderImage.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

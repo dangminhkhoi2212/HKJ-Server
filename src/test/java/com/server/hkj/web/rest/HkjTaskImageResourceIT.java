@@ -42,6 +42,9 @@ class HkjTaskImageResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-task-images";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -74,7 +77,7 @@ class HkjTaskImageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjTaskImage createEntity(EntityManager em) {
-        HkjTaskImage hkjTaskImage = new HkjTaskImage().url(DEFAULT_URL).description(DEFAULT_DESCRIPTION);
+        HkjTaskImage hkjTaskImage = new HkjTaskImage().url(DEFAULT_URL).description(DEFAULT_DESCRIPTION).isDeleted(DEFAULT_IS_DELETED);
         return hkjTaskImage;
     }
 
@@ -85,7 +88,7 @@ class HkjTaskImageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjTaskImage createUpdatedEntity(EntityManager em) {
-        HkjTaskImage hkjTaskImage = new HkjTaskImage().url(UPDATED_URL).description(UPDATED_DESCRIPTION);
+        HkjTaskImage hkjTaskImage = new HkjTaskImage().url(UPDATED_URL).description(UPDATED_DESCRIPTION).isDeleted(UPDATED_IS_DELETED);
         return hkjTaskImage;
     }
 
@@ -180,7 +183,8 @@ class HkjTaskImageResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTaskImage.getId().intValue())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -196,7 +200,8 @@ class HkjTaskImageResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjTaskImage.getId().intValue()))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -322,6 +327,36 @@ class HkjTaskImageResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjTaskImagesByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjTaskImage = hkjTaskImageRepository.saveAndFlush(hkjTaskImage);
+
+        // Get all the hkjTaskImageList where isDeleted equals to
+        defaultHkjTaskImageFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTaskImagesByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjTaskImage = hkjTaskImageRepository.saveAndFlush(hkjTaskImage);
+
+        // Get all the hkjTaskImageList where isDeleted in
+        defaultHkjTaskImageFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTaskImagesByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjTaskImage = hkjTaskImageRepository.saveAndFlush(hkjTaskImage);
+
+        // Get all the hkjTaskImageList where isDeleted is not null
+        defaultHkjTaskImageFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjTaskImagesByHkjTaskIsEqualToSomething() throws Exception {
         HkjTask hkjTask;
         if (TestUtil.findAll(em, HkjTask.class).isEmpty()) {
@@ -357,7 +392,8 @@ class HkjTaskImageResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTaskImage.getId().intValue())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjTaskImageMockMvc
@@ -405,7 +441,7 @@ class HkjTaskImageResourceIT {
         HkjTaskImage updatedHkjTaskImage = hkjTaskImageRepository.findById(hkjTaskImage.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjTaskImage are not directly saved in db
         em.detach(updatedHkjTaskImage);
-        updatedHkjTaskImage.url(UPDATED_URL).description(UPDATED_DESCRIPTION);
+        updatedHkjTaskImage.url(UPDATED_URL).description(UPDATED_DESCRIPTION).isDeleted(UPDATED_IS_DELETED);
         HkjTaskImageDTO hkjTaskImageDTO = hkjTaskImageMapper.toDto(updatedHkjTaskImage);
 
         restHkjTaskImageMockMvc
@@ -500,7 +536,7 @@ class HkjTaskImageResourceIT {
         HkjTaskImage partialUpdatedHkjTaskImage = new HkjTaskImage();
         partialUpdatedHkjTaskImage.setId(hkjTaskImage.getId());
 
-        partialUpdatedHkjTaskImage.url(UPDATED_URL).description(UPDATED_DESCRIPTION);
+        partialUpdatedHkjTaskImage.url(UPDATED_URL).description(UPDATED_DESCRIPTION).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTaskImageMockMvc
             .perform(
@@ -532,7 +568,7 @@ class HkjTaskImageResourceIT {
         HkjTaskImage partialUpdatedHkjTaskImage = new HkjTaskImage();
         partialUpdatedHkjTaskImage.setId(hkjTaskImage.getId());
 
-        partialUpdatedHkjTaskImage.url(UPDATED_URL).description(UPDATED_DESCRIPTION);
+        partialUpdatedHkjTaskImage.url(UPDATED_URL).description(UPDATED_DESCRIPTION).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTaskImageMockMvc
             .perform(

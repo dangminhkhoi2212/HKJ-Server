@@ -38,6 +38,9 @@ class HkjPositionResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-positions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -70,7 +73,7 @@ class HkjPositionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjPosition createEntity(EntityManager em) {
-        HkjPosition hkjPosition = new HkjPosition().name(DEFAULT_NAME);
+        HkjPosition hkjPosition = new HkjPosition().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
         return hkjPosition;
     }
 
@@ -81,7 +84,7 @@ class HkjPositionResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjPosition createUpdatedEntity(EntityManager em) {
-        HkjPosition hkjPosition = new HkjPosition().name(UPDATED_NAME);
+        HkjPosition hkjPosition = new HkjPosition().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
         return hkjPosition;
     }
 
@@ -175,7 +178,8 @@ class HkjPositionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjPosition.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -190,7 +194,8 @@ class HkjPositionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjPosition.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -258,6 +263,36 @@ class HkjPositionResourceIT {
         defaultHkjPositionFiltering("name.doesNotContain=" + UPDATED_NAME, "name.doesNotContain=" + DEFAULT_NAME);
     }
 
+    @Test
+    @Transactional
+    void getAllHkjPositionsByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjPosition = hkjPositionRepository.saveAndFlush(hkjPosition);
+
+        // Get all the hkjPositionList where isDeleted equals to
+        defaultHkjPositionFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjPositionsByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjPosition = hkjPositionRepository.saveAndFlush(hkjPosition);
+
+        // Get all the hkjPositionList where isDeleted in
+        defaultHkjPositionFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjPositionsByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjPosition = hkjPositionRepository.saveAndFlush(hkjPosition);
+
+        // Get all the hkjPositionList where isDeleted is not null
+        defaultHkjPositionFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
     private void defaultHkjPositionFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjPositionShouldBeFound(shouldBeFound);
         defaultHkjPositionShouldNotBeFound(shouldNotBeFound);
@@ -272,7 +307,8 @@ class HkjPositionResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjPosition.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjPositionMockMvc
@@ -320,7 +356,7 @@ class HkjPositionResourceIT {
         HkjPosition updatedHkjPosition = hkjPositionRepository.findById(hkjPosition.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjPosition are not directly saved in db
         em.detach(updatedHkjPosition);
-        updatedHkjPosition.name(UPDATED_NAME);
+        updatedHkjPosition.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
         HkjPositionDTO hkjPositionDTO = hkjPositionMapper.toDto(updatedHkjPosition);
 
         restHkjPositionMockMvc
@@ -413,6 +449,8 @@ class HkjPositionResourceIT {
         HkjPosition partialUpdatedHkjPosition = new HkjPosition();
         partialUpdatedHkjPosition.setId(hkjPosition.getId());
 
+        partialUpdatedHkjPosition.isDeleted(UPDATED_IS_DELETED);
+
         restHkjPositionMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedHkjPosition.getId())
@@ -443,7 +481,7 @@ class HkjPositionResourceIT {
         HkjPosition partialUpdatedHkjPosition = new HkjPosition();
         partialUpdatedHkjPosition.setId(hkjPosition.getId());
 
-        partialUpdatedHkjPosition.name(UPDATED_NAME);
+        partialUpdatedHkjPosition.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
 
         restHkjPositionMockMvc
             .perform(

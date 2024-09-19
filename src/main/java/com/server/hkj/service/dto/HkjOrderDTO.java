@@ -39,6 +39,8 @@ public class HkjOrderDTO implements Serializable {
     @Size(max = 1000)
     private String notes;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -49,9 +51,9 @@ public class HkjOrderDTO implements Serializable {
 
     private HkjProjectDTO project;
 
-    private HkjJewelryModelDTO customOrder;
-
     private UserExtraDTO customer;
+
+    private HkjJewelryModelDTO jewelry;
 
     public Long getId() {
         return id;
@@ -133,6 +135,14 @@ public class HkjOrderDTO implements Serializable {
         this.notes = notes;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -173,20 +183,20 @@ public class HkjOrderDTO implements Serializable {
         this.project = project;
     }
 
-    public HkjJewelryModelDTO getCustomOrder() {
-        return customOrder;
-    }
-
-    public void setCustomOrder(HkjJewelryModelDTO customOrder) {
-        this.customOrder = customOrder;
-    }
-
     public UserExtraDTO getCustomer() {
         return customer;
     }
 
     public void setCustomer(UserExtraDTO customer) {
         this.customer = customer;
+    }
+
+    public HkjJewelryModelDTO getJewelry() {
+        return jewelry;
+    }
+
+    public void setJewelry(HkjJewelryModelDTO jewelry) {
+        this.jewelry = jewelry;
     }
 
     @Override
@@ -224,13 +234,14 @@ public class HkjOrderDTO implements Serializable {
             ", totalPrice=" + getTotalPrice() +
             ", depositAmount=" + getDepositAmount() +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", project=" + getProject() +
-            ", customOrder=" + getCustomOrder() +
             ", customer=" + getCustomer() +
+            ", jewelry=" + getJewelry() +
             "}";
     }
 }

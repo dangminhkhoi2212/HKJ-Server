@@ -70,6 +70,9 @@ class HkjTaskResourceIT {
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-tasks";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -111,7 +114,8 @@ class HkjTaskResourceIT {
             .status(DEFAULT_STATUS)
             .priority(DEFAULT_PRIORITY)
             .point(DEFAULT_POINT)
-            .notes(DEFAULT_NOTES);
+            .notes(DEFAULT_NOTES)
+            .isDeleted(DEFAULT_IS_DELETED);
         return hkjTask;
     }
 
@@ -131,7 +135,8 @@ class HkjTaskResourceIT {
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
             .point(UPDATED_POINT)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
         return hkjTask;
     }
 
@@ -297,7 +302,8 @@ class HkjTaskResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY.toString())))
             .andExpect(jsonPath("$.[*].point").value(hasItem(DEFAULT_POINT)))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)));
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -320,7 +326,8 @@ class HkjTaskResourceIT {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.priority").value(DEFAULT_PRIORITY.toString()))
             .andExpect(jsonPath("$.point").value(DEFAULT_POINT))
-            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES));
+            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -719,6 +726,36 @@ class HkjTaskResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjTasksByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
+
+        // Get all the hkjTaskList where isDeleted equals to
+        defaultHkjTaskFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTasksByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
+
+        // Get all the hkjTaskList where isDeleted in
+        defaultHkjTaskFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTasksByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
+
+        // Get all the hkjTaskList where isDeleted is not null
+        defaultHkjTaskFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjTasksByTemplateStepIsEqualToSomething() throws Exception {
         HkjTemplateStep templateStep;
         if (TestUtil.findAll(em, HkjTemplateStep.class).isEmpty()) {
@@ -805,7 +842,8 @@ class HkjTaskResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY.toString())))
             .andExpect(jsonPath("$.[*].point").value(hasItem(DEFAULT_POINT)))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)));
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjTaskMockMvc
@@ -862,7 +900,8 @@ class HkjTaskResourceIT {
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
             .point(UPDATED_POINT)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
         HkjTaskDTO hkjTaskDTO = hkjTaskMapper.toDto(updatedHkjTask);
 
         restHkjTaskMockMvc
@@ -993,7 +1032,8 @@ class HkjTaskResourceIT {
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
             .point(UPDATED_POINT)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjTaskMockMvc
             .perform(

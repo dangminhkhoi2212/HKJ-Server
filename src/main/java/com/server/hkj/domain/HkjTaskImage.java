@@ -34,6 +34,9 @@ public class HkjTaskImage extends AbstractAuditingEntity<Long> implements Serial
     @Column(name = "description")
     private String description;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -84,6 +87,19 @@ public class HkjTaskImage extends AbstractAuditingEntity<Long> implements Serial
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjTaskImage isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -166,6 +182,7 @@ public class HkjTaskImage extends AbstractAuditingEntity<Long> implements Serial
             "id=" + getId() +
             ", url='" + getUrl() + "'" +
             ", description='" + getDescription() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

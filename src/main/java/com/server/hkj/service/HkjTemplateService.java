@@ -4,7 +4,11 @@ import com.server.hkj.domain.HkjTemplate;
 import com.server.hkj.repository.HkjTemplateRepository;
 import com.server.hkj.service.dto.HkjTemplateDTO;
 import com.server.hkj.service.mapper.HkjTemplateMapper;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -73,6 +77,19 @@ public class HkjTemplateService {
             })
             .map(hkjTemplateRepository::save)
             .map(hkjTemplateMapper::toDto);
+    }
+
+    /**
+     *  Get all the hkjTemplates where HkjProject is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<HkjTemplateDTO> findAllWhereHkjProjectIsNull() {
+        log.debug("Request to get all hkjTemplates where HkjProject is null");
+        return StreamSupport.stream(hkjTemplateRepository.findAll().spliterator(), false)
+            .filter(hkjTemplate -> hkjTemplate.getHkjProject() == null)
+            .map(hkjTemplateMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

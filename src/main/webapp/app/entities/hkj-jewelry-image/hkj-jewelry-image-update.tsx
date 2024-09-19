@@ -8,8 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
-import { getEntities as getHkjEmployees } from 'app/entities/hkj-employee/hkj-employee.reducer';
 import { IHkjJewelryModel } from 'app/shared/model/hkj-jewelry-model.model';
 import { getEntities as getHkjJewelryModels } from 'app/entities/hkj-jewelry-model/hkj-jewelry-model.reducer';
 import { IHkjJewelryImage } from 'app/shared/model/hkj-jewelry-image.model';
@@ -23,7 +21,6 @@ export const HkjJewelryImageUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const hkjEmployees = useAppSelector(state => state.hkjEmployee.entities);
   const hkjJewelryModels = useAppSelector(state => state.hkjJewelryModel.entities);
   const hkjJewelryImageEntity = useAppSelector(state => state.hkjJewelryImage.entity);
   const loading = useAppSelector(state => state.hkjJewelryImage.loading);
@@ -41,7 +38,6 @@ export const HkjJewelryImageUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getHkjEmployees({}));
     dispatch(getHkjJewelryModels({}));
   }, []);
 
@@ -62,7 +58,6 @@ export const HkjJewelryImageUpdate = () => {
     const entity = {
       ...hkjJewelryImageEntity,
       ...values,
-      uploadedBy: hkjEmployees.find(it => it.id.toString() === values.uploadedBy?.toString()),
       jewelryModel: hkjJewelryModels.find(it => it.id.toString() === values.jewelryModel?.toString()),
     };
 
@@ -83,7 +78,6 @@ export const HkjJewelryImageUpdate = () => {
           ...hkjJewelryImageEntity,
           createdDate: convertDateTimeFromServer(hkjJewelryImageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjJewelryImageEntity.lastModifiedDate),
-          uploadedBy: hkjJewelryImageEntity?.uploadedBy?.id,
           jewelryModel: hkjJewelryImageEntity?.jewelryModel?.id,
         };
 
@@ -145,6 +139,14 @@ export const HkjJewelryImageUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjJewelryImage.isDeleted')}
+                id="hkj-jewelry-image-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjJewelryImage.createdBy')}
                 id="hkj-jewelry-image-createdBy"
                 name="createdBy"
@@ -174,22 +176,6 @@ export const HkjJewelryImageUpdate = () => {
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
-              <ValidatedField
-                id="hkj-jewelry-image-uploadedBy"
-                name="uploadedBy"
-                data-cy="uploadedBy"
-                label={translate('serverApp.hkjJewelryImage.uploadedBy')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {hkjEmployees
-                  ? hkjEmployees.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <ValidatedField
                 id="hkj-jewelry-image-jewelryModel"
                 name="jewelryModel"

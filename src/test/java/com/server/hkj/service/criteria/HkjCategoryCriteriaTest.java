@@ -76,11 +76,11 @@ class HkjCategoryCriteriaTest {
     private static void setAllFilters(HkjCategoryCriteria hkjCategoryCriteria) {
         hkjCategoryCriteria.id();
         hkjCategoryCriteria.name();
+        hkjCategoryCriteria.isDeleted();
         hkjCategoryCriteria.createdBy();
         hkjCategoryCriteria.createdDate();
         hkjCategoryCriteria.lastModifiedBy();
         hkjCategoryCriteria.lastModifiedDate();
-        hkjCategoryCriteria.hkjProjectId();
         hkjCategoryCriteria.hkjTemplateId();
         hkjCategoryCriteria.distinct();
     }
@@ -90,11 +90,11 @@ class HkjCategoryCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getName()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getHkjProjectId()) &&
                 condition.apply(criteria.getHkjTemplateId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
@@ -106,11 +106,11 @@ class HkjCategoryCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getName(), copy.getName()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getHkjProjectId(), copy.getHkjProjectId()) &&
                 condition.apply(criteria.getHkjTemplateId(), copy.getHkjTemplateId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"

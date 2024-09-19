@@ -63,6 +63,9 @@ class HkjMaterialUsageResourceIT {
     private static final BigDecimal UPDATED_PRICE = new BigDecimal(2);
     private static final BigDecimal SMALLER_PRICE = new BigDecimal(1 - 1);
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-material-usages";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -101,7 +104,8 @@ class HkjMaterialUsageResourceIT {
             .usageDate(DEFAULT_USAGE_DATE)
             .notes(DEFAULT_NOTES)
             .weight(DEFAULT_WEIGHT)
-            .price(DEFAULT_PRICE);
+            .price(DEFAULT_PRICE)
+            .isDeleted(DEFAULT_IS_DELETED);
         return hkjMaterialUsage;
     }
 
@@ -118,7 +122,8 @@ class HkjMaterialUsageResourceIT {
             .usageDate(UPDATED_USAGE_DATE)
             .notes(UPDATED_NOTES)
             .weight(UPDATED_WEIGHT)
-            .price(UPDATED_PRICE);
+            .price(UPDATED_PRICE)
+            .isDeleted(UPDATED_IS_DELETED);
         return hkjMaterialUsage;
     }
 
@@ -239,7 +244,8 @@ class HkjMaterialUsageResourceIT {
             .andExpect(jsonPath("$.[*].usageDate").value(hasItem(DEFAULT_USAGE_DATE.toString())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))));
+            .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -259,7 +265,8 @@ class HkjMaterialUsageResourceIT {
             .andExpect(jsonPath("$.usageDate").value(DEFAULT_USAGE_DATE.toString()))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
             .andExpect(jsonPath("$.weight").value(DEFAULT_WEIGHT.doubleValue()))
-            .andExpect(jsonPath("$.price").value(sameNumber(DEFAULT_PRICE)));
+            .andExpect(jsonPath("$.price").value(sameNumber(DEFAULT_PRICE)))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -660,6 +667,39 @@ class HkjMaterialUsageResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjMaterialUsagesByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
+
+        // Get all the hkjMaterialUsageList where isDeleted equals to
+        defaultHkjMaterialUsageFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjMaterialUsagesByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
+
+        // Get all the hkjMaterialUsageList where isDeleted in
+        defaultHkjMaterialUsageFiltering(
+            "isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED,
+            "isDeleted.in=" + UPDATED_IS_DELETED
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjMaterialUsagesByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
+
+        // Get all the hkjMaterialUsageList where isDeleted is not null
+        defaultHkjMaterialUsageFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjMaterialUsagesByMaterialIsEqualToSomething() throws Exception {
         HkjMaterial material;
         if (TestUtil.findAll(em, HkjMaterial.class).isEmpty()) {
@@ -721,7 +761,8 @@ class HkjMaterialUsageResourceIT {
             .andExpect(jsonPath("$.[*].usageDate").value(hasItem(DEFAULT_USAGE_DATE.toString())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))));
+            .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjMaterialUsageMockMvc
@@ -775,7 +816,8 @@ class HkjMaterialUsageResourceIT {
             .usageDate(UPDATED_USAGE_DATE)
             .notes(UPDATED_NOTES)
             .weight(UPDATED_WEIGHT)
-            .price(UPDATED_PRICE);
+            .price(UPDATED_PRICE)
+            .isDeleted(UPDATED_IS_DELETED);
         HkjMaterialUsageDTO hkjMaterialUsageDTO = hkjMaterialUsageMapper.toDto(updatedHkjMaterialUsage);
 
         restHkjMaterialUsageMockMvc
@@ -870,7 +912,11 @@ class HkjMaterialUsageResourceIT {
         HkjMaterialUsage partialUpdatedHkjMaterialUsage = new HkjMaterialUsage();
         partialUpdatedHkjMaterialUsage.setId(hkjMaterialUsage.getId());
 
-        partialUpdatedHkjMaterialUsage.lossQuantity(UPDATED_LOSS_QUANTITY).usageDate(UPDATED_USAGE_DATE).notes(UPDATED_NOTES);
+        partialUpdatedHkjMaterialUsage
+            .lossQuantity(UPDATED_LOSS_QUANTITY)
+            .usageDate(UPDATED_USAGE_DATE)
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjMaterialUsageMockMvc
             .perform(
@@ -908,7 +954,8 @@ class HkjMaterialUsageResourceIT {
             .usageDate(UPDATED_USAGE_DATE)
             .notes(UPDATED_NOTES)
             .weight(UPDATED_WEIGHT)
-            .price(UPDATED_PRICE);
+            .price(UPDATED_PRICE)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjMaterialUsageMockMvc
             .perform(

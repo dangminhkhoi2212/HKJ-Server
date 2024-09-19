@@ -23,6 +23,8 @@ public class HkjJewelryImageDTO implements Serializable {
 
     private String tags;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -30,8 +32,6 @@ public class HkjJewelryImageDTO implements Serializable {
     private String lastModifiedBy;
 
     private Instant lastModifiedDate;
-
-    private HkjEmployeeDTO uploadedBy;
 
     private HkjJewelryModelDTO jewelryModel;
 
@@ -75,6 +75,14 @@ public class HkjJewelryImageDTO implements Serializable {
         this.tags = tags;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -105,14 +113,6 @@ public class HkjJewelryImageDTO implements Serializable {
 
     public void setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
-    }
-
-    public HkjEmployeeDTO getUploadedBy() {
-        return uploadedBy;
-    }
-
-    public void setUploadedBy(HkjEmployeeDTO uploadedBy) {
-        this.uploadedBy = uploadedBy;
     }
 
     public HkjJewelryModelDTO getJewelryModel() {
@@ -153,11 +153,11 @@ public class HkjJewelryImageDTO implements Serializable {
             ", isSearchImage='" + getIsSearchImage() + "'" +
             ", description='" + getDescription() + "'" +
             ", tags='" + getTags() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", uploadedBy=" + getUploadedBy() +
             ", jewelryModel=" + getJewelryModel() +
             "}";
     }

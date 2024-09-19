@@ -1,10 +1,11 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.HkjCategoryTestSamples.*;
 import static com.server.hkj.domain.HkjEmployeeTestSamples.*;
+import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
 import static com.server.hkj.domain.HkjOrderTestSamples.*;
 import static com.server.hkj.domain.HkjProjectTestSamples.*;
 import static com.server.hkj.domain.HkjTaskTestSamples.*;
+import static com.server.hkj.domain.HkjTemplateTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
@@ -29,15 +30,15 @@ class HkjProjectTest {
     }
 
     @Test
-    void categoryTest() {
+    void templateTest() {
         HkjProject hkjProject = getHkjProjectRandomSampleGenerator();
-        HkjCategory hkjCategoryBack = getHkjCategoryRandomSampleGenerator();
+        HkjTemplate hkjTemplateBack = getHkjTemplateRandomSampleGenerator();
 
-        hkjProject.setCategory(hkjCategoryBack);
-        assertThat(hkjProject.getCategory()).isEqualTo(hkjCategoryBack);
+        hkjProject.setTemplate(hkjTemplateBack);
+        assertThat(hkjProject.getTemplate()).isEqualTo(hkjTemplateBack);
 
-        hkjProject.category(null);
-        assertThat(hkjProject.getCategory()).isNull();
+        hkjProject.template(null);
+        assertThat(hkjProject.getTemplate()).isNull();
     }
 
     @Test
@@ -72,6 +73,20 @@ class HkjProjectTest {
 
         hkjProject.manager(null);
         assertThat(hkjProject.getManager()).isNull();
+    }
+
+    @Test
+    void hkjJewelryModelTest() {
+        HkjProject hkjProject = getHkjProjectRandomSampleGenerator();
+        HkjJewelryModel hkjJewelryModelBack = getHkjJewelryModelRandomSampleGenerator();
+
+        hkjProject.setHkjJewelryModel(hkjJewelryModelBack);
+        assertThat(hkjProject.getHkjJewelryModel()).isEqualTo(hkjJewelryModelBack);
+        assertThat(hkjJewelryModelBack.getProject()).isEqualTo(hkjProject);
+
+        hkjProject.hkjJewelryModel(null);
+        assertThat(hkjProject.getHkjJewelryModel()).isNull();
+        assertThat(hkjJewelryModelBack.getProject()).isNull();
     }
 
     @Test

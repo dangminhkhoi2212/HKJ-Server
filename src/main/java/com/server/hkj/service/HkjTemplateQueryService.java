@@ -80,6 +80,9 @@ public class HkjTemplateQueryService extends QueryService<HkjTemplate> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), HkjTemplate_.name));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjTemplate_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjTemplate_.createdBy));
             }
@@ -103,6 +106,19 @@ public class HkjTemplateQueryService extends QueryService<HkjTemplate> {
             if (criteria.getStepsId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getStepsId(), root -> root.join(HkjTemplate_.steps, JoinType.LEFT).get(HkjTemplateStep_.id))
+                );
+            }
+            if (criteria.getCreaterId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getCreaterId(), root -> root.join(HkjTemplate_.creater, JoinType.LEFT).get(HkjEmployee_.id))
+                );
+            }
+            if (criteria.getHkjProjectId() != null) {
+                specification = specification.and(
+                    buildSpecification(
+                        criteria.getHkjProjectId(),
+                        root -> root.join(HkjTemplate_.hkjProject, JoinType.LEFT).get(HkjProject_.id)
+                    )
                 );
             }
         }

@@ -33,6 +33,9 @@ public class HkjEmployee extends AbstractAuditingEntity<Long> implements Seriali
     @Column(name = "notes", length = 1000)
     private String notes;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -50,8 +53,8 @@ public class HkjEmployee extends AbstractAuditingEntity<Long> implements Seriali
     @JsonIgnoreProperties(value = { "hkjEmployee" }, allowSetters = true)
     private Set<HkjSalary> salarys = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "position", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "position", "employee" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee")
     private HkjHire hkjHire;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -80,6 +83,19 @@ public class HkjEmployee extends AbstractAuditingEntity<Long> implements Seriali
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjEmployee isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -172,6 +188,12 @@ public class HkjEmployee extends AbstractAuditingEntity<Long> implements Seriali
     }
 
     public void setHkjHire(HkjHire hkjHire) {
+        if (this.hkjHire != null) {
+            this.hkjHire.setEmployee(null);
+        }
+        if (hkjHire != null) {
+            hkjHire.setEmployee(this);
+        }
         this.hkjHire = hkjHire;
     }
 
@@ -205,6 +227,7 @@ public class HkjEmployee extends AbstractAuditingEntity<Long> implements Seriali
         return "HkjEmployee{" +
             "id=" + getId() +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

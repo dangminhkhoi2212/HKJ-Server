@@ -39,6 +39,12 @@ export const HkjPositionDetail = () => {
           </dt>
           <dd>{hkjPositionEntity.name}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjPosition.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjPositionEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjPosition.createdBy">Created By</Translate>
             </span>

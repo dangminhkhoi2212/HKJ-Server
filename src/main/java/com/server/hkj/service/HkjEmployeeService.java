@@ -4,7 +4,11 @@ import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.repository.HkjEmployeeRepository;
 import com.server.hkj.service.dto.HkjEmployeeDTO;
 import com.server.hkj.service.mapper.HkjEmployeeMapper;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -73,6 +77,19 @@ public class HkjEmployeeService {
             })
             .map(hkjEmployeeRepository::save)
             .map(hkjEmployeeMapper::toDto);
+    }
+
+    /**
+     *  Get all the hkjEmployees where HkjHire is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<HkjEmployeeDTO> findAllWhereHkjHireIsNull() {
+        log.debug("Request to get all hkjEmployees where HkjHire is null");
+        return StreamSupport.stream(hkjEmployeeRepository.findAll().spliterator(), false)
+            .filter(hkjEmployee -> hkjEmployee.getHkjHire() == null)
+            .map(hkjEmployeeMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

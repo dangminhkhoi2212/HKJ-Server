@@ -57,6 +57,12 @@ export const HkjJewelryImageDetail = () => {
           </dt>
           <dd>{hkjJewelryImageEntity.tags}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjJewelryImage.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjJewelryImageEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjJewelryImage.createdBy">Created By</Translate>
             </span>
@@ -88,10 +94,6 @@ export const HkjJewelryImageDetail = () => {
               <TextFormat value={hkjJewelryImageEntity.lastModifiedDate} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjJewelryImage.uploadedBy">Uploaded By</Translate>
-          </dt>
-          <dd>{hkjJewelryImageEntity.uploadedBy ? hkjJewelryImageEntity.uploadedBy.id : ''}</dd>
           <dt>
             <Translate contentKey="serverApp.hkjJewelryImage.jewelryModel">Jewelry Model</Translate>
           </dt>

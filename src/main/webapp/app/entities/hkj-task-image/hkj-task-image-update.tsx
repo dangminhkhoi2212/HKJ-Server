@@ -124,6 +124,14 @@ export const HkjTaskImageUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjTaskImage.isDeleted')}
+                id="hkj-task-image-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjTaskImage.createdBy')}
                 id="hkj-task-image-createdBy"
                 name="createdBy"

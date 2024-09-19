@@ -151,6 +151,14 @@ export const HkjMaterialUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjMaterial.isDeleted')}
+                id="hkj-material-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjMaterial.createdBy')}
                 id="hkj-material-createdBy"
                 name="createdBy"

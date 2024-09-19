@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjCategory;
 import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjProject;
+import com.server.hkj.domain.HkjTemplate;
 import com.server.hkj.domain.enumeration.HkjOrderStatus;
 import com.server.hkj.domain.enumeration.HkjPriority;
 import com.server.hkj.repository.HkjProjectRepository;
@@ -78,6 +78,9 @@ class HkjProjectResourceIT {
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-projects";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -121,7 +124,8 @@ class HkjProjectResourceIT {
             .budget(DEFAULT_BUDGET)
             .actualCost(DEFAULT_ACTUAL_COST)
             .qualityCheck(DEFAULT_QUALITY_CHECK)
-            .notes(DEFAULT_NOTES);
+            .notes(DEFAULT_NOTES)
+            .isDeleted(DEFAULT_IS_DELETED);
         return hkjProject;
     }
 
@@ -143,7 +147,8 @@ class HkjProjectResourceIT {
             .budget(UPDATED_BUDGET)
             .actualCost(UPDATED_ACTUAL_COST)
             .qualityCheck(UPDATED_QUALITY_CHECK)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
         return hkjProject;
     }
 
@@ -294,7 +299,8 @@ class HkjProjectResourceIT {
             .andExpect(jsonPath("$.[*].budget").value(hasItem(sameNumber(DEFAULT_BUDGET))))
             .andExpect(jsonPath("$.[*].actualCost").value(hasItem(sameNumber(DEFAULT_ACTUAL_COST))))
             .andExpect(jsonPath("$.[*].qualityCheck").value(hasItem(DEFAULT_QUALITY_CHECK.booleanValue())))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)));
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -319,7 +325,8 @@ class HkjProjectResourceIT {
             .andExpect(jsonPath("$.budget").value(sameNumber(DEFAULT_BUDGET)))
             .andExpect(jsonPath("$.actualCost").value(sameNumber(DEFAULT_ACTUAL_COST)))
             .andExpect(jsonPath("$.qualityCheck").value(DEFAULT_QUALITY_CHECK.booleanValue()))
-            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES));
+            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -830,24 +837,54 @@ class HkjProjectResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjProjectsByCategoryIsEqualToSomething() throws Exception {
-        HkjCategory category;
-        if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
-            hkjProjectRepository.saveAndFlush(hkjProject);
-            category = HkjCategoryResourceIT.createEntity(em);
-        } else {
-            category = TestUtil.findAll(em, HkjCategory.class).get(0);
-        }
-        em.persist(category);
-        em.flush();
-        hkjProject.setCategory(category);
-        hkjProjectRepository.saveAndFlush(hkjProject);
-        Long categoryId = category.getId();
-        // Get all the hkjProjectList where category equals to categoryId
-        defaultHkjProjectShouldBeFound("categoryId.equals=" + categoryId);
+    void getAllHkjProjectsByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
 
-        // Get all the hkjProjectList where category equals to (categoryId + 1)
-        defaultHkjProjectShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
+        // Get all the hkjProjectList where isDeleted equals to
+        defaultHkjProjectFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
+
+        // Get all the hkjProjectList where isDeleted in
+        defaultHkjProjectFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
+
+        // Get all the hkjProjectList where isDeleted is not null
+        defaultHkjProjectFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByTemplateIsEqualToSomething() throws Exception {
+        HkjTemplate template;
+        if (TestUtil.findAll(em, HkjTemplate.class).isEmpty()) {
+            hkjProjectRepository.saveAndFlush(hkjProject);
+            template = HkjTemplateResourceIT.createEntity(em);
+        } else {
+            template = TestUtil.findAll(em, HkjTemplate.class).get(0);
+        }
+        em.persist(template);
+        em.flush();
+        hkjProject.setTemplate(template);
+        hkjProjectRepository.saveAndFlush(hkjProject);
+        Long templateId = template.getId();
+        // Get all the hkjProjectList where template equals to templateId
+        defaultHkjProjectShouldBeFound("templateId.equals=" + templateId);
+
+        // Get all the hkjProjectList where template equals to (templateId + 1)
+        defaultHkjProjectShouldNotBeFound("templateId.equals=" + (templateId + 1));
     }
 
     @Test
@@ -896,7 +933,8 @@ class HkjProjectResourceIT {
             .andExpect(jsonPath("$.[*].budget").value(hasItem(sameNumber(DEFAULT_BUDGET))))
             .andExpect(jsonPath("$.[*].actualCost").value(hasItem(sameNumber(DEFAULT_ACTUAL_COST))))
             .andExpect(jsonPath("$.[*].qualityCheck").value(hasItem(DEFAULT_QUALITY_CHECK.booleanValue())))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)));
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjProjectMockMvc
@@ -955,7 +993,8 @@ class HkjProjectResourceIT {
             .budget(UPDATED_BUDGET)
             .actualCost(UPDATED_ACTUAL_COST)
             .qualityCheck(UPDATED_QUALITY_CHECK)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
         HkjProjectDTO hkjProjectDTO = hkjProjectMapper.toDto(updatedHkjProject);
 
         restHkjProjectMockMvc
@@ -1096,7 +1135,8 @@ class HkjProjectResourceIT {
             .budget(UPDATED_BUDGET)
             .actualCost(UPDATED_ACTUAL_COST)
             .qualityCheck(UPDATED_QUALITY_CHECK)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjProjectMockMvc
             .perform(

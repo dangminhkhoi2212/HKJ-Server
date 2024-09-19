@@ -16,5 +16,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="hkj_category"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="creater_id"
+                                 baseTableName="hkj_template"
+                                 constraintName="fk_hkj_template__creater_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_employee"
+                                 />
     </changeSet>
 </databaseChangeLog>

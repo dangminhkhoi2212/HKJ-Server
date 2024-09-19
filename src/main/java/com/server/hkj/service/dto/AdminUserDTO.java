@@ -4,7 +4,10 @@ import com.server.hkj.config.Constants;
 import com.server.hkj.domain.Authority;
 import com.server.hkj.domain.User;
 import com.server.hkj.domain.UserExtra;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Set;
@@ -43,6 +46,8 @@ public class AdminUserDTO implements Serializable {
     private String phone;
 
     private boolean activated = false;
+
+    private String address;
 
     @Size(min = 2, max = 10)
     private String langKey;
@@ -93,6 +98,7 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
         this.phone = userExtra.getPhone();
+        this.address = userExtra.getAddress();
     }
 
     public AdminUserDTO(User user, UserExtra userExtra) {
@@ -110,6 +116,7 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
         this.phone = userExtra.getPhone(); // Populate phone from UserExtra
+        this.address = userExtra.getAddress();
     }
 
     public AdminUserDTO(AdminUserDTO user) {
@@ -126,5 +133,6 @@ public class AdminUserDTO implements Serializable {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities();
+        this.address = user.getAddress();
     }
 }

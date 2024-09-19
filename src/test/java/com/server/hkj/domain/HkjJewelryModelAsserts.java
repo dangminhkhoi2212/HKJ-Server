@@ -56,7 +56,8 @@ public class HkjJewelryModelAsserts {
             .satisfies(e -> assertThat(e.getWeight()).as("check weight").isEqualTo(actual.getWeight()))
             .satisfies(e -> assertThat(e.getPrice()).as("check price").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getPrice()))
             .satisfies(e -> assertThat(e.getColor()).as("check color").isEqualTo(actual.getColor()))
-            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()));
+            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**
@@ -65,5 +66,9 @@ public class HkjJewelryModelAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertHkjJewelryModelUpdatableRelationshipsEquals(HkjJewelryModel expected, HkjJewelryModel actual) {}
+    public static void assertHkjJewelryModelUpdatableRelationshipsEquals(HkjJewelryModel expected, HkjJewelryModel actual) {
+        assertThat(expected)
+            .as("Verify HkjJewelryModel relationships")
+            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()));
+    }
 }

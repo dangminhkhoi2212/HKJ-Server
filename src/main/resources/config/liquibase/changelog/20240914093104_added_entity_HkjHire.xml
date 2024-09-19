@@ -14,15 +14,42 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="hire_date" type="${datetimeType}">
+            <column name="begin_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="end_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="begin_salary" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_date" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
             <column name="position_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_hire__position_id" />
             </column>
+            <column name="employee_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_hire__employee_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="hkj_hire" columnName="hire_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_hire" columnName="begin_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_hire" columnName="end_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_hire" columnName="created_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_hire" columnName="last_modified_date" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

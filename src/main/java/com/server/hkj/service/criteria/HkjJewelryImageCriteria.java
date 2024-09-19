@@ -32,6 +32,8 @@ public class HkjJewelryImageCriteria implements Serializable, Criteria {
 
     private StringFilter tags;
 
+    private BooleanFilter isDeleted;
+
     private StringFilter createdBy;
 
     private InstantFilter createdDate;
@@ -39,8 +41,6 @@ public class HkjJewelryImageCriteria implements Serializable, Criteria {
     private StringFilter lastModifiedBy;
 
     private InstantFilter lastModifiedDate;
-
-    private LongFilter uploadedById;
 
     private LongFilter jewelryModelId;
 
@@ -54,11 +54,11 @@ public class HkjJewelryImageCriteria implements Serializable, Criteria {
         this.isSearchImage = other.optionalIsSearchImage().map(BooleanFilter::copy).orElse(null);
         this.description = other.optionalDescription().map(StringFilter::copy).orElse(null);
         this.tags = other.optionalTags().map(StringFilter::copy).orElse(null);
+        this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.uploadedById = other.optionalUploadedById().map(LongFilter::copy).orElse(null);
         this.jewelryModelId = other.optionalJewelryModelId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -163,6 +163,25 @@ public class HkjJewelryImageCriteria implements Serializable, Criteria {
         this.tags = tags;
     }
 
+    public BooleanFilter getIsDeleted() {
+        return isDeleted;
+    }
+
+    public Optional<BooleanFilter> optionalIsDeleted() {
+        return Optional.ofNullable(isDeleted);
+    }
+
+    public BooleanFilter isDeleted() {
+        if (isDeleted == null) {
+            setIsDeleted(new BooleanFilter());
+        }
+        return isDeleted;
+    }
+
+    public void setIsDeleted(BooleanFilter isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public StringFilter getCreatedBy() {
         return createdBy;
     }
@@ -239,25 +258,6 @@ public class HkjJewelryImageCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getUploadedById() {
-        return uploadedById;
-    }
-
-    public Optional<LongFilter> optionalUploadedById() {
-        return Optional.ofNullable(uploadedById);
-    }
-
-    public LongFilter uploadedById() {
-        if (uploadedById == null) {
-            setUploadedById(new LongFilter());
-        }
-        return uploadedById;
-    }
-
-    public void setUploadedById(LongFilter uploadedById) {
-        this.uploadedById = uploadedById;
-    }
-
     public LongFilter getJewelryModelId() {
         return jewelryModelId;
     }
@@ -311,11 +311,11 @@ public class HkjJewelryImageCriteria implements Serializable, Criteria {
             Objects.equals(isSearchImage, that.isSearchImage) &&
             Objects.equals(description, that.description) &&
             Objects.equals(tags, that.tags) &&
+            Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(uploadedById, that.uploadedById) &&
             Objects.equals(jewelryModelId, that.jewelryModelId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -329,11 +329,11 @@ public class HkjJewelryImageCriteria implements Serializable, Criteria {
             isSearchImage,
             description,
             tags,
+            isDeleted,
             createdBy,
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
-            uploadedById,
             jewelryModelId,
             distinct
         );
@@ -348,11 +348,11 @@ public class HkjJewelryImageCriteria implements Serializable, Criteria {
             optionalIsSearchImage().map(f -> "isSearchImage=" + f + ", ").orElse("") +
             optionalDescription().map(f -> "description=" + f + ", ").orElse("") +
             optionalTags().map(f -> "tags=" + f + ", ").orElse("") +
+            optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalUploadedById().map(f -> "uploadedById=" + f + ", ").orElse("") +
             optionalJewelryModelId().map(f -> "jewelryModelId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

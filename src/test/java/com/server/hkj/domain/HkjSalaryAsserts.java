@@ -50,9 +50,8 @@ public class HkjSalaryAsserts {
     public static void assertHkjSalaryUpdatableFieldsEquals(HkjSalary expected, HkjSalary actual) {
         assertThat(expected)
             .as("Verify HkjSalary relevant properties")
-            .satisfies(
-                e -> assertThat(e.getSalary()).as("check salary").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getSalary())
-            );
+            .satisfies(e -> assertThat(e.getSalary()).as("check salary").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getSalary()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**

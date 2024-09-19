@@ -53,6 +53,10 @@
       "fieldValidateRulesMaxlength": "1000"
     },
     {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean"
+    },
+    {
       "auditField": true,
       "autoGenerate": true,
       "columnType": "varchar(50)",
@@ -99,14 +103,20 @@
       "relationshipType": "one-to-one"
     },
     {
-      "otherEntityName": "hkjJewelryModel",
-      "relationshipName": "customOrder",
+      "otherEntityName": "hkjOrderImage",
+      "relationshipName": "orderImages",
       "relationshipSide": "left",
-      "relationshipType": "one-to-one"
+      "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "userExtra",
       "relationshipName": "customer",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjJewelryModel",
+      "relationshipName": "jewelry",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

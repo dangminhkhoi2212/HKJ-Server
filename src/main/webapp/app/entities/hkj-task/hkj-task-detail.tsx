@@ -91,6 +91,12 @@ export const HkjTaskDetail = () => {
           </dt>
           <dd>{hkjTaskEntity.notes}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjTask.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjTaskEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjTask.createdBy">Created By</Translate>
             </span>

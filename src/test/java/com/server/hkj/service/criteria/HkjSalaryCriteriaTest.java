@@ -76,6 +76,7 @@ class HkjSalaryCriteriaTest {
     private static void setAllFilters(HkjSalaryCriteria hkjSalaryCriteria) {
         hkjSalaryCriteria.id();
         hkjSalaryCriteria.salary();
+        hkjSalaryCriteria.isDeleted();
         hkjSalaryCriteria.createdBy();
         hkjSalaryCriteria.createdDate();
         hkjSalaryCriteria.lastModifiedBy();
@@ -89,6 +90,7 @@ class HkjSalaryCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getSalary()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -104,6 +106,7 @@ class HkjSalaryCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getSalary(), copy.getSalary()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

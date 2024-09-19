@@ -95,6 +95,12 @@ export const HkjOrderDetail = () => {
           </dt>
           <dd>{hkjOrderEntity.notes}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjOrder.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjOrderEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjOrder.createdBy">Created By</Translate>
             </span>
@@ -129,13 +135,13 @@ export const HkjOrderDetail = () => {
           </dt>
           <dd>{hkjOrderEntity.project ? hkjOrderEntity.project.id : ''}</dd>
           <dt>
-            <Translate contentKey="serverApp.hkjOrder.customOrder">Custom Order</Translate>
-          </dt>
-          <dd>{hkjOrderEntity.customOrder ? hkjOrderEntity.customOrder.id : ''}</dd>
-          <dt>
             <Translate contentKey="serverApp.hkjOrder.customer">Customer</Translate>
           </dt>
           <dd>{hkjOrderEntity.customer ? hkjOrderEntity.customer.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjOrder.jewelry">Jewelry</Translate>
+          </dt>
+          <dd>{hkjOrderEntity.jewelry ? hkjOrderEntity.jewelry.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-order" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

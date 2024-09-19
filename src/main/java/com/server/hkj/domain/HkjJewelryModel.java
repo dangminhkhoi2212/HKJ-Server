@@ -38,8 +38,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Column(name = "description", length = 1000)
     private String description;
 
-    @NotNull
-    @Column(name = "is_custom", nullable = false)
+    @Column(name = "is_custom")
     private Boolean isCustom;
 
     @Column(name = "weight")
@@ -54,6 +53,9 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Column(name = "notes")
     private String notes;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -61,14 +63,15 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Transient
     private boolean isPersisted;
 
+    @JsonIgnoreProperties(value = { "template", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private HkjProject project;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "jewelryModel")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "uploadedBy", "jewelryModel" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "jewelryModel" }, allowSetters = true)
     private Set<HkjJewelryImage> images = new HashSet<>();
-
-    @JsonIgnoreProperties(value = { "project", "customOrder", "customer" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "customOrder")
-    private HkjOrder hkjOrder;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -176,6 +179,19 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
         this.notes = notes;
     }
 
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjJewelryModel isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     // Inherited createdBy methods
     public HkjJewelryModel createdBy(String createdBy) {
         this.setCreatedBy(createdBy);
@@ -217,6 +233,19 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
         return this;
     }
 
+    public HkjProject getProject() {
+        return this.project;
+    }
+
+    public void setProject(HkjProject hkjProject) {
+        this.project = hkjProject;
+    }
+
+    public HkjJewelryModel project(HkjProject hkjProject) {
+        this.setProject(hkjProject);
+        return this;
+    }
+
     public Set<HkjJewelryImage> getImages() {
         return this.images;
     }
@@ -245,25 +274,6 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     public HkjJewelryModel removeImages(HkjJewelryImage hkjJewelryImage) {
         this.images.remove(hkjJewelryImage);
         hkjJewelryImage.setJewelryModel(null);
-        return this;
-    }
-
-    public HkjOrder getHkjOrder() {
-        return this.hkjOrder;
-    }
-
-    public void setHkjOrder(HkjOrder hkjOrder) {
-        if (this.hkjOrder != null) {
-            this.hkjOrder.setCustomOrder(null);
-        }
-        if (hkjOrder != null) {
-            hkjOrder.setCustomOrder(this);
-        }
-        this.hkjOrder = hkjOrder;
-    }
-
-    public HkjJewelryModel hkjOrder(HkjOrder hkjOrder) {
-        this.setHkjOrder(hkjOrder);
         return this;
     }
 
@@ -298,6 +308,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
             ", price=" + getPrice() +
             ", color='" + getColor() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

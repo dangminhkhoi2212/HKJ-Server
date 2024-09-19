@@ -69,6 +69,9 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Column(name = "notes", length = 1000)
     private String notes;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -96,7 +99,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     private HkjEmployee employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "template", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
     private HkjProject hkjProject;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -229,6 +232,19 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjTask isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -406,6 +422,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
             ", priority='" + getPriority() + "'" +
             ", point=" + getPoint() +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

@@ -75,6 +75,12 @@ export const HkjJewelryModelDetail = () => {
           </dt>
           <dd>{hkjJewelryModelEntity.notes}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjJewelryModel.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjJewelryModelEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjJewelryModel.createdBy">Created By</Translate>
             </span>
@@ -106,6 +112,10 @@ export const HkjJewelryModelDetail = () => {
               <TextFormat value={hkjJewelryModelEntity.lastModifiedDate} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjJewelryModel.project">Project</Translate>
+          </dt>
+          <dd>{hkjJewelryModelEntity.project ? hkjJewelryModelEntity.project.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-jewelry-model" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

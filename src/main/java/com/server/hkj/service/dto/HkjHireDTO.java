@@ -2,6 +2,7 @@ package com.server.hkj.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -14,7 +15,14 @@ public class HkjHireDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Instant hireDate;
+    private Instant beginDate;
+
+    @NotNull
+    private Instant endDate;
+
+    private BigDecimal beginSalary;
+
+    private Boolean isDeleted;
 
     private String createdBy;
 
@@ -26,6 +34,8 @@ public class HkjHireDTO implements Serializable {
 
     private HkjPositionDTO position;
 
+    private HkjEmployeeDTO employee;
+
     public Long getId() {
         return id;
     }
@@ -34,12 +44,36 @@ public class HkjHireDTO implements Serializable {
         this.id = id;
     }
 
-    public Instant getHireDate() {
-        return hireDate;
+    public Instant getBeginDate() {
+        return beginDate;
     }
 
-    public void setHireDate(Instant hireDate) {
-        this.hireDate = hireDate;
+    public void setBeginDate(Instant beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
+    }
+
+    public BigDecimal getBeginSalary() {
+        return beginSalary;
+    }
+
+    public void setBeginSalary(BigDecimal beginSalary) {
+        this.beginSalary = beginSalary;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -82,6 +116,14 @@ public class HkjHireDTO implements Serializable {
         this.position = position;
     }
 
+    public HkjEmployeeDTO getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(HkjEmployeeDTO employee) {
+        this.employee = employee;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -108,12 +150,16 @@ public class HkjHireDTO implements Serializable {
     public String toString() {
         return "HkjHireDTO{" +
             "id=" + getId() +
-            ", hireDate='" + getHireDate() + "'" +
+            ", beginDate='" + getBeginDate() + "'" +
+            ", endDate='" + getEndDate() + "'" +
+            ", beginSalary=" + getBeginSalary() +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", position=" + getPosition() +
+            ", employee=" + getEmployee() +
             "}";
     }
 }

@@ -118,6 +118,10 @@ export const HkjCategory = () => {
                   <Translate contentKey="serverApp.hkjCategory.name">Name</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjCategory.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjCategory.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -146,6 +150,7 @@ export const HkjCategory = () => {
                     </Button>
                   </td>
                   <td>{hkjCategory.name}</td>
+                  <td>{hkjCategory.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjCategory.createdBy}</td>
                   <td>
                     {hkjCategory.createdDate ? <TextFormat type="date" value={hkjCategory.createdDate} format={APP_DATE_FORMAT} /> : null}

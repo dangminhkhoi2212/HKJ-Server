@@ -10,8 +10,6 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
-import { IHkjHire } from 'app/shared/model/hkj-hire.model';
-import { getEntities as getHkjHires } from 'app/entities/hkj-hire/hkj-hire.reducer';
 import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
 import { getEntity, updateEntity, createEntity, reset } from './hkj-employee.reducer';
 
@@ -24,7 +22,6 @@ export const HkjEmployeeUpdate = () => {
   const isNew = id === undefined;
 
   const userExtras = useAppSelector(state => state.userExtra.entities);
-  const hkjHires = useAppSelector(state => state.hkjHire.entities);
   const hkjEmployeeEntity = useAppSelector(state => state.hkjEmployee.entity);
   const loading = useAppSelector(state => state.hkjEmployee.loading);
   const updating = useAppSelector(state => state.hkjEmployee.updating);
@@ -42,7 +39,6 @@ export const HkjEmployeeUpdate = () => {
     }
 
     dispatch(getUserExtras({}));
-    dispatch(getHkjHires({}));
   }, []);
 
   useEffect(() => {
@@ -63,7 +59,6 @@ export const HkjEmployeeUpdate = () => {
       ...hkjEmployeeEntity,
       ...values,
       userExtra: userExtras.find(it => it.id.toString() === values.userExtra?.toString()),
-      hkjHire: hkjHires.find(it => it.id.toString() === values.hkjHire?.toString()),
     };
 
     if (isNew) {
@@ -84,7 +79,6 @@ export const HkjEmployeeUpdate = () => {
           createdDate: convertDateTimeFromServer(hkjEmployeeEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjEmployeeEntity.lastModifiedDate),
           userExtra: hkjEmployeeEntity?.userExtra?.id,
-          hkjHire: hkjEmployeeEntity?.hkjHire?.id,
         };
 
   return (
@@ -121,6 +115,14 @@ export const HkjEmployeeUpdate = () => {
                 validate={{
                   maxLength: { value: 1000, message: translate('entity.validation.maxlength', { max: 1000 }) },
                 }}
+              />
+              <ValidatedField
+                label={translate('serverApp.hkjEmployee.isDeleted')}
+                id="hkj-employee-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
               />
               <ValidatedField
                 label={translate('serverApp.hkjEmployee.createdBy')}
@@ -162,22 +164,6 @@ export const HkjEmployeeUpdate = () => {
                 <option value="" key="0" />
                 {userExtras
                   ? userExtras.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="hkj-employee-hkjHire"
-                name="hkjHire"
-                data-cy="hkjHire"
-                label={translate('serverApp.hkjEmployee.hkjHire')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {hkjHires
-                  ? hkjHires.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

@@ -33,11 +33,29 @@ export const HkjHireDetail = () => {
           </dt>
           <dd>{hkjHireEntity.id}</dd>
           <dt>
-            <span id="hireDate">
-              <Translate contentKey="serverApp.hkjHire.hireDate">Hire Date</Translate>
+            <span id="beginDate">
+              <Translate contentKey="serverApp.hkjHire.beginDate">Begin Date</Translate>
             </span>
           </dt>
-          <dd>{hkjHireEntity.hireDate ? <TextFormat value={hkjHireEntity.hireDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>{hkjHireEntity.beginDate ? <TextFormat value={hkjHireEntity.beginDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dt>
+            <span id="endDate">
+              <Translate contentKey="serverApp.hkjHire.endDate">End Date</Translate>
+            </span>
+          </dt>
+          <dd>{hkjHireEntity.endDate ? <TextFormat value={hkjHireEntity.endDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dt>
+            <span id="beginSalary">
+              <Translate contentKey="serverApp.hkjHire.beginSalary">Begin Salary</Translate>
+            </span>
+          </dt>
+          <dd>{hkjHireEntity.beginSalary}</dd>
+          <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjHire.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjHireEntity.isDeleted ? 'true' : 'false'}</dd>
           <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjHire.createdBy">Created By</Translate>
@@ -72,6 +90,10 @@ export const HkjHireDetail = () => {
             <Translate contentKey="serverApp.hkjHire.position">Position</Translate>
           </dt>
           <dd>{hkjHireEntity.position ? hkjHireEntity.position.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjHire.employee">Employee</Translate>
+          </dt>
+          <dd>{hkjHireEntity.employee ? hkjHireEntity.employee.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-hire" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

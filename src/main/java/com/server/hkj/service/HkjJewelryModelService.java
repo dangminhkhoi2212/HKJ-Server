@@ -4,11 +4,7 @@ import com.server.hkj.domain.HkjJewelryModel;
 import com.server.hkj.repository.HkjJewelryModelRepository;
 import com.server.hkj.service.dto.HkjJewelryModelDTO;
 import com.server.hkj.service.mapper.HkjJewelryModelMapper;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -77,19 +73,6 @@ public class HkjJewelryModelService {
             })
             .map(hkjJewelryModelRepository::save)
             .map(hkjJewelryModelMapper::toDto);
-    }
-
-    /**
-     *  Get all the hkjJewelryModels where HkjOrder is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<HkjJewelryModelDTO> findAllWhereHkjOrderIsNull() {
-        log.debug("Request to get all hkjJewelryModels where HkjOrder is null");
-        return StreamSupport.stream(hkjJewelryModelRepository.findAll().spliterator(), false)
-            .filter(hkjJewelryModel -> hkjJewelryModel.getHkjOrder() == null)
-            .map(hkjJewelryModelMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

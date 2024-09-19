@@ -80,6 +80,19 @@ public class HkjProjectService {
     }
 
     /**
+     *  Get all the hkjProjects where HkjJewelryModel is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<HkjProjectDTO> findAllWhereHkjJewelryModelIsNull() {
+        log.debug("Request to get all hkjProjects where HkjJewelryModel is null");
+        return StreamSupport.stream(hkjProjectRepository.findAll().spliterator(), false)
+            .filter(hkjProject -> hkjProject.getHkjJewelryModel() == null)
+            .map(hkjProjectMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      *  Get all the hkjProjects where HkjOrder is {@code null}.
      *  @return the list of entities.
      */

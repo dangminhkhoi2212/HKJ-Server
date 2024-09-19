@@ -20,7 +20,6 @@ public class HkjJewelryModelDTO implements Serializable {
     @Size(max = 1000)
     private String description;
 
-    @NotNull
     private Boolean isCustom;
 
     private Double weight;
@@ -31,6 +30,8 @@ public class HkjJewelryModelDTO implements Serializable {
 
     private String notes;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -38,6 +39,8 @@ public class HkjJewelryModelDTO implements Serializable {
     private String lastModifiedBy;
 
     private Instant lastModifiedDate;
+
+    private HkjProjectDTO project;
 
     public Long getId() {
         return id;
@@ -103,6 +106,14 @@ public class HkjJewelryModelDTO implements Serializable {
         this.notes = notes;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -133,6 +144,14 @@ public class HkjJewelryModelDTO implements Serializable {
 
     public void setLastModifiedDate(Instant lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public HkjProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProject(HkjProjectDTO project) {
+        this.project = project;
     }
 
     @Override
@@ -168,10 +187,12 @@ public class HkjJewelryModelDTO implements Serializable {
             ", price=" + getPrice() +
             ", color='" + getColor() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
+            ", project=" + getProject() +
             "}";
     }
 }

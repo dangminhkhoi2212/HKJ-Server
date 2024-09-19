@@ -28,6 +28,8 @@ public class HkjMaterialUsageDTO implements Serializable {
 
     private BigDecimal price;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -94,6 +96,14 @@ public class HkjMaterialUsageDTO implements Serializable {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -176,6 +186,7 @@ public class HkjMaterialUsageDTO implements Serializable {
             ", notes='" + getNotes() + "'" +
             ", weight=" + getWeight() +
             ", price=" + getPrice() +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

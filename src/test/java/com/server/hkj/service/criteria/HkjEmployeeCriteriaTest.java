@@ -76,6 +76,7 @@ class HkjEmployeeCriteriaTest {
     private static void setAllFilters(HkjEmployeeCriteria hkjEmployeeCriteria) {
         hkjEmployeeCriteria.id();
         hkjEmployeeCriteria.notes();
+        hkjEmployeeCriteria.isDeleted();
         hkjEmployeeCriteria.createdBy();
         hkjEmployeeCriteria.createdDate();
         hkjEmployeeCriteria.lastModifiedBy();
@@ -91,6 +92,7 @@ class HkjEmployeeCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getNotes()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -108,6 +110,7 @@ class HkjEmployeeCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getNotes(), copy.getNotes()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

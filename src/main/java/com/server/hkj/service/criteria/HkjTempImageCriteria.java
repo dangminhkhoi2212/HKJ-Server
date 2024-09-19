@@ -28,6 +28,8 @@ public class HkjTempImageCriteria implements Serializable, Criteria {
 
     private BooleanFilter isUsed;
 
+    private BooleanFilter isDeleted;
+
     private StringFilter createdBy;
 
     private InstantFilter createdDate;
@@ -44,6 +46,7 @@ public class HkjTempImageCriteria implements Serializable, Criteria {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.url = other.optionalUrl().map(StringFilter::copy).orElse(null);
         this.isUsed = other.optionalIsUsed().map(BooleanFilter::copy).orElse(null);
+        this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
@@ -111,6 +114,25 @@ public class HkjTempImageCriteria implements Serializable, Criteria {
 
     public void setIsUsed(BooleanFilter isUsed) {
         this.isUsed = isUsed;
+    }
+
+    public BooleanFilter getIsDeleted() {
+        return isDeleted;
+    }
+
+    public Optional<BooleanFilter> optionalIsDeleted() {
+        return Optional.ofNullable(isDeleted);
+    }
+
+    public BooleanFilter isDeleted() {
+        if (isDeleted == null) {
+            setIsDeleted(new BooleanFilter());
+        }
+        return isDeleted;
+    }
+
+    public void setIsDeleted(BooleanFilter isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public StringFilter getCreatedBy() {
@@ -221,6 +243,7 @@ public class HkjTempImageCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(url, that.url) &&
             Objects.equals(isUsed, that.isUsed) &&
+            Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
@@ -231,7 +254,7 @@ public class HkjTempImageCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, url, isUsed, createdBy, createdDate, lastModifiedBy, lastModifiedDate, distinct);
+        return Objects.hash(id, url, isUsed, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, distinct);
     }
 
     // prettier-ignore
@@ -241,6 +264,7 @@ public class HkjTempImageCriteria implements Serializable, Criteria {
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalUrl().map(f -> "url=" + f + ", ").orElse("") +
             optionalIsUsed().map(f -> "isUsed=" + f + ", ").orElse("") +
+            optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +

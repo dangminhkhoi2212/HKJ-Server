@@ -31,6 +31,9 @@ public class HkjPosition extends AbstractAuditingEntity<Long> implements Seriali
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -38,7 +41,7 @@ public class HkjPosition extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "position", "employees" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "position", "employee" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "position")
     private HkjHire hkjHire;
 
@@ -68,6 +71,19 @@ public class HkjPosition extends AbstractAuditingEntity<Long> implements Seriali
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjPosition isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -155,6 +171,7 @@ public class HkjPosition extends AbstractAuditingEntity<Long> implements Seriali
         return "HkjPosition{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

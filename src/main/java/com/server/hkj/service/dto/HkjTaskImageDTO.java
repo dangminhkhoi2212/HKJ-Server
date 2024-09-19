@@ -18,6 +18,8 @@ public class HkjTaskImageDTO implements Serializable {
 
     private String description;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -50,6 +52,14 @@ public class HkjTaskImageDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -120,6 +130,7 @@ public class HkjTaskImageDTO implements Serializable {
             "id=" + getId() +
             ", url='" + getUrl() + "'" +
             ", description='" + getDescription() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

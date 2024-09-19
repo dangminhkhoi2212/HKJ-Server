@@ -16,6 +16,7 @@ export interface IHkjTask {
   priority?: keyof typeof HkjPriority;
   point?: number | null;
   notes?: string | null;
+  isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
@@ -25,4 +26,6 @@ export interface IHkjTask {
   hkjProject?: IHkjProject | null;
 }
 
-export const defaultValue: Readonly<IHkjTask> = {};
+export const defaultValue: Readonly<IHkjTask> = {
+  isDeleted: false,
+};

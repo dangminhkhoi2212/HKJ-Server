@@ -24,6 +24,7 @@
       "notes": "Notes",
       "weight": "Weight",
       "price": "Price",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",

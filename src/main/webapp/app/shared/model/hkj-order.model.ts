@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { IHkjProject } from 'app/shared/model/hkj-project.model';
-import { IHkjJewelryModel } from 'app/shared/model/hkj-jewelry-model.model';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { IHkjJewelryModel } from 'app/shared/model/hkj-jewelry-model.model';
 import { HkjOrderStatus } from 'app/shared/model/enumerations/hkj-order-status.model';
 
 export interface IHkjOrder {
@@ -15,13 +15,16 @@ export interface IHkjOrder {
   totalPrice?: number | null;
   depositAmount?: number | null;
   notes?: string | null;
+  isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
   project?: IHkjProject | null;
-  customOrder?: IHkjJewelryModel | null;
   customer?: IUserExtra | null;
+  jewelry?: IHkjJewelryModel | null;
 }
 
-export const defaultValue: Readonly<IHkjOrder> = {};
+export const defaultValue: Readonly<IHkjOrder> = {
+  isDeleted: false,
+};

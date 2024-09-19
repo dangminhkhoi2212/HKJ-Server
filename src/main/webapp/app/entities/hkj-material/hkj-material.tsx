@@ -134,6 +134,10 @@ export const HkjMaterial = () => {
                   <Translate contentKey="serverApp.hkjMaterial.supplier">Supplier</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('supplier')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjMaterial.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjMaterial.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -166,6 +170,7 @@ export const HkjMaterial = () => {
                   <td>{hkjMaterial.unit}</td>
                   <td>{hkjMaterial.unitPrice}</td>
                   <td>{hkjMaterial.supplier}</td>
+                  <td>{hkjMaterial.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjMaterial.createdBy}</td>
                   <td>
                     {hkjMaterial.createdDate ? <TextFormat type="date" value={hkjMaterial.createdDate} format={APP_DATE_FORMAT} /> : null}

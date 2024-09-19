@@ -49,7 +49,8 @@ public class HkjPositionAsserts {
     public static void assertHkjPositionUpdatableFieldsEquals(HkjPosition expected, HkjPosition actual) {
         assertThat(expected)
             .as("Verify HkjPosition relevant properties")
-            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()));
+            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**

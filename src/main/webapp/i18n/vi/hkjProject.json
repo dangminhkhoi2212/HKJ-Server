@@ -29,13 +29,15 @@
       "actualCost": "Actual Cost",
       "qualityCheck": "Quality Check",
       "notes": "Notes",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "category": "Category",
+      "template": "Template",
       "tasks": "Tasks",
       "manager": "Manager",
+      "hkjJewelryModel": "Hkj Jewelry Model",
       "hkjOrder": "Hkj Order"
     }
   }

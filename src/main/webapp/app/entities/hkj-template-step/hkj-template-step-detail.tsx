@@ -39,6 +39,12 @@ export const HkjTemplateStepDetail = () => {
           </dt>
           <dd>{hkjTemplateStepEntity.name}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjTemplateStep.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjTemplateStepEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjTemplateStep.createdBy">Created By</Translate>
             </span>

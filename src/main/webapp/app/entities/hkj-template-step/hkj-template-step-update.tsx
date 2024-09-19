@@ -114,6 +114,14 @@ export const HkjTemplateStepUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjTemplateStep.isDeleted')}
+                id="hkj-template-step-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjTemplateStep.createdBy')}
                 id="hkj-template-step-createdBy"
                 name="createdBy"

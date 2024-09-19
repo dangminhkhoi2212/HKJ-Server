@@ -114,9 +114,21 @@ export const HkjHire = () => {
                 <th className="hand" onClick={sort('id')}>
                   <Translate contentKey="serverApp.hkjHire.id">ID</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                 </th>
-                <th className="hand" onClick={sort('hireDate')}>
-                  <Translate contentKey="serverApp.hkjHire.hireDate">Hire Date</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('hireDate')} />
+                <th className="hand" onClick={sort('beginDate')}>
+                  <Translate contentKey="serverApp.hkjHire.beginDate">Begin Date</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('beginDate')} />
+                </th>
+                <th className="hand" onClick={sort('endDate')}>
+                  <Translate contentKey="serverApp.hkjHire.endDate">End Date</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('endDate')} />
+                </th>
+                <th className="hand" onClick={sort('beginSalary')}>
+                  <Translate contentKey="serverApp.hkjHire.beginSalary">Begin Salary</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('beginSalary')} />
+                </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjHire.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
                 </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjHire.createdBy">Created By</Translate>{' '}
@@ -137,6 +149,9 @@ export const HkjHire = () => {
                 <th>
                   <Translate contentKey="serverApp.hkjHire.position">Position</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjHire.employee">Employee</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -148,7 +163,10 @@ export const HkjHire = () => {
                       {hkjHire.id}
                     </Button>
                   </td>
-                  <td>{hkjHire.hireDate ? <TextFormat type="date" value={hkjHire.hireDate} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{hkjHire.beginDate ? <TextFormat type="date" value={hkjHire.beginDate} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{hkjHire.endDate ? <TextFormat type="date" value={hkjHire.endDate} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{hkjHire.beginSalary}</td>
+                  <td>{hkjHire.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjHire.createdBy}</td>
                   <td>{hkjHire.createdDate ? <TextFormat type="date" value={hkjHire.createdDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{hkjHire.lastModifiedBy}</td>
@@ -156,6 +174,7 @@ export const HkjHire = () => {
                     {hkjHire.lastModifiedDate ? <TextFormat type="date" value={hkjHire.lastModifiedDate} format={APP_DATE_FORMAT} /> : null}
                   </td>
                   <td>{hkjHire.position ? <Link to={`/hkj-position/${hkjHire.position.id}`}>{hkjHire.position.id}</Link> : ''}</td>
+                  <td>{hkjHire.employee ? <Link to={`/hkj-employee/${hkjHire.employee.id}`}>{hkjHire.employee.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-hire/${hkjHire.id}`} color="info" size="sm" data-cy="entityDetailsButton">

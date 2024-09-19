@@ -118,6 +118,10 @@ export const HkjTemplate = () => {
                   <Translate contentKey="serverApp.hkjTemplate.name">Name</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjTemplate.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjTemplate.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -137,6 +141,9 @@ export const HkjTemplate = () => {
                 <th>
                   <Translate contentKey="serverApp.hkjTemplate.category">Category</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjTemplate.creater">Creater</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -149,6 +156,7 @@ export const HkjTemplate = () => {
                     </Button>
                   </td>
                   <td>{hkjTemplate.name}</td>
+                  <td>{hkjTemplate.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjTemplate.createdBy}</td>
                   <td>
                     {hkjTemplate.createdDate ? <TextFormat type="date" value={hkjTemplate.createdDate} format={APP_DATE_FORMAT} /> : null}
@@ -162,6 +170,7 @@ export const HkjTemplate = () => {
                   <td>
                     {hkjTemplate.category ? <Link to={`/hkj-category/${hkjTemplate.category.id}`}>{hkjTemplate.category.id}</Link> : ''}
                   </td>
+                  <td>{hkjTemplate.creater ? <Link to={`/hkj-employee/${hkjTemplate.creater.id}`}>{hkjTemplate.creater.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-template/${hkjTemplate.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -122,6 +122,10 @@ export const UserExtra = () => {
                   <Translate contentKey="serverApp.userExtra.address">Address</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('address')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.userExtra.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.userExtra.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -154,6 +158,7 @@ export const UserExtra = () => {
                   </td>
                   <td>{userExtra.phone}</td>
                   <td>{userExtra.address}</td>
+                  <td>{userExtra.isDeleted ? 'true' : 'false'}</td>
                   <td>{userExtra.createdBy}</td>
                   <td>
                     {userExtra.createdDate ? <TextFormat type="date" value={userExtra.createdDate} format={APP_DATE_FORMAT} /> : null}

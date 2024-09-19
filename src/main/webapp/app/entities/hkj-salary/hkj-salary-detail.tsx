@@ -39,6 +39,12 @@ export const HkjSalaryDetail = () => {
           </dt>
           <dd>{hkjSalaryEntity.salary}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjSalary.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjSalaryEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjSalary.createdBy">Created By</Translate>
             </span>

@@ -75,13 +75,16 @@ class HkjHireCriteriaTest {
 
     private static void setAllFilters(HkjHireCriteria hkjHireCriteria) {
         hkjHireCriteria.id();
-        hkjHireCriteria.hireDate();
+        hkjHireCriteria.beginDate();
+        hkjHireCriteria.endDate();
+        hkjHireCriteria.beginSalary();
+        hkjHireCriteria.isDeleted();
         hkjHireCriteria.createdBy();
         hkjHireCriteria.createdDate();
         hkjHireCriteria.lastModifiedBy();
         hkjHireCriteria.lastModifiedDate();
         hkjHireCriteria.positionId();
-        hkjHireCriteria.employeesId();
+        hkjHireCriteria.employeeId();
         hkjHireCriteria.distinct();
     }
 
@@ -89,13 +92,16 @@ class HkjHireCriteriaTest {
         return new Condition<>(
             criteria ->
                 condition.apply(criteria.getId()) &&
-                condition.apply(criteria.getHireDate()) &&
+                condition.apply(criteria.getBeginDate()) &&
+                condition.apply(criteria.getEndDate()) &&
+                condition.apply(criteria.getBeginSalary()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
                 condition.apply(criteria.getPositionId()) &&
-                condition.apply(criteria.getEmployeesId()) &&
+                condition.apply(criteria.getEmployeeId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -105,13 +111,16 @@ class HkjHireCriteriaTest {
         return new Condition<>(
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
-                condition.apply(criteria.getHireDate(), copy.getHireDate()) &&
+                condition.apply(criteria.getBeginDate(), copy.getBeginDate()) &&
+                condition.apply(criteria.getEndDate(), copy.getEndDate()) &&
+                condition.apply(criteria.getBeginSalary(), copy.getBeginSalary()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
                 condition.apply(criteria.getPositionId(), copy.getPositionId()) &&
-                condition.apply(criteria.getEmployeesId(), copy.getEmployeesId()) &&
+                condition.apply(criteria.getEmployeeId(), copy.getEmployeeId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

@@ -131,6 +131,10 @@ export const HkjJewelryImage = () => {
                   <Translate contentKey="serverApp.hkjJewelryImage.tags">Tags</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('tags')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjJewelryImage.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjJewelryImage.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -146,9 +150,6 @@ export const HkjJewelryImage = () => {
                 <th className="hand" onClick={sort('lastModifiedDate')}>
                   <Translate contentKey="serverApp.hkjJewelryImage.lastModifiedDate">Last Modified Date</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
-                </th>
-                <th>
-                  <Translate contentKey="serverApp.hkjJewelryImage.uploadedBy">Uploaded By</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   <Translate contentKey="serverApp.hkjJewelryImage.jewelryModel">Jewelry Model</Translate> <FontAwesomeIcon icon="sort" />
@@ -168,6 +169,7 @@ export const HkjJewelryImage = () => {
                   <td>{hkjJewelryImage.isSearchImage ? 'true' : 'false'}</td>
                   <td>{hkjJewelryImage.description}</td>
                   <td>{hkjJewelryImage.tags}</td>
+                  <td>{hkjJewelryImage.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjJewelryImage.createdBy}</td>
                   <td>
                     {hkjJewelryImage.createdDate ? (
@@ -179,13 +181,6 @@ export const HkjJewelryImage = () => {
                     {hkjJewelryImage.lastModifiedDate ? (
                       <TextFormat type="date" value={hkjJewelryImage.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
-                  </td>
-                  <td>
-                    {hkjJewelryImage.uploadedBy ? (
-                      <Link to={`/hkj-employee/${hkjJewelryImage.uploadedBy.id}`}>{hkjJewelryImage.uploadedBy.id}</Link>
-                    ) : (
-                      ''
-                    )}
                   </td>
                   <td>
                     {hkjJewelryImage.jewelryModel ? (

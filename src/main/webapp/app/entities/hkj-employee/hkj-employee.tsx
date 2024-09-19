@@ -118,6 +118,10 @@ export const HkjEmployee = () => {
                   <Translate contentKey="serverApp.hkjEmployee.notes">Notes</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjEmployee.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjEmployee.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -137,9 +141,6 @@ export const HkjEmployee = () => {
                 <th>
                   <Translate contentKey="serverApp.hkjEmployee.userExtra">User Extra</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="serverApp.hkjEmployee.hkjHire">Hkj Hire</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th />
               </tr>
             </thead>
@@ -152,6 +153,7 @@ export const HkjEmployee = () => {
                     </Button>
                   </td>
                   <td>{hkjEmployee.notes}</td>
+                  <td>{hkjEmployee.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjEmployee.createdBy}</td>
                   <td>
                     {hkjEmployee.createdDate ? <TextFormat type="date" value={hkjEmployee.createdDate} format={APP_DATE_FORMAT} /> : null}
@@ -165,7 +167,6 @@ export const HkjEmployee = () => {
                   <td>
                     {hkjEmployee.userExtra ? <Link to={`/user-extra/${hkjEmployee.userExtra.id}`}>{hkjEmployee.userExtra.id}</Link> : ''}
                   </td>
-                  <td>{hkjEmployee.hkjHire ? <Link to={`/hkj-hire/${hkjEmployee.hkjHire.id}`}>{hkjEmployee.hkjHire.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-employee/${hkjEmployee.id}`} color="info" size="sm" data-cy="entityDetailsButton">

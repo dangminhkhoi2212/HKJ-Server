@@ -2,7 +2,7 @@ package com.server.hkj.domain;
 
 import static com.server.hkj.domain.HkjJewelryImageTestSamples.*;
 import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
-import static com.server.hkj.domain.HkjOrderTestSamples.*;
+import static com.server.hkj.domain.HkjProjectTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
@@ -27,6 +27,18 @@ class HkjJewelryModelTest {
     }
 
     @Test
+    void projectTest() {
+        HkjJewelryModel hkjJewelryModel = getHkjJewelryModelRandomSampleGenerator();
+        HkjProject hkjProjectBack = getHkjProjectRandomSampleGenerator();
+
+        hkjJewelryModel.setProject(hkjProjectBack);
+        assertThat(hkjJewelryModel.getProject()).isEqualTo(hkjProjectBack);
+
+        hkjJewelryModel.project(null);
+        assertThat(hkjJewelryModel.getProject()).isNull();
+    }
+
+    @Test
     void imagesTest() {
         HkjJewelryModel hkjJewelryModel = getHkjJewelryModelRandomSampleGenerator();
         HkjJewelryImage hkjJewelryImageBack = getHkjJewelryImageRandomSampleGenerator();
@@ -46,19 +58,5 @@ class HkjJewelryModelTest {
         hkjJewelryModel.setImages(new HashSet<>());
         assertThat(hkjJewelryModel.getImages()).doesNotContain(hkjJewelryImageBack);
         assertThat(hkjJewelryImageBack.getJewelryModel()).isNull();
-    }
-
-    @Test
-    void hkjOrderTest() {
-        HkjJewelryModel hkjJewelryModel = getHkjJewelryModelRandomSampleGenerator();
-        HkjOrder hkjOrderBack = getHkjOrderRandomSampleGenerator();
-
-        hkjJewelryModel.setHkjOrder(hkjOrderBack);
-        assertThat(hkjJewelryModel.getHkjOrder()).isEqualTo(hkjOrderBack);
-        assertThat(hkjOrderBack.getCustomOrder()).isEqualTo(hkjJewelryModel);
-
-        hkjJewelryModel.hkjOrder(null);
-        assertThat(hkjJewelryModel.getHkjOrder()).isNull();
-        assertThat(hkjOrderBack.getCustomOrder()).isNull();
     }
 }

@@ -76,6 +76,7 @@ class HkjPositionCriteriaTest {
     private static void setAllFilters(HkjPositionCriteria hkjPositionCriteria) {
         hkjPositionCriteria.id();
         hkjPositionCriteria.name();
+        hkjPositionCriteria.isDeleted();
         hkjPositionCriteria.createdBy();
         hkjPositionCriteria.createdDate();
         hkjPositionCriteria.lastModifiedBy();
@@ -89,6 +90,7 @@ class HkjPositionCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getName()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -104,6 +106,7 @@ class HkjPositionCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getName(), copy.getName()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

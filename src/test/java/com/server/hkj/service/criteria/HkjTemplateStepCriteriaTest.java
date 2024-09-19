@@ -76,6 +76,7 @@ class HkjTemplateStepCriteriaTest {
     private static void setAllFilters(HkjTemplateStepCriteria hkjTemplateStepCriteria) {
         hkjTemplateStepCriteria.id();
         hkjTemplateStepCriteria.name();
+        hkjTemplateStepCriteria.isDeleted();
         hkjTemplateStepCriteria.createdBy();
         hkjTemplateStepCriteria.createdDate();
         hkjTemplateStepCriteria.lastModifiedBy();
@@ -90,6 +91,7 @@ class HkjTemplateStepCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getName()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -109,6 +111,7 @@ class HkjTemplateStepCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getName(), copy.getName()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

@@ -235,6 +235,14 @@ export const HkjTaskUpdate = () => {
                 }}
               />
               <ValidatedField
+                label={translate('serverApp.hkjTask.isDeleted')}
+                id="hkj-task-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjTask.createdBy')}
                 id="hkj-task-createdBy"
                 name="createdBy"

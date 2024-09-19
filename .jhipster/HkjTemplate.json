@@ -11,6 +11,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean"
+    },
+    {
       "auditField": true,
       "autoGenerate": true,
       "columnType": "varchar(50)",
@@ -61,6 +65,12 @@
       "relationshipName": "steps",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "hkjEmployee",
+      "relationshipName": "creater",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

@@ -115,6 +115,14 @@ export const HkjTempImageUpdate = () => {
                 type="checkbox"
               />
               <ValidatedField
+                label={translate('serverApp.hkjTempImage.isDeleted')}
+                id="hkj-temp-image-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjTempImage.createdBy')}
                 id="hkj-temp-image-createdBy"
                 name="createdBy"

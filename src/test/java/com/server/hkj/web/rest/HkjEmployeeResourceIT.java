@@ -11,7 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
 import com.server.hkj.domain.HkjEmployee;
-import com.server.hkj.domain.HkjHire;
 import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.HkjEmployeeRepository;
 import com.server.hkj.service.dto.HkjEmployeeDTO;
@@ -39,6 +38,9 @@ class HkjEmployeeResourceIT {
 
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
 
     private static final String ENTITY_API_URL = "/api/hkj-employees";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -72,7 +74,7 @@ class HkjEmployeeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjEmployee createEntity(EntityManager em) {
-        HkjEmployee hkjEmployee = new HkjEmployee().notes(DEFAULT_NOTES);
+        HkjEmployee hkjEmployee = new HkjEmployee().notes(DEFAULT_NOTES).isDeleted(DEFAULT_IS_DELETED);
         return hkjEmployee;
     }
 
@@ -83,7 +85,7 @@ class HkjEmployeeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjEmployee createUpdatedEntity(EntityManager em) {
-        HkjEmployee hkjEmployee = new HkjEmployee().notes(UPDATED_NOTES);
+        HkjEmployee hkjEmployee = new HkjEmployee().notes(UPDATED_NOTES).isDeleted(UPDATED_IS_DELETED);
         return hkjEmployee;
     }
 
@@ -158,7 +160,8 @@ class HkjEmployeeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjEmployee.getId().intValue())))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)));
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -173,7 +176,8 @@ class HkjEmployeeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjEmployee.getId().intValue()))
-            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES));
+            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -243,6 +247,36 @@ class HkjEmployeeResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjEmployeesByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjEmployee = hkjEmployeeRepository.saveAndFlush(hkjEmployee);
+
+        // Get all the hkjEmployeeList where isDeleted equals to
+        defaultHkjEmployeeFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjEmployeesByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjEmployee = hkjEmployeeRepository.saveAndFlush(hkjEmployee);
+
+        // Get all the hkjEmployeeList where isDeleted in
+        defaultHkjEmployeeFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjEmployeesByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjEmployee = hkjEmployeeRepository.saveAndFlush(hkjEmployee);
+
+        // Get all the hkjEmployeeList where isDeleted is not null
+        defaultHkjEmployeeFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjEmployeesByUserExtraIsEqualToSomething() throws Exception {
         UserExtra userExtra;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
@@ -263,28 +297,6 @@ class HkjEmployeeResourceIT {
         defaultHkjEmployeeShouldNotBeFound("userExtraId.equals=" + (userExtraId + 1));
     }
 
-    @Test
-    @Transactional
-    void getAllHkjEmployeesByHkjHireIsEqualToSomething() throws Exception {
-        HkjHire hkjHire;
-        if (TestUtil.findAll(em, HkjHire.class).isEmpty()) {
-            hkjEmployeeRepository.saveAndFlush(hkjEmployee);
-            hkjHire = HkjHireResourceIT.createEntity(em);
-        } else {
-            hkjHire = TestUtil.findAll(em, HkjHire.class).get(0);
-        }
-        em.persist(hkjHire);
-        em.flush();
-        hkjEmployee.setHkjHire(hkjHire);
-        hkjEmployeeRepository.saveAndFlush(hkjEmployee);
-        Long hkjHireId = hkjHire.getId();
-        // Get all the hkjEmployeeList where hkjHire equals to hkjHireId
-        defaultHkjEmployeeShouldBeFound("hkjHireId.equals=" + hkjHireId);
-
-        // Get all the hkjEmployeeList where hkjHire equals to (hkjHireId + 1)
-        defaultHkjEmployeeShouldNotBeFound("hkjHireId.equals=" + (hkjHireId + 1));
-    }
-
     private void defaultHkjEmployeeFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjEmployeeShouldBeFound(shouldBeFound);
         defaultHkjEmployeeShouldNotBeFound(shouldNotBeFound);
@@ -299,7 +311,8 @@ class HkjEmployeeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjEmployee.getId().intValue())))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)));
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjEmployeeMockMvc
@@ -347,7 +360,7 @@ class HkjEmployeeResourceIT {
         HkjEmployee updatedHkjEmployee = hkjEmployeeRepository.findById(hkjEmployee.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjEmployee are not directly saved in db
         em.detach(updatedHkjEmployee);
-        updatedHkjEmployee.notes(UPDATED_NOTES);
+        updatedHkjEmployee.notes(UPDATED_NOTES).isDeleted(UPDATED_IS_DELETED);
         HkjEmployeeDTO hkjEmployeeDTO = hkjEmployeeMapper.toDto(updatedHkjEmployee);
 
         restHkjEmployeeMockMvc
@@ -440,6 +453,8 @@ class HkjEmployeeResourceIT {
         HkjEmployee partialUpdatedHkjEmployee = new HkjEmployee();
         partialUpdatedHkjEmployee.setId(hkjEmployee.getId());
 
+        partialUpdatedHkjEmployee.isDeleted(UPDATED_IS_DELETED);
+
         restHkjEmployeeMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedHkjEmployee.getId())
@@ -470,7 +485,7 @@ class HkjEmployeeResourceIT {
         HkjEmployee partialUpdatedHkjEmployee = new HkjEmployee();
         partialUpdatedHkjEmployee.setId(hkjEmployee.getId());
 
-        partialUpdatedHkjEmployee.notes(UPDATED_NOTES);
+        partialUpdatedHkjEmployee.notes(UPDATED_NOTES).isDeleted(UPDATED_IS_DELETED);
 
         restHkjEmployeeMockMvc
             .perform(

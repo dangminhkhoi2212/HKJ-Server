@@ -49,7 +49,8 @@ public class HkjCategoryAsserts {
     public static void assertHkjCategoryUpdatableFieldsEquals(HkjCategory expected, HkjCategory actual) {
         assertThat(expected)
             .as("Verify HkjCategory relevant properties")
-            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()));
+            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**

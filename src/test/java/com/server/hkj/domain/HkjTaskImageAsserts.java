@@ -50,7 +50,8 @@ public class HkjTaskImageAsserts {
         assertThat(expected)
             .as("Verify HkjTaskImage relevant properties")
             .satisfies(e -> assertThat(e.getUrl()).as("check url").isEqualTo(actual.getUrl()))
-            .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()));
+            .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**

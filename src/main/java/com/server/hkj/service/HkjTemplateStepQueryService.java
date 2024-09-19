@@ -80,6 +80,9 @@ public class HkjTemplateStepQueryService extends QueryService<HkjTemplateStep> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), HkjTemplateStep_.name));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjTemplateStep_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjTemplateStep_.createdBy));
             }

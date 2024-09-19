@@ -98,6 +98,9 @@ public class HkjMaterialUsageQueryService extends QueryService<HkjMaterialUsage>
             if (criteria.getPrice() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPrice(), HkjMaterialUsage_.price));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjMaterialUsage_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjMaterialUsage_.createdBy));
             }

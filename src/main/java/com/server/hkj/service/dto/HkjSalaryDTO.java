@@ -15,6 +15,8 @@ public class HkjSalaryDTO implements Serializable {
 
     private BigDecimal salary;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -39,6 +41,14 @@ public class HkjSalaryDTO implements Serializable {
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -108,6 +118,7 @@ public class HkjSalaryDTO implements Serializable {
         return "HkjSalaryDTO{" +
             "id=" + getId() +
             ", salary=" + getSalary() +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

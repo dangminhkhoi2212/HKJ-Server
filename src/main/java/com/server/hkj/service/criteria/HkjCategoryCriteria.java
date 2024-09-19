@@ -26,6 +26,8 @@ public class HkjCategoryCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
+    private BooleanFilter isDeleted;
+
     private StringFilter createdBy;
 
     private InstantFilter createdDate;
@@ -33,8 +35,6 @@ public class HkjCategoryCriteria implements Serializable, Criteria {
     private StringFilter lastModifiedBy;
 
     private InstantFilter lastModifiedDate;
-
-    private LongFilter hkjProjectId;
 
     private LongFilter hkjTemplateId;
 
@@ -45,11 +45,11 @@ public class HkjCategoryCriteria implements Serializable, Criteria {
     public HkjCategoryCriteria(HkjCategoryCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.name = other.optionalName().map(StringFilter::copy).orElse(null);
+        this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.hkjProjectId = other.optionalHkjProjectId().map(LongFilter::copy).orElse(null);
         this.hkjTemplateId = other.optionalHkjTemplateId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -95,6 +95,25 @@ public class HkjCategoryCriteria implements Serializable, Criteria {
 
     public void setName(StringFilter name) {
         this.name = name;
+    }
+
+    public BooleanFilter getIsDeleted() {
+        return isDeleted;
+    }
+
+    public Optional<BooleanFilter> optionalIsDeleted() {
+        return Optional.ofNullable(isDeleted);
+    }
+
+    public BooleanFilter isDeleted() {
+        if (isDeleted == null) {
+            setIsDeleted(new BooleanFilter());
+        }
+        return isDeleted;
+    }
+
+    public void setIsDeleted(BooleanFilter isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public StringFilter getCreatedBy() {
@@ -173,25 +192,6 @@ public class HkjCategoryCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getHkjProjectId() {
-        return hkjProjectId;
-    }
-
-    public Optional<LongFilter> optionalHkjProjectId() {
-        return Optional.ofNullable(hkjProjectId);
-    }
-
-    public LongFilter hkjProjectId() {
-        if (hkjProjectId == null) {
-            setHkjProjectId(new LongFilter());
-        }
-        return hkjProjectId;
-    }
-
-    public void setHkjProjectId(LongFilter hkjProjectId) {
-        this.hkjProjectId = hkjProjectId;
-    }
-
     public LongFilter getHkjTemplateId() {
         return hkjTemplateId;
     }
@@ -242,11 +242,11 @@ public class HkjCategoryCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(hkjProjectId, that.hkjProjectId) &&
             Objects.equals(hkjTemplateId, that.hkjTemplateId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -254,7 +254,7 @@ public class HkjCategoryCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, createdBy, createdDate, lastModifiedBy, lastModifiedDate, hkjProjectId, hkjTemplateId, distinct);
+        return Objects.hash(id, name, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, hkjTemplateId, distinct);
     }
 
     // prettier-ignore
@@ -263,11 +263,11 @@ public class HkjCategoryCriteria implements Serializable, Criteria {
         return "HkjCategoryCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalName().map(f -> "name=" + f + ", ").orElse("") +
+            optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalHkjProjectId().map(f -> "hkjProjectId=" + f + ", ").orElse("") +
             optionalHkjTemplateId().map(f -> "hkjTemplateId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

@@ -27,6 +27,8 @@ public class HkjMaterialDTO implements Serializable {
 
     private String supplier;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -81,6 +83,14 @@ public class HkjMaterialDTO implements Serializable {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -146,6 +156,7 @@ public class HkjMaterialDTO implements Serializable {
             ", unit='" + getUnit() + "'" +
             ", unitPrice=" + getUnitPrice() +
             ", supplier='" + getSupplier() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

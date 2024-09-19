@@ -41,6 +41,21 @@
             <column name="notes" type="varchar(1000)">
                 <constraints nullable="true" />
             </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
             <column name="template_step_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_task__template_step_id" />
             </column>
@@ -55,6 +70,8 @@
         <dropDefaultValue tableName="hkj_task" columnName="assigned_date" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="hkj_task" columnName="expect_date" columnDataType="${datetimeType}"/>
         <dropDefaultValue tableName="hkj_task" columnName="completed_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_task" columnName="created_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_task" columnName="last_modified_date" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

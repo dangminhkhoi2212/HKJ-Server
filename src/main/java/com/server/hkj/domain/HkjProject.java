@@ -73,6 +73,9 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Column(name = "notes", length = 1000)
     private String notes;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -80,10 +83,10 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "hkjProject", "hkjTemplate" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "steps", "creater", "hkjProject" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
-    private HkjCategory category;
+    private HkjTemplate template;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjProject")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -94,7 +97,11 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
     private HkjEmployee manager;
 
-    @JsonIgnoreProperties(value = { "project", "customOrder", "customer" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
+    private HkjJewelryModel hkjJewelryModel;
+
+    @JsonIgnoreProperties(value = { "project", "orderImages", "customer", "jewelry" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
     private HkjOrder hkjOrder;
 
@@ -256,6 +263,19 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         this.notes = notes;
     }
 
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjProject isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     // Inherited createdBy methods
     public HkjProject createdBy(String createdBy) {
         this.setCreatedBy(createdBy);
@@ -297,16 +317,16 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return this;
     }
 
-    public HkjCategory getCategory() {
-        return this.category;
+    public HkjTemplate getTemplate() {
+        return this.template;
     }
 
-    public void setCategory(HkjCategory hkjCategory) {
-        this.category = hkjCategory;
+    public void setTemplate(HkjTemplate hkjTemplate) {
+        this.template = hkjTemplate;
     }
 
-    public HkjProject category(HkjCategory hkjCategory) {
-        this.setCategory(hkjCategory);
+    public HkjProject template(HkjTemplate hkjTemplate) {
+        this.setTemplate(hkjTemplate);
         return this;
     }
 
@@ -351,6 +371,25 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     public HkjProject manager(HkjEmployee hkjEmployee) {
         this.setManager(hkjEmployee);
+        return this;
+    }
+
+    public HkjJewelryModel getHkjJewelryModel() {
+        return this.hkjJewelryModel;
+    }
+
+    public void setHkjJewelryModel(HkjJewelryModel hkjJewelryModel) {
+        if (this.hkjJewelryModel != null) {
+            this.hkjJewelryModel.setProject(null);
+        }
+        if (hkjJewelryModel != null) {
+            hkjJewelryModel.setProject(this);
+        }
+        this.hkjJewelryModel = hkjJewelryModel;
+    }
+
+    public HkjProject hkjJewelryModel(HkjJewelryModel hkjJewelryModel) {
+        this.setHkjJewelryModel(hkjJewelryModel);
         return this;
     }
 
@@ -408,6 +447,7 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
             ", actualCost=" + getActualCost() +
             ", qualityCheck='" + getQualityCheck() + "'" +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

@@ -34,6 +34,9 @@ public class HkjTempImage extends AbstractAuditingEntity<Long> implements Serial
     @Column(name = "is_used", nullable = false)
     private Boolean isUsed;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -80,6 +83,19 @@ public class HkjTempImage extends AbstractAuditingEntity<Long> implements Serial
 
     public void setIsUsed(Boolean isUsed) {
         this.isUsed = isUsed;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjTempImage isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -149,6 +165,7 @@ public class HkjTempImage extends AbstractAuditingEntity<Long> implements Serial
             "id=" + getId() +
             ", url='" + getUrl() + "'" +
             ", isUsed='" + getIsUsed() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

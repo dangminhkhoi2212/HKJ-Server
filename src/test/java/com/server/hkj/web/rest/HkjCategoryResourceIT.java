@@ -38,6 +38,9 @@ class HkjCategoryResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -70,7 +73,7 @@ class HkjCategoryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjCategory createEntity(EntityManager em) {
-        HkjCategory hkjCategory = new HkjCategory().name(DEFAULT_NAME);
+        HkjCategory hkjCategory = new HkjCategory().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
         return hkjCategory;
     }
 
@@ -81,7 +84,7 @@ class HkjCategoryResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjCategory createUpdatedEntity(EntityManager em) {
-        HkjCategory hkjCategory = new HkjCategory().name(UPDATED_NAME);
+        HkjCategory hkjCategory = new HkjCategory().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
         return hkjCategory;
     }
 
@@ -156,7 +159,8 @@ class HkjCategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjCategory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -171,7 +175,8 @@ class HkjCategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjCategory.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -239,6 +244,36 @@ class HkjCategoryResourceIT {
         defaultHkjCategoryFiltering("name.doesNotContain=" + UPDATED_NAME, "name.doesNotContain=" + DEFAULT_NAME);
     }
 
+    @Test
+    @Transactional
+    void getAllHkjCategoriesByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjCategory = hkjCategoryRepository.saveAndFlush(hkjCategory);
+
+        // Get all the hkjCategoryList where isDeleted equals to
+        defaultHkjCategoryFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjCategoriesByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjCategory = hkjCategoryRepository.saveAndFlush(hkjCategory);
+
+        // Get all the hkjCategoryList where isDeleted in
+        defaultHkjCategoryFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjCategoriesByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjCategory = hkjCategoryRepository.saveAndFlush(hkjCategory);
+
+        // Get all the hkjCategoryList where isDeleted is not null
+        defaultHkjCategoryFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
     private void defaultHkjCategoryFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjCategoryShouldBeFound(shouldBeFound);
         defaultHkjCategoryShouldNotBeFound(shouldNotBeFound);
@@ -253,7 +288,8 @@ class HkjCategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjCategory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjCategoryMockMvc
@@ -301,7 +337,7 @@ class HkjCategoryResourceIT {
         HkjCategory updatedHkjCategory = hkjCategoryRepository.findById(hkjCategory.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjCategory are not directly saved in db
         em.detach(updatedHkjCategory);
-        updatedHkjCategory.name(UPDATED_NAME);
+        updatedHkjCategory.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
         HkjCategoryDTO hkjCategoryDTO = hkjCategoryMapper.toDto(updatedHkjCategory);
 
         restHkjCategoryMockMvc
@@ -394,6 +430,8 @@ class HkjCategoryResourceIT {
         HkjCategory partialUpdatedHkjCategory = new HkjCategory();
         partialUpdatedHkjCategory.setId(hkjCategory.getId());
 
+        partialUpdatedHkjCategory.isDeleted(UPDATED_IS_DELETED);
+
         restHkjCategoryMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedHkjCategory.getId())
@@ -424,7 +462,7 @@ class HkjCategoryResourceIT {
         HkjCategory partialUpdatedHkjCategory = new HkjCategory();
         partialUpdatedHkjCategory.setId(hkjCategory.getId());
 
-        partialUpdatedHkjCategory.name(UPDATED_NAME);
+        partialUpdatedHkjCategory.name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
 
         restHkjCategoryMockMvc
             .perform(

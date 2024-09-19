@@ -29,6 +29,9 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
     @Column(name = "name")
     private String name;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -41,7 +44,7 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
     private HkjTask hkjTask;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "category", "steps" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "steps", "creater", "hkjProject" }, allowSetters = true)
     private HkjTemplate hkjTemplate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -70,6 +73,19 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjTemplateStep isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -170,6 +186,7 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
         return "HkjTemplateStep{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

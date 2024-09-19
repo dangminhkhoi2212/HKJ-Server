@@ -158,6 +158,10 @@ export const HkjProject = () => {
                   <Translate contentKey="serverApp.hkjProject.notes">Notes</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjProject.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjProject.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -175,7 +179,7 @@ export const HkjProject = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjProject.category">Category</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjProject.template">Template</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   <Translate contentKey="serverApp.hkjProject.manager">Manager</Translate> <FontAwesomeIcon icon="sort" />
@@ -208,6 +212,7 @@ export const HkjProject = () => {
                   <td>{hkjProject.actualCost}</td>
                   <td>{hkjProject.qualityCheck ? 'true' : 'false'}</td>
                   <td>{hkjProject.notes}</td>
+                  <td>{hkjProject.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjProject.createdBy}</td>
                   <td>
                     {hkjProject.createdDate ? <TextFormat type="date" value={hkjProject.createdDate} format={APP_DATE_FORMAT} /> : null}
@@ -218,7 +223,7 @@ export const HkjProject = () => {
                       <TextFormat type="date" value={hkjProject.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{hkjProject.category ? <Link to={`/hkj-category/${hkjProject.category.id}`}>{hkjProject.category.id}</Link> : ''}</td>
+                  <td>{hkjProject.template ? <Link to={`/hkj-template/${hkjProject.template.id}`}>{hkjProject.template.id}</Link> : ''}</td>
                   <td>{hkjProject.manager ? <Link to={`/hkj-employee/${hkjProject.manager.id}`}>{hkjProject.manager.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

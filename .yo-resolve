@@ -1,3 +1,9 @@
+src/main/resources/config/application.yml skip
+src/main/resources/config/application-dev.yml skip
+src/main/resources/config/application-prod.yml skip
+src/main/docker/keycloak.yml skip
+src/main/webapp/app/config/constants.ts skip
+src/main/docker/realm-config/jhipster-realm.json skip
 pom.xml skip
 src/main/java/com/server/hkj/service/UserService.java skip
 src/main/java/com/server/hkj/service/dto/AdminUserDTO.java

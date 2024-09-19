@@ -18,6 +18,8 @@ public class HkjTempImageDTO implements Serializable {
     @NotNull
     private Boolean isUsed;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -48,6 +50,14 @@ public class HkjTempImageDTO implements Serializable {
 
     public void setIsUsed(Boolean isUsed) {
         this.isUsed = isUsed;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -110,6 +120,7 @@ public class HkjTempImageDTO implements Serializable {
             "id=" + getId() +
             ", url='" + getUrl() + "'" +
             ", isUsed='" + getIsUsed() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

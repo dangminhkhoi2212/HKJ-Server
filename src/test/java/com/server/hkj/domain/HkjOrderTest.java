@@ -1,12 +1,15 @@
 package com.server.hkj.domain;
 
 import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
+import static com.server.hkj.domain.HkjOrderImageTestSamples.*;
 import static com.server.hkj.domain.HkjOrderTestSamples.*;
 import static com.server.hkj.domain.HkjProjectTestSamples.*;
 import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class HkjOrderTest {
@@ -38,15 +41,25 @@ class HkjOrderTest {
     }
 
     @Test
-    void customOrderTest() {
+    void orderImagesTest() {
         HkjOrder hkjOrder = getHkjOrderRandomSampleGenerator();
-        HkjJewelryModel hkjJewelryModelBack = getHkjJewelryModelRandomSampleGenerator();
+        HkjOrderImage hkjOrderImageBack = getHkjOrderImageRandomSampleGenerator();
 
-        hkjOrder.setCustomOrder(hkjJewelryModelBack);
-        assertThat(hkjOrder.getCustomOrder()).isEqualTo(hkjJewelryModelBack);
+        hkjOrder.addOrderImages(hkjOrderImageBack);
+        assertThat(hkjOrder.getOrderImages()).containsOnly(hkjOrderImageBack);
+        assertThat(hkjOrderImageBack.getHkjOrder()).isEqualTo(hkjOrder);
 
-        hkjOrder.customOrder(null);
-        assertThat(hkjOrder.getCustomOrder()).isNull();
+        hkjOrder.removeOrderImages(hkjOrderImageBack);
+        assertThat(hkjOrder.getOrderImages()).doesNotContain(hkjOrderImageBack);
+        assertThat(hkjOrderImageBack.getHkjOrder()).isNull();
+
+        hkjOrder.orderImages(new HashSet<>(Set.of(hkjOrderImageBack)));
+        assertThat(hkjOrder.getOrderImages()).containsOnly(hkjOrderImageBack);
+        assertThat(hkjOrderImageBack.getHkjOrder()).isEqualTo(hkjOrder);
+
+        hkjOrder.setOrderImages(new HashSet<>());
+        assertThat(hkjOrder.getOrderImages()).doesNotContain(hkjOrderImageBack);
+        assertThat(hkjOrderImageBack.getHkjOrder()).isNull();
     }
 
     @Test
@@ -59,5 +72,17 @@ class HkjOrderTest {
 
         hkjOrder.customer(null);
         assertThat(hkjOrder.getCustomer()).isNull();
+    }
+
+    @Test
+    void jewelryTest() {
+        HkjOrder hkjOrder = getHkjOrderRandomSampleGenerator();
+        HkjJewelryModel hkjJewelryModelBack = getHkjJewelryModelRandomSampleGenerator();
+
+        hkjOrder.setJewelry(hkjJewelryModelBack);
+        assertThat(hkjOrder.getJewelry()).isEqualTo(hkjJewelryModelBack);
+
+        hkjOrder.jewelry(null);
+        assertThat(hkjOrder.getJewelry()).isNull();
     }
 }

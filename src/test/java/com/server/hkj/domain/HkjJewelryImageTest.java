@@ -1,6 +1,5 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.HkjEmployeeTestSamples.*;
 import static com.server.hkj.domain.HkjJewelryImageTestSamples.*;
 import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,18 +21,6 @@ class HkjJewelryImageTest {
 
         hkjJewelryImage2 = getHkjJewelryImageSample2();
         assertThat(hkjJewelryImage1).isNotEqualTo(hkjJewelryImage2);
-    }
-
-    @Test
-    void uploadedByTest() {
-        HkjJewelryImage hkjJewelryImage = getHkjJewelryImageRandomSampleGenerator();
-        HkjEmployee hkjEmployeeBack = getHkjEmployeeRandomSampleGenerator();
-
-        hkjJewelryImage.setUploadedBy(hkjEmployeeBack);
-        assertThat(hkjJewelryImage.getUploadedBy()).isEqualTo(hkjEmployeeBack);
-
-        hkjJewelryImage.uploadedBy(null);
-        assertThat(hkjJewelryImage.getUploadedBy()).isNull();
     }
 
     @Test

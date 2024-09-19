@@ -117,6 +117,14 @@ export const HkjSalaryUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjSalary.isDeleted')}
+                id="hkj-salary-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjSalary.createdBy')}
                 id="hkj-salary-createdBy"
                 name="createdBy"

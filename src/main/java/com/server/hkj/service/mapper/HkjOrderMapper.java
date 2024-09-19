@@ -16,8 +16,8 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface HkjOrderMapper extends EntityMapper<HkjOrderDTO, HkjOrder> {
     @Mapping(target = "project", source = "project", qualifiedByName = "hkjProjectId")
-    @Mapping(target = "customOrder", source = "customOrder", qualifiedByName = "hkjJewelryModelId")
     @Mapping(target = "customer", source = "customer", qualifiedByName = "userExtraId")
+    @Mapping(target = "jewelry", source = "jewelry", qualifiedByName = "hkjJewelryModelId")
     HkjOrderDTO toDto(HkjOrder s);
 
     @Named("hkjProjectId")
@@ -25,13 +25,13 @@ public interface HkjOrderMapper extends EntityMapper<HkjOrderDTO, HkjOrder> {
     @Mapping(target = "id", source = "id")
     HkjProjectDTO toDtoHkjProjectId(HkjProject hkjProject);
 
-    @Named("hkjJewelryModelId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    HkjJewelryModelDTO toDtoHkjJewelryModelId(HkjJewelryModel hkjJewelryModel);
-
     @Named("userExtraId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     UserExtraDTO toDtoUserExtraId(UserExtra userExtra);
+
+    @Named("hkjJewelryModelId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    HkjJewelryModelDTO toDtoHkjJewelryModelId(HkjJewelryModel hkjJewelryModel);
 }

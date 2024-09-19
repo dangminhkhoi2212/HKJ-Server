@@ -68,8 +68,10 @@ class HkjEmployeeTest {
 
         hkjEmployee.setHkjHire(hkjHireBack);
         assertThat(hkjEmployee.getHkjHire()).isEqualTo(hkjHireBack);
+        assertThat(hkjHireBack.getEmployee()).isEqualTo(hkjEmployee);
 
         hkjEmployee.hkjHire(null);
         assertThat(hkjEmployee.getHkjHire()).isNull();
+        assertThat(hkjHireBack.getEmployee()).isNull();
     }
 }

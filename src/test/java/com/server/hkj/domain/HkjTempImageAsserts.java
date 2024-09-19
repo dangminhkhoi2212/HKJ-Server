@@ -50,7 +50,8 @@ public class HkjTempImageAsserts {
         assertThat(expected)
             .as("Verify HkjTempImage relevant properties")
             .satisfies(e -> assertThat(e.getUrl()).as("check url").isEqualTo(actual.getUrl()))
-            .satisfies(e -> assertThat(e.getIsUsed()).as("check isUsed").isEqualTo(actual.getIsUsed()));
+            .satisfies(e -> assertThat(e.getIsUsed()).as("check isUsed").isEqualTo(actual.getIsUsed()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**

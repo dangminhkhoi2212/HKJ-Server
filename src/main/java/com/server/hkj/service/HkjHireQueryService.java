@@ -77,8 +77,17 @@ public class HkjHireQueryService extends QueryService<HkjHire> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), HkjHire_.id));
             }
-            if (criteria.getHireDate() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getHireDate(), HkjHire_.hireDate));
+            if (criteria.getBeginDate() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getBeginDate(), HkjHire_.beginDate));
+            }
+            if (criteria.getEndDate() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getEndDate(), HkjHire_.endDate));
+            }
+            if (criteria.getBeginSalary() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getBeginSalary(), HkjHire_.beginSalary));
+            }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjHire_.isDeleted));
             }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjHire_.createdBy));
@@ -97,9 +106,9 @@ public class HkjHireQueryService extends QueryService<HkjHire> {
                     buildSpecification(criteria.getPositionId(), root -> root.join(HkjHire_.position, JoinType.LEFT).get(HkjPosition_.id))
                 );
             }
-            if (criteria.getEmployeesId() != null) {
+            if (criteria.getEmployeeId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getEmployeesId(), root -> root.join(HkjHire_.employees, JoinType.LEFT).get(HkjEmployee_.id))
+                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjHire_.employee, JoinType.LEFT).get(HkjEmployee_.id))
                 );
             }
         }

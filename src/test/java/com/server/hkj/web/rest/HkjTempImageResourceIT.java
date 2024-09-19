@@ -41,6 +41,9 @@ class HkjTempImageResourceIT {
     private static final Boolean DEFAULT_IS_USED = false;
     private static final Boolean UPDATED_IS_USED = true;
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-temp-images";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -73,7 +76,7 @@ class HkjTempImageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjTempImage createEntity(EntityManager em) {
-        HkjTempImage hkjTempImage = new HkjTempImage().url(DEFAULT_URL).isUsed(DEFAULT_IS_USED);
+        HkjTempImage hkjTempImage = new HkjTempImage().url(DEFAULT_URL).isUsed(DEFAULT_IS_USED).isDeleted(DEFAULT_IS_DELETED);
         return hkjTempImage;
     }
 
@@ -84,7 +87,7 @@ class HkjTempImageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjTempImage createUpdatedEntity(EntityManager em) {
-        HkjTempImage hkjTempImage = new HkjTempImage().url(UPDATED_URL).isUsed(UPDATED_IS_USED);
+        HkjTempImage hkjTempImage = new HkjTempImage().url(UPDATED_URL).isUsed(UPDATED_IS_USED).isDeleted(UPDATED_IS_DELETED);
         return hkjTempImage;
     }
 
@@ -179,7 +182,8 @@ class HkjTempImageResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTempImage.getId().intValue())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
-            .andExpect(jsonPath("$.[*].isUsed").value(hasItem(DEFAULT_IS_USED.booleanValue())));
+            .andExpect(jsonPath("$.[*].isUsed").value(hasItem(DEFAULT_IS_USED.booleanValue())))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -195,7 +199,8 @@ class HkjTempImageResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjTempImage.getId().intValue()))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL))
-            .andExpect(jsonPath("$.isUsed").value(DEFAULT_IS_USED.booleanValue()));
+            .andExpect(jsonPath("$.isUsed").value(DEFAULT_IS_USED.booleanValue()))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -293,6 +298,36 @@ class HkjTempImageResourceIT {
         defaultHkjTempImageFiltering("isUsed.specified=true", "isUsed.specified=false");
     }
 
+    @Test
+    @Transactional
+    void getAllHkjTempImagesByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjTempImage = hkjTempImageRepository.saveAndFlush(hkjTempImage);
+
+        // Get all the hkjTempImageList where isDeleted equals to
+        defaultHkjTempImageFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTempImagesByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjTempImage = hkjTempImageRepository.saveAndFlush(hkjTempImage);
+
+        // Get all the hkjTempImageList where isDeleted in
+        defaultHkjTempImageFiltering("isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED, "isDeleted.in=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTempImagesByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjTempImage = hkjTempImageRepository.saveAndFlush(hkjTempImage);
+
+        // Get all the hkjTempImageList where isDeleted is not null
+        defaultHkjTempImageFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
     private void defaultHkjTempImageFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjTempImageShouldBeFound(shouldBeFound);
         defaultHkjTempImageShouldNotBeFound(shouldNotBeFound);
@@ -308,7 +343,8 @@ class HkjTempImageResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTempImage.getId().intValue())))
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
-            .andExpect(jsonPath("$.[*].isUsed").value(hasItem(DEFAULT_IS_USED.booleanValue())));
+            .andExpect(jsonPath("$.[*].isUsed").value(hasItem(DEFAULT_IS_USED.booleanValue())))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjTempImageMockMvc
@@ -356,7 +392,7 @@ class HkjTempImageResourceIT {
         HkjTempImage updatedHkjTempImage = hkjTempImageRepository.findById(hkjTempImage.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjTempImage are not directly saved in db
         em.detach(updatedHkjTempImage);
-        updatedHkjTempImage.url(UPDATED_URL).isUsed(UPDATED_IS_USED);
+        updatedHkjTempImage.url(UPDATED_URL).isUsed(UPDATED_IS_USED).isDeleted(UPDATED_IS_DELETED);
         HkjTempImageDTO hkjTempImageDTO = hkjTempImageMapper.toDto(updatedHkjTempImage);
 
         restHkjTempImageMockMvc
@@ -451,7 +487,7 @@ class HkjTempImageResourceIT {
         HkjTempImage partialUpdatedHkjTempImage = new HkjTempImage();
         partialUpdatedHkjTempImage.setId(hkjTempImage.getId());
 
-        partialUpdatedHkjTempImage.isUsed(UPDATED_IS_USED);
+        partialUpdatedHkjTempImage.isUsed(UPDATED_IS_USED).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTempImageMockMvc
             .perform(
@@ -483,7 +519,7 @@ class HkjTempImageResourceIT {
         HkjTempImage partialUpdatedHkjTempImage = new HkjTempImage();
         partialUpdatedHkjTempImage.setId(hkjTempImage.getId());
 
-        partialUpdatedHkjTempImage.url(UPDATED_URL).isUsed(UPDATED_IS_USED);
+        partialUpdatedHkjTempImage.url(UPDATED_URL).isUsed(UPDATED_IS_USED).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTempImageMockMvc
             .perform(

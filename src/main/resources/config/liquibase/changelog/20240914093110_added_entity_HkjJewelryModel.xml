@@ -21,7 +21,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="is_custom" type="boolean">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
             <column name="weight" type="double">
                 <constraints nullable="true" />
@@ -35,8 +35,28 @@
             <column name="notes" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="created_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_modified_date" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="project_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_jewelry_model__project_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="hkj_jewelry_model" columnName="created_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_jewelry_model" columnName="last_modified_date" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

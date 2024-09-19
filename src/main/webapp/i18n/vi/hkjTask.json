@@ -27,6 +27,7 @@
       "priority": "Priority",
       "point": "Point",
       "notes": "Notes",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",

@@ -52,7 +52,8 @@ public class HkjJewelryImageAsserts {
             .satisfies(e -> assertThat(e.getUrl()).as("check url").isEqualTo(actual.getUrl()))
             .satisfies(e -> assertThat(e.getIsSearchImage()).as("check isSearchImage").isEqualTo(actual.getIsSearchImage()))
             .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
-            .satisfies(e -> assertThat(e.getTags()).as("check tags").isEqualTo(actual.getTags()));
+            .satisfies(e -> assertThat(e.getTags()).as("check tags").isEqualTo(actual.getTags()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**
@@ -64,7 +65,6 @@ public class HkjJewelryImageAsserts {
     public static void assertHkjJewelryImageUpdatableRelationshipsEquals(HkjJewelryImage expected, HkjJewelryImage actual) {
         assertThat(expected)
             .as("Verify HkjJewelryImage relationships")
-            .satisfies(e -> assertThat(e.getUploadedBy()).as("check uploadedBy").isEqualTo(actual.getUploadedBy()))
             .satisfies(e -> assertThat(e.getJewelryModel()).as("check jewelryModel").isEqualTo(actual.getJewelryModel()));
     }
 }

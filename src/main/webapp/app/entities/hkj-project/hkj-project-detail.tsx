@@ -103,6 +103,12 @@ export const HkjProjectDetail = () => {
           </dt>
           <dd>{hkjProjectEntity.notes}</dd>
           <dt>
+            <span id="isDeleted">
+              <Translate contentKey="serverApp.hkjProject.isDeleted">Is Deleted</Translate>
+            </span>
+          </dt>
+          <dd>{hkjProjectEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjProject.createdBy">Created By</Translate>
             </span>
@@ -133,9 +139,9 @@ export const HkjProjectDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjProject.category">Category</Translate>
+            <Translate contentKey="serverApp.hkjProject.template">Template</Translate>
           </dt>
-          <dd>{hkjProjectEntity.category ? hkjProjectEntity.category.id : ''}</dd>
+          <dd>{hkjProjectEntity.template ? hkjProjectEntity.template.id : ''}</dd>
           <dt>
             <Translate contentKey="serverApp.hkjProject.manager">Manager</Translate>
           </dt>

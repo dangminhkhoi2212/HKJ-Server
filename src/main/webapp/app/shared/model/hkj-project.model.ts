@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { IHkjCategory } from 'app/shared/model/hkj-category.model';
+import { IHkjTemplate } from 'app/shared/model/hkj-template.model';
 import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
 import { HkjOrderStatus } from 'app/shared/model/enumerations/hkj-order-status.model';
 import { HkjPriority } from 'app/shared/model/enumerations/hkj-priority.model';
@@ -17,14 +17,16 @@ export interface IHkjProject {
   actualCost?: number | null;
   qualityCheck?: boolean | null;
   notes?: string | null;
+  isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  category?: IHkjCategory | null;
+  template?: IHkjTemplate | null;
   manager?: IHkjEmployee | null;
 }
 
 export const defaultValue: Readonly<IHkjProject> = {
   qualityCheck: false,
+  isDeleted: false,
 };

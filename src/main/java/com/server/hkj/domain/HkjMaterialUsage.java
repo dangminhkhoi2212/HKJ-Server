@@ -48,6 +48,9 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
     @Column(name = "price", precision = 21, scale = 2)
     private BigDecimal price;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -157,6 +160,19 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
         this.price = price;
     }
 
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjMaterialUsage isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     // Inherited createdBy methods
     public HkjMaterialUsage createdBy(String createdBy) {
         this.setCreatedBy(createdBy);
@@ -254,6 +270,7 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
             ", notes='" + getNotes() + "'" +
             ", weight=" + getWeight() +
             ", price=" + getPrice() +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

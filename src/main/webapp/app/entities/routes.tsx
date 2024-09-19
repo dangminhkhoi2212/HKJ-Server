@@ -20,6 +20,7 @@ import HkjTemplate from './hkj-template';
 import HkjTemplateStep from './hkj-template-step';
 import HkjMaterial from './hkj-material';
 import HkjMaterialUsage from './hkj-material-usage';
+import HkjOrderImage from './hkj-order-image';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -44,6 +45,7 @@ export default () => {
         <Route path="hkj-template-step/*" element={<HkjTemplateStep />} />
         <Route path="hkj-material/*" element={<HkjMaterial />} />
         <Route path="hkj-material-usage/*" element={<HkjMaterialUsage />} />
+        <Route path="hkj-order-image/*" element={<HkjOrderImage />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>

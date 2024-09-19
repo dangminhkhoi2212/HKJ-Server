@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IHkjProject } from 'app/shared/model/hkj-project.model';
+import { getEntities as getHkjProjects } from 'app/entities/hkj-project/hkj-project.reducer';
 import { IHkjJewelryModel } from 'app/shared/model/hkj-jewelry-model.model';
 import { getEntity, updateEntity, createEntity, reset } from './hkj-jewelry-model.reducer';
 
@@ -19,6 +21,7 @@ export const HkjJewelryModelUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const hkjProjects = useAppSelector(state => state.hkjProject.entities);
   const hkjJewelryModelEntity = useAppSelector(state => state.hkjJewelryModel.entity);
   const loading = useAppSelector(state => state.hkjJewelryModel.loading);
   const updating = useAppSelector(state => state.hkjJewelryModel.updating);
@@ -34,6 +37,8 @@ export const HkjJewelryModelUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    dispatch(getHkjProjects({}));
   }, []);
 
   useEffect(() => {
@@ -59,6 +64,7 @@ export const HkjJewelryModelUpdate = () => {
     const entity = {
       ...hkjJewelryModelEntity,
       ...values,
+      project: hkjProjects.find(it => it.id.toString() === values.project?.toString()),
     };
 
     if (isNew) {
@@ -78,6 +84,7 @@ export const HkjJewelryModelUpdate = () => {
           ...hkjJewelryModelEntity,
           createdDate: convertDateTimeFromServer(hkjJewelryModelEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjJewelryModelEntity.lastModifiedDate),
+          project: hkjJewelryModelEntity?.project?.id,
         };
 
   return (
@@ -162,6 +169,14 @@ export const HkjJewelryModelUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjJewelryModel.isDeleted')}
+                id="hkj-jewelry-model-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjJewelryModel.createdBy')}
                 id="hkj-jewelry-model-createdBy"
                 name="createdBy"
@@ -191,6 +206,22 @@ export const HkjJewelryModelUpdate = () => {
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
+              <ValidatedField
+                id="hkj-jewelry-model-project"
+                name="project"
+                data-cy="project"
+                label={translate('serverApp.hkjJewelryModel.project')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjProjects
+                  ? hkjProjects.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/hkj-jewelry-model" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

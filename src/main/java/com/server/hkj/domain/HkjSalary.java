@@ -30,6 +30,9 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
     @Column(name = "salary", precision = 21, scale = 2)
     private BigDecimal salary;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -67,6 +70,19 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
+
+    public HkjSalary isDeleted(Boolean isDeleted) {
+        this.setIsDeleted(isDeleted);
+        return this;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     // Inherited createdBy methods
@@ -148,6 +164,7 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
         return "HkjSalary{" +
             "id=" + getId() +
             ", salary=" + getSalary() +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

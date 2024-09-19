@@ -1,7 +1,6 @@
 package com.server.hkj.domain;
 
 import static com.server.hkj.domain.HkjCategoryTestSamples.*;
-import static com.server.hkj.domain.HkjProjectTestSamples.*;
 import static com.server.hkj.domain.HkjTemplateTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,20 +21,6 @@ class HkjCategoryTest {
 
         hkjCategory2 = getHkjCategorySample2();
         assertThat(hkjCategory1).isNotEqualTo(hkjCategory2);
-    }
-
-    @Test
-    void hkjProjectTest() {
-        HkjCategory hkjCategory = getHkjCategoryRandomSampleGenerator();
-        HkjProject hkjProjectBack = getHkjProjectRandomSampleGenerator();
-
-        hkjCategory.setHkjProject(hkjProjectBack);
-        assertThat(hkjCategory.getHkjProject()).isEqualTo(hkjProjectBack);
-        assertThat(hkjProjectBack.getCategory()).isEqualTo(hkjCategory);
-
-        hkjCategory.hkjProject(null);
-        assertThat(hkjCategory.getHkjProject()).isNull();
-        assertThat(hkjProjectBack.getCategory()).isNull();
     }
 
     @Test

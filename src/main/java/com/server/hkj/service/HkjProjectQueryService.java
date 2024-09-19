@@ -110,6 +110,9 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             if (criteria.getNotes() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjProject_.notes));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjProject_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjProject_.createdBy));
             }
@@ -122,11 +125,11 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjProject_.lastModifiedDate));
             }
-            if (criteria.getCategoryId() != null) {
+            if (criteria.getTemplateId() != null) {
                 specification = specification.and(
                     buildSpecification(
-                        criteria.getCategoryId(),
-                        root -> root.join(HkjProject_.category, JoinType.LEFT).get(HkjCategory_.id)
+                        criteria.getTemplateId(),
+                        root -> root.join(HkjProject_.template, JoinType.LEFT).get(HkjTemplate_.id)
                     )
                 );
             }
@@ -138,6 +141,14 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             if (criteria.getManagerId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getManagerId(), root -> root.join(HkjProject_.manager, JoinType.LEFT).get(HkjEmployee_.id))
+                );
+            }
+            if (criteria.getHkjJewelryModelId() != null) {
+                specification = specification.and(
+                    buildSpecification(
+                        criteria.getHkjJewelryModelId(),
+                        root -> root.join(HkjProject_.hkjJewelryModel, JoinType.LEFT).get(HkjJewelryModel_.id)
+                    )
                 );
             }
             if (criteria.getHkjOrderId() != null) {

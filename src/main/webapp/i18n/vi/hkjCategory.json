@@ -19,11 +19,11 @@
       },
       "id": "ID",
       "name": "Name",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "hkjProject": "Hkj Project",
       "hkjTemplate": "Hkj Template"
     }
   }

@@ -77,6 +77,7 @@ class UserExtraCriteriaTest {
         userExtraCriteria.id();
         userExtraCriteria.phone();
         userExtraCriteria.address();
+        userExtraCriteria.isDeleted();
         userExtraCriteria.createdBy();
         userExtraCriteria.createdDate();
         userExtraCriteria.lastModifiedBy();
@@ -92,6 +93,7 @@ class UserExtraCriteriaTest {
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getPhone()) &&
                 condition.apply(criteria.getAddress()) &&
+                condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -109,6 +111,7 @@ class UserExtraCriteriaTest {
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getPhone(), copy.getPhone()) &&
                 condition.apply(criteria.getAddress(), copy.getAddress()) &&
+                condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

@@ -114,10 +114,6 @@ export const UserExtraUpdate = () => {
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  pattern: {
-                    value: /^(0)(3|5|7|8|9)([0-9]{8})$/,
-                    message: translate('entity.validation.pattern', { pattern: '^(0)(3|5|7|8|9)([0-9]{8})$' }),
-                  },
                 }}
               />
               <ValidatedField
@@ -126,6 +122,14 @@ export const UserExtraUpdate = () => {
                 name="address"
                 data-cy="address"
                 type="text"
+              />
+              <ValidatedField
+                label={translate('serverApp.userExtra.isDeleted')}
+                id="user-extra-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
               />
               <ValidatedField
                 label={translate('serverApp.userExtra.createdBy')}

@@ -143,6 +143,10 @@ export const HkjJewelryModel = () => {
                   <Translate contentKey="serverApp.hkjJewelryModel.notes">Notes</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
                 </th>
+                <th className="hand" onClick={sort('isDeleted')}>
+                  <Translate contentKey="serverApp.hkjJewelryModel.isDeleted">Is Deleted</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.createdBy">Created By</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('createdBy')} />
@@ -158,6 +162,9 @@ export const HkjJewelryModel = () => {
                 <th className="hand" onClick={sort('lastModifiedDate')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.lastModifiedDate">Last Modified Date</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
+                </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjJewelryModel.project">Project</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -177,6 +184,7 @@ export const HkjJewelryModel = () => {
                   <td>{hkjJewelryModel.price}</td>
                   <td>{hkjJewelryModel.color}</td>
                   <td>{hkjJewelryModel.notes}</td>
+                  <td>{hkjJewelryModel.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjJewelryModel.createdBy}</td>
                   <td>
                     {hkjJewelryModel.createdDate ? (
@@ -188,6 +196,13 @@ export const HkjJewelryModel = () => {
                     {hkjJewelryModel.lastModifiedDate ? (
                       <TextFormat type="date" value={hkjJewelryModel.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
+                  </td>
+                  <td>
+                    {hkjJewelryModel.project ? (
+                      <Link to={`/hkj-project/${hkjJewelryModel.project.id}`}>{hkjJewelryModel.project.id}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

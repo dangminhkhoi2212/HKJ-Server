@@ -8,8 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjCategory } from 'app/shared/model/hkj-category.model';
-import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
+import { IHkjTemplate } from 'app/shared/model/hkj-template.model';
+import { getEntities as getHkjTemplates } from 'app/entities/hkj-template/hkj-template.reducer';
 import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
 import { getEntities as getHkjEmployees } from 'app/entities/hkj-employee/hkj-employee.reducer';
 import { IHkjProject } from 'app/shared/model/hkj-project.model';
@@ -25,7 +25,7 @@ export const HkjProjectUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
+  const hkjTemplates = useAppSelector(state => state.hkjTemplate.entities);
   const hkjEmployees = useAppSelector(state => state.hkjEmployee.entities);
   const hkjProjectEntity = useAppSelector(state => state.hkjProject.entity);
   const loading = useAppSelector(state => state.hkjProject.loading);
@@ -45,7 +45,7 @@ export const HkjProjectUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getHkjCategories({}));
+    dispatch(getHkjTemplates({}));
     dispatch(getHkjEmployees({}));
   }, []);
 
@@ -75,7 +75,7 @@ export const HkjProjectUpdate = () => {
     const entity = {
       ...hkjProjectEntity,
       ...values,
-      category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
+      template: hkjTemplates.find(it => it.id.toString() === values.template?.toString()),
       manager: hkjEmployees.find(it => it.id.toString() === values.manager?.toString()),
     };
 
@@ -104,7 +104,7 @@ export const HkjProjectUpdate = () => {
           endDate: convertDateTimeFromServer(hkjProjectEntity.endDate),
           createdDate: convertDateTimeFromServer(hkjProjectEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjProjectEntity.lastModifiedDate),
-          category: hkjProjectEntity?.category?.id,
+          template: hkjProjectEntity?.template?.id,
           manager: hkjProjectEntity?.manager?.id,
         };
 
@@ -239,6 +239,14 @@ export const HkjProjectUpdate = () => {
                 }}
               />
               <ValidatedField
+                label={translate('serverApp.hkjProject.isDeleted')}
+                id="hkj-project-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjProject.createdBy')}
                 id="hkj-project-createdBy"
                 name="createdBy"
@@ -269,15 +277,15 @@ export const HkjProjectUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-project-category"
-                name="category"
-                data-cy="category"
-                label={translate('serverApp.hkjProject.category')}
+                id="hkj-project-template"
+                name="template"
+                data-cy="template"
+                label={translate('serverApp.hkjProject.template')}
                 type="select"
               >
                 <option value="" key="0" />
-                {hkjCategories
-                  ? hkjCategories.map(otherEntity => (
+                {hkjTemplates
+                  ? hkjTemplates.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

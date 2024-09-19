@@ -66,7 +66,8 @@ public class HkjProjectAsserts {
                         .isEqualTo(actual.getActualCost())
             )
             .satisfies(e -> assertThat(e.getQualityCheck()).as("check qualityCheck").isEqualTo(actual.getQualityCheck()))
-            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()));
+            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
     /**
@@ -78,7 +79,7 @@ public class HkjProjectAsserts {
     public static void assertHkjProjectUpdatableRelationshipsEquals(HkjProject expected, HkjProject actual) {
         assertThat(expected)
             .as("Verify HkjProject relationships")
-            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
+            .satisfies(e -> assertThat(e.getTemplate()).as("check template").isEqualTo(actual.getTemplate()))
             .satisfies(e -> assertThat(e.getManager()).as("check manager").isEqualTo(actual.getManager()));
     }
 }

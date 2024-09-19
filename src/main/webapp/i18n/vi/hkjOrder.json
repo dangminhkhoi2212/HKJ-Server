@@ -27,13 +27,15 @@
       "totalPrice": "Total Price",
       "depositAmount": "Deposit Amount",
       "notes": "Notes",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
       "project": "Project",
-      "customOrder": "Custom Order",
-      "customer": "Customer"
+      "orderImages": "Order Images",
+      "customer": "Customer",
+      "jewelry": "Jewelry"
     }
   }
 }

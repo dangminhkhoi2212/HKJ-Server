@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
 import com.server.hkj.domain.HkjJewelryModel;
+import com.server.hkj.domain.HkjProject;
 import com.server.hkj.repository.HkjJewelryModelRepository;
 import com.server.hkj.service.dto.HkjJewelryModelDTO;
 import com.server.hkj.service.mapper.HkjJewelryModelMapper;
@@ -60,6 +61,9 @@ class HkjJewelryModelResourceIT {
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-jewelry-models";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -99,7 +103,8 @@ class HkjJewelryModelResourceIT {
             .weight(DEFAULT_WEIGHT)
             .price(DEFAULT_PRICE)
             .color(DEFAULT_COLOR)
-            .notes(DEFAULT_NOTES);
+            .notes(DEFAULT_NOTES)
+            .isDeleted(DEFAULT_IS_DELETED);
         return hkjJewelryModel;
     }
 
@@ -117,7 +122,8 @@ class HkjJewelryModelResourceIT {
             .weight(UPDATED_WEIGHT)
             .price(UPDATED_PRICE)
             .color(UPDATED_COLOR)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
         return hkjJewelryModel;
     }
 
@@ -204,25 +210,6 @@ class HkjJewelryModelResourceIT {
 
     @Test
     @Transactional
-    void checkIsCustomIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        hkjJewelryModel.setIsCustom(null);
-
-        // Create the HkjJewelryModel, which fails.
-        HkjJewelryModelDTO hkjJewelryModelDTO = hkjJewelryModelMapper.toDto(hkjJewelryModel);
-
-        restHkjJewelryModelMockMvc
-            .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(hkjJewelryModelDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllHkjJewelryModels() throws Exception {
         // Initialize the database
         insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
@@ -239,7 +226,8 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)));
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -260,7 +248,8 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.weight").value(DEFAULT_WEIGHT.doubleValue()))
             .andExpect(jsonPath("$.price").value(sameNumber(DEFAULT_PRICE)))
             .andExpect(jsonPath("$.color").value(DEFAULT_COLOR))
-            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES));
+            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -654,6 +643,61 @@ class HkjJewelryModelResourceIT {
         defaultHkjJewelryModelFiltering("notes.doesNotContain=" + UPDATED_NOTES, "notes.doesNotContain=" + DEFAULT_NOTES);
     }
 
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where isDeleted equals to
+        defaultHkjJewelryModelFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where isDeleted in
+        defaultHkjJewelryModelFiltering(
+            "isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED,
+            "isDeleted.in=" + UPDATED_IS_DELETED
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where isDeleted is not null
+        defaultHkjJewelryModelFiltering("isDeleted.specified=true", "isDeleted.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByProjectIsEqualToSomething() throws Exception {
+        HkjProject project;
+        if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
+            hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+            project = HkjProjectResourceIT.createEntity(em);
+        } else {
+            project = TestUtil.findAll(em, HkjProject.class).get(0);
+        }
+        em.persist(project);
+        em.flush();
+        hkjJewelryModel.setProject(project);
+        hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+        Long projectId = project.getId();
+        // Get all the hkjJewelryModelList where project equals to projectId
+        defaultHkjJewelryModelShouldBeFound("projectId.equals=" + projectId);
+
+        // Get all the hkjJewelryModelList where project equals to (projectId + 1)
+        defaultHkjJewelryModelShouldNotBeFound("projectId.equals=" + (projectId + 1));
+    }
+
     private void defaultHkjJewelryModelFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjJewelryModelShouldBeFound(shouldBeFound);
         defaultHkjJewelryModelShouldNotBeFound(shouldNotBeFound);
@@ -674,7 +718,8 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)));
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjJewelryModelMockMvc
@@ -729,7 +774,8 @@ class HkjJewelryModelResourceIT {
             .weight(UPDATED_WEIGHT)
             .price(UPDATED_PRICE)
             .color(UPDATED_COLOR)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
         HkjJewelryModelDTO hkjJewelryModelDTO = hkjJewelryModelMapper.toDto(updatedHkjJewelryModel);
 
         restHkjJewelryModelMockMvc
@@ -868,7 +914,8 @@ class HkjJewelryModelResourceIT {
             .weight(UPDATED_WEIGHT)
             .price(UPDATED_PRICE)
             .color(UPDATED_COLOR)
-            .notes(UPDATED_NOTES);
+            .notes(UPDATED_NOTES)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjJewelryModelMockMvc
             .perform(

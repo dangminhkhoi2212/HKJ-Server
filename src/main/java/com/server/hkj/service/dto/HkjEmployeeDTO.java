@@ -16,6 +16,8 @@ public class HkjEmployeeDTO implements Serializable {
     @Size(max = 1000)
     private String notes;
 
+    private Boolean isDeleted;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -25,8 +27,6 @@ public class HkjEmployeeDTO implements Serializable {
     private Instant lastModifiedDate;
 
     private UserExtraDTO userExtra;
-
-    private HkjHireDTO hkjHire;
 
     public Long getId() {
         return id;
@@ -42,6 +42,14 @@ public class HkjEmployeeDTO implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public String getCreatedBy() {
@@ -84,14 +92,6 @@ public class HkjEmployeeDTO implements Serializable {
         this.userExtra = userExtra;
     }
 
-    public HkjHireDTO getHkjHire() {
-        return hkjHire;
-    }
-
-    public void setHkjHire(HkjHireDTO hkjHire) {
-        this.hkjHire = hkjHire;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -119,12 +119,12 @@ public class HkjEmployeeDTO implements Serializable {
         return "HkjEmployeeDTO{" +
             "id=" + getId() +
             ", notes='" + getNotes() + "'" +
+            ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", userExtra=" + getUserExtra() +
-            ", hkjHire=" + getHkjHire() +
             "}";
     }
 }

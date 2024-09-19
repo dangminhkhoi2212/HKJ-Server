@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjJewelryImage;
 import com.server.hkj.domain.HkjJewelryModel;
 import com.server.hkj.repository.HkjJewelryImageRepository;
@@ -49,6 +48,9 @@ class HkjJewelryImageResourceIT {
     private static final String DEFAULT_TAGS = "AAAAAAAAAA";
     private static final String UPDATED_TAGS = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_IS_DELETED = false;
+    private static final Boolean UPDATED_IS_DELETED = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-jewelry-images";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -85,7 +87,8 @@ class HkjJewelryImageResourceIT {
             .url(DEFAULT_URL)
             .isSearchImage(DEFAULT_IS_SEARCH_IMAGE)
             .description(DEFAULT_DESCRIPTION)
-            .tags(DEFAULT_TAGS);
+            .tags(DEFAULT_TAGS)
+            .isDeleted(DEFAULT_IS_DELETED);
         return hkjJewelryImage;
     }
 
@@ -100,7 +103,8 @@ class HkjJewelryImageResourceIT {
             .url(UPDATED_URL)
             .isSearchImage(UPDATED_IS_SEARCH_IMAGE)
             .description(UPDATED_DESCRIPTION)
-            .tags(UPDATED_TAGS);
+            .tags(UPDATED_TAGS)
+            .isDeleted(UPDATED_IS_DELETED);
         return hkjJewelryImage;
     }
 
@@ -219,7 +223,8 @@ class HkjJewelryImageResourceIT {
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
             .andExpect(jsonPath("$.[*].isSearchImage").value(hasItem(DEFAULT_IS_SEARCH_IMAGE.booleanValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].tags").value(hasItem(DEFAULT_TAGS)));
+            .andExpect(jsonPath("$.[*].tags").value(hasItem(DEFAULT_TAGS)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
     @Test
@@ -237,7 +242,8 @@ class HkjJewelryImageResourceIT {
             .andExpect(jsonPath("$.url").value(DEFAULT_URL))
             .andExpect(jsonPath("$.isSearchImage").value(DEFAULT_IS_SEARCH_IMAGE.booleanValue()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.tags").value(DEFAULT_TAGS));
+            .andExpect(jsonPath("$.tags").value(DEFAULT_TAGS))
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
     @Test
@@ -449,24 +455,35 @@ class HkjJewelryImageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjJewelryImagesByUploadedByIsEqualToSomething() throws Exception {
-        HkjEmployee uploadedBy;
-        if (TestUtil.findAll(em, HkjEmployee.class).isEmpty()) {
-            hkjJewelryImageRepository.saveAndFlush(hkjJewelryImage);
-            uploadedBy = HkjEmployeeResourceIT.createEntity(em);
-        } else {
-            uploadedBy = TestUtil.findAll(em, HkjEmployee.class).get(0);
-        }
-        em.persist(uploadedBy);
-        em.flush();
-        hkjJewelryImage.setUploadedBy(uploadedBy);
-        hkjJewelryImageRepository.saveAndFlush(hkjJewelryImage);
-        Long uploadedById = uploadedBy.getId();
-        // Get all the hkjJewelryImageList where uploadedBy equals to uploadedById
-        defaultHkjJewelryImageShouldBeFound("uploadedById.equals=" + uploadedById);
+    void getAllHkjJewelryImagesByIsDeletedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryImage = hkjJewelryImageRepository.saveAndFlush(hkjJewelryImage);
 
-        // Get all the hkjJewelryImageList where uploadedBy equals to (uploadedById + 1)
-        defaultHkjJewelryImageShouldNotBeFound("uploadedById.equals=" + (uploadedById + 1));
+        // Get all the hkjJewelryImageList where isDeleted equals to
+        defaultHkjJewelryImageFiltering("isDeleted.equals=" + DEFAULT_IS_DELETED, "isDeleted.equals=" + UPDATED_IS_DELETED);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryImagesByIsDeletedIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryImage = hkjJewelryImageRepository.saveAndFlush(hkjJewelryImage);
+
+        // Get all the hkjJewelryImageList where isDeleted in
+        defaultHkjJewelryImageFiltering(
+            "isDeleted.in=" + DEFAULT_IS_DELETED + "," + UPDATED_IS_DELETED,
+            "isDeleted.in=" + UPDATED_IS_DELETED
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryImagesByIsDeletedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryImage = hkjJewelryImageRepository.saveAndFlush(hkjJewelryImage);
+
+        // Get all the hkjJewelryImageList where isDeleted is not null
+        defaultHkjJewelryImageFiltering("isDeleted.specified=true", "isDeleted.specified=false");
     }
 
     @Test
@@ -508,7 +525,8 @@ class HkjJewelryImageResourceIT {
             .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL)))
             .andExpect(jsonPath("$.[*].isSearchImage").value(hasItem(DEFAULT_IS_SEARCH_IMAGE.booleanValue())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].tags").value(hasItem(DEFAULT_TAGS)));
+            .andExpect(jsonPath("$.[*].tags").value(hasItem(DEFAULT_TAGS)))
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjJewelryImageMockMvc
@@ -556,7 +574,12 @@ class HkjJewelryImageResourceIT {
         HkjJewelryImage updatedHkjJewelryImage = hkjJewelryImageRepository.findById(hkjJewelryImage.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjJewelryImage are not directly saved in db
         em.detach(updatedHkjJewelryImage);
-        updatedHkjJewelryImage.url(UPDATED_URL).isSearchImage(UPDATED_IS_SEARCH_IMAGE).description(UPDATED_DESCRIPTION).tags(UPDATED_TAGS);
+        updatedHkjJewelryImage
+            .url(UPDATED_URL)
+            .isSearchImage(UPDATED_IS_SEARCH_IMAGE)
+            .description(UPDATED_DESCRIPTION)
+            .tags(UPDATED_TAGS)
+            .isDeleted(UPDATED_IS_DELETED);
         HkjJewelryImageDTO hkjJewelryImageDTO = hkjJewelryImageMapper.toDto(updatedHkjJewelryImage);
 
         restHkjJewelryImageMockMvc
@@ -687,7 +710,8 @@ class HkjJewelryImageResourceIT {
             .url(UPDATED_URL)
             .isSearchImage(UPDATED_IS_SEARCH_IMAGE)
             .description(UPDATED_DESCRIPTION)
-            .tags(UPDATED_TAGS);
+            .tags(UPDATED_TAGS)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjJewelryImageMockMvc
             .perform(

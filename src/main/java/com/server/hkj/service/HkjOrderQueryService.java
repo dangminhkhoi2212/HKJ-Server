@@ -106,6 +106,9 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
             if (criteria.getNotes() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjOrder_.notes));
             }
+            if (criteria.getIsDeleted() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjOrder_.isDeleted));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjOrder_.createdBy));
             }
@@ -123,17 +126,25 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
                     buildSpecification(criteria.getProjectId(), root -> root.join(HkjOrder_.project, JoinType.LEFT).get(HkjProject_.id))
                 );
             }
-            if (criteria.getCustomOrderId() != null) {
+            if (criteria.getOrderImagesId() != null) {
                 specification = specification.and(
                     buildSpecification(
-                        criteria.getCustomOrderId(),
-                        root -> root.join(HkjOrder_.customOrder, JoinType.LEFT).get(HkjJewelryModel_.id)
+                        criteria.getOrderImagesId(),
+                        root -> root.join(HkjOrder_.orderImages, JoinType.LEFT).get(HkjOrderImage_.id)
                     )
                 );
             }
             if (criteria.getCustomerId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getCustomerId(), root -> root.join(HkjOrder_.customer, JoinType.LEFT).get(UserExtra_.id))
+                );
+            }
+            if (criteria.getJewelryId() != null) {
+                specification = specification.and(
+                    buildSpecification(
+                        criteria.getJewelryId(),
+                        root -> root.join(HkjOrder_.jewelry, JoinType.LEFT).get(HkjJewelryModel_.id)
+                    )
                 );
             }
         }

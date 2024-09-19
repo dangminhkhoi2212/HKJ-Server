@@ -107,6 +107,14 @@ export const HkjCategoryUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjCategory.isDeleted')}
+                id="hkj-category-isDeleted"
+                name="isDeleted"
+                data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjCategory.createdBy')}
                 id="hkj-category-createdBy"
                 name="createdBy"

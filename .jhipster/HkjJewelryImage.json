@@ -25,6 +25,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "isDeleted",
+      "fieldType": "Boolean"
+    },
+    {
       "auditField": true,
       "autoGenerate": true,
       "columnType": "varchar(50)",
@@ -64,12 +68,6 @@
   "name": "HkjJewelryImage",
   "pagination": "pagination",
   "relationships": [
-    {
-      "otherEntityName": "hkjEmployee",
-      "relationshipName": "uploadedBy",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
     {
       "otherEntityName": "hkjJewelryModel",
       "otherEntityRelationshipName": "images",

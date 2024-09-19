@@ -25,12 +25,13 @@
       "price": "Price",
       "color": "Color",
       "notes": "Notes",
+      "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "images": "Images",
-      "hkjOrder": "Hkj Order"
+      "project": "Project",
+      "images": "Images"
     }
   }
 }
