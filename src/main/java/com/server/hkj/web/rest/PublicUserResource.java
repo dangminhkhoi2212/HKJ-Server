@@ -2,7 +2,7 @@ package com.server.hkj.web.rest;
 
 import com.server.hkj.service.UserExtraService;
 import com.server.hkj.service.UserService;
-import com.server.hkj.service.dto.AdminUserDTO;
+import com.server.hkj.service.dto.AccountDTO;
 import com.server.hkj.service.dto.UserDTO;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -47,12 +47,12 @@ public class PublicUserResource {
     }
 
     @GetMapping("/users/role")
-    public ResponseEntity<List<AdminUserDTO>> getAllPublicUsersByRole(
+    public ResponseEntity<List<AccountDTO>> getAllPublicUsersByRole(
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
         @Param(value = "role") String role
     ) {
-        final Page<AdminUserDTO> page = userExtraService.getUsersByRole(pageable, role);
-        return new ResponseEntity<List<AdminUserDTO>>(page.getContent(), HttpStatus.OK);
+        final Page<AccountDTO> page = userExtraService.getUsersByRole(pageable, role);
+        return new ResponseEntity<List<AccountDTO>>(page.getContent(), HttpStatus.OK);
     }
 
     @GetMapping("/users/role/count")
@@ -60,7 +60,7 @@ public class PublicUserResource {
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
         @Param(value = "role") String role
     ) {
-        final Page<AdminUserDTO> page = userExtraService.getUsersByRole(pageable, role);
+        final Page<AccountDTO> page = userExtraService.getUsersByRole(pageable, role);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 
         return new ResponseEntity<Long>(Long.valueOf(page.getNumberOfElements()), headers, HttpStatus.OK);

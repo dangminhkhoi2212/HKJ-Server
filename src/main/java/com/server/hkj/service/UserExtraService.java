@@ -2,10 +2,9 @@ package com.server.hkj.service;
 
 import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.UserExtraRepository;
-import com.server.hkj.service.dto.AdminUserDTO;
+import com.server.hkj.service.dto.AccountDTO;
 import com.server.hkj.service.dto.UserExtraDTO;
 import com.server.hkj.service.mapper.UserExtraMapper;
-import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,7 +103,7 @@ public class UserExtraService {
         return userExtraRepository.findAll(pageable).map(userExtraMapper::toDto);
     }
 
-    public Page<AdminUserDTO> getUsersByRole(Pageable pageable, String role) {
-        return userExtraRepository.getAllByRole(pageable, role).map(AdminUserDTO::new);
+    public Page<AccountDTO> getUsersByRole(Pageable pageable, String role) {
+        return userExtraRepository.getAllByRole(pageable, role).map(AccountDTO::new);
     }
 }
