@@ -11,6 +11,7 @@ import com.server.hkj.security.AuthoritiesConstants;
 import com.server.hkj.security.SecurityUtils;
 import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
+import com.server.hkj.service.mapper.UserMapper;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,8 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
+    private final UserMapper userMapper;
+
     public UserService(
         UserRepository userRepository,
         AuthorityRepository authorityRepository,
@@ -55,6 +58,18 @@ public class UserService {
         this.authorityRepository = authorityRepository;
         this.userExtraRepository = userExtraRepository;
         this.cacheManager = cacheManager;
+        this.userMapper = new UserMapper();
+    }
+
+    public void updateUser(User user) {
+        Optional<User> existingUser = userRepository.findById(user.getId());
+        if (existingUser.isPresent()) {
+            User newUser = userMapper.partialUpdate(existingUser.get(), user);
+            userRepository.save(newUser);
+            log.info("Changed Information for User: {}", newUser);
+            this.clearUserCaches(newUser);
+            this.clearUserCaches(existingUser.get());
+        }
     }
 
     /**
@@ -186,7 +201,7 @@ public class UserService {
         UserExtra userExtra = new UserExtra();
         userExtra.setUser(user);
         userExtra.setPhone(details.get("phone_number") != null ? details.get("phone_number").toString() : "");
-        userExtra.setAddress(details.get("address") != null ? details.get("address").toString() : "");
+        userExtra.setAddress(details.get("address_string") != null ? details.get("address_string").toString() : "");
         return userExtra;
     }
 
@@ -223,7 +238,8 @@ public class UserService {
                 })
                 .collect(Collectors.toSet())
         );
-        userRepository.save(user);
+
+        updateUser(user);
         UserExtra userExtraSync = syncUserWithIdP(attributes, user);
         return new AdminUserDTO(userExtraSync);
     }
@@ -292,8 +308,8 @@ public class UserService {
         if (details.get("phone_number") != null) {
             userExtra.setPhone(details.get("phone_number").toString());
         }
-        if (details.get("address") != null) {
-            userExtra.setAddress(details.get("address").toString());
+        if (details.get("address_string") != null) {
+            userExtra.setAddress(details.get("address_string").toString());
         }
         userExtra.setUser(user);
         return userExtra;

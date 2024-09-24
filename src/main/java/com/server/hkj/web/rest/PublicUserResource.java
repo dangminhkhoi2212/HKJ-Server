@@ -4,10 +4,7 @@ import com.server.hkj.service.UserExtraService;
 import com.server.hkj.service.UserService;
 import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
-import com.server.hkj.service.dto.response.ResponseCT;
-import com.server.hkj.service.dto.response.ResponseCTBuilder;
-import com.server.hkj.service.dto.response.ResponseErrorCT;
-import java.util.*;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +12,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.PaginationUtil;
 
@@ -48,15 +47,22 @@ public class PublicUserResource {
     }
 
     @GetMapping("/users/role")
-    public ResponseCT<List<AdminUserDTO>> getAllPublicUsersByRole(
+    public ResponseEntity<List<AdminUserDTO>> getAllPublicUsersByRole(
         @org.springdoc.core.annotations.ParameterObject Pageable pageable,
         @Param(value = "role") String role
     ) {
-        try {
-            final Page<AdminUserDTO> page = userExtraService.getUsersByRole(pageable, role);
-            return new ResponseCTBuilder<List<AdminUserDTO>>().addData(page.getContent()).build();
-        } catch (Exception e) {
-            return new ResponseCTBuilder<List<AdminUserDTO>>().error(ResponseErrorCT.builder().detail(e.getMessage()).build()).build();
-        }
+        final Page<AdminUserDTO> page = userExtraService.getUsersByRole(pageable, role);
+        return new ResponseEntity<List<AdminUserDTO>>(page.getContent(), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/role/count")
+    public ResponseEntity<Long> getAllPublicUsersByRoleCount(
+        @org.springdoc.core.annotations.ParameterObject Pageable pageable,
+        @Param(value = "role") String role
+    ) {
+        final Page<AdminUserDTO> page = userExtraService.getUsersByRole(pageable, role);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+
+        return new ResponseEntity<Long>(Long.valueOf(page.getNumberOfElements()), headers, HttpStatus.OK);
     }
 }

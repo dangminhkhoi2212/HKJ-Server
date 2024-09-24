@@ -4,7 +4,11 @@ import com.server.hkj.domain.Authority;
 import com.server.hkj.domain.User;
 import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapping;
@@ -146,5 +150,28 @@ public class UserMapper {
         }
 
         return userSet;
+    }
+
+    public User partialUpdate(User user, User newUser) {
+        if (newUser.getLogin() != null) {
+            user.setLogin(newUser.getLogin());
+        }
+        if (newUser.getFirstName() != null) {
+            user.setFirstName(newUser.getFirstName());
+        }
+        if (newUser.getLastName() != null) {
+            user.setLastName(newUser.getLastName());
+        }
+        if (newUser.getEmail() != null) {
+            user.setEmail(newUser.getEmail());
+        }
+        if (newUser.getImageUrl() != null) {
+            user.setImageUrl(newUser.getImageUrl());
+        }
+        if (newUser.getLangKey() != null) {
+            user.setLangKey(newUser.getLangKey());
+        }
+        user.setActivated(newUser.isActivated());
+        return user;
     }
 }
