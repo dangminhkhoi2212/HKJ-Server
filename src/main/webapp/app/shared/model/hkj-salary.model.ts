@@ -1,15 +1,16 @@
 import dayjs from 'dayjs';
-import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
 
 export interface IHkjSalary {
   id?: number;
   salary?: number | null;
+  notes?: string | null;
   isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  hkjEmployee?: IHkjEmployee | null;
+  employee?: IUserExtra | null;
 }
 
 export const defaultValue: Readonly<IHkjSalary> = {

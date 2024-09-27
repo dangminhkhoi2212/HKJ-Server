@@ -80,6 +80,9 @@ public class HkjSalaryQueryService extends QueryService<HkjSalary> {
             if (criteria.getSalary() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getSalary(), HkjSalary_.salary));
             }
+            if (criteria.getNotes() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjSalary_.notes));
+            }
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjSalary_.isDeleted));
             }
@@ -95,12 +98,9 @@ public class HkjSalaryQueryService extends QueryService<HkjSalary> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjSalary_.lastModifiedDate));
             }
-            if (criteria.getHkjEmployeeId() != null) {
+            if (criteria.getEmployeeId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getHkjEmployeeId(),
-                        root -> root.join(HkjSalary_.hkjEmployee, JoinType.LEFT).get(HkjEmployee_.id)
-                    )
+                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjSalary_.employee, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
         }

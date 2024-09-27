@@ -7,7 +7,6 @@ import UserExtra from './user-extra';
 import HkjPosition from './hkj-position';
 import HkjHire from './hkj-hire';
 import HkjSalary from './hkj-salary';
-import HkjEmployee from './hkj-employee';
 import HkjProject from './hkj-project';
 import HkjTask from './hkj-task';
 import HkjCategory from './hkj-category';
@@ -32,7 +31,6 @@ export default () => {
         <Route path="hkj-position/*" element={<HkjPosition />} />
         <Route path="hkj-hire/*" element={<HkjHire />} />
         <Route path="hkj-salary/*" element={<HkjSalary />} />
-        <Route path="hkj-employee/*" element={<HkjEmployee />} />
         <Route path="hkj-project/*" element={<HkjProject />} />
         <Route path="hkj-task/*" element={<HkjTask />} />
         <Route path="hkj-category/*" element={<HkjCategory />} />

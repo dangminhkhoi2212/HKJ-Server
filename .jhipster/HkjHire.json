@@ -66,15 +66,17 @@
   "relationships": [
     {
       "otherEntityName": "hkjPosition",
+      "otherEntityRelationshipName": "hire",
       "relationshipName": "position",
       "relationshipSide": "left",
-      "relationshipType": "one-to-one"
+      "relationshipType": "many-to-one"
     },
     {
-      "otherEntityName": "hkjEmployee",
+      "otherEntityName": "userExtra",
+      "otherEntityRelationshipName": "hire",
       "relationshipName": "employee",
       "relationshipSide": "left",
-      "relationshipType": "one-to-one"
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

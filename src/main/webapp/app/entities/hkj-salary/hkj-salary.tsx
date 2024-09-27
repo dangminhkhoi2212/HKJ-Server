@@ -118,6 +118,10 @@ export const HkjSalary = () => {
                   <Translate contentKey="serverApp.hkjSalary.salary">Salary</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('salary')} />
                 </th>
+                <th className="hand" onClick={sort('notes')}>
+                  <Translate contentKey="serverApp.hkjSalary.notes">Notes</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
+                </th>
                 <th className="hand" onClick={sort('isDeleted')}>
                   <Translate contentKey="serverApp.hkjSalary.isDeleted">Is Deleted</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
@@ -139,7 +143,7 @@ export const HkjSalary = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjSalary.hkjEmployee">Hkj Employee</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjSalary.employee">Employee</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -153,6 +157,7 @@ export const HkjSalary = () => {
                     </Button>
                   </td>
                   <td>{hkjSalary.salary}</td>
+                  <td>{hkjSalary.notes}</td>
                   <td>{hkjSalary.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjSalary.createdBy}</td>
                   <td>
@@ -164,9 +169,7 @@ export const HkjSalary = () => {
                       <TextFormat type="date" value={hkjSalary.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>
-                    {hkjSalary.hkjEmployee ? <Link to={`/hkj-employee/${hkjSalary.hkjEmployee.id}`}>{hkjSalary.hkjEmployee.id}</Link> : ''}
-                  </td>
+                  <td>{hkjSalary.employee ? <Link to={`/user-extra/${hkjSalary.employee.id}`}>{hkjSalary.employee.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-salary/${hkjSalary.id}`} color="info" size="sm" data-cy="entityDetailsButton">

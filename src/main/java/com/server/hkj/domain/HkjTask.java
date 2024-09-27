@@ -79,28 +79,24 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "hkjTask", "hkjTemplate" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
-    private HkjTemplateStep templateStep;
+    private UserExtra employee;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTask")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "task" }, allowSetters = true)
     private Set<HkjTaskImage> images = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTask")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "material", "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "material", "task" }, allowSetters = true)
     private Set<HkjMaterialUsage> materials = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
-    private HkjEmployee employee;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "template", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
-    private HkjProject hkjProject;
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
+    private HkjProject project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -288,16 +284,16 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
-    public HkjTemplateStep getTemplateStep() {
-        return this.templateStep;
+    public UserExtra getEmployee() {
+        return this.employee;
     }
 
-    public void setTemplateStep(HkjTemplateStep hkjTemplateStep) {
-        this.templateStep = hkjTemplateStep;
+    public void setEmployee(UserExtra userExtra) {
+        this.employee = userExtra;
     }
 
-    public HkjTask templateStep(HkjTemplateStep hkjTemplateStep) {
-        this.setTemplateStep(hkjTemplateStep);
+    public HkjTask employee(UserExtra userExtra) {
+        this.setEmployee(userExtra);
         return this;
     }
 
@@ -307,10 +303,10 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public void setImages(Set<HkjTaskImage> hkjTaskImages) {
         if (this.images != null) {
-            this.images.forEach(i -> i.setHkjTask(null));
+            this.images.forEach(i -> i.setTask(null));
         }
         if (hkjTaskImages != null) {
-            hkjTaskImages.forEach(i -> i.setHkjTask(this));
+            hkjTaskImages.forEach(i -> i.setTask(this));
         }
         this.images = hkjTaskImages;
     }
@@ -322,13 +318,13 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public HkjTask addImages(HkjTaskImage hkjTaskImage) {
         this.images.add(hkjTaskImage);
-        hkjTaskImage.setHkjTask(this);
+        hkjTaskImage.setTask(this);
         return this;
     }
 
     public HkjTask removeImages(HkjTaskImage hkjTaskImage) {
         this.images.remove(hkjTaskImage);
-        hkjTaskImage.setHkjTask(null);
+        hkjTaskImage.setTask(null);
         return this;
     }
 
@@ -338,10 +334,10 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public void setMaterials(Set<HkjMaterialUsage> hkjMaterialUsages) {
         if (this.materials != null) {
-            this.materials.forEach(i -> i.setHkjTask(null));
+            this.materials.forEach(i -> i.setTask(null));
         }
         if (hkjMaterialUsages != null) {
-            hkjMaterialUsages.forEach(i -> i.setHkjTask(this));
+            hkjMaterialUsages.forEach(i -> i.setTask(this));
         }
         this.materials = hkjMaterialUsages;
     }
@@ -353,39 +349,26 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public HkjTask addMaterials(HkjMaterialUsage hkjMaterialUsage) {
         this.materials.add(hkjMaterialUsage);
-        hkjMaterialUsage.setHkjTask(this);
+        hkjMaterialUsage.setTask(this);
         return this;
     }
 
     public HkjTask removeMaterials(HkjMaterialUsage hkjMaterialUsage) {
         this.materials.remove(hkjMaterialUsage);
-        hkjMaterialUsage.setHkjTask(null);
+        hkjMaterialUsage.setTask(null);
         return this;
     }
 
-    public HkjEmployee getEmployee() {
-        return this.employee;
+    public HkjProject getProject() {
+        return this.project;
     }
 
-    public void setEmployee(HkjEmployee hkjEmployee) {
-        this.employee = hkjEmployee;
+    public void setProject(HkjProject hkjProject) {
+        this.project = hkjProject;
     }
 
-    public HkjTask employee(HkjEmployee hkjEmployee) {
-        this.setEmployee(hkjEmployee);
-        return this;
-    }
-
-    public HkjProject getHkjProject() {
-        return this.hkjProject;
-    }
-
-    public void setHkjProject(HkjProject hkjProject) {
-        this.hkjProject = hkjProject;
-    }
-
-    public HkjTask hkjProject(HkjProject hkjProject) {
-        this.setHkjProject(hkjProject);
+    public HkjTask project(HkjProject hkjProject) {
+        this.setProject(hkjProject);
         return this;
     }
 

@@ -54,9 +54,9 @@ public class HkjProjectDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjTemplateDTO template;
+    private HkjCategoryDTO category;
 
-    private HkjEmployeeDTO manager;
+    private UserExtraDTO manager;
 
     public Long getId() {
         return id;
@@ -194,19 +194,19 @@ public class HkjProjectDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjTemplateDTO getTemplate() {
-        return template;
+    public HkjCategoryDTO getCategory() {
+        return category;
     }
 
-    public void setTemplate(HkjTemplateDTO template) {
-        this.template = template;
+    public void setCategory(HkjCategoryDTO category) {
+        this.category = category;
     }
 
-    public HkjEmployeeDTO getManager() {
+    public UserExtraDTO getManager() {
         return manager;
     }
 
-    public void setManager(HkjEmployeeDTO manager) {
+    public void setManager(UserExtraDTO manager) {
         this.manager = manager;
     }
 
@@ -252,7 +252,7 @@ public class HkjProjectDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", template=" + getTemplate() +
+            ", category=" + getCategory() +
             ", manager=" + getManager() +
             "}";
     }

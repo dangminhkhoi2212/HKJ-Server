@@ -1,9 +1,9 @@
 package com.server.hkj.service.mapper;
 
-import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjSalary;
-import com.server.hkj.service.dto.HkjEmployeeDTO;
+import com.server.hkj.domain.UserExtra;
 import com.server.hkj.service.dto.HkjSalaryDTO;
+import com.server.hkj.service.dto.UserExtraDTO;
 import org.mapstruct.*;
 
 /**
@@ -11,11 +11,11 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjSalaryMapper extends EntityMapper<HkjSalaryDTO, HkjSalary> {
-    @Mapping(target = "hkjEmployee", source = "hkjEmployee", qualifiedByName = "hkjEmployeeId")
+    @Mapping(target = "employee", source = "employee", qualifiedByName = "userExtraId")
     HkjSalaryDTO toDto(HkjSalary s);
 
-    @Named("hkjEmployeeId")
+    @Named("userExtraId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    HkjEmployeeDTO toDtoHkjEmployeeId(HkjEmployee hkjEmployee);
+    UserExtraDTO toDtoUserExtraId(UserExtra userExtra);
 }

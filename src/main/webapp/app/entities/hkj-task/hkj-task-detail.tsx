@@ -127,17 +127,13 @@ export const HkjTaskDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjTask.templateStep">Template Step</Translate>
-          </dt>
-          <dd>{hkjTaskEntity.templateStep ? hkjTaskEntity.templateStep.id : ''}</dd>
-          <dt>
             <Translate contentKey="serverApp.hkjTask.employee">Employee</Translate>
           </dt>
           <dd>{hkjTaskEntity.employee ? hkjTaskEntity.employee.id : ''}</dd>
           <dt>
-            <Translate contentKey="serverApp.hkjTask.hkjProject">Hkj Project</Translate>
+            <Translate contentKey="serverApp.hkjTask.project">Project</Translate>
           </dt>
-          <dd>{hkjTaskEntity.hkjProject ? hkjTaskEntity.hkjProject.id : ''}</dd>
+          <dd>{hkjTaskEntity.project ? hkjTaskEntity.project.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-task" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

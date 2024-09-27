@@ -3,6 +3,7 @@ package com.server.hkj.web.rest;
 import com.server.hkj.service.UserExtraService;
 import com.server.hkj.service.UserService;
 import com.server.hkj.service.dto.AccountDTO;
+import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -64,5 +68,12 @@ public class PublicUserResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
 
         return new ResponseEntity<Long>(Long.valueOf(page.getNumberOfElements()), headers, HttpStatus.OK);
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<AdminUserDTO> putMethodName(@PathVariable String id, @RequestBody AdminUserDTO user) {
+        //TODO: process PUT request
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), null);
+        return new ResponseEntity<AdminUserDTO>(null, headers, HttpStatus.OK);
     }
 }

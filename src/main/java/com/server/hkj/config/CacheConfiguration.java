@@ -52,11 +52,12 @@ public class CacheConfiguration {
             createCache(cm, com.server.hkj.domain.User.class.getName() + ".authorities");
             createCache(cm, com.server.hkj.domain.EntityAuditEvent.class.getName());
             createCache(cm, com.server.hkj.domain.UserExtra.class.getName());
+            createCache(cm, com.server.hkj.domain.UserExtra.class.getName() + ".salarys");
+            createCache(cm, com.server.hkj.domain.UserExtra.class.getName() + ".hires");
             createCache(cm, com.server.hkj.domain.HkjPosition.class.getName());
+            createCache(cm, com.server.hkj.domain.HkjPosition.class.getName() + ".hires");
             createCache(cm, com.server.hkj.domain.HkjHire.class.getName());
             createCache(cm, com.server.hkj.domain.HkjSalary.class.getName());
-            createCache(cm, com.server.hkj.domain.HkjEmployee.class.getName());
-            createCache(cm, com.server.hkj.domain.HkjEmployee.class.getName() + ".salarys");
             createCache(cm, com.server.hkj.domain.HkjProject.class.getName());
             createCache(cm, com.server.hkj.domain.HkjProject.class.getName() + ".tasks");
             createCache(cm, com.server.hkj.domain.HkjTask.class.getName());

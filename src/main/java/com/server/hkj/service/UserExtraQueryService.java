@@ -103,12 +103,19 @@ public class UserExtraQueryService extends QueryService<UserExtra> {
                     buildSpecification(criteria.getUserId(), root -> root.join(UserExtra_.user, JoinType.LEFT).get(User_.id))
                 );
             }
-            if (criteria.getHkjEmployeeId() != null) {
+            if (criteria.getSalarysId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getHkjEmployeeId(),
-                        root -> root.join(UserExtra_.hkjEmployee, JoinType.LEFT).get(HkjEmployee_.id)
-                    )
+                    buildSpecification(criteria.getSalarysId(), root -> root.join(UserExtra_.salarys, JoinType.LEFT).get(HkjSalary_.id))
+                );
+            }
+            if (criteria.getHireId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getHireId(), root -> root.join(UserExtra_.hires, JoinType.LEFT).get(HkjHire_.id))
+                );
+            }
+            if (criteria.getHkjTaskId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getHkjTaskId(), root -> root.join(UserExtra_.hkjTask, JoinType.LEFT).get(HkjTask_.id))
                 );
             }
         }

@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
 import com.server.hkj.domain.HkjCategory;
-import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjTemplate;
+import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.HkjTemplateRepository;
 import com.server.hkj.service.dto.HkjTemplateDTO;
 import com.server.hkj.service.mapper.HkjTemplateMapper;
@@ -301,12 +301,12 @@ class HkjTemplateResourceIT {
     @Test
     @Transactional
     void getAllHkjTemplatesByCreaterIsEqualToSomething() throws Exception {
-        HkjEmployee creater;
-        if (TestUtil.findAll(em, HkjEmployee.class).isEmpty()) {
+        UserExtra creater;
+        if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjTemplateRepository.saveAndFlush(hkjTemplate);
-            creater = HkjEmployeeResourceIT.createEntity(em);
+            creater = UserExtraResourceIT.createEntity(em);
         } else {
-            creater = TestUtil.findAll(em, HkjEmployee.class).get(0);
+            creater = TestUtil.findAll(em, UserExtra.class).get(0);
         }
         em.persist(creater);
         em.flush();

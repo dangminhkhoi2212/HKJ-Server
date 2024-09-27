@@ -10,18 +10,18 @@
     -->
     <changeSet id="20240914093107-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="template_id"
+        <addForeignKeyConstraint baseColumnNames="category_id"
                                  baseTableName="hkj_project"
-                                 constraintName="fk_hkj_project__template_id"
+                                 constraintName="fk_hkj_project__category_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="hkj_template"
+                                 referencedTableName="hkj_category"
                                  />
 
         <addForeignKeyConstraint baseColumnNames="manager_id"
                                  baseTableName="hkj_project"
                                  constraintName="fk_hkj_project__manager_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="hkj_employee"
+                                 referencedTableName="user_extra"
                                  />
     </changeSet>
 </databaseChangeLog>

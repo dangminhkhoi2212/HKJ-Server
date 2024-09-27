@@ -62,12 +62,13 @@
     },
     {
       "otherEntityName": "hkjTemplateStep",
+      "otherEntityRelationshipName": "template",
       "relationshipName": "steps",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "hkjEmployee",
+      "otherEntityName": "userExtra",
       "relationshipName": "creater",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"

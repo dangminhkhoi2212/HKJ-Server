@@ -357,24 +357,24 @@ class HkjTaskImageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjTaskImagesByHkjTaskIsEqualToSomething() throws Exception {
-        HkjTask hkjTask;
+    void getAllHkjTaskImagesByTaskIsEqualToSomething() throws Exception {
+        HkjTask task;
         if (TestUtil.findAll(em, HkjTask.class).isEmpty()) {
             hkjTaskImageRepository.saveAndFlush(hkjTaskImage);
-            hkjTask = HkjTaskResourceIT.createEntity(em);
+            task = HkjTaskResourceIT.createEntity(em);
         } else {
-            hkjTask = TestUtil.findAll(em, HkjTask.class).get(0);
+            task = TestUtil.findAll(em, HkjTask.class).get(0);
         }
-        em.persist(hkjTask);
+        em.persist(task);
         em.flush();
-        hkjTaskImage.setHkjTask(hkjTask);
+        hkjTaskImage.setTask(task);
         hkjTaskImageRepository.saveAndFlush(hkjTaskImage);
-        Long hkjTaskId = hkjTask.getId();
-        // Get all the hkjTaskImageList where hkjTask equals to hkjTaskId
-        defaultHkjTaskImageShouldBeFound("hkjTaskId.equals=" + hkjTaskId);
+        Long taskId = task.getId();
+        // Get all the hkjTaskImageList where task equals to taskId
+        defaultHkjTaskImageShouldBeFound("taskId.equals=" + taskId);
 
-        // Get all the hkjTaskImageList where hkjTask equals to (hkjTaskId + 1)
-        defaultHkjTaskImageShouldNotBeFound("hkjTaskId.equals=" + (hkjTaskId + 1));
+        // Get all the hkjTaskImageList where task equals to (taskId + 1)
+        defaultHkjTaskImageShouldNotBeFound("taskId.equals=" + (taskId + 1));
     }
 
     private void defaultHkjTaskImageFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

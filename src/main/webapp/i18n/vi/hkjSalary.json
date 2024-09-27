@@ -19,12 +19,13 @@
       },
       "id": "ID",
       "salary": "Salary",
+      "notes": "Notes",
       "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "hkjEmployee": "Hkj Employee"
+      "employee": "Employee"
     }
   }
 }

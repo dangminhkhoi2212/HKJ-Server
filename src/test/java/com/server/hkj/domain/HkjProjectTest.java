@@ -1,11 +1,11 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.HkjEmployeeTestSamples.*;
+import static com.server.hkj.domain.HkjCategoryTestSamples.*;
 import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
 import static com.server.hkj.domain.HkjOrderTestSamples.*;
 import static com.server.hkj.domain.HkjProjectTestSamples.*;
 import static com.server.hkj.domain.HkjTaskTestSamples.*;
-import static com.server.hkj.domain.HkjTemplateTestSamples.*;
+import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
@@ -30,15 +30,15 @@ class HkjProjectTest {
     }
 
     @Test
-    void templateTest() {
+    void categoryTest() {
         HkjProject hkjProject = getHkjProjectRandomSampleGenerator();
-        HkjTemplate hkjTemplateBack = getHkjTemplateRandomSampleGenerator();
+        HkjCategory hkjCategoryBack = getHkjCategoryRandomSampleGenerator();
 
-        hkjProject.setTemplate(hkjTemplateBack);
-        assertThat(hkjProject.getTemplate()).isEqualTo(hkjTemplateBack);
+        hkjProject.setCategory(hkjCategoryBack);
+        assertThat(hkjProject.getCategory()).isEqualTo(hkjCategoryBack);
 
-        hkjProject.template(null);
-        assertThat(hkjProject.getTemplate()).isNull();
+        hkjProject.category(null);
+        assertThat(hkjProject.getCategory()).isNull();
     }
 
     @Test
@@ -48,28 +48,28 @@ class HkjProjectTest {
 
         hkjProject.addTasks(hkjTaskBack);
         assertThat(hkjProject.getTasks()).containsOnly(hkjTaskBack);
-        assertThat(hkjTaskBack.getHkjProject()).isEqualTo(hkjProject);
+        assertThat(hkjTaskBack.getProject()).isEqualTo(hkjProject);
 
         hkjProject.removeTasks(hkjTaskBack);
         assertThat(hkjProject.getTasks()).doesNotContain(hkjTaskBack);
-        assertThat(hkjTaskBack.getHkjProject()).isNull();
+        assertThat(hkjTaskBack.getProject()).isNull();
 
         hkjProject.tasks(new HashSet<>(Set.of(hkjTaskBack)));
         assertThat(hkjProject.getTasks()).containsOnly(hkjTaskBack);
-        assertThat(hkjTaskBack.getHkjProject()).isEqualTo(hkjProject);
+        assertThat(hkjTaskBack.getProject()).isEqualTo(hkjProject);
 
         hkjProject.setTasks(new HashSet<>());
         assertThat(hkjProject.getTasks()).doesNotContain(hkjTaskBack);
-        assertThat(hkjTaskBack.getHkjProject()).isNull();
+        assertThat(hkjTaskBack.getProject()).isNull();
     }
 
     @Test
     void managerTest() {
         HkjProject hkjProject = getHkjProjectRandomSampleGenerator();
-        HkjEmployee hkjEmployeeBack = getHkjEmployeeRandomSampleGenerator();
+        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
 
-        hkjProject.setManager(hkjEmployeeBack);
-        assertThat(hkjProject.getManager()).isEqualTo(hkjEmployeeBack);
+        hkjProject.setManager(userExtraBack);
+        assertThat(hkjProject.getManager()).isEqualTo(userExtraBack);
 
         hkjProject.manager(null);
         assertThat(hkjProject.getManager()).isNull();

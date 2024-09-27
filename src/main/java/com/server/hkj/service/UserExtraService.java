@@ -1,11 +1,16 @@
 package com.server.hkj.service;
 
+import com.server.hkj.domain.Authority;
+import com.server.hkj.domain.User;
 import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.UserExtraRepository;
+import com.server.hkj.repository.UserRepository;
 import com.server.hkj.service.dto.AccountDTO;
 import com.server.hkj.service.dto.UserExtraDTO;
+import com.server.hkj.service.mapper.AccountMapper;
 import com.server.hkj.service.mapper.UserExtraMapper;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -26,9 +31,19 @@ public class UserExtraService {
 
     private final UserExtraMapper userExtraMapper;
 
-    public UserExtraService(UserExtraRepository userExtraRepository, UserExtraMapper userExtraMapper) {
+    private final UserRepository userRepository;
+    private final AccountMapper accountMapper;
+
+    public UserExtraService(
+        UserExtraRepository userExtraRepository,
+        UserExtraMapper userExtraMapper,
+        UserRepository userRepository,
+        AccountMapper accountMapper
+    ) {
         this.userExtraRepository = userExtraRepository;
         this.userExtraMapper = userExtraMapper;
+        this.userRepository = userRepository;
+        this.accountMapper = accountMapper;
     }
 
     /**
@@ -104,6 +119,43 @@ public class UserExtraService {
     }
 
     public Page<AccountDTO> getUsersByRole(Pageable pageable, String role) {
-        return userExtraRepository.getAllByRole(pageable, role).map(AccountDTO::new);
+        return userExtraRepository.getAllByRoleAndNotInHire(pageable, role).map(this::accountMapper);
+    }
+
+    public AccountDTO accountMapper(UserExtra userExtra) {
+        return accountMapper.toDto(userExtra);
+    }
+
+    public UserExtra setDetails(UserExtra userExtra, String phone, String address) {
+        userExtra.setPhone(phone);
+        userExtra.setAddress(address);
+        return userExtra;
+    }
+
+    public UserExtraDTO syncAccount(AccountDTO accountDTO) {
+        User user = new User();
+        user.setId(accountDTO.getUserId());
+        user.setLogin(accountDTO.getLogin());
+        user.setFirstName(accountDTO.getFirstName());
+        user.setLastName(accountDTO.getLastName());
+        user.setEmail(accountDTO.getEmail());
+        user.setAuthorities(
+            accountDTO
+                .getAuthorities()
+                .stream()
+                .map(authority -> {
+                    Authority auth = new Authority();
+                    auth.setName(authority);
+                    return auth;
+                })
+                .collect(Collectors.toSet())
+        );
+        User savedUser = userRepository.save(user);
+        UserExtra userExtra = new UserExtra();
+        userExtra.setPhone(accountDTO.getPhone());
+        userExtra.setAddress(accountDTO.getAddress());
+        userExtra.setUser(savedUser);
+        UserExtra savedUserExtra = userExtraRepository.save(userExtra);
+        return userExtraMapper.toDto(savedUserExtra);
     }
 }

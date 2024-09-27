@@ -170,13 +170,10 @@ export const HkjTask = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjTask.templateStep">Template Step</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
                   <Translate contentKey="serverApp.hkjTask.employee">Employee</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjTask.hkjProject">Hkj Project</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjTask.project">Project</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -211,15 +208,8 @@ export const HkjTask = () => {
                   <td>
                     {hkjTask.lastModifiedDate ? <TextFormat type="date" value={hkjTask.lastModifiedDate} format={APP_DATE_FORMAT} /> : null}
                   </td>
-                  <td>
-                    {hkjTask.templateStep ? (
-                      <Link to={`/hkj-template-step/${hkjTask.templateStep.id}`}>{hkjTask.templateStep.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>{hkjTask.employee ? <Link to={`/hkj-employee/${hkjTask.employee.id}`}>{hkjTask.employee.id}</Link> : ''}</td>
-                  <td>{hkjTask.hkjProject ? <Link to={`/hkj-project/${hkjTask.hkjProject.id}`}>{hkjTask.hkjProject.id}</Link> : ''}</td>
+                  <td>{hkjTask.employee ? <Link to={`/user-extra/${hkjTask.employee.id}`}>{hkjTask.employee.id}</Link> : ''}</td>
+                  <td>{hkjTask.project ? <Link to={`/hkj-project/${hkjTask.project.id}`}>{hkjTask.project.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-task/${hkjTask.id}`} color="info" size="sm" data-cy="entityDetailsButton">

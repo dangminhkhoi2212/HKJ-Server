@@ -8,8 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
-import { getEntities as getHkjEmployees } from 'app/entities/hkj-employee/hkj-employee.reducer';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
 import { IHkjSalary } from 'app/shared/model/hkj-salary.model';
 import { getEntity, updateEntity, createEntity, reset } from './hkj-salary.reducer';
 
@@ -21,7 +21,7 @@ export const HkjSalaryUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const hkjEmployees = useAppSelector(state => state.hkjEmployee.entities);
+  const userExtras = useAppSelector(state => state.userExtra.entities);
   const hkjSalaryEntity = useAppSelector(state => state.hkjSalary.entity);
   const loading = useAppSelector(state => state.hkjSalary.loading);
   const updating = useAppSelector(state => state.hkjSalary.updating);
@@ -38,7 +38,7 @@ export const HkjSalaryUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getHkjEmployees({}));
+    dispatch(getUserExtras({}));
   }, []);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export const HkjSalaryUpdate = () => {
     const entity = {
       ...hkjSalaryEntity,
       ...values,
-      hkjEmployee: hkjEmployees.find(it => it.id.toString() === values.hkjEmployee?.toString()),
+      employee: userExtras.find(it => it.id.toString() === values.employee?.toString()),
     };
 
     if (isNew) {
@@ -81,7 +81,7 @@ export const HkjSalaryUpdate = () => {
           ...hkjSalaryEntity,
           createdDate: convertDateTimeFromServer(hkjSalaryEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjSalaryEntity.lastModifiedDate),
-          hkjEmployee: hkjSalaryEntity?.hkjEmployee?.id,
+          employee: hkjSalaryEntity?.employee?.id,
         };
 
   return (
@@ -114,6 +114,13 @@ export const HkjSalaryUpdate = () => {
                 id="hkj-salary-salary"
                 name="salary"
                 data-cy="salary"
+                type="text"
+              />
+              <ValidatedField
+                label={translate('serverApp.hkjSalary.notes')}
+                id="hkj-salary-notes"
+                name="notes"
+                data-cy="notes"
                 type="text"
               />
               <ValidatedField
@@ -155,15 +162,15 @@ export const HkjSalaryUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-salary-hkjEmployee"
-                name="hkjEmployee"
-                data-cy="hkjEmployee"
-                label={translate('serverApp.hkjSalary.hkjEmployee')}
+                id="hkj-salary-employee"
+                name="employee"
+                data-cy="employee"
+                label={translate('serverApp.hkjSalary.employee')}
                 type="select"
               >
                 <option value="" key="0" />
-                {hkjEmployees
-                  ? hkjEmployees.map(otherEntity => (
+                {userExtras
+                  ? userExtras.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

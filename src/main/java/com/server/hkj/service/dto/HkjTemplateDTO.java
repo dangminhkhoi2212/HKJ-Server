@@ -26,7 +26,7 @@ public class HkjTemplateDTO implements Serializable {
 
     private HkjCategoryDTO category;
 
-    private HkjEmployeeDTO creater;
+    private UserExtraDTO creater;
 
     public Long getId() {
         return id;
@@ -92,11 +92,11 @@ public class HkjTemplateDTO implements Serializable {
         this.category = category;
     }
 
-    public HkjEmployeeDTO getCreater() {
+    public UserExtraDTO getCreater() {
         return creater;
     }
 
-    public void setCreater(HkjEmployeeDTO creater) {
+    public void setCreater(UserExtraDTO creater) {
         this.creater = creater;
     }
 

@@ -58,7 +58,7 @@ export const HkjTemplateStepUpdate = () => {
     const entity = {
       ...hkjTemplateStepEntity,
       ...values,
-      hkjTemplate: hkjTemplates.find(it => it.id.toString() === values.hkjTemplate?.toString()),
+      template: hkjTemplates.find(it => it.id.toString() === values.template?.toString()),
     };
 
     if (isNew) {
@@ -78,7 +78,7 @@ export const HkjTemplateStepUpdate = () => {
           ...hkjTemplateStepEntity,
           createdDate: convertDateTimeFromServer(hkjTemplateStepEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjTemplateStepEntity.lastModifiedDate),
-          hkjTemplate: hkjTemplateStepEntity?.hkjTemplate?.id,
+          template: hkjTemplateStepEntity?.template?.id,
         };
 
   return (
@@ -152,10 +152,10 @@ export const HkjTemplateStepUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-template-step-hkjTemplate"
-                name="hkjTemplate"
-                data-cy="hkjTemplate"
-                label={translate('serverApp.hkjTemplateStep.hkjTemplate')}
+                id="hkj-template-step-template"
+                name="template"
+                data-cy="template"
+                label={translate('serverApp.hkjTemplateStep.template')}
                 type="select"
               >
                 <option value="" key="0" />

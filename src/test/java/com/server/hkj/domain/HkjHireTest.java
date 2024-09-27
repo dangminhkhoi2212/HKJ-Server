@@ -1,8 +1,8 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.HkjEmployeeTestSamples.*;
 import static com.server.hkj.domain.HkjHireTestSamples.*;
 import static com.server.hkj.domain.HkjPositionTestSamples.*;
+import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
@@ -39,10 +39,10 @@ class HkjHireTest {
     @Test
     void employeeTest() {
         HkjHire hkjHire = getHkjHireRandomSampleGenerator();
-        HkjEmployee hkjEmployeeBack = getHkjEmployeeRandomSampleGenerator();
+        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
 
-        hkjHire.setEmployee(hkjEmployeeBack);
-        assertThat(hkjHire.getEmployee()).isEqualTo(hkjEmployeeBack);
+        hkjHire.setEmployee(userExtraBack);
+        assertThat(hkjHire.getEmployee()).isEqualTo(userExtraBack);
 
         hkjHire.employee(null);
         assertThat(hkjHire.getEmployee()).isNull();

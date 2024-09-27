@@ -62,6 +62,6 @@ public class HkjTemplateStepAsserts {
     public static void assertHkjTemplateStepUpdatableRelationshipsEquals(HkjTemplateStep expected, HkjTemplateStep actual) {
         assertThat(expected)
             .as("Verify HkjTemplateStep relationships")
-            .satisfies(e -> assertThat(e.getHkjTemplate()).as("check hkjTemplate").isEqualTo(actual.getHkjTemplate()));
+            .satisfies(e -> assertThat(e.getTemplate()).as("check template").isEqualTo(actual.getTemplate()));
     }
 }

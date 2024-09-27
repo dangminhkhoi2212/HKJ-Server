@@ -1,13 +1,11 @@
 package com.server.hkj.service.mapper;
 
-import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjProject;
 import com.server.hkj.domain.HkjTask;
-import com.server.hkj.domain.HkjTemplateStep;
-import com.server.hkj.service.dto.HkjEmployeeDTO;
+import com.server.hkj.domain.UserExtra;
 import com.server.hkj.service.dto.HkjProjectDTO;
 import com.server.hkj.service.dto.HkjTaskDTO;
-import com.server.hkj.service.dto.HkjTemplateStepDTO;
+import com.server.hkj.service.dto.UserExtraDTO;
 import org.mapstruct.*;
 
 /**
@@ -15,20 +13,14 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjTaskMapper extends EntityMapper<HkjTaskDTO, HkjTask> {
-    @Mapping(target = "templateStep", source = "templateStep", qualifiedByName = "hkjTemplateStepId")
-    @Mapping(target = "employee", source = "employee", qualifiedByName = "hkjEmployeeId")
-    @Mapping(target = "hkjProject", source = "hkjProject", qualifiedByName = "hkjProjectId")
+    @Mapping(target = "employee", source = "employee", qualifiedByName = "userExtraId")
+    @Mapping(target = "project", source = "project", qualifiedByName = "hkjProjectId")
     HkjTaskDTO toDto(HkjTask s);
 
-    @Named("hkjTemplateStepId")
+    @Named("userExtraId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    HkjTemplateStepDTO toDtoHkjTemplateStepId(HkjTemplateStep hkjTemplateStep);
-
-    @Named("hkjEmployeeId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    HkjEmployeeDTO toDtoHkjEmployeeId(HkjEmployee hkjEmployee);
+    UserExtraDTO toDtoUserExtraId(UserExtra userExtra);
 
     @Named("hkjProjectId")
     @BeanMapping(ignoreByDefault = true)

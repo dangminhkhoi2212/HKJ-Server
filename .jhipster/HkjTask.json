@@ -101,27 +101,30 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjTemplateStep",
-      "relationshipName": "templateStep",
+      "otherEntityName": "userExtra",
+      "relationshipName": "employee",
       "relationshipSide": "left",
       "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "hkjTaskImage",
+      "otherEntityRelationshipName": "task",
       "relationshipName": "images",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "hkjMaterialUsage",
+      "otherEntityRelationshipName": "task",
       "relationshipName": "materials",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "hkjEmployee",
-      "relationshipName": "employee",
-      "relationshipSide": "left",
+      "otherEntityName": "hkjProject",
+      "otherEntityRelationshipName": "tasks",
+      "relationshipName": "project",
+      "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }
   ],

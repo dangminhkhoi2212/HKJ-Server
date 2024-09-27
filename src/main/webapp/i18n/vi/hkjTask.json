@@ -32,11 +32,10 @@
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "templateStep": "Template Step",
+      "employee": "Employee",
       "images": "Images",
       "materials": "Materials",
-      "employee": "Employee",
-      "hkjProject": "Hkj Project"
+      "project": "Project"
     }
   }
 }

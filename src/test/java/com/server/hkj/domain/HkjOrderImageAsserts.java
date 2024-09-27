@@ -62,6 +62,6 @@ public class HkjOrderImageAsserts {
     public static void assertHkjOrderImageUpdatableRelationshipsEquals(HkjOrderImage expected, HkjOrderImage actual) {
         assertThat(expected)
             .as("Verify HkjOrderImage relationships")
-            .satisfies(e -> assertThat(e.getHkjOrder()).as("check hkjOrder").isEqualTo(actual.getHkjOrder()));
+            .satisfies(e -> assertThat(e.getOrder()).as("check order").isEqualTo(actual.getOrder()));
     }
 }

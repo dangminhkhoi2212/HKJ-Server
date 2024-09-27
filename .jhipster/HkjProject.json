@@ -105,19 +105,20 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjTemplate",
-      "relationshipName": "template",
+      "otherEntityName": "hkjCategory",
+      "relationshipName": "category",
       "relationshipSide": "left",
       "relationshipType": "one-to-one"
     },
     {
       "otherEntityName": "hkjTask",
+      "otherEntityRelationshipName": "project",
       "relationshipName": "tasks",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "hkjEmployee",
+      "otherEntityName": "userExtra",
       "relationshipName": "manager",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"

@@ -56,7 +56,7 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "material", "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "material", "task" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "material")
     private HkjMaterialUsage hkjMaterialUsage;
 

@@ -174,7 +174,7 @@ export const HkjHire = () => {
                     {hkjHire.lastModifiedDate ? <TextFormat type="date" value={hkjHire.lastModifiedDate} format={APP_DATE_FORMAT} /> : null}
                   </td>
                   <td>{hkjHire.position ? <Link to={`/hkj-position/${hkjHire.position.id}`}>{hkjHire.position.id}</Link> : ''}</td>
-                  <td>{hkjHire.employee ? <Link to={`/hkj-employee/${hkjHire.employee.id}`}>{hkjHire.employee.id}</Link> : ''}</td>
+                  <td>{hkjHire.employee ? <Link to={`/user-extra/${hkjHire.employee.id}`}>{hkjHire.employee.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-hire/${hkjHire.id}`} color="info" size="sm" data-cy="entityDetailsButton">

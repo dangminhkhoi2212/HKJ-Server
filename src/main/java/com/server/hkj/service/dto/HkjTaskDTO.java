@@ -52,11 +52,9 @@ public class HkjTaskDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjTemplateStepDTO templateStep;
+    private UserExtraDTO employee;
 
-    private HkjEmployeeDTO employee;
-
-    private HkjProjectDTO hkjProject;
+    private HkjProjectDTO project;
 
     public Long getId() {
         return id;
@@ -178,28 +176,20 @@ public class HkjTaskDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjTemplateStepDTO getTemplateStep() {
-        return templateStep;
-    }
-
-    public void setTemplateStep(HkjTemplateStepDTO templateStep) {
-        this.templateStep = templateStep;
-    }
-
-    public HkjEmployeeDTO getEmployee() {
+    public UserExtraDTO getEmployee() {
         return employee;
     }
 
-    public void setEmployee(HkjEmployeeDTO employee) {
+    public void setEmployee(UserExtraDTO employee) {
         this.employee = employee;
     }
 
-    public HkjProjectDTO getHkjProject() {
-        return hkjProject;
+    public HkjProjectDTO getProject() {
+        return project;
     }
 
-    public void setHkjProject(HkjProjectDTO hkjProject) {
-        this.hkjProject = hkjProject;
+    public void setProject(HkjProjectDTO project) {
+        this.project = project;
     }
 
     @Override
@@ -242,9 +232,8 @@ public class HkjTaskDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", templateStep=" + getTemplateStep() +
             ", employee=" + getEmployee() +
-            ", hkjProject=" + getHkjProject() +
+            ", project=" + getProject() +
             "}";
     }
 }

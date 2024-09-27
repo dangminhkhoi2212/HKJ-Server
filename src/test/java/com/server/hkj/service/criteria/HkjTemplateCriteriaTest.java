@@ -84,7 +84,6 @@ class HkjTemplateCriteriaTest {
         hkjTemplateCriteria.categoryId();
         hkjTemplateCriteria.stepsId();
         hkjTemplateCriteria.createrId();
-        hkjTemplateCriteria.hkjProjectId();
         hkjTemplateCriteria.distinct();
     }
 
@@ -101,7 +100,6 @@ class HkjTemplateCriteriaTest {
                 condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getStepsId()) &&
                 condition.apply(criteria.getCreaterId()) &&
-                condition.apply(criteria.getHkjProjectId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -120,7 +118,6 @@ class HkjTemplateCriteriaTest {
                 condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getStepsId(), copy.getStepsId()) &&
                 condition.apply(criteria.getCreaterId(), copy.getCreaterId()) &&
-                condition.apply(criteria.getHkjProjectId(), copy.getHkjProjectId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

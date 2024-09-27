@@ -95,6 +95,14 @@ public class HkjCategoryQueryService extends QueryService<HkjCategory> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjCategory_.lastModifiedDate));
             }
+            if (criteria.getHkjProjectId() != null) {
+                specification = specification.and(
+                    buildSpecification(
+                        criteria.getHkjProjectId(),
+                        root -> root.join(HkjCategory_.hkjProject, JoinType.LEFT).get(HkjProject_.id)
+                    )
+                );
+            }
             if (criteria.getHkjTemplateId() != null) {
                 specification = specification.and(
                     buildSpecification(

@@ -170,7 +170,7 @@ export const HkjTemplate = () => {
                   <td>
                     {hkjTemplate.category ? <Link to={`/hkj-category/${hkjTemplate.category.id}`}>{hkjTemplate.category.id}</Link> : ''}
                   </td>
-                  <td>{hkjTemplate.creater ? <Link to={`/hkj-employee/${hkjTemplate.creater.id}`}>{hkjTemplate.creater.id}</Link> : ''}</td>
+                  <td>{hkjTemplate.creater ? <Link to={`/user-extra/${hkjTemplate.creater.id}`}>{hkjTemplate.creater.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-template/${hkjTemplate.id}`} color="info" size="sm" data-cy="entityDetailsButton">

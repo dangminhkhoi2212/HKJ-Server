@@ -92,7 +92,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter templateId;
+    private LongFilter categoryId;
 
     private LongFilter tasksId;
 
@@ -124,7 +124,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.templateId = other.optionalTemplateId().map(LongFilter::copy).orElse(null);
+        this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
         this.tasksId = other.optionalTasksId().map(LongFilter::copy).orElse(null);
         this.managerId = other.optionalManagerId().map(LongFilter::copy).orElse(null);
         this.hkjJewelryModelId = other.optionalHkjJewelryModelId().map(LongFilter::copy).orElse(null);
@@ -460,23 +460,23 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getTemplateId() {
-        return templateId;
+    public LongFilter getCategoryId() {
+        return categoryId;
     }
 
-    public Optional<LongFilter> optionalTemplateId() {
-        return Optional.ofNullable(templateId);
+    public Optional<LongFilter> optionalCategoryId() {
+        return Optional.ofNullable(categoryId);
     }
 
-    public LongFilter templateId() {
-        if (templateId == null) {
-            setTemplateId(new LongFilter());
+    public LongFilter categoryId() {
+        if (categoryId == null) {
+            setCategoryId(new LongFilter());
         }
-        return templateId;
+        return categoryId;
     }
 
-    public void setTemplateId(LongFilter templateId) {
-        this.templateId = templateId;
+    public void setCategoryId(LongFilter categoryId) {
+        this.categoryId = categoryId;
     }
 
     public LongFilter getTasksId() {
@@ -601,7 +601,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(templateId, that.templateId) &&
+            Objects.equals(categoryId, that.categoryId) &&
             Objects.equals(tasksId, that.tasksId) &&
             Objects.equals(managerId, that.managerId) &&
             Objects.equals(hkjJewelryModelId, that.hkjJewelryModelId) &&
@@ -630,7 +630,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
-            templateId,
+            categoryId,
             tasksId,
             managerId,
             hkjJewelryModelId,
@@ -660,7 +660,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalTemplateId().map(f -> "templateId=" + f + ", ").orElse("") +
+            optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
             optionalTasksId().map(f -> "tasksId=" + f + ", ").orElse("") +
             optionalManagerId().map(f -> "managerId=" + f + ", ").orElse("") +
             optionalHkjJewelryModelId().map(f -> "hkjJewelryModelId=" + f + ", ").orElse("") +

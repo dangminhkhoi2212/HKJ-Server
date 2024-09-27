@@ -5,6 +5,8 @@ import static com.server.hkj.domain.HkjPositionTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class HkjPositionTest {
@@ -24,16 +26,24 @@ class HkjPositionTest {
     }
 
     @Test
-    void hkjHireTest() {
+    void hireTest() {
         HkjPosition hkjPosition = getHkjPositionRandomSampleGenerator();
         HkjHire hkjHireBack = getHkjHireRandomSampleGenerator();
 
-        hkjPosition.setHkjHire(hkjHireBack);
-        assertThat(hkjPosition.getHkjHire()).isEqualTo(hkjHireBack);
+        hkjPosition.addHire(hkjHireBack);
+        assertThat(hkjPosition.getHires()).containsOnly(hkjHireBack);
         assertThat(hkjHireBack.getPosition()).isEqualTo(hkjPosition);
 
-        hkjPosition.hkjHire(null);
-        assertThat(hkjPosition.getHkjHire()).isNull();
+        hkjPosition.removeHire(hkjHireBack);
+        assertThat(hkjPosition.getHires()).doesNotContain(hkjHireBack);
+        assertThat(hkjHireBack.getPosition()).isNull();
+
+        hkjPosition.hires(new HashSet<>(Set.of(hkjHireBack)));
+        assertThat(hkjPosition.getHires()).containsOnly(hkjHireBack);
+        assertThat(hkjHireBack.getPosition()).isEqualTo(hkjPosition);
+
+        hkjPosition.setHires(new HashSet<>());
+        assertThat(hkjPosition.getHires()).doesNotContain(hkjHireBack);
         assertThat(hkjHireBack.getPosition()).isNull();
     }
 }

@@ -36,7 +36,7 @@ public class HkjPositionCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter hkjHireId;
+    private LongFilter hireId;
 
     private Boolean distinct;
 
@@ -50,7 +50,7 @@ public class HkjPositionCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.hkjHireId = other.optionalHkjHireId().map(LongFilter::copy).orElse(null);
+        this.hireId = other.optionalHireId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -192,23 +192,23 @@ public class HkjPositionCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getHkjHireId() {
-        return hkjHireId;
+    public LongFilter getHireId() {
+        return hireId;
     }
 
-    public Optional<LongFilter> optionalHkjHireId() {
-        return Optional.ofNullable(hkjHireId);
+    public Optional<LongFilter> optionalHireId() {
+        return Optional.ofNullable(hireId);
     }
 
-    public LongFilter hkjHireId() {
-        if (hkjHireId == null) {
-            setHkjHireId(new LongFilter());
+    public LongFilter hireId() {
+        if (hireId == null) {
+            setHireId(new LongFilter());
         }
-        return hkjHireId;
+        return hireId;
     }
 
-    public void setHkjHireId(LongFilter hkjHireId) {
-        this.hkjHireId = hkjHireId;
+    public void setHireId(LongFilter hireId) {
+        this.hireId = hireId;
     }
 
     public Boolean getDistinct() {
@@ -247,14 +247,14 @@ public class HkjPositionCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(hkjHireId, that.hkjHireId) &&
+            Objects.equals(hireId, that.hireId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, hkjHireId, distinct);
+        return Objects.hash(id, name, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, hireId, distinct);
     }
 
     // prettier-ignore
@@ -268,7 +268,7 @@ public class HkjPositionCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalHkjHireId().map(f -> "hkjHireId=" + f + ", ").orElse("") +
+            optionalHireId().map(f -> "hireId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

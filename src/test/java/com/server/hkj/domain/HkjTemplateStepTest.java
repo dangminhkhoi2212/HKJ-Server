@@ -1,6 +1,5 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.HkjTaskTestSamples.*;
 import static com.server.hkj.domain.HkjTemplateStepTestSamples.*;
 import static com.server.hkj.domain.HkjTemplateTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,28 +24,14 @@ class HkjTemplateStepTest {
     }
 
     @Test
-    void hkjTaskTest() {
-        HkjTemplateStep hkjTemplateStep = getHkjTemplateStepRandomSampleGenerator();
-        HkjTask hkjTaskBack = getHkjTaskRandomSampleGenerator();
-
-        hkjTemplateStep.setHkjTask(hkjTaskBack);
-        assertThat(hkjTemplateStep.getHkjTask()).isEqualTo(hkjTaskBack);
-        assertThat(hkjTaskBack.getTemplateStep()).isEqualTo(hkjTemplateStep);
-
-        hkjTemplateStep.hkjTask(null);
-        assertThat(hkjTemplateStep.getHkjTask()).isNull();
-        assertThat(hkjTaskBack.getTemplateStep()).isNull();
-    }
-
-    @Test
-    void hkjTemplateTest() {
+    void templateTest() {
         HkjTemplateStep hkjTemplateStep = getHkjTemplateStepRandomSampleGenerator();
         HkjTemplate hkjTemplateBack = getHkjTemplateRandomSampleGenerator();
 
-        hkjTemplateStep.setHkjTemplate(hkjTemplateBack);
-        assertThat(hkjTemplateStep.getHkjTemplate()).isEqualTo(hkjTemplateBack);
+        hkjTemplateStep.setTemplate(hkjTemplateBack);
+        assertThat(hkjTemplateStep.getTemplate()).isEqualTo(hkjTemplateBack);
 
-        hkjTemplateStep.hkjTemplate(null);
-        assertThat(hkjTemplateStep.getHkjTemplate()).isNull();
+        hkjTemplateStep.template(null);
+        assertThat(hkjTemplateStep.getTemplate()).isNull();
     }
 }

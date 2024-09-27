@@ -168,7 +168,7 @@ export const HkjMaterialUsage = () => {
                   <Translate contentKey="serverApp.hkjMaterialUsage.material">Material</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjMaterialUsage.hkjTask">Hkj Task</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjMaterialUsage.task">Task</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -212,11 +212,7 @@ export const HkjMaterialUsage = () => {
                     )}
                   </td>
                   <td>
-                    {hkjMaterialUsage.hkjTask ? (
-                      <Link to={`/hkj-task/${hkjMaterialUsage.hkjTask.id}`}>{hkjMaterialUsage.hkjTask.id}</Link>
-                    ) : (
-                      ''
-                    )}
+                    {hkjMaterialUsage.task ? <Link to={`/hkj-task/${hkjMaterialUsage.task.id}`}>{hkjMaterialUsage.task.id}</Link> : ''}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

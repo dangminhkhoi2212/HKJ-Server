@@ -17,9 +17,9 @@
                                  referencedTableName="hkj_material"
                                  />
 
-        <addForeignKeyConstraint baseColumnNames="hkj_task_id"
+        <addForeignKeyConstraint baseColumnNames="task_id"
                                  baseTableName="hkj_material_usage"
-                                 constraintName="fk_hkj_material_usage__hkj_task_id"
+                                 constraintName="fk_hkj_material_usage__task_id"
                                  referencedColumnNames="id"
                                  referencedTableName="hkj_task"
                                  />

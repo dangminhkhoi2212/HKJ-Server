@@ -1,11 +1,10 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.HkjEmployeeTestSamples.*;
 import static com.server.hkj.domain.HkjMaterialUsageTestSamples.*;
 import static com.server.hkj.domain.HkjProjectTestSamples.*;
 import static com.server.hkj.domain.HkjTaskImageTestSamples.*;
 import static com.server.hkj.domain.HkjTaskTestSamples.*;
-import static com.server.hkj.domain.HkjTemplateStepTestSamples.*;
+import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
@@ -30,15 +29,15 @@ class HkjTaskTest {
     }
 
     @Test
-    void templateStepTest() {
+    void employeeTest() {
         HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
-        HkjTemplateStep hkjTemplateStepBack = getHkjTemplateStepRandomSampleGenerator();
+        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
 
-        hkjTask.setTemplateStep(hkjTemplateStepBack);
-        assertThat(hkjTask.getTemplateStep()).isEqualTo(hkjTemplateStepBack);
+        hkjTask.setEmployee(userExtraBack);
+        assertThat(hkjTask.getEmployee()).isEqualTo(userExtraBack);
 
-        hkjTask.templateStep(null);
-        assertThat(hkjTask.getTemplateStep()).isNull();
+        hkjTask.employee(null);
+        assertThat(hkjTask.getEmployee()).isNull();
     }
 
     @Test
@@ -48,19 +47,19 @@ class HkjTaskTest {
 
         hkjTask.addImages(hkjTaskImageBack);
         assertThat(hkjTask.getImages()).containsOnly(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getHkjTask()).isEqualTo(hkjTask);
+        assertThat(hkjTaskImageBack.getTask()).isEqualTo(hkjTask);
 
         hkjTask.removeImages(hkjTaskImageBack);
         assertThat(hkjTask.getImages()).doesNotContain(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getHkjTask()).isNull();
+        assertThat(hkjTaskImageBack.getTask()).isNull();
 
         hkjTask.images(new HashSet<>(Set.of(hkjTaskImageBack)));
         assertThat(hkjTask.getImages()).containsOnly(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getHkjTask()).isEqualTo(hkjTask);
+        assertThat(hkjTaskImageBack.getTask()).isEqualTo(hkjTask);
 
         hkjTask.setImages(new HashSet<>());
         assertThat(hkjTask.getImages()).doesNotContain(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getHkjTask()).isNull();
+        assertThat(hkjTaskImageBack.getTask()).isNull();
     }
 
     @Test
@@ -70,42 +69,30 @@ class HkjTaskTest {
 
         hkjTask.addMaterials(hkjMaterialUsageBack);
         assertThat(hkjTask.getMaterials()).containsOnly(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getHkjTask()).isEqualTo(hkjTask);
+        assertThat(hkjMaterialUsageBack.getTask()).isEqualTo(hkjTask);
 
         hkjTask.removeMaterials(hkjMaterialUsageBack);
         assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getHkjTask()).isNull();
+        assertThat(hkjMaterialUsageBack.getTask()).isNull();
 
         hkjTask.materials(new HashSet<>(Set.of(hkjMaterialUsageBack)));
         assertThat(hkjTask.getMaterials()).containsOnly(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getHkjTask()).isEqualTo(hkjTask);
+        assertThat(hkjMaterialUsageBack.getTask()).isEqualTo(hkjTask);
 
         hkjTask.setMaterials(new HashSet<>());
         assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getHkjTask()).isNull();
+        assertThat(hkjMaterialUsageBack.getTask()).isNull();
     }
 
     @Test
-    void employeeTest() {
-        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
-        HkjEmployee hkjEmployeeBack = getHkjEmployeeRandomSampleGenerator();
-
-        hkjTask.setEmployee(hkjEmployeeBack);
-        assertThat(hkjTask.getEmployee()).isEqualTo(hkjEmployeeBack);
-
-        hkjTask.employee(null);
-        assertThat(hkjTask.getEmployee()).isNull();
-    }
-
-    @Test
-    void hkjProjectTest() {
+    void projectTest() {
         HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
         HkjProject hkjProjectBack = getHkjProjectRandomSampleGenerator();
 
-        hkjTask.setHkjProject(hkjProjectBack);
-        assertThat(hkjTask.getHkjProject()).isEqualTo(hkjProjectBack);
+        hkjTask.setProject(hkjProjectBack);
+        assertThat(hkjTask.getProject()).isEqualTo(hkjProjectBack);
 
-        hkjTask.hkjProject(null);
-        assertThat(hkjTask.getHkjProject()).isNull();
+        hkjTask.project(null);
+        assertThat(hkjTask.getProject()).isNull();
     }
 }

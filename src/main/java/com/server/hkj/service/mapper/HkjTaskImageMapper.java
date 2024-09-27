@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjTaskImageMapper extends EntityMapper<HkjTaskImageDTO, HkjTaskImage> {
-    @Mapping(target = "hkjTask", source = "hkjTask", qualifiedByName = "hkjTaskId")
+    @Mapping(target = "task", source = "task", qualifiedByName = "hkjTaskId")
     HkjTaskImageDTO toDto(HkjTaskImage s);
 
     @Named("hkjTaskId")

@@ -77,9 +77,9 @@ export const HkjTemplateStepDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjTemplateStep.hkjTemplate">Hkj Template</Translate>
+            <Translate contentKey="serverApp.hkjTemplateStep.template">Template</Translate>
           </dt>
-          <dd>{hkjTemplateStepEntity.hkjTemplate ? hkjTemplateStepEntity.hkjTemplate.id : ''}</dd>
+          <dd>{hkjTemplateStepEntity.template ? hkjTemplateStepEntity.template.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-template-step" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

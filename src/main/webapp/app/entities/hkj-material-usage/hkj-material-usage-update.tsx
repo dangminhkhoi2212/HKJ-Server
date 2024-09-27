@@ -76,7 +76,7 @@ export const HkjMaterialUsageUpdate = () => {
       ...hkjMaterialUsageEntity,
       ...values,
       material: hkjMaterials.find(it => it.id.toString() === values.material?.toString()),
-      hkjTask: hkjTasks.find(it => it.id.toString() === values.hkjTask?.toString()),
+      task: hkjTasks.find(it => it.id.toString() === values.task?.toString()),
     };
 
     if (isNew) {
@@ -99,7 +99,7 @@ export const HkjMaterialUsageUpdate = () => {
           createdDate: convertDateTimeFromServer(hkjMaterialUsageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjMaterialUsageEntity.lastModifiedDate),
           material: hkjMaterialUsageEntity?.material?.id,
-          hkjTask: hkjMaterialUsageEntity?.hkjTask?.id,
+          task: hkjMaterialUsageEntity?.task?.id,
         };
 
   return (
@@ -232,10 +232,10 @@ export const HkjMaterialUsageUpdate = () => {
                   : null}
               </ValidatedField>
               <ValidatedField
-                id="hkj-material-usage-hkjTask"
-                name="hkjTask"
-                data-cy="hkjTask"
-                label={translate('serverApp.hkjMaterialUsage.hkjTask')}
+                id="hkj-material-usage-task"
+                name="task"
+                data-cy="task"
+                label={translate('serverApp.hkjMaterialUsage.task')}
                 type="select"
               >
                 <option value="" key="0" />

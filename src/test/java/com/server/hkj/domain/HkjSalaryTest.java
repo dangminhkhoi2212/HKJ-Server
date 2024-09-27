@@ -1,7 +1,7 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.HkjEmployeeTestSamples.*;
 import static com.server.hkj.domain.HkjSalaryTestSamples.*;
+import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
@@ -24,14 +24,14 @@ class HkjSalaryTest {
     }
 
     @Test
-    void hkjEmployeeTest() {
+    void employeeTest() {
         HkjSalary hkjSalary = getHkjSalaryRandomSampleGenerator();
-        HkjEmployee hkjEmployeeBack = getHkjEmployeeRandomSampleGenerator();
+        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
 
-        hkjSalary.setHkjEmployee(hkjEmployeeBack);
-        assertThat(hkjSalary.getHkjEmployee()).isEqualTo(hkjEmployeeBack);
+        hkjSalary.setEmployee(userExtraBack);
+        assertThat(hkjSalary.getEmployee()).isEqualTo(userExtraBack);
 
-        hkjSalary.hkjEmployee(null);
-        assertThat(hkjSalary.getHkjEmployee()).isNull();
+        hkjSalary.employee(null);
+        assertThat(hkjSalary.getEmployee()).isNull();
     }
 }

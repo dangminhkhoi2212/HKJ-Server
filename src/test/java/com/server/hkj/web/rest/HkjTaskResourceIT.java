@@ -10,10 +10,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjProject;
 import com.server.hkj.domain.HkjTask;
-import com.server.hkj.domain.HkjTemplateStep;
+import com.server.hkj.domain.UserExtra;
 import com.server.hkj.domain.enumeration.HkjOrderStatus;
 import com.server.hkj.domain.enumeration.HkjPriority;
 import com.server.hkj.repository.HkjTaskRepository;
@@ -756,35 +755,13 @@ class HkjTaskResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjTasksByTemplateStepIsEqualToSomething() throws Exception {
-        HkjTemplateStep templateStep;
-        if (TestUtil.findAll(em, HkjTemplateStep.class).isEmpty()) {
-            hkjTaskRepository.saveAndFlush(hkjTask);
-            templateStep = HkjTemplateStepResourceIT.createEntity(em);
-        } else {
-            templateStep = TestUtil.findAll(em, HkjTemplateStep.class).get(0);
-        }
-        em.persist(templateStep);
-        em.flush();
-        hkjTask.setTemplateStep(templateStep);
-        hkjTaskRepository.saveAndFlush(hkjTask);
-        Long templateStepId = templateStep.getId();
-        // Get all the hkjTaskList where templateStep equals to templateStepId
-        defaultHkjTaskShouldBeFound("templateStepId.equals=" + templateStepId);
-
-        // Get all the hkjTaskList where templateStep equals to (templateStepId + 1)
-        defaultHkjTaskShouldNotBeFound("templateStepId.equals=" + (templateStepId + 1));
-    }
-
-    @Test
-    @Transactional
     void getAllHkjTasksByEmployeeIsEqualToSomething() throws Exception {
-        HkjEmployee employee;
-        if (TestUtil.findAll(em, HkjEmployee.class).isEmpty()) {
+        UserExtra employee;
+        if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjTaskRepository.saveAndFlush(hkjTask);
-            employee = HkjEmployeeResourceIT.createEntity(em);
+            employee = UserExtraResourceIT.createEntity(em);
         } else {
-            employee = TestUtil.findAll(em, HkjEmployee.class).get(0);
+            employee = TestUtil.findAll(em, UserExtra.class).get(0);
         }
         em.persist(employee);
         em.flush();
@@ -800,24 +777,24 @@ class HkjTaskResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjTasksByHkjProjectIsEqualToSomething() throws Exception {
-        HkjProject hkjProject;
+    void getAllHkjTasksByProjectIsEqualToSomething() throws Exception {
+        HkjProject project;
         if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
             hkjTaskRepository.saveAndFlush(hkjTask);
-            hkjProject = HkjProjectResourceIT.createEntity(em);
+            project = HkjProjectResourceIT.createEntity(em);
         } else {
-            hkjProject = TestUtil.findAll(em, HkjProject.class).get(0);
+            project = TestUtil.findAll(em, HkjProject.class).get(0);
         }
-        em.persist(hkjProject);
+        em.persist(project);
         em.flush();
-        hkjTask.setHkjProject(hkjProject);
+        hkjTask.setProject(project);
         hkjTaskRepository.saveAndFlush(hkjTask);
-        Long hkjProjectId = hkjProject.getId();
-        // Get all the hkjTaskList where hkjProject equals to hkjProjectId
-        defaultHkjTaskShouldBeFound("hkjProjectId.equals=" + hkjProjectId);
+        Long projectId = project.getId();
+        // Get all the hkjTaskList where project equals to projectId
+        defaultHkjTaskShouldBeFound("projectId.equals=" + projectId);
 
-        // Get all the hkjTaskList where hkjProject equals to (hkjProjectId + 1)
-        defaultHkjTaskShouldNotBeFound("hkjProjectId.equals=" + (hkjProjectId + 1));
+        // Get all the hkjTaskList where project equals to (projectId + 1)
+        defaultHkjTaskShouldNotBeFound("projectId.equals=" + (projectId + 1));
     }
 
     private void defaultHkjTaskFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

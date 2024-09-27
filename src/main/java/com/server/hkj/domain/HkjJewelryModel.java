@@ -63,7 +63,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "template", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjProject project;

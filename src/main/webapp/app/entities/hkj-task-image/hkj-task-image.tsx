@@ -143,7 +143,7 @@ export const HkjTaskImage = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjTaskImage.hkjTask">Hkj Task</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjTaskImage.task">Task</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -169,7 +169,7 @@ export const HkjTaskImage = () => {
                       <TextFormat type="date" value={hkjTaskImage.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{hkjTaskImage.hkjTask ? <Link to={`/hkj-task/${hkjTaskImage.hkjTask.id}`}>{hkjTaskImage.hkjTask.id}</Link> : ''}</td>
+                  <td>{hkjTaskImage.task ? <Link to={`/hkj-task/${hkjTaskImage.task.id}`}>{hkjTaskImage.task.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-task-image/${hkjTaskImage.id}`} color="info" size="sm" data-cy="entityDetailsButton">

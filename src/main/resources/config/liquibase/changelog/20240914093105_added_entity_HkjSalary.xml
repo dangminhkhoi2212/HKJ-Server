@@ -17,6 +17,9 @@
             <column name="salary" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
+            <column name="notes" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
             <column name="is_deleted" type="boolean">
                 <constraints nullable="true" />
             </column>
@@ -32,7 +35,7 @@
             <column name="last_modified_date" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="hkj_employee_id" type="bigint">
+            <column name="employee_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

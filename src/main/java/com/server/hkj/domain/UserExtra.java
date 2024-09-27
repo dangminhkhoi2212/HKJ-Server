@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
@@ -48,9 +50,19 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
     @JoinColumn(unique = true)
     private User user;
 
-    @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userExtra")
-    private HkjEmployee hkjEmployee;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "employee" }, allowSetters = true)
+    private Set<HkjSalary> salarys = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "position", "employee" }, allowSetters = true)
+    private Set<HkjHire> hires = new HashSet<>();
+
+    @JsonIgnoreProperties(value = { "employee", "images", "materials", "project" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee")
+    private HkjTask hkjTask;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -160,22 +172,84 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
         return this;
     }
 
-    public HkjEmployee getHkjEmployee() {
-        return this.hkjEmployee;
+    public Set<HkjSalary> getSalarys() {
+        return this.salarys;
     }
 
-    public void setHkjEmployee(HkjEmployee hkjEmployee) {
-        if (this.hkjEmployee != null) {
-            this.hkjEmployee.setUserExtra(null);
+    public void setSalarys(Set<HkjSalary> hkjSalaries) {
+        if (this.salarys != null) {
+            this.salarys.forEach(i -> i.setEmployee(null));
         }
-        if (hkjEmployee != null) {
-            hkjEmployee.setUserExtra(this);
+        if (hkjSalaries != null) {
+            hkjSalaries.forEach(i -> i.setEmployee(this));
         }
-        this.hkjEmployee = hkjEmployee;
+        this.salarys = hkjSalaries;
     }
 
-    public UserExtra hkjEmployee(HkjEmployee hkjEmployee) {
-        this.setHkjEmployee(hkjEmployee);
+    public UserExtra salarys(Set<HkjSalary> hkjSalaries) {
+        this.setSalarys(hkjSalaries);
+        return this;
+    }
+
+    public UserExtra addSalarys(HkjSalary hkjSalary) {
+        this.salarys.add(hkjSalary);
+        hkjSalary.setEmployee(this);
+        return this;
+    }
+
+    public UserExtra removeSalarys(HkjSalary hkjSalary) {
+        this.salarys.remove(hkjSalary);
+        hkjSalary.setEmployee(null);
+        return this;
+    }
+
+    public Set<HkjHire> getHires() {
+        return this.hires;
+    }
+
+    public void setHires(Set<HkjHire> hkjHires) {
+        if (this.hires != null) {
+            this.hires.forEach(i -> i.setEmployee(null));
+        }
+        if (hkjHires != null) {
+            hkjHires.forEach(i -> i.setEmployee(this));
+        }
+        this.hires = hkjHires;
+    }
+
+    public UserExtra hires(Set<HkjHire> hkjHires) {
+        this.setHires(hkjHires);
+        return this;
+    }
+
+    public UserExtra addHire(HkjHire hkjHire) {
+        this.hires.add(hkjHire);
+        hkjHire.setEmployee(this);
+        return this;
+    }
+
+    public UserExtra removeHire(HkjHire hkjHire) {
+        this.hires.remove(hkjHire);
+        hkjHire.setEmployee(null);
+        return this;
+    }
+
+    public HkjTask getHkjTask() {
+        return this.hkjTask;
+    }
+
+    public void setHkjTask(HkjTask hkjTask) {
+        if (this.hkjTask != null) {
+            this.hkjTask.setEmployee(null);
+        }
+        if (hkjTask != null) {
+            hkjTask.setEmployee(this);
+        }
+        this.hkjTask = hkjTask;
+    }
+
+    public UserExtra hkjTask(HkjTask hkjTask) {
+        this.setHkjTask(hkjTask);
         return this;
     }
 

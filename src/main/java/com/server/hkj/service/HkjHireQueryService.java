@@ -108,7 +108,7 @@ public class HkjHireQueryService extends QueryService<HkjHire> {
             }
             if (criteria.getEmployeeId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjHire_.employee, JoinType.LEFT).get(HkjEmployee_.id))
+                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjHire_.employee, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
         }

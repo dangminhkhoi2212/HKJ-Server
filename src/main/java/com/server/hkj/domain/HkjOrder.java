@@ -75,18 +75,18 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "template", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjProject project;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjOrder")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "order" }, allowSetters = true)
     private Set<HkjOrderImage> orderImages = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "hkjEmployee" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
     private UserExtra customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -298,10 +298,10 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public void setOrderImages(Set<HkjOrderImage> hkjOrderImages) {
         if (this.orderImages != null) {
-            this.orderImages.forEach(i -> i.setHkjOrder(null));
+            this.orderImages.forEach(i -> i.setOrder(null));
         }
         if (hkjOrderImages != null) {
-            hkjOrderImages.forEach(i -> i.setHkjOrder(this));
+            hkjOrderImages.forEach(i -> i.setOrder(this));
         }
         this.orderImages = hkjOrderImages;
     }
@@ -313,13 +313,13 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public HkjOrder addOrderImages(HkjOrderImage hkjOrderImage) {
         this.orderImages.add(hkjOrderImage);
-        hkjOrderImage.setHkjOrder(this);
+        hkjOrderImage.setOrder(this);
         return this;
     }
 
     public HkjOrder removeOrderImages(HkjOrderImage hkjOrderImage) {
         this.orderImages.remove(hkjOrderImage);
-        hkjOrderImage.setHkjOrder(null);
+        hkjOrderImage.setOrder(null);
         return this;
     }
 

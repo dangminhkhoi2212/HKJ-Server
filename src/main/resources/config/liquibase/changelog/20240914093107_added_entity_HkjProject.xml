@@ -62,8 +62,8 @@
             <column name="last_modified_date" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="template_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_project__template_id" />
+            <column name="category_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_project__category_id" />
             </column>
             <column name="manager_id" type="bigint">
                 <constraints nullable="true" />

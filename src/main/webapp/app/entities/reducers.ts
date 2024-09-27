@@ -2,7 +2,6 @@ import userExtra from 'app/entities/user-extra/user-extra.reducer';
 import hkjPosition from 'app/entities/hkj-position/hkj-position.reducer';
 import hkjHire from 'app/entities/hkj-hire/hkj-hire.reducer';
 import hkjSalary from 'app/entities/hkj-salary/hkj-salary.reducer';
-import hkjEmployee from 'app/entities/hkj-employee/hkj-employee.reducer';
 import hkjProject from 'app/entities/hkj-project/hkj-project.reducer';
 import hkjTask from 'app/entities/hkj-task/hkj-task.reducer';
 import hkjCategory from 'app/entities/hkj-category/hkj-category.reducer';
@@ -23,7 +22,6 @@ const entitiesReducers = {
   hkjPosition,
   hkjHire,
   hkjSalary,
-  hkjEmployee,
   hkjProject,
   hkjTask,
   hkjCategory,

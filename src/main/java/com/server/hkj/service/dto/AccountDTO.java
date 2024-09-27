@@ -1,22 +1,22 @@
 package com.server.hkj.service.dto;
 
 import com.server.hkj.config.Constants;
-import com.server.hkj.domain.Authority;
-import com.server.hkj.domain.User;
-import com.server.hkj.domain.UserExtra;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
-import java.util.stream.Collectors;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountDTO {
 
     private static final long serialVersionUID = 1L;
@@ -62,24 +62,4 @@ public class AccountDTO {
     private Instant lastModifiedDate;
 
     private Set<String> authorities;
-
-    public AccountDTO(UserExtra userExtra) {
-        User user = userExtra.getUser();
-        this.userId = user.getId();
-        this.login = user.getLogin();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
-        this.activated = user.isActivated();
-        this.imageUrl = user.getImageUrl();
-        this.langKey = user.getLangKey();
-        this.createdBy = user.getCreatedBy();
-        this.createdDate = user.getCreatedDate();
-        this.lastModifiedBy = user.getLastModifiedBy();
-        this.lastModifiedDate = user.getLastModifiedDate();
-        this.authorities = user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet());
-        this.id = userExtra.getId();
-        this.phone = userExtra.getPhone();
-        this.address = userExtra.getAddress();
-    }
 }

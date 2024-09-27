@@ -4,11 +4,7 @@ import com.server.hkj.domain.HkjTemplateStep;
 import com.server.hkj.repository.HkjTemplateStepRepository;
 import com.server.hkj.service.dto.HkjTemplateStepDTO;
 import com.server.hkj.service.mapper.HkjTemplateStepMapper;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -77,19 +73,6 @@ public class HkjTemplateStepService {
             })
             .map(hkjTemplateStepRepository::save)
             .map(hkjTemplateStepMapper::toDto);
-    }
-
-    /**
-     *  Get all the hkjTemplateSteps where HkjTask is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<HkjTemplateStepDTO> findAllWhereHkjTaskIsNull() {
-        log.debug("Request to get all hkjTemplateSteps where HkjTask is null");
-        return StreamSupport.stream(hkjTemplateStepRepository.findAll().spliterator(), false)
-            .filter(hkjTemplateStep -> hkjTemplateStep.getHkjTask() == null)
-            .map(hkjTemplateStepMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

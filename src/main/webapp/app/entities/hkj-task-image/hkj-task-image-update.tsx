@@ -58,7 +58,7 @@ export const HkjTaskImageUpdate = () => {
     const entity = {
       ...hkjTaskImageEntity,
       ...values,
-      hkjTask: hkjTasks.find(it => it.id.toString() === values.hkjTask?.toString()),
+      task: hkjTasks.find(it => it.id.toString() === values.task?.toString()),
     };
 
     if (isNew) {
@@ -78,7 +78,7 @@ export const HkjTaskImageUpdate = () => {
           ...hkjTaskImageEntity,
           createdDate: convertDateTimeFromServer(hkjTaskImageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjTaskImageEntity.lastModifiedDate),
-          hkjTask: hkjTaskImageEntity?.hkjTask?.id,
+          task: hkjTaskImageEntity?.task?.id,
         };
 
   return (
@@ -162,10 +162,10 @@ export const HkjTaskImageUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-task-image-hkjTask"
-                name="hkjTask"
-                data-cy="hkjTask"
-                label={translate('serverApp.hkjTaskImage.hkjTask')}
+                id="hkj-task-image-task"
+                name="task"
+                data-cy="task"
+                label={translate('serverApp.hkjTaskImage.task')}
                 type="select"
               >
                 <option value="" key="0" />

@@ -39,6 +39,12 @@ export const HkjSalaryDetail = () => {
           </dt>
           <dd>{hkjSalaryEntity.salary}</dd>
           <dt>
+            <span id="notes">
+              <Translate contentKey="serverApp.hkjSalary.notes">Notes</Translate>
+            </span>
+          </dt>
+          <dd>{hkjSalaryEntity.notes}</dd>
+          <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjSalary.isDeleted">Is Deleted</Translate>
             </span>
@@ -75,9 +81,9 @@ export const HkjSalaryDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjSalary.hkjEmployee">Hkj Employee</Translate>
+            <Translate contentKey="serverApp.hkjSalary.employee">Employee</Translate>
           </dt>
-          <dd>{hkjSalaryEntity.hkjEmployee ? hkjSalaryEntity.hkjEmployee.id : ''}</dd>
+          <dd>{hkjSalaryEntity.employee ? hkjSalaryEntity.employee.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-salary" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

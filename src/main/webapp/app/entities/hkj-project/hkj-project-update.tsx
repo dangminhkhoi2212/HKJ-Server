@@ -8,10 +8,10 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjTemplate } from 'app/shared/model/hkj-template.model';
-import { getEntities as getHkjTemplates } from 'app/entities/hkj-template/hkj-template.reducer';
-import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
-import { getEntities as getHkjEmployees } from 'app/entities/hkj-employee/hkj-employee.reducer';
+import { IHkjCategory } from 'app/shared/model/hkj-category.model';
+import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
 import { IHkjProject } from 'app/shared/model/hkj-project.model';
 import { HkjOrderStatus } from 'app/shared/model/enumerations/hkj-order-status.model';
 import { HkjPriority } from 'app/shared/model/enumerations/hkj-priority.model';
@@ -25,8 +25,8 @@ export const HkjProjectUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const hkjTemplates = useAppSelector(state => state.hkjTemplate.entities);
-  const hkjEmployees = useAppSelector(state => state.hkjEmployee.entities);
+  const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
+  const userExtras = useAppSelector(state => state.userExtra.entities);
   const hkjProjectEntity = useAppSelector(state => state.hkjProject.entity);
   const loading = useAppSelector(state => state.hkjProject.loading);
   const updating = useAppSelector(state => state.hkjProject.updating);
@@ -45,8 +45,8 @@ export const HkjProjectUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getHkjTemplates({}));
-    dispatch(getHkjEmployees({}));
+    dispatch(getHkjCategories({}));
+    dispatch(getUserExtras({}));
   }, []);
 
   useEffect(() => {
@@ -75,8 +75,8 @@ export const HkjProjectUpdate = () => {
     const entity = {
       ...hkjProjectEntity,
       ...values,
-      template: hkjTemplates.find(it => it.id.toString() === values.template?.toString()),
-      manager: hkjEmployees.find(it => it.id.toString() === values.manager?.toString()),
+      category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
+      manager: userExtras.find(it => it.id.toString() === values.manager?.toString()),
     };
 
     if (isNew) {
@@ -104,7 +104,7 @@ export const HkjProjectUpdate = () => {
           endDate: convertDateTimeFromServer(hkjProjectEntity.endDate),
           createdDate: convertDateTimeFromServer(hkjProjectEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjProjectEntity.lastModifiedDate),
-          template: hkjProjectEntity?.template?.id,
+          category: hkjProjectEntity?.category?.id,
           manager: hkjProjectEntity?.manager?.id,
         };
 
@@ -277,15 +277,15 @@ export const HkjProjectUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-project-template"
-                name="template"
-                data-cy="template"
-                label={translate('serverApp.hkjProject.template')}
+                id="hkj-project-category"
+                name="category"
+                data-cy="category"
+                label={translate('serverApp.hkjProject.category')}
                 type="select"
               >
                 <option value="" key="0" />
-                {hkjTemplates
-                  ? hkjTemplates.map(otherEntity => (
+                {hkjCategories
+                  ? hkjCategories.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>
@@ -300,8 +300,8 @@ export const HkjProjectUpdate = () => {
                 type="select"
               >
                 <option value="" key="0" />
-                {hkjEmployees
-                  ? hkjEmployees.map(otherEntity => (
+                {userExtras
+                  ? userExtras.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

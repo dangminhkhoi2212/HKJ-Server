@@ -56,13 +56,10 @@
             <column name="last_modified_date" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="template_step_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_task__template_step_id" />
-            </column>
             <column name="employee_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_task__employee_id" />
             </column>
-            <column name="hkj_project_id" type="bigint">
+            <column name="project_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

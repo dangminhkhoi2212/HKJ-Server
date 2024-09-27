@@ -39,13 +39,9 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "templateStep", "images", "materials", "employee", "hkjProject" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "templateStep")
-    private HkjTask hkjTask;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "category", "steps", "creater", "hkjProject" }, allowSetters = true)
-    private HkjTemplate hkjTemplate;
+    @JsonIgnoreProperties(value = { "category", "steps", "creater" }, allowSetters = true)
+    private HkjTemplate template;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -129,35 +125,16 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
         return this;
     }
 
-    public HkjTask getHkjTask() {
-        return this.hkjTask;
+    public HkjTemplate getTemplate() {
+        return this.template;
     }
 
-    public void setHkjTask(HkjTask hkjTask) {
-        if (this.hkjTask != null) {
-            this.hkjTask.setTemplateStep(null);
-        }
-        if (hkjTask != null) {
-            hkjTask.setTemplateStep(this);
-        }
-        this.hkjTask = hkjTask;
+    public void setTemplate(HkjTemplate hkjTemplate) {
+        this.template = hkjTemplate;
     }
 
-    public HkjTemplateStep hkjTask(HkjTask hkjTask) {
-        this.setHkjTask(hkjTask);
-        return this;
-    }
-
-    public HkjTemplate getHkjTemplate() {
-        return this.hkjTemplate;
-    }
-
-    public void setHkjTemplate(HkjTemplate hkjTemplate) {
-        this.hkjTemplate = hkjTemplate;
-    }
-
-    public HkjTemplateStep hkjTemplate(HkjTemplate hkjTemplate) {
-        this.setHkjTemplate(hkjTemplate);
+    public HkjTemplateStep template(HkjTemplate hkjTemplate) {
+        this.setTemplate(hkjTemplate);
         return this;
     }
 

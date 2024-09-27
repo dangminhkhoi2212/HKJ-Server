@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjEmployee;
+import com.server.hkj.domain.HkjCategory;
 import com.server.hkj.domain.HkjProject;
-import com.server.hkj.domain.HkjTemplate;
+import com.server.hkj.domain.UserExtra;
 import com.server.hkj.domain.enumeration.HkjOrderStatus;
 import com.server.hkj.domain.enumeration.HkjPriority;
 import com.server.hkj.repository.HkjProjectRepository;
@@ -867,35 +867,35 @@ class HkjProjectResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjProjectsByTemplateIsEqualToSomething() throws Exception {
-        HkjTemplate template;
-        if (TestUtil.findAll(em, HkjTemplate.class).isEmpty()) {
+    void getAllHkjProjectsByCategoryIsEqualToSomething() throws Exception {
+        HkjCategory category;
+        if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
             hkjProjectRepository.saveAndFlush(hkjProject);
-            template = HkjTemplateResourceIT.createEntity(em);
+            category = HkjCategoryResourceIT.createEntity(em);
         } else {
-            template = TestUtil.findAll(em, HkjTemplate.class).get(0);
+            category = TestUtil.findAll(em, HkjCategory.class).get(0);
         }
-        em.persist(template);
+        em.persist(category);
         em.flush();
-        hkjProject.setTemplate(template);
+        hkjProject.setCategory(category);
         hkjProjectRepository.saveAndFlush(hkjProject);
-        Long templateId = template.getId();
-        // Get all the hkjProjectList where template equals to templateId
-        defaultHkjProjectShouldBeFound("templateId.equals=" + templateId);
+        Long categoryId = category.getId();
+        // Get all the hkjProjectList where category equals to categoryId
+        defaultHkjProjectShouldBeFound("categoryId.equals=" + categoryId);
 
-        // Get all the hkjProjectList where template equals to (templateId + 1)
-        defaultHkjProjectShouldNotBeFound("templateId.equals=" + (templateId + 1));
+        // Get all the hkjProjectList where category equals to (categoryId + 1)
+        defaultHkjProjectShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
     }
 
     @Test
     @Transactional
     void getAllHkjProjectsByManagerIsEqualToSomething() throws Exception {
-        HkjEmployee manager;
-        if (TestUtil.findAll(em, HkjEmployee.class).isEmpty()) {
+        UserExtra manager;
+        if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjProjectRepository.saveAndFlush(hkjProject);
-            manager = HkjEmployeeResourceIT.createEntity(em);
+            manager = UserExtraResourceIT.createEntity(em);
         } else {
-            manager = TestUtil.findAll(em, HkjEmployee.class).get(0);
+            manager = TestUtil.findAll(em, UserExtra.class).get(0);
         }
         em.persist(manager);
         em.flush();

@@ -42,8 +42,6 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
 
     private LongFilter createrId;
 
-    private LongFilter hkjProjectId;
-
     private Boolean distinct;
 
     public HkjTemplateCriteria() {}
@@ -59,7 +57,6 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
         this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
         this.stepsId = other.optionalStepsId().map(LongFilter::copy).orElse(null);
         this.createrId = other.optionalCreaterId().map(LongFilter::copy).orElse(null);
-        this.hkjProjectId = other.optionalHkjProjectId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -258,25 +255,6 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
         this.createrId = createrId;
     }
 
-    public LongFilter getHkjProjectId() {
-        return hkjProjectId;
-    }
-
-    public Optional<LongFilter> optionalHkjProjectId() {
-        return Optional.ofNullable(hkjProjectId);
-    }
-
-    public LongFilter hkjProjectId() {
-        if (hkjProjectId == null) {
-            setHkjProjectId(new LongFilter());
-        }
-        return hkjProjectId;
-    }
-
-    public void setHkjProjectId(LongFilter hkjProjectId) {
-        this.hkjProjectId = hkjProjectId;
-    }
-
     public Boolean getDistinct() {
         return distinct;
     }
@@ -316,7 +294,6 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
             Objects.equals(categoryId, that.categoryId) &&
             Objects.equals(stepsId, that.stepsId) &&
             Objects.equals(createrId, that.createrId) &&
-            Objects.equals(hkjProjectId, that.hkjProjectId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -334,7 +311,6 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
             categoryId,
             stepsId,
             createrId,
-            hkjProjectId,
             distinct
         );
     }
@@ -353,7 +329,6 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
             optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
             optionalStepsId().map(f -> "stepsId=" + f + ", ").orElse("") +
             optionalCreaterId().map(f -> "createrId=" + f + ", ").orElse("") +
-            optionalHkjProjectId().map(f -> "hkjProjectId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

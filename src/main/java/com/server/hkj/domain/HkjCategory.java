@@ -39,7 +39,11 @@ public class HkjCategory extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "steps", "creater", "hkjProject" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "category")
+    private HkjProject hkjProject;
+
+    @JsonIgnoreProperties(value = { "category", "steps", "creater" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "category")
     private HkjTemplate hkjTemplate;
 
@@ -122,6 +126,25 @@ public class HkjCategory extends AbstractAuditingEntity<Long> implements Seriali
 
     public HkjCategory setIsPersisted() {
         this.isPersisted = true;
+        return this;
+    }
+
+    public HkjProject getHkjProject() {
+        return this.hkjProject;
+    }
+
+    public void setHkjProject(HkjProject hkjProject) {
+        if (this.hkjProject != null) {
+            this.hkjProject.setCategory(null);
+        }
+        if (hkjProject != null) {
+            hkjProject.setCategory(this);
+        }
+        this.hkjProject = hkjProject;
+    }
+
+    public HkjCategory hkjProject(HkjProject hkjProject) {
+        this.setHkjProject(hkjProject);
         return this;
     }
 

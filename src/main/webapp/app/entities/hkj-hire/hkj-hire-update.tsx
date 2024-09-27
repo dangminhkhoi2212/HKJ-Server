@@ -10,8 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IHkjPosition } from 'app/shared/model/hkj-position.model';
 import { getEntities as getHkjPositions } from 'app/entities/hkj-position/hkj-position.reducer';
-import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
-import { getEntities as getHkjEmployees } from 'app/entities/hkj-employee/hkj-employee.reducer';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
 import { IHkjHire } from 'app/shared/model/hkj-hire.model';
 import { getEntity, updateEntity, createEntity, reset } from './hkj-hire.reducer';
 
@@ -24,7 +24,7 @@ export const HkjHireUpdate = () => {
   const isNew = id === undefined;
 
   const hkjPositions = useAppSelector(state => state.hkjPosition.entities);
-  const hkjEmployees = useAppSelector(state => state.hkjEmployee.entities);
+  const userExtras = useAppSelector(state => state.userExtra.entities);
   const hkjHireEntity = useAppSelector(state => state.hkjHire.entity);
   const loading = useAppSelector(state => state.hkjHire.loading);
   const updating = useAppSelector(state => state.hkjHire.updating);
@@ -42,7 +42,7 @@ export const HkjHireUpdate = () => {
     }
 
     dispatch(getHkjPositions({}));
-    dispatch(getHkjEmployees({}));
+    dispatch(getUserExtras({}));
   }, []);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export const HkjHireUpdate = () => {
       ...hkjHireEntity,
       ...values,
       position: hkjPositions.find(it => it.id.toString() === values.position?.toString()),
-      employee: hkjEmployees.find(it => it.id.toString() === values.employee?.toString()),
+      employee: userExtras.find(it => it.id.toString() === values.employee?.toString()),
     };
 
     if (isNew) {
@@ -212,8 +212,8 @@ export const HkjHireUpdate = () => {
                 type="select"
               >
                 <option value="" key="0" />
-                {hkjEmployees
-                  ? hkjEmployees.map(otherEntity => (
+                {userExtras
+                  ? userExtras.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

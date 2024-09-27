@@ -83,7 +83,9 @@ class UserExtraCriteriaTest {
         userExtraCriteria.lastModifiedBy();
         userExtraCriteria.lastModifiedDate();
         userExtraCriteria.userId();
-        userExtraCriteria.hkjEmployeeId();
+        userExtraCriteria.salarysId();
+        userExtraCriteria.hireId();
+        userExtraCriteria.hkjTaskId();
         userExtraCriteria.distinct();
     }
 
@@ -99,7 +101,9 @@ class UserExtraCriteriaTest {
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
                 condition.apply(criteria.getUserId()) &&
-                condition.apply(criteria.getHkjEmployeeId()) &&
+                condition.apply(criteria.getSalarysId()) &&
+                condition.apply(criteria.getHireId()) &&
+                condition.apply(criteria.getHkjTaskId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -117,7 +121,9 @@ class UserExtraCriteriaTest {
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
                 condition.apply(criteria.getUserId(), copy.getUserId()) &&
-                condition.apply(criteria.getHkjEmployeeId(), copy.getHkjEmployeeId()) &&
+                condition.apply(criteria.getSalarysId(), copy.getSalarysId()) &&
+                condition.apply(criteria.getHireId(), copy.getHireId()) &&
+                condition.apply(criteria.getHkjTaskId(), copy.getHkjTaskId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

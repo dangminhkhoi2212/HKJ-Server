@@ -79,7 +79,7 @@ public class HkjProjectAsserts {
     public static void assertHkjProjectUpdatableRelationshipsEquals(HkjProject expected, HkjProject actual) {
         assertThat(expected)
             .as("Verify HkjProject relationships")
-            .satisfies(e -> assertThat(e.getTemplate()).as("check template").isEqualTo(actual.getTemplate()))
+            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
             .satisfies(e -> assertThat(e.getManager()).as("check manager").isEqualTo(actual.getManager()));
     }
 }

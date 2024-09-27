@@ -139,9 +139,9 @@ export const HkjProjectDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjProject.template">Template</Translate>
+            <Translate contentKey="serverApp.hkjProject.category">Category</Translate>
           </dt>
-          <dd>{hkjProjectEntity.template ? hkjProjectEntity.template.id : ''}</dd>
+          <dd>{hkjProjectEntity.category ? hkjProjectEntity.category.id : ''}</dd>
           <dt>
             <Translate contentKey="serverApp.hkjProject.manager">Manager</Translate>
           </dt>

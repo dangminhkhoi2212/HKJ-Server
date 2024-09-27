@@ -91,7 +91,7 @@ class HkjProjectCriteriaTest {
         hkjProjectCriteria.createdDate();
         hkjProjectCriteria.lastModifiedBy();
         hkjProjectCriteria.lastModifiedDate();
-        hkjProjectCriteria.templateId();
+        hkjProjectCriteria.categoryId();
         hkjProjectCriteria.tasksId();
         hkjProjectCriteria.managerId();
         hkjProjectCriteria.hkjJewelryModelId();
@@ -119,7 +119,7 @@ class HkjProjectCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getTemplateId()) &&
+                condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getTasksId()) &&
                 condition.apply(criteria.getManagerId()) &&
                 condition.apply(criteria.getHkjJewelryModelId()) &&
@@ -149,7 +149,7 @@ class HkjProjectCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getTemplateId(), copy.getTemplateId()) &&
+                condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getTasksId(), copy.getTasksId()) &&
                 condition.apply(criteria.getManagerId(), copy.getManagerId()) &&
                 condition.apply(criteria.getHkjJewelryModelId(), copy.getHkjJewelryModelId()) &&

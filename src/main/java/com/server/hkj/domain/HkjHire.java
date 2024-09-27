@@ -49,15 +49,13 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "hkjHire" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "hires" }, allowSetters = true)
     private HkjPosition position;
 
-    @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private HkjEmployee employee;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
+    private UserExtra employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -180,16 +178,16 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
-    public HkjEmployee getEmployee() {
+    public UserExtra getEmployee() {
         return this.employee;
     }
 
-    public void setEmployee(HkjEmployee hkjEmployee) {
-        this.employee = hkjEmployee;
+    public void setEmployee(UserExtra userExtra) {
+        this.employee = userExtra;
     }
 
-    public HkjHire employee(HkjEmployee hkjEmployee) {
-        this.setEmployee(hkjEmployee);
+    public HkjHire employee(UserExtra userExtra) {
+        this.setEmployee(userExtra);
         return this;
     }
 

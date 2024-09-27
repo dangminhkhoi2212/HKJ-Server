@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
@@ -41,9 +43,10 @@ public class HkjPosition extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "position")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "position", "employee" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "position")
-    private HkjHire hkjHire;
+    private Set<HkjHire> hires = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -127,22 +130,34 @@ public class HkjPosition extends AbstractAuditingEntity<Long> implements Seriali
         return this;
     }
 
-    public HkjHire getHkjHire() {
-        return this.hkjHire;
+    public Set<HkjHire> getHires() {
+        return this.hires;
     }
 
-    public void setHkjHire(HkjHire hkjHire) {
-        if (this.hkjHire != null) {
-            this.hkjHire.setPosition(null);
+    public void setHires(Set<HkjHire> hkjHires) {
+        if (this.hires != null) {
+            this.hires.forEach(i -> i.setPosition(null));
         }
-        if (hkjHire != null) {
-            hkjHire.setPosition(this);
+        if (hkjHires != null) {
+            hkjHires.forEach(i -> i.setPosition(this));
         }
-        this.hkjHire = hkjHire;
+        this.hires = hkjHires;
     }
 
-    public HkjPosition hkjHire(HkjHire hkjHire) {
-        this.setHkjHire(hkjHire);
+    public HkjPosition hires(Set<HkjHire> hkjHires) {
+        this.setHires(hkjHires);
+        return this;
+    }
+
+    public HkjPosition addHire(HkjHire hkjHire) {
+        this.hires.add(hkjHire);
+        hkjHire.setPosition(this);
+        return this;
+    }
+
+    public HkjPosition removeHire(HkjHire hkjHire) {
+        this.hires.remove(hkjHire);
+        hkjHire.setPosition(null);
         return this;
     }
 

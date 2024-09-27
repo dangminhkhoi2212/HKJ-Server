@@ -80,6 +80,19 @@ public class HkjCategoryService {
     }
 
     /**
+     *  Get all the hkjCategories where HkjProject is {@code null}.
+     *  @return the list of entities.
+     */
+    @Transactional(readOnly = true)
+    public List<HkjCategoryDTO> findAllWhereHkjProjectIsNull() {
+        log.debug("Request to get all hkjCategories where HkjProject is null");
+        return StreamSupport.stream(hkjCategoryRepository.findAll().spliterator(), false)
+            .filter(hkjCategory -> hkjCategory.getHkjProject() == null)
+            .map(hkjCategoryMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    /**
      *  Get all the hkjCategories where HkjTemplate is {@code null}.
      *  @return the list of entities.
      */

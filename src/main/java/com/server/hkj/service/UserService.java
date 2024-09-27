@@ -13,6 +13,7 @@ import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
 import com.server.hkj.service.mapper.UserMapper;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -48,17 +49,21 @@ public class UserService {
 
     private final UserMapper userMapper;
 
+    private final UserExtraService userExtraService;
+
     public UserService(
         UserRepository userRepository,
         AuthorityRepository authorityRepository,
         CacheManager cacheManager,
-        UserExtraRepository userExtraRepository
+        UserExtraRepository userExtraRepository,
+        UserExtraService userExtraService
     ) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.userExtraRepository = userExtraRepository;
         this.cacheManager = cacheManager;
         this.userMapper = new UserMapper();
+        this.userExtraService = userExtraService;
     }
 
     public void updateUser(User user) {
@@ -81,40 +86,37 @@ public class UserService {
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl, String phoneNumber) {
-        // #dang minh khoi
+    public void updateUser(
+        String firstName,
+        String lastName,
+        String email,
+        String langKey,
+        String imageUrl,
+        String phoneNumber,
+        String addressString
+    ) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
-                if (email != null) {
-                    user.setEmail(email.toLowerCase());
-                }
+                user.setEmail(email != null ? email.toLowerCase() : null);
                 user.setLangKey(langKey);
                 user.setImageUrl(imageUrl);
-
                 userRepository.save(user);
-                this.clearUserCaches(user);
-                // log.info("Changed Information for User: {}", user);
-                // Retrieve the associated ApplicationUser and update the phone number
-                // Check if UserExtra already exists for the user
-                if (phoneNumber != null) {
-                    Optional<UserExtra> userExtraOptional = userExtraRepository.findOneByUserLogin(user.getLogin());
-                    UserExtra userExtra;
-                    if (userExtraOptional.isPresent()) {
-                        userExtra = userExtraOptional.get(); // Retrieve existing UserExtra
-                        log.info("Updating existing UserExtra for user: {}", user.getLogin());
-                    } else {
-                        userExtra = new UserExtra(); // Create a new UserExtra if not exists
-                        userExtra.setUser(user);
-                        log.info("Creating new UserExtra for user: {}", user.getLogin());
-                    }
 
-                    // Update phone number
-                    userExtra.setPhone(phoneNumber);
-                    userExtraRepository.save(userExtra);
-                }
+                UserExtra userExtra = userExtraRepository
+                    .findOneByUserLogin(user.getLogin())
+                    .orElseGet(() -> {
+                        UserExtra newUserExtra = new UserExtra();
+                        newUserExtra.setUser(user);
+                        return newUserExtra;
+                    });
+
+                userExtra = userExtraService.setDetails(userExtra, phoneNumber, addressString);
+                userExtraRepository.save(userExtra);
+
+                clearUserCaches(user);
             });
     }
 
@@ -142,67 +144,94 @@ public class UserService {
         return authorityRepository.findAll().stream().map(Authority::getName).toList();
     }
 
+    private String getDetailString(Map<String, Object> details, String key) {
+        return details.get(key) != null ? details.get(key).toString() : "";
+    }
+
+    private void saveAuthority(String authorityName) {
+        log.info("Saving authority '{}' in local database", authorityName);
+        Authority authority = new Authority();
+        authority.setName(authorityName);
+        authorityRepository.save(authority);
+    }
+
     private UserExtra syncUserWithIdP(Map<String, Object> details, User user) {
         // save authorities in to sync user roles/groups between IdP and JHipster's local database
-        Set<String> dbAuthoritiesSet = getAuthorities().stream().collect(Collectors.toSet());
+        Set<String> dbAuthorities = new HashSet<>(getAuthorities());
         user
             .getAuthorities()
             .stream()
             .map(Authority::getName)
-            .filter(authority -> !dbAuthoritiesSet.contains(authority) && AuthoritiesConstants.AUTHORITIES.contains(authority))
-            .forEach(authority -> {
-                log.info("Saving authority '{}' in local database", authority);
-                Authority authorityToSave = new Authority();
-                authorityToSave.setName(authority);
-                authorityRepository.save(authorityToSave);
-            });
-        // log.info("details: {}", details);
-        // save account in to sync users between IdP and JHipster's local database
-        Optional<User> existingUser = userRepository.findOneByLogin(user.getLogin());
-        if (existingUser.isPresent()) {
-            // if IdP sends last updated information, use it to determine if an update should happen
-            if (details.get("updated_at") != null) {
-                Instant dbModifiedDate = existingUser.orElseThrow().getLastModifiedDate();
-                Instant idpModifiedDate;
-                if (details.get("updated_at") instanceof Instant) {
-                    idpModifiedDate = (Instant) details.get("updated_at");
-                } else {
-                    idpModifiedDate = Instant.ofEpochSecond((Integer) details.get("updated_at"));
-                }
-                if (idpModifiedDate.isAfter(dbModifiedDate)) {
-                    log.info("Updating user '{}' in local database", user.getLogin());
-                    updateUser(
-                        user.getFirstName(),
-                        user.getLastName(),
-                        user.getEmail(),
-                        user.getLangKey(),
-                        user.getImageUrl(),
-                        details.get("phone_number") != null ? details.get("phone_number").toString() : ""
-                    );
-                }
-                // no last updated info, blindly update
-            } else {
-                log.info("Updating user '{}' in local database", user.getLogin());
-                updateUser(
-                    user.getFirstName(),
-                    user.getLastName(),
-                    user.getEmail(),
-                    user.getLangKey(),
-                    user.getImageUrl(),
-                    details.get("phone_number") != null ? details.get("phone_number").toString() : ""
-                );
-            }
-        } else {
-            log.info("Saving user '{}' in local database", user.getLogin());
-            userRepository.save(user);
-            this.clearUserCaches(user);
-        }
+            .filter(authority -> !dbAuthorities.contains(authority) && AuthoritiesConstants.AUTHORITIES.contains(authority))
+            .forEach(this::saveAuthority);
 
+        // save account in to sync users between IdP and JHipster's local database
+        return userRepository
+            .findOneByLogin(user.getLogin())
+            .map(existingUser -> updateExistingUser(existingUser, user, details))
+            .orElseGet(() -> createNewUser(user, details));
+    }
+
+    private UserExtra createNewUser(User user, Map<String, Object> details) {
+        log.info("Saving user '{}' in local database", user.getLogin());
+        User newUser = userRepository.save(user);
         UserExtra userExtra = new UserExtra();
-        userExtra.setUser(user);
-        userExtra.setPhone(details.get("phone_number") != null ? details.get("phone_number").toString() : "");
-        userExtra.setAddress(details.get("address_string") != null ? details.get("address_string").toString() : "");
+        userExtra.setUser(newUser);
+        userExtra.setPhone(getDetailString(details, "phone_number"));
+        userExtra.setAddress(getDetailString(details, "address_string"));
+        userExtraRepository.save(userExtra);
+        clearUserCaches(user);
+        clearUserCaches(newUser);
         return userExtra;
+    }
+
+    private UserExtra updateExistingUser(User existingUser, User user, Map<String, Object> details) {
+        log.info("Updating user '{}' in local database", user.getLogin());
+        //update authorities
+        existingUser.setAuthorities(user.getAuthorities());
+        userRepository.save(existingUser);
+        updateUser(
+            existingUser.getFirstName(),
+            existingUser.getLastName(),
+            existingUser.getEmail(),
+            existingUser.getLangKey(),
+            existingUser.getImageUrl(),
+            getDetailString(details, "phone_number"),
+            getDetailString(details, "address_string")
+        );
+        return userExtraRepository.findOneByUserLogin(existingUser.getLogin()).get();
+    }
+
+    private Map<String, Object> getAttributes(AbstractAuthenticationToken authToken) {
+        if (authToken instanceof OAuth2AuthenticationToken) {
+            return ((OAuth2AuthenticationToken) authToken).getPrincipal().getAttributes();
+        } else if (authToken instanceof JwtAuthenticationToken) {
+            return ((JwtAuthenticationToken) authToken).getTokenAttributes();
+        }
+        throw new IllegalArgumentException("AuthenticationToken is not OAuth2 or JWT!");
+    }
+
+    private boolean shouldUpdate(User existingUser, Map<String, Object> details) {
+        if (details.get("updated_at") == null) return true;
+        Instant dbModifiedDate = existingUser.getLastModifiedDate();
+        Instant idpModifiedDate = details.get("updated_at") instanceof Instant
+            ? (Instant) details.get("updated_at")
+            : Instant.ofEpochSecond((Integer) details.get("updated_at"));
+        return idpModifiedDate.isAfter(dbModifiedDate);
+    }
+
+    private Set<Authority> getAuthoritiesFromToken(AbstractAuthenticationToken authToken) {
+        return authToken
+            .getAuthorities()
+            .stream()
+            .map(GrantedAuthority::getAuthority)
+            .filter(AuthoritiesConstants.AUTHORITIES::contains)
+            .map(authorityName -> {
+                Authority auth = new Authority();
+                auth.setName(authorityName);
+                return auth;
+            })
+            .collect(Collectors.toSet());
     }
 
     /**
@@ -212,36 +241,15 @@ public class UserService {
      * @param authToken the authentication token.
      * @return the user from the authentication.
      */
+
     @Transactional
     public AdminUserDTO getUserFromAuthentication(AbstractAuthenticationToken authToken) {
-        log.info("Fetching user for authentication token {}", authToken);
-        Map<String, Object> attributes;
-        if (authToken instanceof OAuth2AuthenticationToken) {
-            attributes = ((OAuth2AuthenticationToken) authToken).getPrincipal().getAttributes();
-        } else if (authToken instanceof JwtAuthenticationToken) {
-            attributes = ((JwtAuthenticationToken) authToken).getTokenAttributes();
-        } else {
-            throw new IllegalArgumentException("AuthenticationToken is not OAuth2 or JWT!");
-        }
+        Map<String, Object> attributes = getAttributes(authToken);
         UserExtra userExtra = getUser(attributes);
         User user = userExtra.getUser();
-        user.setAuthorities(
-            authToken
-                .getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(AuthoritiesConstants.AUTHORITIES::contains)
-                .map(authority -> {
-                    Authority auth = new Authority();
-                    auth.setName(authority);
-                    return auth;
-                })
-                .collect(Collectors.toSet())
-        );
-
-        updateUser(user);
+        user.setAuthorities(getAuthoritiesFromToken(authToken));
         UserExtra userExtraSync = syncUserWithIdP(attributes, user);
-        return new AdminUserDTO(userExtraSync);
+        return new AdminUserDTO(userExtraSync != null ? userExtraSync : userExtra);
     }
 
     private static UserExtra getUser(Map<String, Object> details) {

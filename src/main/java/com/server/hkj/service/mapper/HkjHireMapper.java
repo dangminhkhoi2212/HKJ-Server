@@ -1,12 +1,15 @@
 package com.server.hkj.service.mapper;
 
-import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjHire;
 import com.server.hkj.domain.HkjPosition;
-import com.server.hkj.service.dto.HkjEmployeeDTO;
+import com.server.hkj.domain.UserExtra;
 import com.server.hkj.service.dto.HkjHireDTO;
 import com.server.hkj.service.dto.HkjPositionDTO;
-import org.mapstruct.*;
+import com.server.hkj.service.dto.UserExtraDTO;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 /**
  * Mapper for the entity {@link HkjHire} and its DTO {@link HkjHireDTO}.
@@ -14,7 +17,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface HkjHireMapper extends EntityMapper<HkjHireDTO, HkjHire> {
     @Mapping(target = "position", source = "position", qualifiedByName = "hkjPositionId")
-    @Mapping(target = "employee", source = "employee", qualifiedByName = "hkjEmployeeId")
+    @Mapping(target = "employee", source = "employee", qualifiedByName = "userExtraId")
     HkjHireDTO toDto(HkjHire s);
 
     @Named("hkjPositionId")
@@ -22,8 +25,8 @@ public interface HkjHireMapper extends EntityMapper<HkjHireDTO, HkjHire> {
     @Mapping(target = "id", source = "id")
     HkjPositionDTO toDtoHkjPositionId(HkjPosition hkjPosition);
 
-    @Named("hkjEmployeeId")
+    @Named("userExtraId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    HkjEmployeeDTO toDtoHkjEmployeeId(HkjEmployee hkjEmployee);
+    UserExtraDTO toDtoUserExtraId(UserExtra userExtra);
 }

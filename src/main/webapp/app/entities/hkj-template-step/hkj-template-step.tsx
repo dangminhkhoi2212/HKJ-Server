@@ -140,7 +140,7 @@ export const HkjTemplateStep = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjTemplateStep.hkjTemplate">Hkj Template</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjTemplateStep.template">Template</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -168,8 +168,8 @@ export const HkjTemplateStep = () => {
                     ) : null}
                   </td>
                   <td>
-                    {hkjTemplateStep.hkjTemplate ? (
-                      <Link to={`/hkj-template/${hkjTemplateStep.hkjTemplate.id}`}>{hkjTemplateStep.hkjTemplate.id}</Link>
+                    {hkjTemplateStep.template ? (
+                      <Link to={`/hkj-template/${hkjTemplateStep.template.id}`}>{hkjTemplateStep.template.id}</Link>
                     ) : (
                       ''
                     )}

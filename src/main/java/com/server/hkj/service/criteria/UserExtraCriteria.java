@@ -40,7 +40,11 @@ public class UserExtraCriteria implements Serializable, Criteria {
 
     private StringFilter userId;
 
-    private LongFilter hkjEmployeeId;
+    private LongFilter salarysId;
+
+    private LongFilter hireId;
+
+    private LongFilter hkjTaskId;
 
     private Boolean distinct;
 
@@ -56,7 +60,9 @@ public class UserExtraCriteria implements Serializable, Criteria {
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
         this.userId = other.optionalUserId().map(StringFilter::copy).orElse(null);
-        this.hkjEmployeeId = other.optionalHkjEmployeeId().map(LongFilter::copy).orElse(null);
+        this.salarysId = other.optionalSalarysId().map(LongFilter::copy).orElse(null);
+        this.hireId = other.optionalHireId().map(LongFilter::copy).orElse(null);
+        this.hkjTaskId = other.optionalHkjTaskId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -236,23 +242,61 @@ public class UserExtraCriteria implements Serializable, Criteria {
         this.userId = userId;
     }
 
-    public LongFilter getHkjEmployeeId() {
-        return hkjEmployeeId;
+    public LongFilter getSalarysId() {
+        return salarysId;
     }
 
-    public Optional<LongFilter> optionalHkjEmployeeId() {
-        return Optional.ofNullable(hkjEmployeeId);
+    public Optional<LongFilter> optionalSalarysId() {
+        return Optional.ofNullable(salarysId);
     }
 
-    public LongFilter hkjEmployeeId() {
-        if (hkjEmployeeId == null) {
-            setHkjEmployeeId(new LongFilter());
+    public LongFilter salarysId() {
+        if (salarysId == null) {
+            setSalarysId(new LongFilter());
         }
-        return hkjEmployeeId;
+        return salarysId;
     }
 
-    public void setHkjEmployeeId(LongFilter hkjEmployeeId) {
-        this.hkjEmployeeId = hkjEmployeeId;
+    public void setSalarysId(LongFilter salarysId) {
+        this.salarysId = salarysId;
+    }
+
+    public LongFilter getHireId() {
+        return hireId;
+    }
+
+    public Optional<LongFilter> optionalHireId() {
+        return Optional.ofNullable(hireId);
+    }
+
+    public LongFilter hireId() {
+        if (hireId == null) {
+            setHireId(new LongFilter());
+        }
+        return hireId;
+    }
+
+    public void setHireId(LongFilter hireId) {
+        this.hireId = hireId;
+    }
+
+    public LongFilter getHkjTaskId() {
+        return hkjTaskId;
+    }
+
+    public Optional<LongFilter> optionalHkjTaskId() {
+        return Optional.ofNullable(hkjTaskId);
+    }
+
+    public LongFilter hkjTaskId() {
+        if (hkjTaskId == null) {
+            setHkjTaskId(new LongFilter());
+        }
+        return hkjTaskId;
+    }
+
+    public void setHkjTaskId(LongFilter hkjTaskId) {
+        this.hkjTaskId = hkjTaskId;
     }
 
     public Boolean getDistinct() {
@@ -293,7 +337,9 @@ public class UserExtraCriteria implements Serializable, Criteria {
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
             Objects.equals(userId, that.userId) &&
-            Objects.equals(hkjEmployeeId, that.hkjEmployeeId) &&
+            Objects.equals(salarysId, that.salarysId) &&
+            Objects.equals(hireId, that.hireId) &&
+            Objects.equals(hkjTaskId, that.hkjTaskId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -310,7 +356,9 @@ public class UserExtraCriteria implements Serializable, Criteria {
             lastModifiedBy,
             lastModifiedDate,
             userId,
-            hkjEmployeeId,
+            salarysId,
+            hireId,
+            hkjTaskId,
             distinct
         );
     }
@@ -328,7 +376,9 @@ public class UserExtraCriteria implements Serializable, Criteria {
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
             optionalUserId().map(f -> "userId=" + f + ", ").orElse("") +
-            optionalHkjEmployeeId().map(f -> "hkjEmployeeId=" + f + ", ").orElse("") +
+            optionalSalarysId().map(f -> "salarysId=" + f + ", ").orElse("") +
+            optionalHireId().map(f -> "hireId=" + f + ", ").orElse("") +
+            optionalHkjTaskId().map(f -> "hkjTaskId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

@@ -9,7 +9,7 @@ export interface IHkjOrderImage {
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  hkjOrder?: IHkjOrder | null;
+  order?: IHkjOrder | null;
 }
 
 export const defaultValue: Readonly<IHkjOrderImage> = {

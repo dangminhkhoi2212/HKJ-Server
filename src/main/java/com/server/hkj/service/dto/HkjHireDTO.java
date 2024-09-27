@@ -34,7 +34,7 @@ public class HkjHireDTO implements Serializable {
 
     private HkjPositionDTO position;
 
-    private HkjEmployeeDTO employee;
+    private UserExtraDTO employee;
 
     public Long getId() {
         return id;
@@ -116,11 +116,11 @@ public class HkjHireDTO implements Serializable {
         this.position = position;
     }
 
-    public HkjEmployeeDTO getEmployee() {
+    public UserExtraDTO getEmployee() {
         return employee;
     }
 
-    public void setEmployee(HkjEmployeeDTO employee) {
+    public void setEmployee(UserExtraDTO employee) {
         this.employee = employee;
     }
 

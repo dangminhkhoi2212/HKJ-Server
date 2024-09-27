@@ -40,7 +40,7 @@ public class HkjMaterialUsageDTO implements Serializable {
 
     private HkjMaterialDTO material;
 
-    private HkjTaskDTO hkjTask;
+    private HkjTaskDTO task;
 
     public Long getId() {
         return id;
@@ -146,12 +146,12 @@ public class HkjMaterialUsageDTO implements Serializable {
         this.material = material;
     }
 
-    public HkjTaskDTO getHkjTask() {
-        return hkjTask;
+    public HkjTaskDTO getTask() {
+        return task;
     }
 
-    public void setHkjTask(HkjTaskDTO hkjTask) {
-        this.hkjTask = hkjTask;
+    public void setTask(HkjTaskDTO task) {
+        this.task = task;
     }
 
     @Override
@@ -192,7 +192,7 @@ public class HkjMaterialUsageDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", material=" + getMaterial() +
-            ", hkjTask=" + getHkjTask() +
+            ", task=" + getTask() +
             "}";
     }
 }

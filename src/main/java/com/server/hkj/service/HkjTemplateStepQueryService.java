@@ -97,16 +97,11 @@ public class HkjTemplateStepQueryService extends QueryService<HkjTemplateStep> {
                     buildRangeSpecification(criteria.getLastModifiedDate(), HkjTemplateStep_.lastModifiedDate)
                 );
             }
-            if (criteria.getHkjTaskId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getHkjTaskId(), root -> root.join(HkjTemplateStep_.hkjTask, JoinType.LEFT).get(HkjTask_.id))
-                );
-            }
-            if (criteria.getHkjTemplateId() != null) {
+            if (criteria.getTemplateId() != null) {
                 specification = specification.and(
                     buildSpecification(
-                        criteria.getHkjTemplateId(),
-                        root -> root.join(HkjTemplateStep_.hkjTemplate, JoinType.LEFT).get(HkjTemplate_.id)
+                        criteria.getTemplateId(),
+                        root -> root.join(HkjTemplateStep_.template, JoinType.LEFT).get(HkjTemplate_.id)
                     )
                 );
             }

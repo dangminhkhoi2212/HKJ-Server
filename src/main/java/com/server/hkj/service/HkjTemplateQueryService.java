@@ -110,15 +110,7 @@ public class HkjTemplateQueryService extends QueryService<HkjTemplate> {
             }
             if (criteria.getCreaterId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getCreaterId(), root -> root.join(HkjTemplate_.creater, JoinType.LEFT).get(HkjEmployee_.id))
-                );
-            }
-            if (criteria.getHkjProjectId() != null) {
-                specification = specification.and(
-                    buildSpecification(
-                        criteria.getHkjProjectId(),
-                        root -> root.join(HkjTemplate_.hkjProject, JoinType.LEFT).get(HkjProject_.id)
-                    )
+                    buildSpecification(criteria.getCreaterId(), root -> root.join(HkjTemplate_.creater, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
         }

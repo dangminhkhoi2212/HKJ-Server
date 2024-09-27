@@ -45,8 +45,8 @@ public class HkjTaskImage extends AbstractAuditingEntity<Long> implements Serial
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "templateStep", "images", "materials", "employee", "hkjProject" }, allowSetters = true)
-    private HkjTask hkjTask;
+    @JsonIgnoreProperties(value = { "employee", "images", "materials", "project" }, allowSetters = true)
+    private HkjTask task;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -143,16 +143,16 @@ public class HkjTaskImage extends AbstractAuditingEntity<Long> implements Serial
         return this;
     }
 
-    public HkjTask getHkjTask() {
-        return this.hkjTask;
+    public HkjTask getTask() {
+        return this.task;
     }
 
-    public void setHkjTask(HkjTask hkjTask) {
-        this.hkjTask = hkjTask;
+    public void setTask(HkjTask hkjTask) {
+        this.task = hkjTask;
     }
 
-    public HkjTaskImage hkjTask(HkjTask hkjTask) {
-        this.setHkjTask(hkjTask);
+    public HkjTaskImage task(HkjTask hkjTask) {
+        this.setTask(hkjTask);
         return this;
     }
 

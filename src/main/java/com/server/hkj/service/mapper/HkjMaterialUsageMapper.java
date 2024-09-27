@@ -14,7 +14,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface HkjMaterialUsageMapper extends EntityMapper<HkjMaterialUsageDTO, HkjMaterialUsage> {
     @Mapping(target = "material", source = "material", qualifiedByName = "hkjMaterialId")
-    @Mapping(target = "hkjTask", source = "hkjTask", qualifiedByName = "hkjTaskId")
+    @Mapping(target = "task", source = "task", qualifiedByName = "hkjTaskId")
     HkjMaterialUsageDTO toDto(HkjMaterialUsage s);
 
     @Named("hkjMaterialId")

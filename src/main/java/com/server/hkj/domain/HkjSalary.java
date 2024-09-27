@@ -30,6 +30,9 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
     @Column(name = "salary", precision = 21, scale = 2)
     private BigDecimal salary;
 
+    @Column(name = "notes")
+    private String notes;
+
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
@@ -41,8 +44,8 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
-    private HkjEmployee hkjEmployee;
+    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
+    private UserExtra employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -70,6 +73,19 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
 
     public void setSalary(BigDecimal salary) {
         this.salary = salary;
+    }
+
+    public String getNotes() {
+        return this.notes;
+    }
+
+    public HkjSalary notes(String notes) {
+        this.setNotes(notes);
+        return this;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -126,16 +142,16 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
         return this;
     }
 
-    public HkjEmployee getHkjEmployee() {
-        return this.hkjEmployee;
+    public UserExtra getEmployee() {
+        return this.employee;
     }
 
-    public void setHkjEmployee(HkjEmployee hkjEmployee) {
-        this.hkjEmployee = hkjEmployee;
+    public void setEmployee(UserExtra userExtra) {
+        this.employee = userExtra;
     }
 
-    public HkjSalary hkjEmployee(HkjEmployee hkjEmployee) {
-        this.setHkjEmployee(hkjEmployee);
+    public HkjSalary employee(UserExtra userExtra) {
+        this.setEmployee(userExtra);
         return this;
     }
 
@@ -164,6 +180,7 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
         return "HkjSalary{" +
             "id=" + getId() +
             ", salary=" + getSalary() +
+            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

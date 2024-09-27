@@ -722,24 +722,24 @@ class HkjMaterialUsageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByHkjTaskIsEqualToSomething() throws Exception {
-        HkjTask hkjTask;
+    void getAllHkjMaterialUsagesByTaskIsEqualToSomething() throws Exception {
+        HkjTask task;
         if (TestUtil.findAll(em, HkjTask.class).isEmpty()) {
             hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-            hkjTask = HkjTaskResourceIT.createEntity(em);
+            task = HkjTaskResourceIT.createEntity(em);
         } else {
-            hkjTask = TestUtil.findAll(em, HkjTask.class).get(0);
+            task = TestUtil.findAll(em, HkjTask.class).get(0);
         }
-        em.persist(hkjTask);
+        em.persist(task);
         em.flush();
-        hkjMaterialUsage.setHkjTask(hkjTask);
+        hkjMaterialUsage.setTask(task);
         hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-        Long hkjTaskId = hkjTask.getId();
-        // Get all the hkjMaterialUsageList where hkjTask equals to hkjTaskId
-        defaultHkjMaterialUsageShouldBeFound("hkjTaskId.equals=" + hkjTaskId);
+        Long taskId = task.getId();
+        // Get all the hkjMaterialUsageList where task equals to taskId
+        defaultHkjMaterialUsageShouldBeFound("taskId.equals=" + taskId);
 
-        // Get all the hkjMaterialUsageList where hkjTask equals to (hkjTaskId + 1)
-        defaultHkjMaterialUsageShouldNotBeFound("hkjTaskId.equals=" + (hkjTaskId + 1));
+        // Get all the hkjMaterialUsageList where task equals to (taskId + 1)
+        defaultHkjMaterialUsageShouldNotBeFound("taskId.equals=" + (taskId + 1));
     }
 
     private void defaultHkjMaterialUsageFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

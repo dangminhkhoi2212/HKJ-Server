@@ -83,19 +83,19 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "steps", "creater", "hkjProject" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "hkjProject", "hkjTemplate" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
-    private HkjTemplate template;
+    private HkjCategory category;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjProject")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "templateStep", "images", "materials", "employee", "hkjProject" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "employee", "images", "materials", "project" }, allowSetters = true)
     private Set<HkjTask> tasks = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
-    private HkjEmployee manager;
+    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
+    private UserExtra manager;
 
     @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
@@ -317,16 +317,16 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return this;
     }
 
-    public HkjTemplate getTemplate() {
-        return this.template;
+    public HkjCategory getCategory() {
+        return this.category;
     }
 
-    public void setTemplate(HkjTemplate hkjTemplate) {
-        this.template = hkjTemplate;
+    public void setCategory(HkjCategory hkjCategory) {
+        this.category = hkjCategory;
     }
 
-    public HkjProject template(HkjTemplate hkjTemplate) {
-        this.setTemplate(hkjTemplate);
+    public HkjProject category(HkjCategory hkjCategory) {
+        this.setCategory(hkjCategory);
         return this;
     }
 
@@ -336,10 +336,10 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     public void setTasks(Set<HkjTask> hkjTasks) {
         if (this.tasks != null) {
-            this.tasks.forEach(i -> i.setHkjProject(null));
+            this.tasks.forEach(i -> i.setProject(null));
         }
         if (hkjTasks != null) {
-            hkjTasks.forEach(i -> i.setHkjProject(this));
+            hkjTasks.forEach(i -> i.setProject(this));
         }
         this.tasks = hkjTasks;
     }
@@ -351,26 +351,26 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     public HkjProject addTasks(HkjTask hkjTask) {
         this.tasks.add(hkjTask);
-        hkjTask.setHkjProject(this);
+        hkjTask.setProject(this);
         return this;
     }
 
     public HkjProject removeTasks(HkjTask hkjTask) {
         this.tasks.remove(hkjTask);
-        hkjTask.setHkjProject(null);
+        hkjTask.setProject(null);
         return this;
     }
 
-    public HkjEmployee getManager() {
+    public UserExtra getManager() {
         return this.manager;
     }
 
-    public void setManager(HkjEmployee hkjEmployee) {
-        this.manager = hkjEmployee;
+    public void setManager(UserExtra userExtra) {
+        this.manager = userExtra;
     }
 
-    public HkjProject manager(HkjEmployee hkjEmployee) {
-        this.setManager(hkjEmployee);
+    public HkjProject manager(UserExtra userExtra) {
+        this.setManager(userExtra);
         return this;
     }
 

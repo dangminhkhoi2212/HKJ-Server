@@ -1,11 +1,11 @@
 package com.server.hkj.service.mapper;
 
-import com.server.hkj.domain.HkjEmployee;
+import com.server.hkj.domain.HkjCategory;
 import com.server.hkj.domain.HkjProject;
-import com.server.hkj.domain.HkjTemplate;
-import com.server.hkj.service.dto.HkjEmployeeDTO;
+import com.server.hkj.domain.UserExtra;
+import com.server.hkj.service.dto.HkjCategoryDTO;
 import com.server.hkj.service.dto.HkjProjectDTO;
-import com.server.hkj.service.dto.HkjTemplateDTO;
+import com.server.hkj.service.dto.UserExtraDTO;
 import org.mapstruct.*;
 
 /**
@@ -13,17 +13,17 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjProjectMapper extends EntityMapper<HkjProjectDTO, HkjProject> {
-    @Mapping(target = "template", source = "template", qualifiedByName = "hkjTemplateId")
-    @Mapping(target = "manager", source = "manager", qualifiedByName = "hkjEmployeeId")
+    @Mapping(target = "category", source = "category", qualifiedByName = "hkjCategoryId")
+    @Mapping(target = "manager", source = "manager", qualifiedByName = "userExtraId")
     HkjProjectDTO toDto(HkjProject s);
 
-    @Named("hkjTemplateId")
+    @Named("hkjCategoryId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    HkjTemplateDTO toDtoHkjTemplateId(HkjTemplate hkjTemplate);
+    HkjCategoryDTO toDtoHkjCategoryId(HkjCategory hkjCategory);
 
-    @Named("hkjEmployeeId")
+    @Named("userExtraId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    HkjEmployeeDTO toDtoHkjEmployeeId(HkjEmployee hkjEmployee);
+    UserExtraDTO toDtoUserExtraId(UserExtra userExtra);
 }

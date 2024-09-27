@@ -41,23 +41,19 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "hkjTemplate" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "hkjProject", "hkjTemplate" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjCategory category;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTemplate")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "template")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "hkjTask", "hkjTemplate" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "template" }, allowSetters = true)
     private Set<HkjTemplateStep> steps = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "userExtra", "salarys", "hkjHire" }, allowSetters = true)
-    private HkjEmployee creater;
-
-    @JsonIgnoreProperties(value = { "template", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "template")
-    private HkjProject hkjProject;
+    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
+    private UserExtra creater;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -160,10 +156,10 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
 
     public void setSteps(Set<HkjTemplateStep> hkjTemplateSteps) {
         if (this.steps != null) {
-            this.steps.forEach(i -> i.setHkjTemplate(null));
+            this.steps.forEach(i -> i.setTemplate(null));
         }
         if (hkjTemplateSteps != null) {
-            hkjTemplateSteps.forEach(i -> i.setHkjTemplate(this));
+            hkjTemplateSteps.forEach(i -> i.setTemplate(this));
         }
         this.steps = hkjTemplateSteps;
     }
@@ -175,45 +171,26 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
 
     public HkjTemplate addSteps(HkjTemplateStep hkjTemplateStep) {
         this.steps.add(hkjTemplateStep);
-        hkjTemplateStep.setHkjTemplate(this);
+        hkjTemplateStep.setTemplate(this);
         return this;
     }
 
     public HkjTemplate removeSteps(HkjTemplateStep hkjTemplateStep) {
         this.steps.remove(hkjTemplateStep);
-        hkjTemplateStep.setHkjTemplate(null);
+        hkjTemplateStep.setTemplate(null);
         return this;
     }
 
-    public HkjEmployee getCreater() {
+    public UserExtra getCreater() {
         return this.creater;
     }
 
-    public void setCreater(HkjEmployee hkjEmployee) {
-        this.creater = hkjEmployee;
+    public void setCreater(UserExtra userExtra) {
+        this.creater = userExtra;
     }
 
-    public HkjTemplate creater(HkjEmployee hkjEmployee) {
-        this.setCreater(hkjEmployee);
-        return this;
-    }
-
-    public HkjProject getHkjProject() {
-        return this.hkjProject;
-    }
-
-    public void setHkjProject(HkjProject hkjProject) {
-        if (this.hkjProject != null) {
-            this.hkjProject.setTemplate(null);
-        }
-        if (hkjProject != null) {
-            hkjProject.setTemplate(this);
-        }
-        this.hkjProject = hkjProject;
-    }
-
-    public HkjTemplate hkjProject(HkjProject hkjProject) {
-        this.setHkjProject(hkjProject);
+    public HkjTemplate creater(UserExtra userExtra) {
+        this.setCreater(userExtra);
         return this;
     }
 

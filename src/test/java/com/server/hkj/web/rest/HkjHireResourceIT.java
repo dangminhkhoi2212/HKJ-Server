@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjEmployee;
 import com.server.hkj.domain.HkjHire;
 import com.server.hkj.domain.HkjPosition;
+import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.HkjHireRepository;
 import com.server.hkj.service.dto.HkjHireDTO;
 import com.server.hkj.service.mapper.HkjHireMapper;
@@ -445,12 +445,12 @@ class HkjHireResourceIT {
     @Test
     @Transactional
     void getAllHkjHiresByEmployeeIsEqualToSomething() throws Exception {
-        HkjEmployee employee;
-        if (TestUtil.findAll(em, HkjEmployee.class).isEmpty()) {
+        UserExtra employee;
+        if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjHireRepository.saveAndFlush(hkjHire);
-            employee = HkjEmployeeResourceIT.createEntity(em);
+            employee = UserExtraResourceIT.createEntity(em);
         } else {
-            employee = TestUtil.findAll(em, HkjEmployee.class).get(0);
+            employee = TestUtil.findAll(em, UserExtra.class).get(0);
         }
         em.persist(employee);
         em.flush();

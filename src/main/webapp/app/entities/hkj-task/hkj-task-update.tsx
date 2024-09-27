@@ -8,10 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjTemplateStep } from 'app/shared/model/hkj-template-step.model';
-import { getEntities as getHkjTemplateSteps } from 'app/entities/hkj-template-step/hkj-template-step.reducer';
-import { IHkjEmployee } from 'app/shared/model/hkj-employee.model';
-import { getEntities as getHkjEmployees } from 'app/entities/hkj-employee/hkj-employee.reducer';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
 import { IHkjProject } from 'app/shared/model/hkj-project.model';
 import { getEntities as getHkjProjects } from 'app/entities/hkj-project/hkj-project.reducer';
 import { IHkjTask } from 'app/shared/model/hkj-task.model';
@@ -27,8 +25,7 @@ export const HkjTaskUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const hkjTemplateSteps = useAppSelector(state => state.hkjTemplateStep.entities);
-  const hkjEmployees = useAppSelector(state => state.hkjEmployee.entities);
+  const userExtras = useAppSelector(state => state.userExtra.entities);
   const hkjProjects = useAppSelector(state => state.hkjProject.entities);
   const hkjTaskEntity = useAppSelector(state => state.hkjTask.entity);
   const loading = useAppSelector(state => state.hkjTask.loading);
@@ -48,8 +45,7 @@ export const HkjTaskUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getHkjTemplateSteps({}));
-    dispatch(getHkjEmployees({}));
+    dispatch(getUserExtras({}));
     dispatch(getHkjProjects({}));
   }, []);
 
@@ -76,9 +72,8 @@ export const HkjTaskUpdate = () => {
     const entity = {
       ...hkjTaskEntity,
       ...values,
-      templateStep: hkjTemplateSteps.find(it => it.id.toString() === values.templateStep?.toString()),
-      employee: hkjEmployees.find(it => it.id.toString() === values.employee?.toString()),
-      hkjProject: hkjProjects.find(it => it.id.toString() === values.hkjProject?.toString()),
+      employee: userExtras.find(it => it.id.toString() === values.employee?.toString()),
+      project: hkjProjects.find(it => it.id.toString() === values.project?.toString()),
     };
 
     if (isNew) {
@@ -106,9 +101,8 @@ export const HkjTaskUpdate = () => {
           completedDate: convertDateTimeFromServer(hkjTaskEntity.completedDate),
           createdDate: convertDateTimeFromServer(hkjTaskEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjTaskEntity.lastModifiedDate),
-          templateStep: hkjTaskEntity?.templateStep?.id,
           employee: hkjTaskEntity?.employee?.id,
-          hkjProject: hkjTaskEntity?.hkjProject?.id,
+          project: hkjTaskEntity?.project?.id,
         };
 
   return (
@@ -273,22 +267,6 @@ export const HkjTaskUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-task-templateStep"
-                name="templateStep"
-                data-cy="templateStep"
-                label={translate('serverApp.hkjTask.templateStep')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {hkjTemplateSteps
-                  ? hkjTemplateSteps.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
                 id="hkj-task-employee"
                 name="employee"
                 data-cy="employee"
@@ -296,8 +274,8 @@ export const HkjTaskUpdate = () => {
                 type="select"
               >
                 <option value="" key="0" />
-                {hkjEmployees
-                  ? hkjEmployees.map(otherEntity => (
+                {userExtras
+                  ? userExtras.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>
@@ -305,10 +283,10 @@ export const HkjTaskUpdate = () => {
                   : null}
               </ValidatedField>
               <ValidatedField
-                id="hkj-task-hkjProject"
-                name="hkjProject"
-                data-cy="hkjProject"
-                label={translate('serverApp.hkjTask.hkjProject')}
+                id="hkj-task-project"
+                name="project"
+                data-cy="project"
+                label={translate('serverApp.hkjTask.project')}
                 type="select"
               >
                 <option value="" key="0" />

@@ -26,7 +26,9 @@
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
       "user": "User",
-      "hkjEmployee": "Hkj Employee"
+      "salarys": "Salarys",
+      "hire": "Hire",
+      "hkjTask": "Hkj Task"
     }
   }
 }

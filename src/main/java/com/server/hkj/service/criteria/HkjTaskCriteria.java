@@ -88,15 +88,13 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter templateStepId;
+    private LongFilter employeeId;
 
     private LongFilter imagesId;
 
     private LongFilter materialsId;
 
-    private LongFilter employeeId;
-
-    private LongFilter hkjProjectId;
+    private LongFilter projectId;
 
     private Boolean distinct;
 
@@ -118,11 +116,10 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.templateStepId = other.optionalTemplateStepId().map(LongFilter::copy).orElse(null);
+        this.employeeId = other.optionalEmployeeId().map(LongFilter::copy).orElse(null);
         this.imagesId = other.optionalImagesId().map(LongFilter::copy).orElse(null);
         this.materialsId = other.optionalMaterialsId().map(LongFilter::copy).orElse(null);
-        this.employeeId = other.optionalEmployeeId().map(LongFilter::copy).orElse(null);
-        this.hkjProjectId = other.optionalHkjProjectId().map(LongFilter::copy).orElse(null);
+        this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -416,23 +413,23 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getTemplateStepId() {
-        return templateStepId;
+    public LongFilter getEmployeeId() {
+        return employeeId;
     }
 
-    public Optional<LongFilter> optionalTemplateStepId() {
-        return Optional.ofNullable(templateStepId);
+    public Optional<LongFilter> optionalEmployeeId() {
+        return Optional.ofNullable(employeeId);
     }
 
-    public LongFilter templateStepId() {
-        if (templateStepId == null) {
-            setTemplateStepId(new LongFilter());
+    public LongFilter employeeId() {
+        if (employeeId == null) {
+            setEmployeeId(new LongFilter());
         }
-        return templateStepId;
+        return employeeId;
     }
 
-    public void setTemplateStepId(LongFilter templateStepId) {
-        this.templateStepId = templateStepId;
+    public void setEmployeeId(LongFilter employeeId) {
+        this.employeeId = employeeId;
     }
 
     public LongFilter getImagesId() {
@@ -473,42 +470,23 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         this.materialsId = materialsId;
     }
 
-    public LongFilter getEmployeeId() {
-        return employeeId;
+    public LongFilter getProjectId() {
+        return projectId;
     }
 
-    public Optional<LongFilter> optionalEmployeeId() {
-        return Optional.ofNullable(employeeId);
+    public Optional<LongFilter> optionalProjectId() {
+        return Optional.ofNullable(projectId);
     }
 
-    public LongFilter employeeId() {
-        if (employeeId == null) {
-            setEmployeeId(new LongFilter());
+    public LongFilter projectId() {
+        if (projectId == null) {
+            setProjectId(new LongFilter());
         }
-        return employeeId;
+        return projectId;
     }
 
-    public void setEmployeeId(LongFilter employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public LongFilter getHkjProjectId() {
-        return hkjProjectId;
-    }
-
-    public Optional<LongFilter> optionalHkjProjectId() {
-        return Optional.ofNullable(hkjProjectId);
-    }
-
-    public LongFilter hkjProjectId() {
-        if (hkjProjectId == null) {
-            setHkjProjectId(new LongFilter());
-        }
-        return hkjProjectId;
-    }
-
-    public void setHkjProjectId(LongFilter hkjProjectId) {
-        this.hkjProjectId = hkjProjectId;
+    public void setProjectId(LongFilter projectId) {
+        this.projectId = projectId;
     }
 
     public Boolean getDistinct() {
@@ -555,11 +533,10 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(templateStepId, that.templateStepId) &&
+            Objects.equals(employeeId, that.employeeId) &&
             Objects.equals(imagesId, that.imagesId) &&
             Objects.equals(materialsId, that.materialsId) &&
-            Objects.equals(employeeId, that.employeeId) &&
-            Objects.equals(hkjProjectId, that.hkjProjectId) &&
+            Objects.equals(projectId, that.projectId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -582,11 +559,10 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
-            templateStepId,
+            employeeId,
             imagesId,
             materialsId,
-            employeeId,
-            hkjProjectId,
+            projectId,
             distinct
         );
     }
@@ -610,11 +586,10 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalTemplateStepId().map(f -> "templateStepId=" + f + ", ").orElse("") +
+            optionalEmployeeId().map(f -> "employeeId=" + f + ", ").orElse("") +
             optionalImagesId().map(f -> "imagesId=" + f + ", ").orElse("") +
             optionalMaterialsId().map(f -> "materialsId=" + f + ", ").orElse("") +
-            optionalEmployeeId().map(f -> "employeeId=" + f + ", ").orElse("") +
-            optionalHkjProjectId().map(f -> "hkjProjectId=" + f + ", ").orElse("") +
+            optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

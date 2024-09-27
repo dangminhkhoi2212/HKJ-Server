@@ -54,7 +54,15 @@
   "jpaMetamodelFiltering": true,
   "name": "HkjPosition",
   "pagination": "pagination",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "hkjHire",
+      "otherEntityRelationshipName": "position",
+      "relationshipName": "hire",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "searchEngine": "no",
   "service": "serviceClass"
 }

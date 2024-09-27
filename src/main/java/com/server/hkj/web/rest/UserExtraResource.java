@@ -4,6 +4,7 @@ import com.server.hkj.repository.UserExtraRepository;
 import com.server.hkj.service.UserExtraQueryService;
 import com.server.hkj.service.UserExtraService;
 import com.server.hkj.service.criteria.UserExtraCriteria;
+import com.server.hkj.service.dto.AccountDTO;
 import com.server.hkj.service.dto.UserExtraDTO;
 import com.server.hkj.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -20,7 +21,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -71,6 +80,18 @@ public class UserExtraResource {
         }
         userExtraDTO = userExtraService.save(userExtraDTO);
         return ResponseEntity.created(new URI("/api/user-extras/" + userExtraDTO.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, userExtraDTO.getId().toString()))
+            .body(userExtraDTO);
+    }
+
+    @PostMapping("/sync")
+    public ResponseEntity<UserExtraDTO> syncUserExtra(@Valid @RequestBody AccountDTO accountDTO) throws URISyntaxException {
+        log.debug("REST request to save UserExtra : {}", accountDTO);
+        if (accountDTO.getId() != null) {
+            throw new BadRequestAlertException("A new userExtra cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        UserExtraDTO userExtraDTO = userExtraService.syncAccount(accountDTO);
+        return ResponseEntity.created(new URI("/api/user-extras/sync" + userExtraDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, userExtraDTO.getId().toString()))
             .body(userExtraDTO);
     }

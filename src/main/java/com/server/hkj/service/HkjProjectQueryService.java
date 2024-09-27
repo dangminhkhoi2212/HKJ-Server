@@ -125,11 +125,11 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjProject_.lastModifiedDate));
             }
-            if (criteria.getTemplateId() != null) {
+            if (criteria.getCategoryId() != null) {
                 specification = specification.and(
                     buildSpecification(
-                        criteria.getTemplateId(),
-                        root -> root.join(HkjProject_.template, JoinType.LEFT).get(HkjTemplate_.id)
+                        criteria.getCategoryId(),
+                        root -> root.join(HkjProject_.category, JoinType.LEFT).get(HkjCategory_.id)
                     )
                 );
             }
@@ -140,7 +140,7 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             }
             if (criteria.getManagerId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getManagerId(), root -> root.join(HkjProject_.manager, JoinType.LEFT).get(HkjEmployee_.id))
+                    buildSpecification(criteria.getManagerId(), root -> root.join(HkjProject_.manager, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
             if (criteria.getHkjJewelryModelId() != null) {

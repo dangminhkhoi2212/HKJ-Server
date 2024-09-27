@@ -70,8 +70,7 @@ public class HkjTaskAsserts {
     public static void assertHkjTaskUpdatableRelationshipsEquals(HkjTask expected, HkjTask actual) {
         assertThat(expected)
             .as("Verify HkjTask relationships")
-            .satisfies(e -> assertThat(e.getTemplateStep()).as("check templateStep").isEqualTo(actual.getTemplateStep()))
             .satisfies(e -> assertThat(e.getEmployee()).as("check employee").isEqualTo(actual.getEmployee()))
-            .satisfies(e -> assertThat(e.getHkjProject()).as("check hkjProject").isEqualTo(actual.getHkjProject()));
+            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()));
     }
 }

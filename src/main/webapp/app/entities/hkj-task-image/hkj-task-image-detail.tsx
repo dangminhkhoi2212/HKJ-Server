@@ -83,9 +83,9 @@ export const HkjTaskImageDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjTaskImage.hkjTask">Hkj Task</Translate>
+            <Translate contentKey="serverApp.hkjTaskImage.task">Task</Translate>
           </dt>
-          <dd>{hkjTaskImageEntity.hkjTask ? hkjTaskImageEntity.hkjTask.id : ''}</dd>
+          <dd>{hkjTaskImageEntity.task ? hkjTaskImageEntity.task.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-task-image" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

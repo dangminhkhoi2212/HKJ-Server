@@ -38,7 +38,7 @@ public class HkjTaskImageCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter hkjTaskId;
+    private LongFilter taskId;
 
     private Boolean distinct;
 
@@ -53,7 +53,7 @@ public class HkjTaskImageCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.hkjTaskId = other.optionalHkjTaskId().map(LongFilter::copy).orElse(null);
+        this.taskId = other.optionalTaskId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -214,23 +214,23 @@ public class HkjTaskImageCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getHkjTaskId() {
-        return hkjTaskId;
+    public LongFilter getTaskId() {
+        return taskId;
     }
 
-    public Optional<LongFilter> optionalHkjTaskId() {
-        return Optional.ofNullable(hkjTaskId);
+    public Optional<LongFilter> optionalTaskId() {
+        return Optional.ofNullable(taskId);
     }
 
-    public LongFilter hkjTaskId() {
-        if (hkjTaskId == null) {
-            setHkjTaskId(new LongFilter());
+    public LongFilter taskId() {
+        if (taskId == null) {
+            setTaskId(new LongFilter());
         }
-        return hkjTaskId;
+        return taskId;
     }
 
-    public void setHkjTaskId(LongFilter hkjTaskId) {
-        this.hkjTaskId = hkjTaskId;
+    public void setTaskId(LongFilter taskId) {
+        this.taskId = taskId;
     }
 
     public Boolean getDistinct() {
@@ -270,14 +270,14 @@ public class HkjTaskImageCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(hkjTaskId, that.hkjTaskId) &&
+            Objects.equals(taskId, that.taskId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, url, description, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, hkjTaskId, distinct);
+        return Objects.hash(id, url, description, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, taskId, distinct);
     }
 
     // prettier-ignore
@@ -292,7 +292,7 @@ public class HkjTaskImageCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalHkjTaskId().map(f -> "hkjTaskId=" + f + ", ").orElse("") +
+            optionalTaskId().map(f -> "taskId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

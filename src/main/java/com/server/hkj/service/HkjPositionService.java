@@ -4,11 +4,7 @@ import com.server.hkj.domain.HkjPosition;
 import com.server.hkj.repository.HkjPositionRepository;
 import com.server.hkj.service.dto.HkjPositionDTO;
 import com.server.hkj.service.mapper.HkjPositionMapper;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -77,19 +73,6 @@ public class HkjPositionService {
             })
             .map(hkjPositionRepository::save)
             .map(hkjPositionMapper::toDto);
-    }
-
-    /**
-     *  Get all the hkjPositions where HkjHire is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<HkjPositionDTO> findAllWhereHkjHireIsNull() {
-        log.debug("Request to get all hkjPositions where HkjHire is null");
-        return StreamSupport.stream(hkjPositionRepository.findAll().spliterator(), false)
-            .filter(hkjPosition -> hkjPosition.getHkjHire() == null)
-            .map(hkjPositionMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

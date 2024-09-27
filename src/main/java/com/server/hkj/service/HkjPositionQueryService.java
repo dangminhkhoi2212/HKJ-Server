@@ -95,9 +95,9 @@ public class HkjPositionQueryService extends QueryService<HkjPosition> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjPosition_.lastModifiedDate));
             }
-            if (criteria.getHkjHireId() != null) {
+            if (criteria.getHireId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getHkjHireId(), root -> root.join(HkjPosition_.hkjHire, JoinType.LEFT).get(HkjHire_.id))
+                    buildSpecification(criteria.getHireId(), root -> root.join(HkjPosition_.hires, JoinType.LEFT).get(HkjHire_.id))
                 );
             }
         }

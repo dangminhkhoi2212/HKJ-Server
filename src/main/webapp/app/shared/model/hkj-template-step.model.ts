@@ -9,7 +9,7 @@ export interface IHkjTemplateStep {
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  hkjTemplate?: IHkjTemplate | null;
+  template?: IHkjTemplate | null;
 }
 
 export const defaultValue: Readonly<IHkjTemplateStep> = {

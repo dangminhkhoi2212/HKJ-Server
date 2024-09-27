@@ -50,7 +50,7 @@
             <column name="material_id" type="bigint">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_material_usage__material_id" />
             </column>
-            <column name="hkj_task_id" type="bigint">
+            <column name="task_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

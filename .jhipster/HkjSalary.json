@@ -11,6 +11,10 @@
       "fieldType": "BigDecimal"
     },
     {
+      "fieldName": "notes",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "isDeleted",
       "fieldType": "Boolean"
     },
@@ -53,7 +57,15 @@
   "jpaMetamodelFiltering": true,
   "name": "HkjSalary",
   "pagination": "pagination",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "userExtra",
+      "otherEntityRelationshipName": "salarys",
+      "relationshipName": "employee",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "searchEngine": "no",
   "service": "serviceClass"
 }
