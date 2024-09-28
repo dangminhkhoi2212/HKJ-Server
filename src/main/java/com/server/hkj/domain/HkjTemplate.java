@@ -46,13 +46,13 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
     @JoinColumn(unique = true)
     private HkjCategory category;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "template")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTemplate")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "template" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "hkjTemplate" }, allowSetters = true)
     private Set<HkjTemplateStep> steps = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
     private UserExtra creater;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -156,10 +156,10 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
 
     public void setSteps(Set<HkjTemplateStep> hkjTemplateSteps) {
         if (this.steps != null) {
-            this.steps.forEach(i -> i.setTemplate(null));
+            this.steps.forEach(i -> i.setHkjTemplate(null));
         }
         if (hkjTemplateSteps != null) {
-            hkjTemplateSteps.forEach(i -> i.setTemplate(this));
+            hkjTemplateSteps.forEach(i -> i.setHkjTemplate(this));
         }
         this.steps = hkjTemplateSteps;
     }
@@ -171,13 +171,13 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
 
     public HkjTemplate addSteps(HkjTemplateStep hkjTemplateStep) {
         this.steps.add(hkjTemplateStep);
-        hkjTemplateStep.setTemplate(this);
+        hkjTemplateStep.setHkjTemplate(this);
         return this;
     }
 
     public HkjTemplate removeSteps(HkjTemplateStep hkjTemplateStep) {
         this.steps.remove(hkjTemplateStep);
-        hkjTemplateStep.setTemplate(null);
+        hkjTemplateStep.setHkjTemplate(null);
         return this;
     }
 

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './hkj-template-step.reducer';
+import { deleteEntity, getEntity } from './hkj-template-step.reducer';
 
 export const HkjTemplateStepDeleteDialog = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export const HkjTemplateStepDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.hkjTemplateStep.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-template-step' + pageLocation.search);
+    navigate(`/hkj-template-step${pageLocation.search}`);
   };
 
   useEffect(() => {

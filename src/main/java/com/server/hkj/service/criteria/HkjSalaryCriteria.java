@@ -28,6 +28,8 @@ public class HkjSalaryCriteria implements Serializable, Criteria {
 
     private StringFilter notes;
 
+    private InstantFilter payDate;
+
     private BooleanFilter isDeleted;
 
     private StringFilter createdBy;
@@ -38,7 +40,7 @@ public class HkjSalaryCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter employeeId;
+    private LongFilter userExtraId;
 
     private Boolean distinct;
 
@@ -48,12 +50,13 @@ public class HkjSalaryCriteria implements Serializable, Criteria {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.salary = other.optionalSalary().map(BigDecimalFilter::copy).orElse(null);
         this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
+        this.payDate = other.optionalPayDate().map(InstantFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.employeeId = other.optionalEmployeeId().map(LongFilter::copy).orElse(null);
+        this.userExtraId = other.optionalUserExtraId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -117,6 +120,25 @@ public class HkjSalaryCriteria implements Serializable, Criteria {
 
     public void setNotes(StringFilter notes) {
         this.notes = notes;
+    }
+
+    public InstantFilter getPayDate() {
+        return payDate;
+    }
+
+    public Optional<InstantFilter> optionalPayDate() {
+        return Optional.ofNullable(payDate);
+    }
+
+    public InstantFilter payDate() {
+        if (payDate == null) {
+            setPayDate(new InstantFilter());
+        }
+        return payDate;
+    }
+
+    public void setPayDate(InstantFilter payDate) {
+        this.payDate = payDate;
     }
 
     public BooleanFilter getIsDeleted() {
@@ -214,23 +236,23 @@ public class HkjSalaryCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getEmployeeId() {
-        return employeeId;
+    public LongFilter getUserExtraId() {
+        return userExtraId;
     }
 
-    public Optional<LongFilter> optionalEmployeeId() {
-        return Optional.ofNullable(employeeId);
+    public Optional<LongFilter> optionalUserExtraId() {
+        return Optional.ofNullable(userExtraId);
     }
 
-    public LongFilter employeeId() {
-        if (employeeId == null) {
-            setEmployeeId(new LongFilter());
+    public LongFilter userExtraId() {
+        if (userExtraId == null) {
+            setUserExtraId(new LongFilter());
         }
-        return employeeId;
+        return userExtraId;
     }
 
-    public void setEmployeeId(LongFilter employeeId) {
-        this.employeeId = employeeId;
+    public void setUserExtraId(LongFilter userExtraId) {
+        this.userExtraId = userExtraId;
     }
 
     public Boolean getDistinct() {
@@ -265,19 +287,32 @@ public class HkjSalaryCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(salary, that.salary) &&
             Objects.equals(notes, that.notes) &&
+            Objects.equals(payDate, that.payDate) &&
             Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(employeeId, that.employeeId) &&
+            Objects.equals(userExtraId, that.userExtraId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, salary, notes, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, employeeId, distinct);
+        return Objects.hash(
+            id,
+            salary,
+            notes,
+            payDate,
+            isDeleted,
+            createdBy,
+            createdDate,
+            lastModifiedBy,
+            lastModifiedDate,
+            userExtraId,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -287,12 +322,13 @@ public class HkjSalaryCriteria implements Serializable, Criteria {
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalSalary().map(f -> "salary=" + f + ", ").orElse("") +
             optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
+            optionalPayDate().map(f -> "payDate=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalEmployeeId().map(f -> "employeeId=" + f + ", ").orElse("") +
+            optionalUserExtraId().map(f -> "userExtraId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

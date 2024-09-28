@@ -75,9 +75,8 @@ class HkjTempImageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTempImage createEntity(EntityManager em) {
-        HkjTempImage hkjTempImage = new HkjTempImage().url(DEFAULT_URL).isUsed(DEFAULT_IS_USED).isDeleted(DEFAULT_IS_DELETED);
-        return hkjTempImage;
+    public static HkjTempImage createEntity() {
+        return new HkjTempImage().url(DEFAULT_URL).isUsed(DEFAULT_IS_USED).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -86,14 +85,13 @@ class HkjTempImageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTempImage createUpdatedEntity(EntityManager em) {
-        HkjTempImage hkjTempImage = new HkjTempImage().url(UPDATED_URL).isUsed(UPDATED_IS_USED).isDeleted(UPDATED_IS_DELETED);
-        return hkjTempImage;
+    public static HkjTempImage createUpdatedEntity() {
+        return new HkjTempImage().url(UPDATED_URL).isUsed(UPDATED_IS_USED).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjTempImage = createEntity(em);
+        hkjTempImage = createEntity();
     }
 
     @AfterEach
@@ -487,7 +485,7 @@ class HkjTempImageResourceIT {
         HkjTempImage partialUpdatedHkjTempImage = new HkjTempImage();
         partialUpdatedHkjTempImage.setId(hkjTempImage.getId());
 
-        partialUpdatedHkjTempImage.isUsed(UPDATED_IS_USED).isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedHkjTempImage.isUsed(UPDATED_IS_USED);
 
         restHkjTempImageMockMvc
             .perform(

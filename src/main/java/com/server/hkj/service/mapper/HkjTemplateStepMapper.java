@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjTemplateStepMapper extends EntityMapper<HkjTemplateStepDTO, HkjTemplateStep> {
-    @Mapping(target = "template", source = "template", qualifiedByName = "hkjTemplateId")
+    @Mapping(target = "hkjTemplate", source = "hkjTemplate", qualifiedByName = "hkjTemplateId")
     HkjTemplateStepDTO toDto(HkjTemplateStep s);
 
     @Named("hkjTemplateId")

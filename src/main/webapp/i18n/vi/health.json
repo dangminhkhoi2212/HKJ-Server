@@ -11,6 +11,7 @@
       "error": "Lỗi"
     },
     "indicator": {
+      "binders": "Truyền tải tin nhắn",
       "diskSpace": "Dung lượng trống",
       "mail": "Email",
       "livenessState": "Liveness state",

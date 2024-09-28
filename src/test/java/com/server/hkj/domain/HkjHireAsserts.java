@@ -52,12 +52,11 @@ public class HkjHireAsserts {
             .as("Verify HkjHire relevant properties")
             .satisfies(e -> assertThat(e.getBeginDate()).as("check beginDate").isEqualTo(actual.getBeginDate()))
             .satisfies(e -> assertThat(e.getEndDate()).as("check endDate").isEqualTo(actual.getEndDate()))
-            .satisfies(
-                e ->
-                    assertThat(e.getBeginSalary())
-                        .as("check beginSalary")
-                        .usingComparator(bigDecimalCompareTo)
-                        .isEqualTo(actual.getBeginSalary())
+            .satisfies(e ->
+                assertThat(e.getBeginSalary())
+                    .as("check beginSalary")
+                    .usingComparator(bigDecimalCompareTo)
+                    .isEqualTo(actual.getBeginSalary())
             )
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }

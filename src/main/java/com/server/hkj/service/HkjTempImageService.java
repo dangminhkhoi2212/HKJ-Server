@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjTempImageService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTempImageService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTempImageService.class);
 
     private final HkjTempImageRepository hkjTempImageRepository;
 
@@ -35,7 +35,7 @@ public class HkjTempImageService {
      * @return the persisted entity.
      */
     public HkjTempImageDTO save(HkjTempImageDTO hkjTempImageDTO) {
-        log.debug("Request to save HkjTempImage : {}", hkjTempImageDTO);
+        LOG.debug("Request to save HkjTempImage : {}", hkjTempImageDTO);
         HkjTempImage hkjTempImage = hkjTempImageMapper.toEntity(hkjTempImageDTO);
         hkjTempImage = hkjTempImageRepository.save(hkjTempImage);
         return hkjTempImageMapper.toDto(hkjTempImage);
@@ -48,7 +48,7 @@ public class HkjTempImageService {
      * @return the persisted entity.
      */
     public HkjTempImageDTO update(HkjTempImageDTO hkjTempImageDTO) {
-        log.debug("Request to update HkjTempImage : {}", hkjTempImageDTO);
+        LOG.debug("Request to update HkjTempImage : {}", hkjTempImageDTO);
         HkjTempImage hkjTempImage = hkjTempImageMapper.toEntity(hkjTempImageDTO);
         hkjTempImage.setIsPersisted();
         hkjTempImage = hkjTempImageRepository.save(hkjTempImage);
@@ -62,7 +62,7 @@ public class HkjTempImageService {
      * @return the persisted entity.
      */
     public Optional<HkjTempImageDTO> partialUpdate(HkjTempImageDTO hkjTempImageDTO) {
-        log.debug("Request to partially update HkjTempImage : {}", hkjTempImageDTO);
+        LOG.debug("Request to partially update HkjTempImage : {}", hkjTempImageDTO);
 
         return hkjTempImageRepository
             .findById(hkjTempImageDTO.getId())
@@ -83,7 +83,7 @@ public class HkjTempImageService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjTempImageDTO> findOne(Long id) {
-        log.debug("Request to get HkjTempImage : {}", id);
+        LOG.debug("Request to get HkjTempImage : {}", id);
         return hkjTempImageRepository.findById(id).map(hkjTempImageMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjTempImageService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjTempImage : {}", id);
+        LOG.debug("Request to delete HkjTempImage : {}", id);
         hkjTempImageRepository.deleteById(id);
     }
 }

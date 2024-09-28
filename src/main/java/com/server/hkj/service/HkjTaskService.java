@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjTaskService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTaskService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTaskService.class);
 
     private final HkjTaskRepository hkjTaskRepository;
 
@@ -35,7 +35,7 @@ public class HkjTaskService {
      * @return the persisted entity.
      */
     public HkjTaskDTO save(HkjTaskDTO hkjTaskDTO) {
-        log.debug("Request to save HkjTask : {}", hkjTaskDTO);
+        LOG.debug("Request to save HkjTask : {}", hkjTaskDTO);
         HkjTask hkjTask = hkjTaskMapper.toEntity(hkjTaskDTO);
         hkjTask = hkjTaskRepository.save(hkjTask);
         return hkjTaskMapper.toDto(hkjTask);
@@ -48,7 +48,7 @@ public class HkjTaskService {
      * @return the persisted entity.
      */
     public HkjTaskDTO update(HkjTaskDTO hkjTaskDTO) {
-        log.debug("Request to update HkjTask : {}", hkjTaskDTO);
+        LOG.debug("Request to update HkjTask : {}", hkjTaskDTO);
         HkjTask hkjTask = hkjTaskMapper.toEntity(hkjTaskDTO);
         hkjTask.setIsPersisted();
         hkjTask = hkjTaskRepository.save(hkjTask);
@@ -62,7 +62,7 @@ public class HkjTaskService {
      * @return the persisted entity.
      */
     public Optional<HkjTaskDTO> partialUpdate(HkjTaskDTO hkjTaskDTO) {
-        log.debug("Request to partially update HkjTask : {}", hkjTaskDTO);
+        LOG.debug("Request to partially update HkjTask : {}", hkjTaskDTO);
 
         return hkjTaskRepository
             .findById(hkjTaskDTO.getId())
@@ -83,7 +83,7 @@ public class HkjTaskService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjTaskDTO> findOne(Long id) {
-        log.debug("Request to get HkjTask : {}", id);
+        LOG.debug("Request to get HkjTask : {}", id);
         return hkjTaskRepository.findById(id).map(hkjTaskMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjTaskService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjTask : {}", id);
+        LOG.debug("Request to delete HkjTask : {}", id);
         hkjTaskRepository.deleteById(id);
     }
 }

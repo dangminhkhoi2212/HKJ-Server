@@ -48,19 +48,19 @@ class HkjProjectTest {
 
         hkjProject.addTasks(hkjTaskBack);
         assertThat(hkjProject.getTasks()).containsOnly(hkjTaskBack);
-        assertThat(hkjTaskBack.getProject()).isEqualTo(hkjProject);
+        assertThat(hkjTaskBack.getHkjProject()).isEqualTo(hkjProject);
 
         hkjProject.removeTasks(hkjTaskBack);
         assertThat(hkjProject.getTasks()).doesNotContain(hkjTaskBack);
-        assertThat(hkjTaskBack.getProject()).isNull();
+        assertThat(hkjTaskBack.getHkjProject()).isNull();
 
         hkjProject.tasks(new HashSet<>(Set.of(hkjTaskBack)));
         assertThat(hkjProject.getTasks()).containsOnly(hkjTaskBack);
-        assertThat(hkjTaskBack.getProject()).isEqualTo(hkjProject);
+        assertThat(hkjTaskBack.getHkjProject()).isEqualTo(hkjProject);
 
         hkjProject.setTasks(new HashSet<>());
         assertThat(hkjProject.getTasks()).doesNotContain(hkjTaskBack);
-        assertThat(hkjTaskBack.getProject()).isNull();
+        assertThat(hkjTaskBack.getHkjProject()).isNull();
     }
 
     @Test
@@ -76,16 +76,16 @@ class HkjProjectTest {
     }
 
     @Test
-    void hkjJewelryModelTest() {
+    void jewelryTest() {
         HkjProject hkjProject = getHkjProjectRandomSampleGenerator();
         HkjJewelryModel hkjJewelryModelBack = getHkjJewelryModelRandomSampleGenerator();
 
-        hkjProject.setHkjJewelryModel(hkjJewelryModelBack);
-        assertThat(hkjProject.getHkjJewelryModel()).isEqualTo(hkjJewelryModelBack);
+        hkjProject.setJewelry(hkjJewelryModelBack);
+        assertThat(hkjProject.getJewelry()).isEqualTo(hkjJewelryModelBack);
         assertThat(hkjJewelryModelBack.getProject()).isEqualTo(hkjProject);
 
-        hkjProject.hkjJewelryModel(null);
-        assertThat(hkjProject.getHkjJewelryModel()).isNull();
+        hkjProject.jewelry(null);
+        assertThat(hkjProject.getJewelry()).isNull();
         assertThat(hkjJewelryModelBack.getProject()).isNull();
     }
 

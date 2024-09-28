@@ -73,9 +73,8 @@ class HkjTemplateStepResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTemplateStep createEntity(EntityManager em) {
-        HkjTemplateStep hkjTemplateStep = new HkjTemplateStep().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
-        return hkjTemplateStep;
+    public static HkjTemplateStep createEntity() {
+        return new HkjTemplateStep().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -84,14 +83,13 @@ class HkjTemplateStepResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTemplateStep createUpdatedEntity(EntityManager em) {
-        HkjTemplateStep hkjTemplateStep = new HkjTemplateStep().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
-        return hkjTemplateStep;
+    public static HkjTemplateStep createUpdatedEntity() {
+        return new HkjTemplateStep().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjTemplateStep = createEntity(em);
+        hkjTemplateStep = createEntity();
     }
 
     @AfterEach
@@ -283,24 +281,24 @@ class HkjTemplateStepResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjTemplateStepsByTemplateIsEqualToSomething() throws Exception {
-        HkjTemplate template;
+    void getAllHkjTemplateStepsByHkjTemplateIsEqualToSomething() throws Exception {
+        HkjTemplate hkjTemplate;
         if (TestUtil.findAll(em, HkjTemplate.class).isEmpty()) {
             hkjTemplateStepRepository.saveAndFlush(hkjTemplateStep);
-            template = HkjTemplateResourceIT.createEntity(em);
+            hkjTemplate = HkjTemplateResourceIT.createEntity();
         } else {
-            template = TestUtil.findAll(em, HkjTemplate.class).get(0);
+            hkjTemplate = TestUtil.findAll(em, HkjTemplate.class).get(0);
         }
-        em.persist(template);
+        em.persist(hkjTemplate);
         em.flush();
-        hkjTemplateStep.setTemplate(template);
+        hkjTemplateStep.setHkjTemplate(hkjTemplate);
         hkjTemplateStepRepository.saveAndFlush(hkjTemplateStep);
-        Long templateId = template.getId();
-        // Get all the hkjTemplateStepList where template equals to templateId
-        defaultHkjTemplateStepShouldBeFound("templateId.equals=" + templateId);
+        Long hkjTemplateId = hkjTemplate.getId();
+        // Get all the hkjTemplateStepList where hkjTemplate equals to hkjTemplateId
+        defaultHkjTemplateStepShouldBeFound("hkjTemplateId.equals=" + hkjTemplateId);
 
-        // Get all the hkjTemplateStepList where template equals to (templateId + 1)
-        defaultHkjTemplateStepShouldNotBeFound("templateId.equals=" + (templateId + 1));
+        // Get all the hkjTemplateStepList where hkjTemplate equals to (hkjTemplateId + 1)
+        defaultHkjTemplateStepShouldNotBeFound("hkjTemplateId.equals=" + (hkjTemplateId + 1));
     }
 
     private void defaultHkjTemplateStepFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

@@ -31,7 +31,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-categories")
 public class HkjCategoryResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjCategoryResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjCategoryResource.class);
 
     private static final String ENTITY_NAME = "hkjCategory";
 
@@ -63,7 +63,7 @@ public class HkjCategoryResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjCategoryDTO> createHkjCategory(@RequestBody HkjCategoryDTO hkjCategoryDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjCategory : {}", hkjCategoryDTO);
+        LOG.debug("REST request to save HkjCategory : {}", hkjCategoryDTO);
         if (hkjCategoryDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjCategory cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -88,7 +88,7 @@ public class HkjCategoryResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjCategoryDTO hkjCategoryDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjCategory : {}, {}", id, hkjCategoryDTO);
+        LOG.debug("REST request to update HkjCategory : {}, {}", id, hkjCategoryDTO);
         if (hkjCategoryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -122,7 +122,7 @@ public class HkjCategoryResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjCategoryDTO hkjCategoryDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjCategory partially : {}, {}", id, hkjCategoryDTO);
+        LOG.debug("REST request to partial update HkjCategory partially : {}, {}", id, hkjCategoryDTO);
         if (hkjCategoryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -154,7 +154,7 @@ public class HkjCategoryResource {
         HkjCategoryCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjCategories by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjCategories by criteria: {}", criteria);
 
         Page<HkjCategoryDTO> page = hkjCategoryQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -169,7 +169,7 @@ public class HkjCategoryResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjCategories(HkjCategoryCriteria criteria) {
-        log.debug("REST request to count HkjCategories by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjCategories by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjCategoryQueryService.countByCriteria(criteria));
     }
 
@@ -181,7 +181,7 @@ public class HkjCategoryResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjCategoryDTO> getHkjCategory(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjCategory : {}", id);
+        LOG.debug("REST request to get HkjCategory : {}", id);
         Optional<HkjCategoryDTO> hkjCategoryDTO = hkjCategoryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjCategoryDTO);
     }
@@ -194,7 +194,7 @@ public class HkjCategoryResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjCategory(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjCategory : {}", id);
+        LOG.debug("REST request to delete HkjCategory : {}", id);
         hkjCategoryService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

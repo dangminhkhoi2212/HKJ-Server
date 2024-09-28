@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjTaskImageQueryService extends QueryService<HkjTaskImage> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTaskImageQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTaskImageQueryService.class);
 
     private final HkjTaskImageRepository hkjTaskImageRepository;
 
@@ -45,7 +45,7 @@ public class HkjTaskImageQueryService extends QueryService<HkjTaskImage> {
      */
     @Transactional(readOnly = true)
     public Page<HkjTaskImageDTO> findByCriteria(HkjTaskImageCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjTaskImage> specification = createSpecification(criteria);
         return hkjTaskImageRepository.findAll(specification, page).map(hkjTaskImageMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjTaskImageQueryService extends QueryService<HkjTaskImage> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjTaskImageCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjTaskImage> specification = createSpecification(criteria);
         return hkjTaskImageRepository.count(specification);
     }
@@ -98,9 +98,9 @@ public class HkjTaskImageQueryService extends QueryService<HkjTaskImage> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjTaskImage_.lastModifiedDate));
             }
-            if (criteria.getTaskId() != null) {
+            if (criteria.getHkjTaskId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getTaskId(), root -> root.join(HkjTaskImage_.task, JoinType.LEFT).get(HkjTask_.id))
+                    buildSpecification(criteria.getHkjTaskId(), root -> root.join(HkjTaskImage_.hkjTask, JoinType.LEFT).get(HkjTask_.id))
                 );
             }
         }

@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjJewelryImageQueryService extends QueryService<HkjJewelryImage> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjJewelryImageQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjJewelryImageQueryService.class);
 
     private final HkjJewelryImageRepository hkjJewelryImageRepository;
 
@@ -45,7 +45,7 @@ public class HkjJewelryImageQueryService extends QueryService<HkjJewelryImage> {
      */
     @Transactional(readOnly = true)
     public Page<HkjJewelryImageDTO> findByCriteria(HkjJewelryImageCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjJewelryImage> specification = createSpecification(criteria);
         return hkjJewelryImageRepository.findAll(specification, page).map(hkjJewelryImageMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjJewelryImageQueryService extends QueryService<HkjJewelryImage> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjJewelryImageCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjJewelryImage> specification = createSpecification(criteria);
         return hkjJewelryImageRepository.count(specification);
     }
@@ -108,9 +108,8 @@ public class HkjJewelryImageQueryService extends QueryService<HkjJewelryImage> {
             }
             if (criteria.getJewelryModelId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getJewelryModelId(),
-                        root -> root.join(HkjJewelryImage_.jewelryModel, JoinType.LEFT).get(HkjJewelryModel_.id)
+                    buildSpecification(criteria.getJewelryModelId(), root ->
+                        root.join(HkjJewelryImage_.jewelryModel, JoinType.LEFT).get(HkjJewelryModel_.id)
                     )
                 );
             }

@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjOrderImageQueryService extends QueryService<HkjOrderImage> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjOrderImageQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjOrderImageQueryService.class);
 
     private final HkjOrderImageRepository hkjOrderImageRepository;
 
@@ -45,7 +45,7 @@ public class HkjOrderImageQueryService extends QueryService<HkjOrderImage> {
      */
     @Transactional(readOnly = true)
     public Page<HkjOrderImageDTO> findByCriteria(HkjOrderImageCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjOrderImage> specification = createSpecification(criteria);
         return hkjOrderImageRepository.findAll(specification, page).map(hkjOrderImageMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjOrderImageQueryService extends QueryService<HkjOrderImage> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjOrderImageCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjOrderImage> specification = createSpecification(criteria);
         return hkjOrderImageRepository.count(specification);
     }
@@ -95,9 +95,10 @@ public class HkjOrderImageQueryService extends QueryService<HkjOrderImage> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjOrderImage_.lastModifiedDate));
             }
-            if (criteria.getOrderId() != null) {
+            if (criteria.getHkjOrderId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getOrderId(), root -> root.join(HkjOrderImage_.order, JoinType.LEFT).get(HkjOrder_.id))
+                    buildSpecification(criteria.getHkjOrderId(), root -> root.join(HkjOrderImage_.hkjOrder, JoinType.LEFT).get(HkjOrder_.id)
+                    )
                 );
             }
         }

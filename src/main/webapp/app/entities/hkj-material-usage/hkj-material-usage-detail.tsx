@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { TextFormat, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './hkj-material-usage.reducer';
@@ -115,9 +115,9 @@ export const HkjMaterialUsageDetail = () => {
           </dt>
           <dd>{hkjMaterialUsageEntity.material ? hkjMaterialUsageEntity.material.id : ''}</dd>
           <dt>
-            <Translate contentKey="serverApp.hkjMaterialUsage.task">Task</Translate>
+            <Translate contentKey="serverApp.hkjMaterialUsage.hkjTask">Hkj Task</Translate>
           </dt>
-          <dd>{hkjMaterialUsageEntity.task ? hkjMaterialUsageEntity.task.id : ''}</dd>
+          <dd>{hkjMaterialUsageEntity.hkjTask ? hkjMaterialUsageEntity.hkjTask.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-material-usage" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

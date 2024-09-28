@@ -6,7 +6,6 @@ import com.server.hkj.repository.HkjPositionRepository;
 import com.server.hkj.service.criteria.HkjPositionCriteria;
 import com.server.hkj.service.dto.HkjPositionDTO;
 import com.server.hkj.service.mapper.HkjPositionMapper;
-import jakarta.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -26,7 +25,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjPositionQueryService extends QueryService<HkjPosition> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjPositionQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjPositionQueryService.class);
 
     private final HkjPositionRepository hkjPositionRepository;
 
@@ -45,7 +44,7 @@ public class HkjPositionQueryService extends QueryService<HkjPosition> {
      */
     @Transactional(readOnly = true)
     public Page<HkjPositionDTO> findByCriteria(HkjPositionCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjPosition> specification = createSpecification(criteria);
         return hkjPositionRepository.findAll(specification, page).map(hkjPositionMapper::toDto);
     }
@@ -57,7 +56,7 @@ public class HkjPositionQueryService extends QueryService<HkjPosition> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjPositionCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjPosition> specification = createSpecification(criteria);
         return hkjPositionRepository.count(specification);
     }
@@ -94,11 +93,6 @@ public class HkjPositionQueryService extends QueryService<HkjPosition> {
             }
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjPosition_.lastModifiedDate));
-            }
-            if (criteria.getHireId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getHireId(), root -> root.join(HkjPosition_.hires, JoinType.LEFT).get(HkjHire_.id))
-                );
             }
         }
         return specification;

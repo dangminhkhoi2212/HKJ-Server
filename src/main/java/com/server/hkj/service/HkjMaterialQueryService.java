@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjMaterialQueryService extends QueryService<HkjMaterial> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjMaterialQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjMaterialQueryService.class);
 
     private final HkjMaterialRepository hkjMaterialRepository;
 
@@ -45,7 +45,7 @@ public class HkjMaterialQueryService extends QueryService<HkjMaterial> {
      */
     @Transactional(readOnly = true)
     public Page<HkjMaterialDTO> findByCriteria(HkjMaterialCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjMaterial> specification = createSpecification(criteria);
         return hkjMaterialRepository.findAll(specification, page).map(hkjMaterialMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjMaterialQueryService extends QueryService<HkjMaterial> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjMaterialCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjMaterial> specification = createSpecification(criteria);
         return hkjMaterialRepository.count(specification);
     }
@@ -107,11 +107,17 @@ public class HkjMaterialQueryService extends QueryService<HkjMaterial> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjMaterial_.lastModifiedDate));
             }
+            if (criteria.getImagesId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getImagesId(), root ->
+                        root.join(HkjMaterial_.images, JoinType.LEFT).get(HkjMaterialImage_.id)
+                    )
+                );
+            }
             if (criteria.getHkjMaterialUsageId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getHkjMaterialUsageId(),
-                        root -> root.join(HkjMaterial_.hkjMaterialUsage, JoinType.LEFT).get(HkjMaterialUsage_.id)
+                    buildSpecification(criteria.getHkjMaterialUsageId(), root ->
+                        root.join(HkjMaterial_.hkjMaterialUsage, JoinType.LEFT).get(HkjMaterialUsage_.id)
                     )
                 );
             }

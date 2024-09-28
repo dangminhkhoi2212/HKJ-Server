@@ -24,14 +24,14 @@ class HkjTemplateStepTest {
     }
 
     @Test
-    void templateTest() {
+    void hkjTemplateTest() {
         HkjTemplateStep hkjTemplateStep = getHkjTemplateStepRandomSampleGenerator();
         HkjTemplate hkjTemplateBack = getHkjTemplateRandomSampleGenerator();
 
-        hkjTemplateStep.setTemplate(hkjTemplateBack);
-        assertThat(hkjTemplateStep.getTemplate()).isEqualTo(hkjTemplateBack);
+        hkjTemplateStep.setHkjTemplate(hkjTemplateBack);
+        assertThat(hkjTemplateStep.getHkjTemplate()).isEqualTo(hkjTemplateBack);
 
-        hkjTemplateStep.template(null);
-        assertThat(hkjTemplateStep.getTemplate()).isNull();
+        hkjTemplateStep.hkjTemplate(null);
+        assertThat(hkjTemplateStep.getHkjTemplate()).isNull();
     }
 }

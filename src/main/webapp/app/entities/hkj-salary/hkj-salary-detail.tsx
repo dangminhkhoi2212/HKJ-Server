@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { TextFormat, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './hkj-salary.reducer';
@@ -45,6 +45,12 @@ export const HkjSalaryDetail = () => {
           </dt>
           <dd>{hkjSalaryEntity.notes}</dd>
           <dt>
+            <span id="payDate">
+              <Translate contentKey="serverApp.hkjSalary.payDate">Pay Date</Translate>
+            </span>
+          </dt>
+          <dd>{hkjSalaryEntity.payDate ? <TextFormat value={hkjSalaryEntity.payDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjSalary.isDeleted">Is Deleted</Translate>
             </span>
@@ -81,9 +87,9 @@ export const HkjSalaryDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjSalary.employee">Employee</Translate>
+            <Translate contentKey="serverApp.hkjSalary.userExtra">User Extra</Translate>
           </dt>
-          <dd>{hkjSalaryEntity.employee ? hkjSalaryEntity.employee.id : ''}</dd>
+          <dd>{hkjSalaryEntity.userExtra ? hkjSalaryEntity.userExtra.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-salary" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

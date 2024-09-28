@@ -6,6 +6,8 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
@@ -56,7 +58,12 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "material", "task" }, allowSetters = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjMaterial")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "hkjMaterial" }, allowSetters = true)
+    private Set<HkjMaterialImage> images = new HashSet<>();
+
+    @JsonIgnoreProperties(value = { "material", "hkjTask" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "material")
     private HkjMaterialUsage hkjMaterialUsage;
 
@@ -191,6 +198,37 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
 
     public HkjMaterial setIsPersisted() {
         this.isPersisted = true;
+        return this;
+    }
+
+    public Set<HkjMaterialImage> getImages() {
+        return this.images;
+    }
+
+    public void setImages(Set<HkjMaterialImage> hkjMaterialImages) {
+        if (this.images != null) {
+            this.images.forEach(i -> i.setHkjMaterial(null));
+        }
+        if (hkjMaterialImages != null) {
+            hkjMaterialImages.forEach(i -> i.setHkjMaterial(this));
+        }
+        this.images = hkjMaterialImages;
+    }
+
+    public HkjMaterial images(Set<HkjMaterialImage> hkjMaterialImages) {
+        this.setImages(hkjMaterialImages);
+        return this;
+    }
+
+    public HkjMaterial addImages(HkjMaterialImage hkjMaterialImage) {
+        this.images.add(hkjMaterialImage);
+        hkjMaterialImage.setHkjMaterial(this);
+        return this;
+    }
+
+    public HkjMaterial removeImages(HkjMaterialImage hkjMaterialImage) {
+        this.images.remove(hkjMaterialImage);
+        hkjMaterialImage.setHkjMaterial(null);
         return this;
     }
 

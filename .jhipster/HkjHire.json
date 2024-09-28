@@ -66,14 +66,12 @@
   "relationships": [
     {
       "otherEntityName": "hkjPosition",
-      "otherEntityRelationshipName": "hire",
       "relationshipName": "position",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "userExtra",
-      "otherEntityRelationshipName": "hire",
       "relationshipName": "employee",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"

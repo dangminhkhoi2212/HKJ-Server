@@ -11,6 +11,7 @@ export interface IHkjJewelryModel {
   color?: string | null;
   notes?: string | null;
   isDeleted?: boolean | null;
+  active?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
@@ -21,4 +22,5 @@ export interface IHkjJewelryModel {
 export const defaultValue: Readonly<IHkjJewelryModel> = {
   isCustom: false,
   isDeleted: false,
+  active: false,
 };

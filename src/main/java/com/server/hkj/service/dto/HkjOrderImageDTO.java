@@ -24,7 +24,7 @@ public class HkjOrderImageDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjOrderDTO order;
+    private HkjOrderDTO hkjOrder;
 
     public Long getId() {
         return id;
@@ -82,12 +82,12 @@ public class HkjOrderImageDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjOrderDTO getOrder() {
-        return order;
+    public HkjOrderDTO getHkjOrder() {
+        return hkjOrder;
     }
 
-    public void setOrder(HkjOrderDTO order) {
-        this.order = order;
+    public void setHkjOrder(HkjOrderDTO hkjOrder) {
+        this.hkjOrder = hkjOrder;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class HkjOrderImageDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", order=" + getOrder() +
+            ", hkjOrder=" + getHkjOrder() +
             "}";
     }
 }

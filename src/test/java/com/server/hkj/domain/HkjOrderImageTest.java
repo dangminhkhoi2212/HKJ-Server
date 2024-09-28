@@ -24,14 +24,14 @@ class HkjOrderImageTest {
     }
 
     @Test
-    void orderTest() {
+    void hkjOrderTest() {
         HkjOrderImage hkjOrderImage = getHkjOrderImageRandomSampleGenerator();
         HkjOrder hkjOrderBack = getHkjOrderRandomSampleGenerator();
 
-        hkjOrderImage.setOrder(hkjOrderBack);
-        assertThat(hkjOrderImage.getOrder()).isEqualTo(hkjOrderBack);
+        hkjOrderImage.setHkjOrder(hkjOrderBack);
+        assertThat(hkjOrderImage.getHkjOrder()).isEqualTo(hkjOrderBack);
 
-        hkjOrderImage.order(null);
-        assertThat(hkjOrderImage.getOrder()).isNull();
+        hkjOrderImage.hkjOrder(null);
+        assertThat(hkjOrderImage.getHkjOrder()).isNull();
     }
 }

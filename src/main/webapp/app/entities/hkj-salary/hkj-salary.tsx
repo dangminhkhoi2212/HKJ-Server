@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat, getPaginationState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { JhiItemCount, JhiPagination, TextFormat, Translate, getPaginationState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -85,9 +85,8 @@ export const HkjSalary = () => {
     const order = paginationState.order;
     if (sortFieldName !== fieldName) {
       return faSort;
-    } else {
-      return order === ASC ? faSortUp : faSortDown;
     }
+    return order === ASC ? faSortUp : faSortDown;
   };
 
   return (
@@ -122,6 +121,10 @@ export const HkjSalary = () => {
                   <Translate contentKey="serverApp.hkjSalary.notes">Notes</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
                 </th>
+                <th className="hand" onClick={sort('payDate')}>
+                  <Translate contentKey="serverApp.hkjSalary.payDate">Pay Date</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('payDate')} />
+                </th>
                 <th className="hand" onClick={sort('isDeleted')}>
                   <Translate contentKey="serverApp.hkjSalary.isDeleted">Is Deleted</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
@@ -143,7 +146,7 @@ export const HkjSalary = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjSalary.employee">Employee</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjSalary.userExtra">User Extra</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -158,6 +161,7 @@ export const HkjSalary = () => {
                   </td>
                   <td>{hkjSalary.salary}</td>
                   <td>{hkjSalary.notes}</td>
+                  <td>{hkjSalary.payDate ? <TextFormat type="date" value={hkjSalary.payDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{hkjSalary.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjSalary.createdBy}</td>
                   <td>
@@ -169,7 +173,7 @@ export const HkjSalary = () => {
                       <TextFormat type="date" value={hkjSalary.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{hkjSalary.employee ? <Link to={`/user-extra/${hkjSalary.employee.id}`}>{hkjSalary.employee.id}</Link> : ''}</td>
+                  <td>{hkjSalary.userExtra ? <Link to={`/user-extra/${hkjSalary.userExtra.id}`}>{hkjSalary.userExtra.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-salary/${hkjSalary.id}`} color="info" size="sm" data-cy="entityDetailsButton">

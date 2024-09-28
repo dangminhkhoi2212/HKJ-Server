@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjTemplateService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTemplateService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTemplateService.class);
 
     private final HkjTemplateRepository hkjTemplateRepository;
 
@@ -35,7 +35,7 @@ public class HkjTemplateService {
      * @return the persisted entity.
      */
     public HkjTemplateDTO save(HkjTemplateDTO hkjTemplateDTO) {
-        log.debug("Request to save HkjTemplate : {}", hkjTemplateDTO);
+        LOG.debug("Request to save HkjTemplate : {}", hkjTemplateDTO);
         HkjTemplate hkjTemplate = hkjTemplateMapper.toEntity(hkjTemplateDTO);
         hkjTemplate = hkjTemplateRepository.save(hkjTemplate);
         return hkjTemplateMapper.toDto(hkjTemplate);
@@ -48,7 +48,7 @@ public class HkjTemplateService {
      * @return the persisted entity.
      */
     public HkjTemplateDTO update(HkjTemplateDTO hkjTemplateDTO) {
-        log.debug("Request to update HkjTemplate : {}", hkjTemplateDTO);
+        LOG.debug("Request to update HkjTemplate : {}", hkjTemplateDTO);
         HkjTemplate hkjTemplate = hkjTemplateMapper.toEntity(hkjTemplateDTO);
         hkjTemplate.setIsPersisted();
         hkjTemplate = hkjTemplateRepository.save(hkjTemplate);
@@ -62,7 +62,7 @@ public class HkjTemplateService {
      * @return the persisted entity.
      */
     public Optional<HkjTemplateDTO> partialUpdate(HkjTemplateDTO hkjTemplateDTO) {
-        log.debug("Request to partially update HkjTemplate : {}", hkjTemplateDTO);
+        LOG.debug("Request to partially update HkjTemplate : {}", hkjTemplateDTO);
 
         return hkjTemplateRepository
             .findById(hkjTemplateDTO.getId())
@@ -83,7 +83,7 @@ public class HkjTemplateService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjTemplateDTO> findOne(Long id) {
-        log.debug("Request to get HkjTemplate : {}", id);
+        LOG.debug("Request to get HkjTemplate : {}", id);
         return hkjTemplateRepository.findById(id).map(hkjTemplateMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjTemplateService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjTemplate : {}", id);
+        LOG.debug("Request to delete HkjTemplate : {}", id);
         hkjTemplateRepository.deleteById(id);
     }
 }

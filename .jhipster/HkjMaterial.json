@@ -72,7 +72,14 @@
   "jpaMetamodelFiltering": true,
   "name": "HkjMaterial",
   "pagination": "pagination",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "hkjMaterialImage",
+      "relationshipName": "images",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
   "searchEngine": "no",
   "service": "serviceClass"
 }

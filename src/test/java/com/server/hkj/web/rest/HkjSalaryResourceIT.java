@@ -18,6 +18,8 @@ import com.server.hkj.service.dto.HkjSalaryDTO;
 import com.server.hkj.service.mapper.HkjSalaryMapper;
 import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
@@ -44,6 +46,9 @@ class HkjSalaryResourceIT {
 
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_PAY_DATE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_PAY_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
@@ -79,9 +84,8 @@ class HkjSalaryResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjSalary createEntity(EntityManager em) {
-        HkjSalary hkjSalary = new HkjSalary().salary(DEFAULT_SALARY).notes(DEFAULT_NOTES).isDeleted(DEFAULT_IS_DELETED);
-        return hkjSalary;
+    public static HkjSalary createEntity() {
+        return new HkjSalary().salary(DEFAULT_SALARY).notes(DEFAULT_NOTES).payDate(DEFAULT_PAY_DATE).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -90,14 +94,13 @@ class HkjSalaryResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjSalary createUpdatedEntity(EntityManager em) {
-        HkjSalary hkjSalary = new HkjSalary().salary(UPDATED_SALARY).notes(UPDATED_NOTES).isDeleted(UPDATED_IS_DELETED);
-        return hkjSalary;
+    public static HkjSalary createUpdatedEntity() {
+        return new HkjSalary().salary(UPDATED_SALARY).notes(UPDATED_NOTES).payDate(UPDATED_PAY_DATE).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjSalary = createEntity(em);
+        hkjSalary = createEntity();
     }
 
     @AfterEach
@@ -166,6 +169,7 @@ class HkjSalaryResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjSalary.getId().intValue())))
             .andExpect(jsonPath("$.[*].salary").value(hasItem(sameNumber(DEFAULT_SALARY))))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].payDate").value(hasItem(DEFAULT_PAY_DATE.toString())))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
@@ -183,6 +187,7 @@ class HkjSalaryResourceIT {
             .andExpect(jsonPath("$.id").value(hkjSalary.getId().intValue()))
             .andExpect(jsonPath("$.salary").value(sameNumber(DEFAULT_SALARY)))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
+            .andExpect(jsonPath("$.payDate").value(DEFAULT_PAY_DATE.toString()))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
@@ -323,6 +328,36 @@ class HkjSalaryResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjSalariesByPayDateIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjSalary = hkjSalaryRepository.saveAndFlush(hkjSalary);
+
+        // Get all the hkjSalaryList where payDate equals to
+        defaultHkjSalaryFiltering("payDate.equals=" + DEFAULT_PAY_DATE, "payDate.equals=" + UPDATED_PAY_DATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjSalariesByPayDateIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjSalary = hkjSalaryRepository.saveAndFlush(hkjSalary);
+
+        // Get all the hkjSalaryList where payDate in
+        defaultHkjSalaryFiltering("payDate.in=" + DEFAULT_PAY_DATE + "," + UPDATED_PAY_DATE, "payDate.in=" + UPDATED_PAY_DATE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjSalariesByPayDateIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjSalary = hkjSalaryRepository.saveAndFlush(hkjSalary);
+
+        // Get all the hkjSalaryList where payDate is not null
+        defaultHkjSalaryFiltering("payDate.specified=true", "payDate.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjSalariesByIsDeletedIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjSalary = hkjSalaryRepository.saveAndFlush(hkjSalary);
@@ -353,24 +388,24 @@ class HkjSalaryResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjSalariesByEmployeeIsEqualToSomething() throws Exception {
-        UserExtra employee;
+    void getAllHkjSalariesByUserExtraIsEqualToSomething() throws Exception {
+        UserExtra userExtra;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjSalaryRepository.saveAndFlush(hkjSalary);
-            employee = UserExtraResourceIT.createEntity(em);
+            userExtra = UserExtraResourceIT.createEntity();
         } else {
-            employee = TestUtil.findAll(em, UserExtra.class).get(0);
+            userExtra = TestUtil.findAll(em, UserExtra.class).get(0);
         }
-        em.persist(employee);
+        em.persist(userExtra);
         em.flush();
-        hkjSalary.setEmployee(employee);
+        hkjSalary.setUserExtra(userExtra);
         hkjSalaryRepository.saveAndFlush(hkjSalary);
-        Long employeeId = employee.getId();
-        // Get all the hkjSalaryList where employee equals to employeeId
-        defaultHkjSalaryShouldBeFound("employeeId.equals=" + employeeId);
+        Long userExtraId = userExtra.getId();
+        // Get all the hkjSalaryList where userExtra equals to userExtraId
+        defaultHkjSalaryShouldBeFound("userExtraId.equals=" + userExtraId);
 
-        // Get all the hkjSalaryList where employee equals to (employeeId + 1)
-        defaultHkjSalaryShouldNotBeFound("employeeId.equals=" + (employeeId + 1));
+        // Get all the hkjSalaryList where userExtra equals to (userExtraId + 1)
+        defaultHkjSalaryShouldNotBeFound("userExtraId.equals=" + (userExtraId + 1));
     }
 
     private void defaultHkjSalaryFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
@@ -389,6 +424,7 @@ class HkjSalaryResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjSalary.getId().intValue())))
             .andExpect(jsonPath("$.[*].salary").value(hasItem(sameNumber(DEFAULT_SALARY))))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
+            .andExpect(jsonPath("$.[*].payDate").value(hasItem(DEFAULT_PAY_DATE.toString())))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
@@ -437,7 +473,7 @@ class HkjSalaryResourceIT {
         HkjSalary updatedHkjSalary = hkjSalaryRepository.findById(hkjSalary.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjSalary are not directly saved in db
         em.detach(updatedHkjSalary);
-        updatedHkjSalary.salary(UPDATED_SALARY).notes(UPDATED_NOTES).isDeleted(UPDATED_IS_DELETED);
+        updatedHkjSalary.salary(UPDATED_SALARY).notes(UPDATED_NOTES).payDate(UPDATED_PAY_DATE).isDeleted(UPDATED_IS_DELETED);
         HkjSalaryDTO hkjSalaryDTO = hkjSalaryMapper.toDto(updatedHkjSalary);
 
         restHkjSalaryMockMvc
@@ -562,7 +598,7 @@ class HkjSalaryResourceIT {
         HkjSalary partialUpdatedHkjSalary = new HkjSalary();
         partialUpdatedHkjSalary.setId(hkjSalary.getId());
 
-        partialUpdatedHkjSalary.salary(UPDATED_SALARY).notes(UPDATED_NOTES).isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedHkjSalary.salary(UPDATED_SALARY).notes(UPDATED_NOTES).payDate(UPDATED_PAY_DATE).isDeleted(UPDATED_IS_DELETED);
 
         restHkjSalaryMockMvc
             .perform(

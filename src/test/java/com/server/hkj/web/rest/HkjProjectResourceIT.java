@@ -112,8 +112,8 @@ class HkjProjectResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjProject createEntity(EntityManager em) {
-        HkjProject hkjProject = new HkjProject()
+    public static HkjProject createEntity() {
+        return new HkjProject()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .startDate(DEFAULT_START_DATE)
@@ -126,7 +126,6 @@ class HkjProjectResourceIT {
             .qualityCheck(DEFAULT_QUALITY_CHECK)
             .notes(DEFAULT_NOTES)
             .isDeleted(DEFAULT_IS_DELETED);
-        return hkjProject;
     }
 
     /**
@@ -135,8 +134,8 @@ class HkjProjectResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjProject createUpdatedEntity(EntityManager em) {
-        HkjProject hkjProject = new HkjProject()
+    public static HkjProject createUpdatedEntity() {
+        return new HkjProject()
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .startDate(UPDATED_START_DATE)
@@ -149,12 +148,11 @@ class HkjProjectResourceIT {
             .qualityCheck(UPDATED_QUALITY_CHECK)
             .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
-        return hkjProject;
     }
 
     @BeforeEach
     public void initTest() {
-        hkjProject = createEntity(em);
+        hkjProject = createEntity();
     }
 
     @AfterEach
@@ -871,7 +869,7 @@ class HkjProjectResourceIT {
         HkjCategory category;
         if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
             hkjProjectRepository.saveAndFlush(hkjProject);
-            category = HkjCategoryResourceIT.createEntity(em);
+            category = HkjCategoryResourceIT.createEntity();
         } else {
             category = TestUtil.findAll(em, HkjCategory.class).get(0);
         }
@@ -893,7 +891,7 @@ class HkjProjectResourceIT {
         UserExtra manager;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjProjectRepository.saveAndFlush(hkjProject);
-            manager = UserExtraResourceIT.createEntity(em);
+            manager = UserExtraResourceIT.createEntity();
         } else {
             manager = TestUtil.findAll(em, UserExtra.class).get(0);
         }
@@ -1088,11 +1086,10 @@ class HkjProjectResourceIT {
         partialUpdatedHkjProject.setId(hkjProject.getId());
 
         partialUpdatedHkjProject
-            .expectDate(UPDATED_EXPECT_DATE)
-            .endDate(UPDATED_END_DATE)
+            .startDate(UPDATED_START_DATE)
             .status(UPDATED_STATUS)
-            .budget(UPDATED_BUDGET)
-            .notes(UPDATED_NOTES);
+            .priority(UPDATED_PRIORITY)
+            .qualityCheck(UPDATED_QUALITY_CHECK);
 
         restHkjProjectMockMvc
             .perform(

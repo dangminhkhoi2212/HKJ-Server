@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjTemplateStepService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTemplateStepService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTemplateStepService.class);
 
     private final HkjTemplateStepRepository hkjTemplateStepRepository;
 
@@ -35,7 +35,7 @@ public class HkjTemplateStepService {
      * @return the persisted entity.
      */
     public HkjTemplateStepDTO save(HkjTemplateStepDTO hkjTemplateStepDTO) {
-        log.debug("Request to save HkjTemplateStep : {}", hkjTemplateStepDTO);
+        LOG.debug("Request to save HkjTemplateStep : {}", hkjTemplateStepDTO);
         HkjTemplateStep hkjTemplateStep = hkjTemplateStepMapper.toEntity(hkjTemplateStepDTO);
         hkjTemplateStep = hkjTemplateStepRepository.save(hkjTemplateStep);
         return hkjTemplateStepMapper.toDto(hkjTemplateStep);
@@ -48,7 +48,7 @@ public class HkjTemplateStepService {
      * @return the persisted entity.
      */
     public HkjTemplateStepDTO update(HkjTemplateStepDTO hkjTemplateStepDTO) {
-        log.debug("Request to update HkjTemplateStep : {}", hkjTemplateStepDTO);
+        LOG.debug("Request to update HkjTemplateStep : {}", hkjTemplateStepDTO);
         HkjTemplateStep hkjTemplateStep = hkjTemplateStepMapper.toEntity(hkjTemplateStepDTO);
         hkjTemplateStep.setIsPersisted();
         hkjTemplateStep = hkjTemplateStepRepository.save(hkjTemplateStep);
@@ -62,7 +62,7 @@ public class HkjTemplateStepService {
      * @return the persisted entity.
      */
     public Optional<HkjTemplateStepDTO> partialUpdate(HkjTemplateStepDTO hkjTemplateStepDTO) {
-        log.debug("Request to partially update HkjTemplateStep : {}", hkjTemplateStepDTO);
+        LOG.debug("Request to partially update HkjTemplateStep : {}", hkjTemplateStepDTO);
 
         return hkjTemplateStepRepository
             .findById(hkjTemplateStepDTO.getId())
@@ -83,7 +83,7 @@ public class HkjTemplateStepService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjTemplateStepDTO> findOne(Long id) {
-        log.debug("Request to get HkjTemplateStep : {}", id);
+        LOG.debug("Request to get HkjTemplateStep : {}", id);
         return hkjTemplateStepRepository.findById(id).map(hkjTemplateStepMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjTemplateStepService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjTemplateStep : {}", id);
+        LOG.debug("Request to delete HkjTemplateStep : {}", id);
         hkjTemplateStepRepository.deleteById(id);
     }
 }

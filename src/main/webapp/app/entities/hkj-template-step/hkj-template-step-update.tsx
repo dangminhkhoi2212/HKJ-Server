@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjTemplate } from 'app/shared/model/hkj-template.model';
 import { getEntities as getHkjTemplates } from 'app/entities/hkj-template/hkj-template.reducer';
-import { IHkjTemplateStep } from 'app/shared/model/hkj-template-step.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-template-step.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-template-step.reducer';
 
 export const HkjTemplateStepUpdate = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +25,7 @@ export const HkjTemplateStepUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjTemplateStep.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-template-step' + location.search);
+    navigate(`/hkj-template-step${location.search}`);
   };
 
   useEffect(() => {
@@ -47,7 +44,6 @@ export const HkjTemplateStepUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
@@ -58,7 +54,7 @@ export const HkjTemplateStepUpdate = () => {
     const entity = {
       ...hkjTemplateStepEntity,
       ...values,
-      template: hkjTemplates.find(it => it.id.toString() === values.template?.toString()),
+      hkjTemplate: hkjTemplates.find(it => it.id.toString() === values.hkjTemplate?.toString()),
     };
 
     if (isNew) {
@@ -78,7 +74,7 @@ export const HkjTemplateStepUpdate = () => {
           ...hkjTemplateStepEntity,
           createdDate: convertDateTimeFromServer(hkjTemplateStepEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjTemplateStepEntity.lastModifiedDate),
-          template: hkjTemplateStepEntity?.template?.id,
+          hkjTemplate: hkjTemplateStepEntity?.hkjTemplate?.id,
         };
 
   return (
@@ -152,10 +148,10 @@ export const HkjTemplateStepUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-template-step-template"
-                name="template"
-                data-cy="template"
-                label={translate('serverApp.hkjTemplateStep.template')}
+                id="hkj-template-step-hkjTemplate"
+                name="hkjTemplate"
+                data-cy="hkjTemplate"
+                label={translate('serverApp.hkjTemplateStep.hkjTemplate')}
                 type="select"
               >
                 <option value="" key="0" />

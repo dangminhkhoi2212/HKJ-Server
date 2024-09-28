@@ -10,18 +10,17 @@ import reducer, {
   deleteEntity,
   getEntities,
   getEntity,
-  updateEntity,
   partialUpdateEntity,
   reset,
+  updateEntity,
 } from './hkj-jewelry-image.reducer';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
     if (element instanceof Array) {
       return element.length === 0;
-    } else {
-      return Object.keys(element).length === 0;
     }
+    return Object.keys(element).length === 0;
   }
 
   const initialState: EntityState<IHkjJewelryImage> = {

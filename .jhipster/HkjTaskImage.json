@@ -58,15 +58,7 @@
   "jpaMetamodelFiltering": true,
   "name": "HkjTaskImage",
   "pagination": "pagination",
-  "relationships": [
-    {
-      "otherEntityName": "hkjTask",
-      "otherEntityRelationshipName": "images",
-      "relationshipName": "task",
-      "relationshipSide": "right",
-      "relationshipType": "many-to-one"
-    }
-  ],
+  "relationships": [],
   "searchEngine": "no",
   "service": "serviceClass"
 }

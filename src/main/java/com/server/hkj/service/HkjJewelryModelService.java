@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjJewelryModelService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjJewelryModelService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjJewelryModelService.class);
 
     private final HkjJewelryModelRepository hkjJewelryModelRepository;
 
@@ -35,7 +35,7 @@ public class HkjJewelryModelService {
      * @return the persisted entity.
      */
     public HkjJewelryModelDTO save(HkjJewelryModelDTO hkjJewelryModelDTO) {
-        log.debug("Request to save HkjJewelryModel : {}", hkjJewelryModelDTO);
+        LOG.debug("Request to save HkjJewelryModel : {}", hkjJewelryModelDTO);
         HkjJewelryModel hkjJewelryModel = hkjJewelryModelMapper.toEntity(hkjJewelryModelDTO);
         hkjJewelryModel = hkjJewelryModelRepository.save(hkjJewelryModel);
         return hkjJewelryModelMapper.toDto(hkjJewelryModel);
@@ -48,7 +48,7 @@ public class HkjJewelryModelService {
      * @return the persisted entity.
      */
     public HkjJewelryModelDTO update(HkjJewelryModelDTO hkjJewelryModelDTO) {
-        log.debug("Request to update HkjJewelryModel : {}", hkjJewelryModelDTO);
+        LOG.debug("Request to update HkjJewelryModel : {}", hkjJewelryModelDTO);
         HkjJewelryModel hkjJewelryModel = hkjJewelryModelMapper.toEntity(hkjJewelryModelDTO);
         hkjJewelryModel.setIsPersisted();
         hkjJewelryModel = hkjJewelryModelRepository.save(hkjJewelryModel);
@@ -62,7 +62,7 @@ public class HkjJewelryModelService {
      * @return the persisted entity.
      */
     public Optional<HkjJewelryModelDTO> partialUpdate(HkjJewelryModelDTO hkjJewelryModelDTO) {
-        log.debug("Request to partially update HkjJewelryModel : {}", hkjJewelryModelDTO);
+        LOG.debug("Request to partially update HkjJewelryModel : {}", hkjJewelryModelDTO);
 
         return hkjJewelryModelRepository
             .findById(hkjJewelryModelDTO.getId())
@@ -83,7 +83,7 @@ public class HkjJewelryModelService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjJewelryModelDTO> findOne(Long id) {
-        log.debug("Request to get HkjJewelryModel : {}", id);
+        LOG.debug("Request to get HkjJewelryModel : {}", id);
         return hkjJewelryModelRepository.findById(id).map(hkjJewelryModelMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjJewelryModelService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjJewelryModel : {}", id);
+        LOG.debug("Request to delete HkjJewelryModel : {}", id);
         hkjJewelryModelRepository.deleteById(id);
     }
 }

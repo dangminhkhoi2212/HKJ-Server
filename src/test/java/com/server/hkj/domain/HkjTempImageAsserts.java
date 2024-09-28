@@ -60,5 +60,7 @@ public class HkjTempImageAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertHkjTempImageUpdatableRelationshipsEquals(HkjTempImage expected, HkjTempImage actual) {}
+    public static void assertHkjTempImageUpdatableRelationshipsEquals(HkjTempImage expected, HkjTempImage actual) {
+        // empty method
+    }
 }

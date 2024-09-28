@@ -39,6 +39,9 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
+    @Column(name = "active")
+    private Boolean active;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -50,19 +53,10 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
     @JoinColumn(unique = true)
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userExtra")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "employee" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "userExtra" }, allowSetters = true)
     private Set<HkjSalary> salarys = new HashSet<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "position", "employee" }, allowSetters = true)
-    private Set<HkjHire> hires = new HashSet<>();
-
-    @JsonIgnoreProperties(value = { "employee", "images", "materials", "project" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee")
-    private HkjTask hkjTask;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -116,6 +110,19 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Boolean getActive() {
+        return this.active;
+    }
+
+    public UserExtra active(Boolean active) {
+        this.setActive(active);
+        return this;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     // Inherited createdBy methods
@@ -178,10 +185,10 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
 
     public void setSalarys(Set<HkjSalary> hkjSalaries) {
         if (this.salarys != null) {
-            this.salarys.forEach(i -> i.setEmployee(null));
+            this.salarys.forEach(i -> i.setUserExtra(null));
         }
         if (hkjSalaries != null) {
-            hkjSalaries.forEach(i -> i.setEmployee(this));
+            hkjSalaries.forEach(i -> i.setUserExtra(this));
         }
         this.salarys = hkjSalaries;
     }
@@ -193,63 +200,13 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
 
     public UserExtra addSalarys(HkjSalary hkjSalary) {
         this.salarys.add(hkjSalary);
-        hkjSalary.setEmployee(this);
+        hkjSalary.setUserExtra(this);
         return this;
     }
 
     public UserExtra removeSalarys(HkjSalary hkjSalary) {
         this.salarys.remove(hkjSalary);
-        hkjSalary.setEmployee(null);
-        return this;
-    }
-
-    public Set<HkjHire> getHires() {
-        return this.hires;
-    }
-
-    public void setHires(Set<HkjHire> hkjHires) {
-        if (this.hires != null) {
-            this.hires.forEach(i -> i.setEmployee(null));
-        }
-        if (hkjHires != null) {
-            hkjHires.forEach(i -> i.setEmployee(this));
-        }
-        this.hires = hkjHires;
-    }
-
-    public UserExtra hires(Set<HkjHire> hkjHires) {
-        this.setHires(hkjHires);
-        return this;
-    }
-
-    public UserExtra addHire(HkjHire hkjHire) {
-        this.hires.add(hkjHire);
-        hkjHire.setEmployee(this);
-        return this;
-    }
-
-    public UserExtra removeHire(HkjHire hkjHire) {
-        this.hires.remove(hkjHire);
-        hkjHire.setEmployee(null);
-        return this;
-    }
-
-    public HkjTask getHkjTask() {
-        return this.hkjTask;
-    }
-
-    public void setHkjTask(HkjTask hkjTask) {
-        if (this.hkjTask != null) {
-            this.hkjTask.setEmployee(null);
-        }
-        if (hkjTask != null) {
-            hkjTask.setEmployee(this);
-        }
-        this.hkjTask = hkjTask;
-    }
-
-    public UserExtra hkjTask(HkjTask hkjTask) {
-        this.setHkjTask(hkjTask);
+        hkjSalary.setUserExtra(null);
         return this;
     }
 
@@ -280,6 +237,7 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
             ", phone='" + getPhone() + "'" +
             ", address='" + getAddress() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
+            ", active='" + getActive() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

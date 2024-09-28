@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjTemplateQueryService extends QueryService<HkjTemplate> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTemplateQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTemplateQueryService.class);
 
     private final HkjTemplateRepository hkjTemplateRepository;
 
@@ -45,7 +45,7 @@ public class HkjTemplateQueryService extends QueryService<HkjTemplate> {
      */
     @Transactional(readOnly = true)
     public Page<HkjTemplateDTO> findByCriteria(HkjTemplateCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjTemplate> specification = createSpecification(criteria);
         return hkjTemplateRepository.findAll(specification, page).map(hkjTemplateMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjTemplateQueryService extends QueryService<HkjTemplate> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjTemplateCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjTemplate> specification = createSpecification(criteria);
         return hkjTemplateRepository.count(specification);
     }
@@ -97,9 +97,8 @@ public class HkjTemplateQueryService extends QueryService<HkjTemplate> {
             }
             if (criteria.getCategoryId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getCategoryId(),
-                        root -> root.join(HkjTemplate_.category, JoinType.LEFT).get(HkjCategory_.id)
+                    buildSpecification(criteria.getCategoryId(), root ->
+                        root.join(HkjTemplate_.category, JoinType.LEFT).get(HkjCategory_.id)
                     )
                 );
             }

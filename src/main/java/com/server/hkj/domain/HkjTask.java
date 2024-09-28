@@ -79,24 +79,23 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private UserExtra employee;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTask")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "task" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "hkjTask" }, allowSetters = true)
     private Set<HkjTaskImage> images = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTask")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "material", "task" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "material", "hkjTask" }, allowSetters = true)
     private Set<HkjMaterialUsage> materials = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
-    private HkjProject project;
+    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
+    private UserExtra employee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "jewelry", "hkjOrder" }, allowSetters = true)
+    private HkjProject hkjProject;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -284,6 +283,68 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
+    public Set<HkjTaskImage> getImages() {
+        return this.images;
+    }
+
+    public void setImages(Set<HkjTaskImage> hkjTaskImages) {
+        if (this.images != null) {
+            this.images.forEach(i -> i.setHkjTask(null));
+        }
+        if (hkjTaskImages != null) {
+            hkjTaskImages.forEach(i -> i.setHkjTask(this));
+        }
+        this.images = hkjTaskImages;
+    }
+
+    public HkjTask images(Set<HkjTaskImage> hkjTaskImages) {
+        this.setImages(hkjTaskImages);
+        return this;
+    }
+
+    public HkjTask addImages(HkjTaskImage hkjTaskImage) {
+        this.images.add(hkjTaskImage);
+        hkjTaskImage.setHkjTask(this);
+        return this;
+    }
+
+    public HkjTask removeImages(HkjTaskImage hkjTaskImage) {
+        this.images.remove(hkjTaskImage);
+        hkjTaskImage.setHkjTask(null);
+        return this;
+    }
+
+    public Set<HkjMaterialUsage> getMaterials() {
+        return this.materials;
+    }
+
+    public void setMaterials(Set<HkjMaterialUsage> hkjMaterialUsages) {
+        if (this.materials != null) {
+            this.materials.forEach(i -> i.setHkjTask(null));
+        }
+        if (hkjMaterialUsages != null) {
+            hkjMaterialUsages.forEach(i -> i.setHkjTask(this));
+        }
+        this.materials = hkjMaterialUsages;
+    }
+
+    public HkjTask materials(Set<HkjMaterialUsage> hkjMaterialUsages) {
+        this.setMaterials(hkjMaterialUsages);
+        return this;
+    }
+
+    public HkjTask addMaterials(HkjMaterialUsage hkjMaterialUsage) {
+        this.materials.add(hkjMaterialUsage);
+        hkjMaterialUsage.setHkjTask(this);
+        return this;
+    }
+
+    public HkjTask removeMaterials(HkjMaterialUsage hkjMaterialUsage) {
+        this.materials.remove(hkjMaterialUsage);
+        hkjMaterialUsage.setHkjTask(null);
+        return this;
+    }
+
     public UserExtra getEmployee() {
         return this.employee;
     }
@@ -297,78 +358,16 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
-    public Set<HkjTaskImage> getImages() {
-        return this.images;
+    public HkjProject getHkjProject() {
+        return this.hkjProject;
     }
 
-    public void setImages(Set<HkjTaskImage> hkjTaskImages) {
-        if (this.images != null) {
-            this.images.forEach(i -> i.setTask(null));
-        }
-        if (hkjTaskImages != null) {
-            hkjTaskImages.forEach(i -> i.setTask(this));
-        }
-        this.images = hkjTaskImages;
+    public void setHkjProject(HkjProject hkjProject) {
+        this.hkjProject = hkjProject;
     }
 
-    public HkjTask images(Set<HkjTaskImage> hkjTaskImages) {
-        this.setImages(hkjTaskImages);
-        return this;
-    }
-
-    public HkjTask addImages(HkjTaskImage hkjTaskImage) {
-        this.images.add(hkjTaskImage);
-        hkjTaskImage.setTask(this);
-        return this;
-    }
-
-    public HkjTask removeImages(HkjTaskImage hkjTaskImage) {
-        this.images.remove(hkjTaskImage);
-        hkjTaskImage.setTask(null);
-        return this;
-    }
-
-    public Set<HkjMaterialUsage> getMaterials() {
-        return this.materials;
-    }
-
-    public void setMaterials(Set<HkjMaterialUsage> hkjMaterialUsages) {
-        if (this.materials != null) {
-            this.materials.forEach(i -> i.setTask(null));
-        }
-        if (hkjMaterialUsages != null) {
-            hkjMaterialUsages.forEach(i -> i.setTask(this));
-        }
-        this.materials = hkjMaterialUsages;
-    }
-
-    public HkjTask materials(Set<HkjMaterialUsage> hkjMaterialUsages) {
-        this.setMaterials(hkjMaterialUsages);
-        return this;
-    }
-
-    public HkjTask addMaterials(HkjMaterialUsage hkjMaterialUsage) {
-        this.materials.add(hkjMaterialUsage);
-        hkjMaterialUsage.setTask(this);
-        return this;
-    }
-
-    public HkjTask removeMaterials(HkjMaterialUsage hkjMaterialUsage) {
-        this.materials.remove(hkjMaterialUsage);
-        hkjMaterialUsage.setTask(null);
-        return this;
-    }
-
-    public HkjProject getProject() {
-        return this.project;
-    }
-
-    public void setProject(HkjProject hkjProject) {
-        this.project = hkjProject;
-    }
-
-    public HkjTask project(HkjProject hkjProject) {
-        this.setProject(hkjProject);
+    public HkjTask hkjProject(HkjProject hkjProject) {
+        this.setHkjProject(hkjProject);
         return this;
     }
 

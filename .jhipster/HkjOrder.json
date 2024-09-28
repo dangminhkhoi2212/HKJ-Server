@@ -104,7 +104,6 @@
     },
     {
       "otherEntityName": "hkjOrderImage",
-      "otherEntityRelationshipName": "order",
       "relationshipName": "orderImages",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"

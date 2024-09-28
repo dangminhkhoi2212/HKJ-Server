@@ -24,7 +24,7 @@ public class HkjTemplateStepDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjTemplateDTO template;
+    private HkjTemplateDTO hkjTemplate;
 
     public Long getId() {
         return id;
@@ -82,12 +82,12 @@ public class HkjTemplateStepDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjTemplateDTO getTemplate() {
-        return template;
+    public HkjTemplateDTO getHkjTemplate() {
+        return hkjTemplate;
     }
 
-    public void setTemplate(HkjTemplateDTO template) {
-        this.template = template;
+    public void setHkjTemplate(HkjTemplateDTO hkjTemplate) {
+        this.hkjTemplate = hkjTemplate;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class HkjTemplateStepDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", template=" + getTemplate() +
+            ", hkjTemplate=" + getHkjTemplate() +
             "}";
     }
 }

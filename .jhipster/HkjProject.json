@@ -112,7 +112,6 @@
     },
     {
       "otherEntityName": "hkjTask",
-      "otherEntityRelationshipName": "project",
       "relationshipName": "tasks",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
@@ -122,6 +121,13 @@
       "relationshipName": "manager",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjJewelryModel",
+      "otherEntityRelationshipName": "project",
+      "relationshipName": "jewelry",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
     }
   ],
   "searchEngine": "no",

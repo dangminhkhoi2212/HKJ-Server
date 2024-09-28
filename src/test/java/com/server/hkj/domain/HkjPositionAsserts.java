@@ -59,5 +59,7 @@ public class HkjPositionAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertHkjPositionUpdatableRelationshipsEquals(HkjPosition expected, HkjPosition actual) {}
+    public static void assertHkjPositionUpdatableRelationshipsEquals(HkjPosition expected, HkjPosition actual) {
+        // empty method
+    }
 }

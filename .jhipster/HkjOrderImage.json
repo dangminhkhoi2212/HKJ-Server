@@ -52,15 +52,7 @@
   "jpaMetamodelFiltering": true,
   "name": "HkjOrderImage",
   "pagination": "pagination",
-  "relationships": [
-    {
-      "otherEntityName": "hkjOrder",
-      "otherEntityRelationshipName": "orderImages",
-      "relationshipName": "order",
-      "relationshipSide": "right",
-      "relationshipType": "many-to-one"
-    }
-  ],
+  "relationships": [],
   "searchEngine": "no",
   "service": "serviceClass"
 }

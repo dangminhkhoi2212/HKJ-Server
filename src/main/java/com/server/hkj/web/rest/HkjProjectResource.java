@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-projects")
 public class HkjProjectResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjProjectResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjProjectResource.class);
 
     private static final String ENTITY_NAME = "hkjProject";
 
@@ -65,7 +65,7 @@ public class HkjProjectResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjProjectDTO> createHkjProject(@Valid @RequestBody HkjProjectDTO hkjProjectDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjProject : {}", hkjProjectDTO);
+        LOG.debug("REST request to save HkjProject : {}", hkjProjectDTO);
         if (hkjProjectDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjProject cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -90,7 +90,7 @@ public class HkjProjectResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjProjectDTO hkjProjectDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjProject : {}, {}", id, hkjProjectDTO);
+        LOG.debug("REST request to update HkjProject : {}, {}", id, hkjProjectDTO);
         if (hkjProjectDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -124,7 +124,7 @@ public class HkjProjectResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjProjectDTO hkjProjectDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjProject partially : {}, {}", id, hkjProjectDTO);
+        LOG.debug("REST request to partial update HkjProject partially : {}, {}", id, hkjProjectDTO);
         if (hkjProjectDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -156,7 +156,7 @@ public class HkjProjectResource {
         HkjProjectCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjProjects by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjProjects by criteria: {}", criteria);
 
         Page<HkjProjectDTO> page = hkjProjectQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -171,7 +171,7 @@ public class HkjProjectResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjProjects(HkjProjectCriteria criteria) {
-        log.debug("REST request to count HkjProjects by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjProjects by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjProjectQueryService.countByCriteria(criteria));
     }
 
@@ -183,7 +183,7 @@ public class HkjProjectResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjProjectDTO> getHkjProject(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjProject : {}", id);
+        LOG.debug("REST request to get HkjProject : {}", id);
         Optional<HkjProjectDTO> hkjProjectDTO = hkjProjectService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjProjectDTO);
     }
@@ -196,7 +196,7 @@ public class HkjProjectResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjProject(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjProject : {}", id);
+        LOG.debug("REST request to delete HkjProject : {}", id);
         hkjProjectService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

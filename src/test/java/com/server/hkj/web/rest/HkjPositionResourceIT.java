@@ -72,9 +72,8 @@ class HkjPositionResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjPosition createEntity(EntityManager em) {
-        HkjPosition hkjPosition = new HkjPosition().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
-        return hkjPosition;
+    public static HkjPosition createEntity() {
+        return new HkjPosition().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -83,14 +82,13 @@ class HkjPositionResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjPosition createUpdatedEntity(EntityManager em) {
-        HkjPosition hkjPosition = new HkjPosition().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
-        return hkjPosition;
+    public static HkjPosition createUpdatedEntity() {
+        return new HkjPosition().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjPosition = createEntity(em);
+        hkjPosition = createEntity();
     }
 
     @AfterEach

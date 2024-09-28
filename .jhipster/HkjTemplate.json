@@ -62,7 +62,6 @@
     },
     {
       "otherEntityName": "hkjTemplateStep",
-      "otherEntityRelationshipName": "template",
       "relationshipName": "steps",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"

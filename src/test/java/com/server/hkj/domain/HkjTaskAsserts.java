@@ -71,6 +71,6 @@ public class HkjTaskAsserts {
         assertThat(expected)
             .as("Verify HkjTask relationships")
             .satisfies(e -> assertThat(e.getEmployee()).as("check employee").isEqualTo(actual.getEmployee()))
-            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()));
+            .satisfies(e -> assertThat(e.getHkjProject()).as("check hkjProject").isEqualTo(actual.getHkjProject()));
     }
 }

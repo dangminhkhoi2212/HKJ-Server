@@ -107,8 +107,8 @@ class HkjOrderResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjOrder createEntity(EntityManager em) {
-        HkjOrder hkjOrder = new HkjOrder()
+    public static HkjOrder createEntity() {
+        return new HkjOrder()
             .orderDate(DEFAULT_ORDER_DATE)
             .expectedDeliveryDate(DEFAULT_EXPECTED_DELIVERY_DATE)
             .actualDeliveryDate(DEFAULT_ACTUAL_DELIVERY_DATE)
@@ -119,7 +119,6 @@ class HkjOrderResourceIT {
             .depositAmount(DEFAULT_DEPOSIT_AMOUNT)
             .notes(DEFAULT_NOTES)
             .isDeleted(DEFAULT_IS_DELETED);
-        return hkjOrder;
     }
 
     /**
@@ -128,8 +127,8 @@ class HkjOrderResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjOrder createUpdatedEntity(EntityManager em) {
-        HkjOrder hkjOrder = new HkjOrder()
+    public static HkjOrder createUpdatedEntity() {
+        return new HkjOrder()
             .orderDate(UPDATED_ORDER_DATE)
             .expectedDeliveryDate(UPDATED_EXPECTED_DELIVERY_DATE)
             .actualDeliveryDate(UPDATED_ACTUAL_DELIVERY_DATE)
@@ -140,12 +139,11 @@ class HkjOrderResourceIT {
             .depositAmount(UPDATED_DEPOSIT_AMOUNT)
             .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
-        return hkjOrder;
     }
 
     @BeforeEach
     public void initTest() {
-        hkjOrder = createEntity(em);
+        hkjOrder = createEntity();
     }
 
     @AfterEach
@@ -820,7 +818,7 @@ class HkjOrderResourceIT {
         HkjProject project;
         if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
             hkjOrderRepository.saveAndFlush(hkjOrder);
-            project = HkjProjectResourceIT.createEntity(em);
+            project = HkjProjectResourceIT.createEntity();
         } else {
             project = TestUtil.findAll(em, HkjProject.class).get(0);
         }
@@ -842,7 +840,7 @@ class HkjOrderResourceIT {
         UserExtra customer;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjOrderRepository.saveAndFlush(hkjOrder);
-            customer = UserExtraResourceIT.createEntity(em);
+            customer = UserExtraResourceIT.createEntity();
         } else {
             customer = TestUtil.findAll(em, UserExtra.class).get(0);
         }
@@ -864,7 +862,7 @@ class HkjOrderResourceIT {
         HkjJewelryModel jewelry;
         if (TestUtil.findAll(em, HkjJewelryModel.class).isEmpty()) {
             hkjOrderRepository.saveAndFlush(hkjOrder);
-            jewelry = HkjJewelryModelResourceIT.createEntity(em);
+            jewelry = HkjJewelryModelResourceIT.createEntity();
         } else {
             jewelry = TestUtil.findAll(em, HkjJewelryModel.class).get(0);
         }
@@ -1056,9 +1054,10 @@ class HkjOrderResourceIT {
 
         partialUpdatedHkjOrder
             .orderDate(UPDATED_ORDER_DATE)
+            .actualDeliveryDate(UPDATED_ACTUAL_DELIVERY_DATE)
+            .specialRequests(UPDATED_SPECIAL_REQUESTS)
             .status(UPDATED_STATUS)
             .customerRating(UPDATED_CUSTOMER_RATING)
-            .totalPrice(UPDATED_TOTAL_PRICE)
             .notes(UPDATED_NOTES);
 
         restHkjOrderMockMvc

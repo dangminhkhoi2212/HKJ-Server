@@ -29,6 +29,50 @@ class HkjTaskTest {
     }
 
     @Test
+    void imagesTest() {
+        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
+        HkjTaskImage hkjTaskImageBack = getHkjTaskImageRandomSampleGenerator();
+
+        hkjTask.addImages(hkjTaskImageBack);
+        assertThat(hkjTask.getImages()).containsOnly(hkjTaskImageBack);
+        assertThat(hkjTaskImageBack.getHkjTask()).isEqualTo(hkjTask);
+
+        hkjTask.removeImages(hkjTaskImageBack);
+        assertThat(hkjTask.getImages()).doesNotContain(hkjTaskImageBack);
+        assertThat(hkjTaskImageBack.getHkjTask()).isNull();
+
+        hkjTask.images(new HashSet<>(Set.of(hkjTaskImageBack)));
+        assertThat(hkjTask.getImages()).containsOnly(hkjTaskImageBack);
+        assertThat(hkjTaskImageBack.getHkjTask()).isEqualTo(hkjTask);
+
+        hkjTask.setImages(new HashSet<>());
+        assertThat(hkjTask.getImages()).doesNotContain(hkjTaskImageBack);
+        assertThat(hkjTaskImageBack.getHkjTask()).isNull();
+    }
+
+    @Test
+    void materialsTest() {
+        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
+        HkjMaterialUsage hkjMaterialUsageBack = getHkjMaterialUsageRandomSampleGenerator();
+
+        hkjTask.addMaterials(hkjMaterialUsageBack);
+        assertThat(hkjTask.getMaterials()).containsOnly(hkjMaterialUsageBack);
+        assertThat(hkjMaterialUsageBack.getHkjTask()).isEqualTo(hkjTask);
+
+        hkjTask.removeMaterials(hkjMaterialUsageBack);
+        assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
+        assertThat(hkjMaterialUsageBack.getHkjTask()).isNull();
+
+        hkjTask.materials(new HashSet<>(Set.of(hkjMaterialUsageBack)));
+        assertThat(hkjTask.getMaterials()).containsOnly(hkjMaterialUsageBack);
+        assertThat(hkjMaterialUsageBack.getHkjTask()).isEqualTo(hkjTask);
+
+        hkjTask.setMaterials(new HashSet<>());
+        assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
+        assertThat(hkjMaterialUsageBack.getHkjTask()).isNull();
+    }
+
+    @Test
     void employeeTest() {
         HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
         UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
@@ -41,58 +85,14 @@ class HkjTaskTest {
     }
 
     @Test
-    void imagesTest() {
-        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
-        HkjTaskImage hkjTaskImageBack = getHkjTaskImageRandomSampleGenerator();
-
-        hkjTask.addImages(hkjTaskImageBack);
-        assertThat(hkjTask.getImages()).containsOnly(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getTask()).isEqualTo(hkjTask);
-
-        hkjTask.removeImages(hkjTaskImageBack);
-        assertThat(hkjTask.getImages()).doesNotContain(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getTask()).isNull();
-
-        hkjTask.images(new HashSet<>(Set.of(hkjTaskImageBack)));
-        assertThat(hkjTask.getImages()).containsOnly(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getTask()).isEqualTo(hkjTask);
-
-        hkjTask.setImages(new HashSet<>());
-        assertThat(hkjTask.getImages()).doesNotContain(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getTask()).isNull();
-    }
-
-    @Test
-    void materialsTest() {
-        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
-        HkjMaterialUsage hkjMaterialUsageBack = getHkjMaterialUsageRandomSampleGenerator();
-
-        hkjTask.addMaterials(hkjMaterialUsageBack);
-        assertThat(hkjTask.getMaterials()).containsOnly(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getTask()).isEqualTo(hkjTask);
-
-        hkjTask.removeMaterials(hkjMaterialUsageBack);
-        assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getTask()).isNull();
-
-        hkjTask.materials(new HashSet<>(Set.of(hkjMaterialUsageBack)));
-        assertThat(hkjTask.getMaterials()).containsOnly(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getTask()).isEqualTo(hkjTask);
-
-        hkjTask.setMaterials(new HashSet<>());
-        assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getTask()).isNull();
-    }
-
-    @Test
-    void projectTest() {
+    void hkjProjectTest() {
         HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
         HkjProject hkjProjectBack = getHkjProjectRandomSampleGenerator();
 
-        hkjTask.setProject(hkjProjectBack);
-        assertThat(hkjTask.getProject()).isEqualTo(hkjProjectBack);
+        hkjTask.setHkjProject(hkjProjectBack);
+        assertThat(hkjTask.getHkjProject()).isEqualTo(hkjProjectBack);
 
-        hkjTask.project(null);
-        assertThat(hkjTask.getProject()).isNull();
+        hkjTask.hkjProject(null);
+        assertThat(hkjTask.getHkjProject()).isNull();
     }
 }

@@ -58,14 +58,14 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "hkjMaterialUsage" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "hkjMaterialUsage" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjMaterial material;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "employee", "images", "materials", "project" }, allowSetters = true)
-    private HkjTask task;
+    @JsonIgnoreProperties(value = { "images", "materials", "employee", "hkjProject" }, allowSetters = true)
+    private HkjTask hkjTask;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -227,16 +227,16 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
         return this;
     }
 
-    public HkjTask getTask() {
-        return this.task;
+    public HkjTask getHkjTask() {
+        return this.hkjTask;
     }
 
-    public void setTask(HkjTask hkjTask) {
-        this.task = hkjTask;
+    public void setHkjTask(HkjTask hkjTask) {
+        this.hkjTask = hkjTask;
     }
 
-    public HkjMaterialUsage task(HkjTask hkjTask) {
-        this.setTask(hkjTask);
+    public HkjMaterialUsage hkjTask(HkjTask hkjTask) {
+        this.setHkjTask(hkjTask);
         return this;
     }
 

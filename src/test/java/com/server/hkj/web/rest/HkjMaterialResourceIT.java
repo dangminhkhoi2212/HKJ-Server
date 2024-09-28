@@ -88,15 +88,14 @@ class HkjMaterialResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjMaterial createEntity(EntityManager em) {
-        HkjMaterial hkjMaterial = new HkjMaterial()
+    public static HkjMaterial createEntity() {
+        return new HkjMaterial()
             .name(DEFAULT_NAME)
             .quantity(DEFAULT_QUANTITY)
             .unit(DEFAULT_UNIT)
             .unitPrice(DEFAULT_UNIT_PRICE)
             .supplier(DEFAULT_SUPPLIER)
             .isDeleted(DEFAULT_IS_DELETED);
-        return hkjMaterial;
     }
 
     /**
@@ -105,20 +104,19 @@ class HkjMaterialResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjMaterial createUpdatedEntity(EntityManager em) {
-        HkjMaterial hkjMaterial = new HkjMaterial()
+    public static HkjMaterial createUpdatedEntity() {
+        return new HkjMaterial()
             .name(UPDATED_NAME)
             .quantity(UPDATED_QUANTITY)
             .unit(UPDATED_UNIT)
             .unitPrice(UPDATED_UNIT_PRICE)
             .supplier(UPDATED_SUPPLIER)
             .isDeleted(UPDATED_IS_DELETED);
-        return hkjMaterial;
     }
 
     @BeforeEach
     public void initTest() {
-        hkjMaterial = createEntity(em);
+        hkjMaterial = createEntity();
     }
 
     @AfterEach
@@ -776,7 +774,7 @@ class HkjMaterialResourceIT {
         HkjMaterial partialUpdatedHkjMaterial = new HkjMaterial();
         partialUpdatedHkjMaterial.setId(hkjMaterial.getId());
 
-        partialUpdatedHkjMaterial.name(UPDATED_NAME).quantity(UPDATED_QUANTITY).unit(UPDATED_UNIT).unitPrice(UPDATED_UNIT_PRICE);
+        partialUpdatedHkjMaterial.name(UPDATED_NAME).quantity(UPDATED_QUANTITY).unitPrice(UPDATED_UNIT_PRICE);
 
         restHkjMaterialMockMvc
             .perform(

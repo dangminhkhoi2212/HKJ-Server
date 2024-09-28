@@ -74,9 +74,8 @@ class HkjTemplateResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTemplate createEntity(EntityManager em) {
-        HkjTemplate hkjTemplate = new HkjTemplate().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
-        return hkjTemplate;
+    public static HkjTemplate createEntity() {
+        return new HkjTemplate().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -85,14 +84,13 @@ class HkjTemplateResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTemplate createUpdatedEntity(EntityManager em) {
-        HkjTemplate hkjTemplate = new HkjTemplate().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
-        return hkjTemplate;
+    public static HkjTemplate createUpdatedEntity() {
+        return new HkjTemplate().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjTemplate = createEntity(em);
+        hkjTemplate = createEntity();
     }
 
     @AfterEach
@@ -282,7 +280,7 @@ class HkjTemplateResourceIT {
         HkjCategory category;
         if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
             hkjTemplateRepository.saveAndFlush(hkjTemplate);
-            category = HkjCategoryResourceIT.createEntity(em);
+            category = HkjCategoryResourceIT.createEntity();
         } else {
             category = TestUtil.findAll(em, HkjCategory.class).get(0);
         }
@@ -304,7 +302,7 @@ class HkjTemplateResourceIT {
         UserExtra creater;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjTemplateRepository.saveAndFlush(hkjTemplate);
-            creater = UserExtraResourceIT.createEntity(em);
+            creater = UserExtraResourceIT.createEntity();
         } else {
             creater = TestUtil.findAll(em, UserExtra.class).get(0);
         }

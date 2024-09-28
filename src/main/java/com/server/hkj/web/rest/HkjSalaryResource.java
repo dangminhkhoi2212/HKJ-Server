@@ -31,7 +31,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-salaries")
 public class HkjSalaryResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjSalaryResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjSalaryResource.class);
 
     private static final String ENTITY_NAME = "hkjSalary";
 
@@ -63,7 +63,7 @@ public class HkjSalaryResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjSalaryDTO> createHkjSalary(@RequestBody HkjSalaryDTO hkjSalaryDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjSalary : {}", hkjSalaryDTO);
+        LOG.debug("REST request to save HkjSalary : {}", hkjSalaryDTO);
         if (hkjSalaryDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjSalary cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -88,7 +88,7 @@ public class HkjSalaryResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjSalaryDTO hkjSalaryDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjSalary : {}, {}", id, hkjSalaryDTO);
+        LOG.debug("REST request to update HkjSalary : {}, {}", id, hkjSalaryDTO);
         if (hkjSalaryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -122,7 +122,7 @@ public class HkjSalaryResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjSalaryDTO hkjSalaryDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjSalary partially : {}, {}", id, hkjSalaryDTO);
+        LOG.debug("REST request to partial update HkjSalary partially : {}, {}", id, hkjSalaryDTO);
         if (hkjSalaryDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -154,7 +154,7 @@ public class HkjSalaryResource {
         HkjSalaryCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjSalaries by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjSalaries by criteria: {}", criteria);
 
         Page<HkjSalaryDTO> page = hkjSalaryQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -169,7 +169,7 @@ public class HkjSalaryResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjSalaries(HkjSalaryCriteria criteria) {
-        log.debug("REST request to count HkjSalaries by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjSalaries by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjSalaryQueryService.countByCriteria(criteria));
     }
 
@@ -181,7 +181,7 @@ public class HkjSalaryResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjSalaryDTO> getHkjSalary(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjSalary : {}", id);
+        LOG.debug("REST request to get HkjSalary : {}", id);
         Optional<HkjSalaryDTO> hkjSalaryDTO = hkjSalaryService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjSalaryDTO);
     }
@@ -194,7 +194,7 @@ public class HkjSalaryResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjSalary(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjSalary : {}", id);
+        LOG.debug("REST request to delete HkjSalary : {}", id);
         hkjSalaryService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

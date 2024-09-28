@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjHireService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjHireService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjHireService.class);
 
     private final HkjHireRepository hkjHireRepository;
 
@@ -35,7 +35,7 @@ public class HkjHireService {
      * @return the persisted entity.
      */
     public HkjHireDTO save(HkjHireDTO hkjHireDTO) {
-        log.debug("Request to save HkjHire : {}", hkjHireDTO);
+        LOG.debug("Request to save HkjHire : {}", hkjHireDTO);
         HkjHire hkjHire = hkjHireMapper.toEntity(hkjHireDTO);
         hkjHire = hkjHireRepository.save(hkjHire);
         return hkjHireMapper.toDto(hkjHire);
@@ -48,7 +48,7 @@ public class HkjHireService {
      * @return the persisted entity.
      */
     public HkjHireDTO update(HkjHireDTO hkjHireDTO) {
-        log.debug("Request to update HkjHire : {}", hkjHireDTO);
+        LOG.debug("Request to update HkjHire : {}", hkjHireDTO);
         HkjHire hkjHire = hkjHireMapper.toEntity(hkjHireDTO);
         hkjHire.setIsPersisted();
         hkjHire = hkjHireRepository.save(hkjHire);
@@ -62,7 +62,7 @@ public class HkjHireService {
      * @return the persisted entity.
      */
     public Optional<HkjHireDTO> partialUpdate(HkjHireDTO hkjHireDTO) {
-        log.debug("Request to partially update HkjHire : {}", hkjHireDTO);
+        LOG.debug("Request to partially update HkjHire : {}", hkjHireDTO);
 
         return hkjHireRepository
             .findById(hkjHireDTO.getId())
@@ -83,7 +83,7 @@ public class HkjHireService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjHireDTO> findOne(Long id) {
-        log.debug("Request to get HkjHire : {}", id);
+        LOG.debug("Request to get HkjHire : {}", id);
         return hkjHireRepository.findById(id).map(hkjHireMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjHireService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjHire : {}", id);
+        LOG.debug("Request to delete HkjHire : {}", id);
         hkjHireRepository.deleteById(id);
     }
 }

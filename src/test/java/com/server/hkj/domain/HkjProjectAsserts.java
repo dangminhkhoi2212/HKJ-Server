@@ -58,12 +58,8 @@ public class HkjProjectAsserts {
             .satisfies(e -> assertThat(e.getStatus()).as("check status").isEqualTo(actual.getStatus()))
             .satisfies(e -> assertThat(e.getPriority()).as("check priority").isEqualTo(actual.getPriority()))
             .satisfies(e -> assertThat(e.getBudget()).as("check budget").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getBudget()))
-            .satisfies(
-                e ->
-                    assertThat(e.getActualCost())
-                        .as("check actualCost")
-                        .usingComparator(bigDecimalCompareTo)
-                        .isEqualTo(actual.getActualCost())
+            .satisfies(e ->
+                assertThat(e.getActualCost()).as("check actualCost").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getActualCost())
             )
             .satisfies(e -> assertThat(e.getQualityCheck()).as("check qualityCheck").isEqualTo(actual.getQualityCheck()))
             .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))

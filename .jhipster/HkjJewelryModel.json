@@ -42,6 +42,10 @@
       "fieldType": "Boolean"
     },
     {
+      "fieldName": "active",
+      "fieldType": "Boolean"
+    },
+    {
       "auditField": true,
       "autoGenerate": true,
       "columnType": "varchar(50)",
@@ -83,6 +87,7 @@
   "relationships": [
     {
       "otherEntityName": "hkjProject",
+      "otherEntityRelationshipName": "jewelry",
       "relationshipName": "project",
       "relationshipSide": "left",
       "relationshipType": "one-to-one"

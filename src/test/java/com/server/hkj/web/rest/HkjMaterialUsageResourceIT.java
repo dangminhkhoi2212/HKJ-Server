@@ -97,8 +97,8 @@ class HkjMaterialUsageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjMaterialUsage createEntity(EntityManager em) {
-        HkjMaterialUsage hkjMaterialUsage = new HkjMaterialUsage()
+    public static HkjMaterialUsage createEntity() {
+        return new HkjMaterialUsage()
             .quantity(DEFAULT_QUANTITY)
             .lossQuantity(DEFAULT_LOSS_QUANTITY)
             .usageDate(DEFAULT_USAGE_DATE)
@@ -106,7 +106,6 @@ class HkjMaterialUsageResourceIT {
             .weight(DEFAULT_WEIGHT)
             .price(DEFAULT_PRICE)
             .isDeleted(DEFAULT_IS_DELETED);
-        return hkjMaterialUsage;
     }
 
     /**
@@ -115,8 +114,8 @@ class HkjMaterialUsageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjMaterialUsage createUpdatedEntity(EntityManager em) {
-        HkjMaterialUsage hkjMaterialUsage = new HkjMaterialUsage()
+    public static HkjMaterialUsage createUpdatedEntity() {
+        return new HkjMaterialUsage()
             .quantity(UPDATED_QUANTITY)
             .lossQuantity(UPDATED_LOSS_QUANTITY)
             .usageDate(UPDATED_USAGE_DATE)
@@ -124,12 +123,11 @@ class HkjMaterialUsageResourceIT {
             .weight(UPDATED_WEIGHT)
             .price(UPDATED_PRICE)
             .isDeleted(UPDATED_IS_DELETED);
-        return hkjMaterialUsage;
     }
 
     @BeforeEach
     public void initTest() {
-        hkjMaterialUsage = createEntity(em);
+        hkjMaterialUsage = createEntity();
     }
 
     @AfterEach
@@ -704,7 +702,7 @@ class HkjMaterialUsageResourceIT {
         HkjMaterial material;
         if (TestUtil.findAll(em, HkjMaterial.class).isEmpty()) {
             hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-            material = HkjMaterialResourceIT.createEntity(em);
+            material = HkjMaterialResourceIT.createEntity();
         } else {
             material = TestUtil.findAll(em, HkjMaterial.class).get(0);
         }
@@ -722,24 +720,24 @@ class HkjMaterialUsageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByTaskIsEqualToSomething() throws Exception {
-        HkjTask task;
+    void getAllHkjMaterialUsagesByHkjTaskIsEqualToSomething() throws Exception {
+        HkjTask hkjTask;
         if (TestUtil.findAll(em, HkjTask.class).isEmpty()) {
             hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-            task = HkjTaskResourceIT.createEntity(em);
+            hkjTask = HkjTaskResourceIT.createEntity();
         } else {
-            task = TestUtil.findAll(em, HkjTask.class).get(0);
+            hkjTask = TestUtil.findAll(em, HkjTask.class).get(0);
         }
-        em.persist(task);
+        em.persist(hkjTask);
         em.flush();
-        hkjMaterialUsage.setTask(task);
+        hkjMaterialUsage.setHkjTask(hkjTask);
         hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-        Long taskId = task.getId();
-        // Get all the hkjMaterialUsageList where task equals to taskId
-        defaultHkjMaterialUsageShouldBeFound("taskId.equals=" + taskId);
+        Long hkjTaskId = hkjTask.getId();
+        // Get all the hkjMaterialUsageList where hkjTask equals to hkjTaskId
+        defaultHkjMaterialUsageShouldBeFound("hkjTaskId.equals=" + hkjTaskId);
 
-        // Get all the hkjMaterialUsageList where task equals to (taskId + 1)
-        defaultHkjMaterialUsageShouldNotBeFound("taskId.equals=" + (taskId + 1));
+        // Get all the hkjMaterialUsageList where hkjTask equals to (hkjTaskId + 1)
+        defaultHkjMaterialUsageShouldNotBeFound("hkjTaskId.equals=" + (hkjTaskId + 1));
     }
 
     private void defaultHkjMaterialUsageFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
@@ -912,11 +910,7 @@ class HkjMaterialUsageResourceIT {
         HkjMaterialUsage partialUpdatedHkjMaterialUsage = new HkjMaterialUsage();
         partialUpdatedHkjMaterialUsage.setId(hkjMaterialUsage.getId());
 
-        partialUpdatedHkjMaterialUsage
-            .lossQuantity(UPDATED_LOSS_QUANTITY)
-            .usageDate(UPDATED_USAGE_DATE)
-            .notes(UPDATED_NOTES)
-            .isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedHkjMaterialUsage.lossQuantity(UPDATED_LOSS_QUANTITY).notes(UPDATED_NOTES);
 
         restHkjMaterialUsageMockMvc
             .perform(

@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
-import { IHkjSalary } from 'app/shared/model/hkj-salary.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-salary.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-salary.reducer';
 
 export const HkjSalaryUpdate = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +25,7 @@ export const HkjSalaryUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjSalary.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-salary' + location.search);
+    navigate(`/hkj-salary${location.search}`);
   };
 
   useEffect(() => {
@@ -47,7 +44,6 @@ export const HkjSalaryUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
@@ -55,13 +51,14 @@ export const HkjSalaryUpdate = () => {
     if (values.salary !== undefined && typeof values.salary !== 'number') {
       values.salary = Number(values.salary);
     }
+    values.payDate = convertDateTimeToServer(values.payDate);
     values.createdDate = convertDateTimeToServer(values.createdDate);
     values.lastModifiedDate = convertDateTimeToServer(values.lastModifiedDate);
 
     const entity = {
       ...hkjSalaryEntity,
       ...values,
-      employee: userExtras.find(it => it.id.toString() === values.employee?.toString()),
+      userExtra: userExtras.find(it => it.id.toString() === values.userExtra?.toString()),
     };
 
     if (isNew) {
@@ -74,14 +71,16 @@ export const HkjSalaryUpdate = () => {
   const defaultValues = () =>
     isNew
       ? {
+          payDate: displayDefaultDateTime(),
           createdDate: displayDefaultDateTime(),
           lastModifiedDate: displayDefaultDateTime(),
         }
       : {
           ...hkjSalaryEntity,
+          payDate: convertDateTimeFromServer(hkjSalaryEntity.payDate),
           createdDate: convertDateTimeFromServer(hkjSalaryEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjSalaryEntity.lastModifiedDate),
-          employee: hkjSalaryEntity?.employee?.id,
+          userExtra: hkjSalaryEntity?.userExtra?.id,
         };
 
   return (
@@ -124,6 +123,14 @@ export const HkjSalaryUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjSalary.payDate')}
+                id="hkj-salary-payDate"
+                name="payDate"
+                data-cy="payDate"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjSalary.isDeleted')}
                 id="hkj-salary-isDeleted"
                 name="isDeleted"
@@ -162,10 +169,10 @@ export const HkjSalaryUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-salary-employee"
-                name="employee"
-                data-cy="employee"
-                label={translate('serverApp.hkjSalary.employee')}
+                id="hkj-salary-userExtra"
+                name="userExtra"
+                data-cy="userExtra"
+                label={translate('serverApp.hkjSalary.userExtra')}
                 type="select"
               >
                 <option value="" key="0" />

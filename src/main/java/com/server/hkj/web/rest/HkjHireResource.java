@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-hires")
 public class HkjHireResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjHireResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjHireResource.class);
 
     private static final String ENTITY_NAME = "hkjHire";
 
@@ -61,7 +61,7 @@ public class HkjHireResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjHireDTO> createHkjHire(@Valid @RequestBody HkjHireDTO hkjHireDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjHire : {}", hkjHireDTO);
+        LOG.debug("REST request to save HkjHire : {}", hkjHireDTO);
         if (hkjHireDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjHire cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -86,7 +86,7 @@ public class HkjHireResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjHireDTO hkjHireDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjHire : {}, {}", id, hkjHireDTO);
+        LOG.debug("REST request to update HkjHire : {}, {}", id, hkjHireDTO);
         if (hkjHireDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -120,7 +120,7 @@ public class HkjHireResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjHireDTO hkjHireDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjHire partially : {}, {}", id, hkjHireDTO);
+        LOG.debug("REST request to partial update HkjHire partially : {}, {}", id, hkjHireDTO);
         if (hkjHireDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -152,7 +152,7 @@ public class HkjHireResource {
         HkjHireCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjHires by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjHires by criteria: {}", criteria);
 
         Page<HkjHireDTO> page = hkjHireQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -167,7 +167,7 @@ public class HkjHireResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjHires(HkjHireCriteria criteria) {
-        log.debug("REST request to count HkjHires by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjHires by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjHireQueryService.countByCriteria(criteria));
     }
 
@@ -179,7 +179,7 @@ public class HkjHireResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjHireDTO> getHkjHire(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjHire : {}", id);
+        LOG.debug("REST request to get HkjHire : {}", id);
         Optional<HkjHireDTO> hkjHireDTO = hkjHireService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjHireDTO);
     }
@@ -192,7 +192,7 @@ public class HkjHireResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjHire(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjHire : {}", id);
+        LOG.debug("REST request to delete HkjHire : {}", id);
         hkjHireService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

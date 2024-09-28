@@ -85,13 +85,12 @@ class HkjHireResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjHire createEntity(EntityManager em) {
-        HkjHire hkjHire = new HkjHire()
+    public static HkjHire createEntity() {
+        return new HkjHire()
             .beginDate(DEFAULT_BEGIN_DATE)
             .endDate(DEFAULT_END_DATE)
             .beginSalary(DEFAULT_BEGIN_SALARY)
             .isDeleted(DEFAULT_IS_DELETED);
-        return hkjHire;
     }
 
     /**
@@ -100,18 +99,17 @@ class HkjHireResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjHire createUpdatedEntity(EntityManager em) {
-        HkjHire hkjHire = new HkjHire()
+    public static HkjHire createUpdatedEntity() {
+        return new HkjHire()
             .beginDate(UPDATED_BEGIN_DATE)
             .endDate(UPDATED_END_DATE)
             .beginSalary(UPDATED_BEGIN_SALARY)
             .isDeleted(UPDATED_IS_DELETED);
-        return hkjHire;
     }
 
     @BeforeEach
     public void initTest() {
-        hkjHire = createEntity(em);
+        hkjHire = createEntity();
     }
 
     @AfterEach
@@ -426,7 +424,7 @@ class HkjHireResourceIT {
         HkjPosition position;
         if (TestUtil.findAll(em, HkjPosition.class).isEmpty()) {
             hkjHireRepository.saveAndFlush(hkjHire);
-            position = HkjPositionResourceIT.createEntity(em);
+            position = HkjPositionResourceIT.createEntity();
         } else {
             position = TestUtil.findAll(em, HkjPosition.class).get(0);
         }
@@ -448,7 +446,7 @@ class HkjHireResourceIT {
         UserExtra employee;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjHireRepository.saveAndFlush(hkjHire);
-            employee = UserExtraResourceIT.createEntity(em);
+            employee = UserExtraResourceIT.createEntity();
         } else {
             employee = TestUtil.findAll(em, UserExtra.class).get(0);
         }
@@ -626,7 +624,7 @@ class HkjHireResourceIT {
         HkjHire partialUpdatedHkjHire = new HkjHire();
         partialUpdatedHkjHire.setId(hkjHire.getId());
 
-        partialUpdatedHkjHire.isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedHkjHire.beginSalary(UPDATED_BEGIN_SALARY).isDeleted(UPDATED_IS_DELETED);
 
         restHkjHireMockMvc
             .perform(

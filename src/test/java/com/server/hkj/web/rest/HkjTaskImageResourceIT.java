@@ -76,9 +76,8 @@ class HkjTaskImageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTaskImage createEntity(EntityManager em) {
-        HkjTaskImage hkjTaskImage = new HkjTaskImage().url(DEFAULT_URL).description(DEFAULT_DESCRIPTION).isDeleted(DEFAULT_IS_DELETED);
-        return hkjTaskImage;
+    public static HkjTaskImage createEntity() {
+        return new HkjTaskImage().url(DEFAULT_URL).description(DEFAULT_DESCRIPTION).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -87,14 +86,13 @@ class HkjTaskImageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTaskImage createUpdatedEntity(EntityManager em) {
-        HkjTaskImage hkjTaskImage = new HkjTaskImage().url(UPDATED_URL).description(UPDATED_DESCRIPTION).isDeleted(UPDATED_IS_DELETED);
-        return hkjTaskImage;
+    public static HkjTaskImage createUpdatedEntity() {
+        return new HkjTaskImage().url(UPDATED_URL).description(UPDATED_DESCRIPTION).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjTaskImage = createEntity(em);
+        hkjTaskImage = createEntity();
     }
 
     @AfterEach
@@ -357,24 +355,24 @@ class HkjTaskImageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjTaskImagesByTaskIsEqualToSomething() throws Exception {
-        HkjTask task;
+    void getAllHkjTaskImagesByHkjTaskIsEqualToSomething() throws Exception {
+        HkjTask hkjTask;
         if (TestUtil.findAll(em, HkjTask.class).isEmpty()) {
             hkjTaskImageRepository.saveAndFlush(hkjTaskImage);
-            task = HkjTaskResourceIT.createEntity(em);
+            hkjTask = HkjTaskResourceIT.createEntity();
         } else {
-            task = TestUtil.findAll(em, HkjTask.class).get(0);
+            hkjTask = TestUtil.findAll(em, HkjTask.class).get(0);
         }
-        em.persist(task);
+        em.persist(hkjTask);
         em.flush();
-        hkjTaskImage.setTask(task);
+        hkjTaskImage.setHkjTask(hkjTask);
         hkjTaskImageRepository.saveAndFlush(hkjTaskImage);
-        Long taskId = task.getId();
-        // Get all the hkjTaskImageList where task equals to taskId
-        defaultHkjTaskImageShouldBeFound("taskId.equals=" + taskId);
+        Long hkjTaskId = hkjTask.getId();
+        // Get all the hkjTaskImageList where hkjTask equals to hkjTaskId
+        defaultHkjTaskImageShouldBeFound("hkjTaskId.equals=" + hkjTaskId);
 
-        // Get all the hkjTaskImageList where task equals to (taskId + 1)
-        defaultHkjTaskImageShouldNotBeFound("taskId.equals=" + (taskId + 1));
+        // Get all the hkjTaskImageList where hkjTask equals to (hkjTaskId + 1)
+        defaultHkjTaskImageShouldNotBeFound("hkjTaskId.equals=" + (hkjTaskId + 1));
     }
 
     private void defaultHkjTaskImageFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

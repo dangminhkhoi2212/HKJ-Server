@@ -24,8 +24,20 @@ public interface UserExtraRepository extends JpaRepository<UserExtra, Long>, Jpa
     Page<UserExtra> getAllByRole(Pageable pageable, String role);
 
     @Query(
-        value = "select ux from UserExtra ux join ux.user u join u.authorities a left join ux.hires h where a.name = :role and h.id is null",
-        countQuery = "select count(ux) from UserExtra ux join ux.user u join u.authorities a left join ux.hires h where a.name = :role and h.id is null"
+        value = """
+        SELECT ux FROM UserExtra ux
+        JOIN ux.user u
+        JOIN u.authorities a
+        LEFT JOIN HkjHire h ON h.employee.id = ux.id
+        WHERE a.name = :role AND h.id IS NULL
+        """,
+        countQuery = """
+        SELECT COUNT(ux) FROM UserExtra ux
+        JOIN ux.user u
+        JOIN u.authorities a
+        LEFT JOIN HkjHire h ON h.employee.id = ux.id
+        WHERE a.name = :role AND h.id IS NULL
+        """
     )
     Page<UserExtra> getAllByRoleAndNotInHire(Pageable pageable, String role);
 }

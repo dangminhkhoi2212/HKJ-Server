@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IUser } from 'app/shared/model/user.model';
 import { getUsers } from 'app/shared/reducers/user-management';
-import { IUserExtra } from 'app/shared/model/user-extra.model';
-import { getEntity, updateEntity, createEntity, reset } from './user-extra.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './user-extra.reducer';
 
 export const UserExtraUpdate = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +25,7 @@ export const UserExtraUpdate = () => {
   const updateSuccess = useAppSelector(state => state.userExtra.updateSuccess);
 
   const handleClose = () => {
-    navigate('/user-extra' + location.search);
+    navigate(`/user-extra${location.search}`);
   };
 
   useEffect(() => {
@@ -47,7 +44,6 @@ export const UserExtraUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
@@ -128,6 +124,14 @@ export const UserExtraUpdate = () => {
                 id="user-extra-isDeleted"
                 name="isDeleted"
                 data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
+                label={translate('serverApp.userExtra.active')}
+                id="user-extra-active"
+                name="active"
+                data-cy="active"
                 check
                 type="checkbox"
               />

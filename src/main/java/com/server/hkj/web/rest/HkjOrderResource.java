@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-orders")
 public class HkjOrderResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjOrderResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjOrderResource.class);
 
     private static final String ENTITY_NAME = "hkjOrder";
 
@@ -65,7 +65,7 @@ public class HkjOrderResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjOrderDTO> createHkjOrder(@Valid @RequestBody HkjOrderDTO hkjOrderDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjOrder : {}", hkjOrderDTO);
+        LOG.debug("REST request to save HkjOrder : {}", hkjOrderDTO);
         if (hkjOrderDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjOrder cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -90,7 +90,7 @@ public class HkjOrderResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjOrderDTO hkjOrderDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjOrder : {}, {}", id, hkjOrderDTO);
+        LOG.debug("REST request to update HkjOrder : {}, {}", id, hkjOrderDTO);
         if (hkjOrderDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -124,7 +124,7 @@ public class HkjOrderResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjOrderDTO hkjOrderDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjOrder partially : {}, {}", id, hkjOrderDTO);
+        LOG.debug("REST request to partial update HkjOrder partially : {}, {}", id, hkjOrderDTO);
         if (hkjOrderDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -156,7 +156,7 @@ public class HkjOrderResource {
         HkjOrderCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjOrders by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjOrders by criteria: {}", criteria);
 
         Page<HkjOrderDTO> page = hkjOrderQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -171,7 +171,7 @@ public class HkjOrderResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjOrders(HkjOrderCriteria criteria) {
-        log.debug("REST request to count HkjOrders by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjOrders by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjOrderQueryService.countByCriteria(criteria));
     }
 
@@ -183,7 +183,7 @@ public class HkjOrderResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjOrderDTO> getHkjOrder(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjOrder : {}", id);
+        LOG.debug("REST request to get HkjOrder : {}", id);
         Optional<HkjOrderDTO> hkjOrderDTO = hkjOrderService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjOrderDTO);
     }
@@ -196,7 +196,7 @@ public class HkjOrderResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjOrder(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjOrder : {}", id);
+        LOG.debug("REST request to delete HkjOrder : {}", id);
         hkjOrderService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

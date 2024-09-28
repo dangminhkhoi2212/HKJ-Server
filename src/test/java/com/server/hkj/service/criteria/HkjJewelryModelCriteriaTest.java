@@ -83,6 +83,7 @@ class HkjJewelryModelCriteriaTest {
         hkjJewelryModelCriteria.color();
         hkjJewelryModelCriteria.notes();
         hkjJewelryModelCriteria.isDeleted();
+        hkjJewelryModelCriteria.active();
         hkjJewelryModelCriteria.createdBy();
         hkjJewelryModelCriteria.createdDate();
         hkjJewelryModelCriteria.lastModifiedBy();
@@ -104,6 +105,7 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getColor()) &&
                 condition.apply(criteria.getNotes()) &&
                 condition.apply(criteria.getIsDeleted()) &&
+                condition.apply(criteria.getActive()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
@@ -130,6 +132,7 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getColor(), copy.getColor()) &&
                 condition.apply(criteria.getNotes(), copy.getNotes()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
+                condition.apply(criteria.getActive(), copy.getActive()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&

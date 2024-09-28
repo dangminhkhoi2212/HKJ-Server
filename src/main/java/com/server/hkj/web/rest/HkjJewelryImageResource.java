@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-jewelry-images")
 public class HkjJewelryImageResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjJewelryImageResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjJewelryImageResource.class);
 
     private static final String ENTITY_NAME = "hkjJewelryImage";
 
@@ -66,7 +66,7 @@ public class HkjJewelryImageResource {
     @PostMapping("")
     public ResponseEntity<HkjJewelryImageDTO> createHkjJewelryImage(@Valid @RequestBody HkjJewelryImageDTO hkjJewelryImageDTO)
         throws URISyntaxException {
-        log.debug("REST request to save HkjJewelryImage : {}", hkjJewelryImageDTO);
+        LOG.debug("REST request to save HkjJewelryImage : {}", hkjJewelryImageDTO);
         if (hkjJewelryImageDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjJewelryImage cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -91,7 +91,7 @@ public class HkjJewelryImageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjJewelryImageDTO hkjJewelryImageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjJewelryImage : {}, {}", id, hkjJewelryImageDTO);
+        LOG.debug("REST request to update HkjJewelryImage : {}, {}", id, hkjJewelryImageDTO);
         if (hkjJewelryImageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -125,7 +125,7 @@ public class HkjJewelryImageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjJewelryImageDTO hkjJewelryImageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjJewelryImage partially : {}, {}", id, hkjJewelryImageDTO);
+        LOG.debug("REST request to partial update HkjJewelryImage partially : {}, {}", id, hkjJewelryImageDTO);
         if (hkjJewelryImageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -157,7 +157,7 @@ public class HkjJewelryImageResource {
         HkjJewelryImageCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjJewelryImages by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjJewelryImages by criteria: {}", criteria);
 
         Page<HkjJewelryImageDTO> page = hkjJewelryImageQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -172,7 +172,7 @@ public class HkjJewelryImageResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjJewelryImages(HkjJewelryImageCriteria criteria) {
-        log.debug("REST request to count HkjJewelryImages by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjJewelryImages by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjJewelryImageQueryService.countByCriteria(criteria));
     }
 
@@ -184,7 +184,7 @@ public class HkjJewelryImageResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjJewelryImageDTO> getHkjJewelryImage(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjJewelryImage : {}", id);
+        LOG.debug("REST request to get HkjJewelryImage : {}", id);
         Optional<HkjJewelryImageDTO> hkjJewelryImageDTO = hkjJewelryImageService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjJewelryImageDTO);
     }
@@ -197,7 +197,7 @@ public class HkjJewelryImageResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjJewelryImage(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjJewelryImage : {}", id);
+        LOG.debug("REST request to delete HkjJewelryImage : {}", id);
         hkjJewelryImageService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

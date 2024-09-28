@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './hkj-salary.reducer';
+import { deleteEntity, getEntity } from './hkj-salary.reducer';
 
 export const HkjSalaryDeleteDialog = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export const HkjSalaryDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.hkjSalary.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-salary' + pageLocation.search);
+    navigate(`/hkj-salary${pageLocation.search}`);
   };
 
   useEffect(() => {

@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjJewelryModelQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjJewelryModelQueryService.class);
 
     private final HkjJewelryModelRepository hkjJewelryModelRepository;
 
@@ -45,7 +45,7 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
      */
     @Transactional(readOnly = true)
     public Page<HkjJewelryModelDTO> findByCriteria(HkjJewelryModelCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjJewelryModel> specification = createSpecification(criteria);
         return hkjJewelryModelRepository.findAll(specification, page).map(hkjJewelryModelMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjJewelryModelCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjJewelryModel> specification = createSpecification(criteria);
         return hkjJewelryModelRepository.count(specification);
     }
@@ -101,6 +101,9 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjJewelryModel_.isDeleted));
             }
+            if (criteria.getActive() != null) {
+                specification = specification.and(buildSpecification(criteria.getActive(), HkjJewelryModel_.active));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjJewelryModel_.createdBy));
             }
@@ -117,17 +120,15 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
             }
             if (criteria.getProjectId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getProjectId(),
-                        root -> root.join(HkjJewelryModel_.project, JoinType.LEFT).get(HkjProject_.id)
+                    buildSpecification(criteria.getProjectId(), root ->
+                        root.join(HkjJewelryModel_.project, JoinType.LEFT).get(HkjProject_.id)
                     )
                 );
             }
             if (criteria.getImagesId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getImagesId(),
-                        root -> root.join(HkjJewelryModel_.images, JoinType.LEFT).get(HkjJewelryImage_.id)
+                    buildSpecification(criteria.getImagesId(), root ->
+                        root.join(HkjJewelryModel_.images, JoinType.LEFT).get(HkjJewelryImage_.id)
                     )
                 );
             }

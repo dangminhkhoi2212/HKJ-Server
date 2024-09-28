@@ -54,7 +54,7 @@ public class HkjTaskDTO implements Serializable {
 
     private UserExtraDTO employee;
 
-    private HkjProjectDTO project;
+    private HkjProjectDTO hkjProject;
 
     public Long getId() {
         return id;
@@ -184,12 +184,12 @@ public class HkjTaskDTO implements Serializable {
         this.employee = employee;
     }
 
-    public HkjProjectDTO getProject() {
-        return project;
+    public HkjProjectDTO getHkjProject() {
+        return hkjProject;
     }
 
-    public void setProject(HkjProjectDTO project) {
-        this.project = project;
+    public void setHkjProject(HkjProjectDTO hkjProject) {
+        this.hkjProject = hkjProject;
     }
 
     @Override
@@ -233,7 +233,7 @@ public class HkjTaskDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", employee=" + getEmployee() +
-            ", project=" + getProject() +
+            ", hkjProject=" + getHkjProject() +
             "}";
     }
 }

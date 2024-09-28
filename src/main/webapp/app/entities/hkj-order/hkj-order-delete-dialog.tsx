@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './hkj-order.reducer';
+import { deleteEntity, getEntity } from './hkj-order.reducer';
 
 export const HkjOrderDeleteDialog = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export const HkjOrderDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.hkjOrder.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-order' + pageLocation.search);
+    navigate(`/hkj-order${pageLocation.search}`);
   };
 
   useEffect(() => {

@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-positions")
 public class HkjPositionResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjPositionResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjPositionResource.class);
 
     private static final String ENTITY_NAME = "hkjPosition";
 
@@ -65,7 +65,7 @@ public class HkjPositionResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjPositionDTO> createHkjPosition(@Valid @RequestBody HkjPositionDTO hkjPositionDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjPosition : {}", hkjPositionDTO);
+        LOG.debug("REST request to save HkjPosition : {}", hkjPositionDTO);
         if (hkjPositionDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjPosition cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -90,7 +90,7 @@ public class HkjPositionResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjPositionDTO hkjPositionDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjPosition : {}, {}", id, hkjPositionDTO);
+        LOG.debug("REST request to update HkjPosition : {}, {}", id, hkjPositionDTO);
         if (hkjPositionDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -124,7 +124,7 @@ public class HkjPositionResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjPositionDTO hkjPositionDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjPosition partially : {}, {}", id, hkjPositionDTO);
+        LOG.debug("REST request to partial update HkjPosition partially : {}, {}", id, hkjPositionDTO);
         if (hkjPositionDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -156,7 +156,7 @@ public class HkjPositionResource {
         HkjPositionCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjPositions by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjPositions by criteria: {}", criteria);
 
         Page<HkjPositionDTO> page = hkjPositionQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -171,7 +171,7 @@ public class HkjPositionResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjPositions(HkjPositionCriteria criteria) {
-        log.debug("REST request to count HkjPositions by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjPositions by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjPositionQueryService.countByCriteria(criteria));
     }
 
@@ -183,7 +183,7 @@ public class HkjPositionResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjPositionDTO> getHkjPosition(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjPosition : {}", id);
+        LOG.debug("REST request to get HkjPosition : {}", id);
         Optional<HkjPositionDTO> hkjPositionDTO = hkjPositionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjPositionDTO);
     }
@@ -196,7 +196,7 @@ public class HkjPositionResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjPosition(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjPosition : {}", id);
+        LOG.debug("REST request to delete HkjPosition : {}", id);
         hkjPositionService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

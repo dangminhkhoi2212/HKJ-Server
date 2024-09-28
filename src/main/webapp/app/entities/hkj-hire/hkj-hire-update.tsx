@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjPosition } from 'app/shared/model/hkj-position.model';
 import { getEntities as getHkjPositions } from 'app/entities/hkj-position/hkj-position.reducer';
-import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
-import { IHkjHire } from 'app/shared/model/hkj-hire.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-hire.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-hire.reducer';
 
 export const HkjHireUpdate = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +27,7 @@ export const HkjHireUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjHire.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-hire' + location.search);
+    navigate(`/hkj-hire${location.search}`);
   };
 
   useEffect(() => {
@@ -51,7 +47,6 @@ export const HkjHireUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);

@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjCategoryService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjCategoryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjCategoryService.class);
 
     private final HkjCategoryRepository hkjCategoryRepository;
 
@@ -39,7 +39,7 @@ public class HkjCategoryService {
      * @return the persisted entity.
      */
     public HkjCategoryDTO save(HkjCategoryDTO hkjCategoryDTO) {
-        log.debug("Request to save HkjCategory : {}", hkjCategoryDTO);
+        LOG.debug("Request to save HkjCategory : {}", hkjCategoryDTO);
         HkjCategory hkjCategory = hkjCategoryMapper.toEntity(hkjCategoryDTO);
         hkjCategory = hkjCategoryRepository.save(hkjCategory);
         return hkjCategoryMapper.toDto(hkjCategory);
@@ -52,7 +52,7 @@ public class HkjCategoryService {
      * @return the persisted entity.
      */
     public HkjCategoryDTO update(HkjCategoryDTO hkjCategoryDTO) {
-        log.debug("Request to update HkjCategory : {}", hkjCategoryDTO);
+        LOG.debug("Request to update HkjCategory : {}", hkjCategoryDTO);
         HkjCategory hkjCategory = hkjCategoryMapper.toEntity(hkjCategoryDTO);
         hkjCategory.setIsPersisted();
         hkjCategory = hkjCategoryRepository.save(hkjCategory);
@@ -66,7 +66,7 @@ public class HkjCategoryService {
      * @return the persisted entity.
      */
     public Optional<HkjCategoryDTO> partialUpdate(HkjCategoryDTO hkjCategoryDTO) {
-        log.debug("Request to partially update HkjCategory : {}", hkjCategoryDTO);
+        LOG.debug("Request to partially update HkjCategory : {}", hkjCategoryDTO);
 
         return hkjCategoryRepository
             .findById(hkjCategoryDTO.getId())
@@ -85,7 +85,7 @@ public class HkjCategoryService {
      */
     @Transactional(readOnly = true)
     public List<HkjCategoryDTO> findAllWhereHkjProjectIsNull() {
-        log.debug("Request to get all hkjCategories where HkjProject is null");
+        LOG.debug("Request to get all hkjCategories where HkjProject is null");
         return StreamSupport.stream(hkjCategoryRepository.findAll().spliterator(), false)
             .filter(hkjCategory -> hkjCategory.getHkjProject() == null)
             .map(hkjCategoryMapper::toDto)
@@ -98,7 +98,7 @@ public class HkjCategoryService {
      */
     @Transactional(readOnly = true)
     public List<HkjCategoryDTO> findAllWhereHkjTemplateIsNull() {
-        log.debug("Request to get all hkjCategories where HkjTemplate is null");
+        LOG.debug("Request to get all hkjCategories where HkjTemplate is null");
         return StreamSupport.stream(hkjCategoryRepository.findAll().spliterator(), false)
             .filter(hkjCategory -> hkjCategory.getHkjTemplate() == null)
             .map(hkjCategoryMapper::toDto)
@@ -113,7 +113,7 @@ public class HkjCategoryService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjCategoryDTO> findOne(Long id) {
-        log.debug("Request to get HkjCategory : {}", id);
+        LOG.debug("Request to get HkjCategory : {}", id);
         return hkjCategoryRepository.findById(id).map(hkjCategoryMapper::toDto);
     }
 
@@ -123,7 +123,7 @@ public class HkjCategoryService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjCategory : {}", id);
+        LOG.debug("Request to delete HkjCategory : {}", id);
         hkjCategoryRepository.deleteById(id);
     }
 }

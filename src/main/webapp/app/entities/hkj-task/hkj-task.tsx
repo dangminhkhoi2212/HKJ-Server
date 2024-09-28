@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat, getPaginationState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { JhiItemCount, JhiPagination, TextFormat, Translate, getPaginationState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -85,9 +85,8 @@ export const HkjTask = () => {
     const order = paginationState.order;
     if (sortFieldName !== fieldName) {
       return faSort;
-    } else {
-      return order === ASC ? faSortUp : faSortDown;
     }
+    return order === ASC ? faSortUp : faSortDown;
   };
 
   return (
@@ -173,7 +172,7 @@ export const HkjTask = () => {
                   <Translate contentKey="serverApp.hkjTask.employee">Employee</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjTask.project">Project</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjTask.hkjProject">Hkj Project</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -209,7 +208,7 @@ export const HkjTask = () => {
                     {hkjTask.lastModifiedDate ? <TextFormat type="date" value={hkjTask.lastModifiedDate} format={APP_DATE_FORMAT} /> : null}
                   </td>
                   <td>{hkjTask.employee ? <Link to={`/user-extra/${hkjTask.employee.id}`}>{hkjTask.employee.id}</Link> : ''}</td>
-                  <td>{hkjTask.project ? <Link to={`/hkj-project/${hkjTask.project.id}`}>{hkjTask.project.id}</Link> : ''}</td>
+                  <td>{hkjTask.hkjProject ? <Link to={`/hkj-project/${hkjTask.hkjProject.id}`}>{hkjTask.hkjProject.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-task/${hkjTask.id}`} color="info" size="sm" data-cy="entityDetailsButton">

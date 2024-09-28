@@ -33,6 +33,9 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
     @Column(name = "notes")
     private String notes;
 
+    @Column(name = "pay_date")
+    private Instant payDate;
+
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
@@ -44,8 +47,8 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
-    private UserExtra employee;
+    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
+    private UserExtra userExtra;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -86,6 +89,19 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public Instant getPayDate() {
+        return this.payDate;
+    }
+
+    public HkjSalary payDate(Instant payDate) {
+        this.setPayDate(payDate);
+        return this;
+    }
+
+    public void setPayDate(Instant payDate) {
+        this.payDate = payDate;
     }
 
     public Boolean getIsDeleted() {
@@ -142,16 +158,16 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
         return this;
     }
 
-    public UserExtra getEmployee() {
-        return this.employee;
+    public UserExtra getUserExtra() {
+        return this.userExtra;
     }
 
-    public void setEmployee(UserExtra userExtra) {
-        this.employee = userExtra;
+    public void setUserExtra(UserExtra userExtra) {
+        this.userExtra = userExtra;
     }
 
-    public HkjSalary employee(UserExtra userExtra) {
-        this.setEmployee(userExtra);
+    public HkjSalary userExtra(UserExtra userExtra) {
+        this.setUserExtra(userExtra);
         return this;
     }
 
@@ -181,6 +197,7 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
             "id=" + getId() +
             ", salary=" + getSalary() +
             ", notes='" + getNotes() + "'" +
+            ", payDate='" + getPayDate() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

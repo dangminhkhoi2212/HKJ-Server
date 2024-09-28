@@ -32,6 +32,8 @@ public class HkjJewelryModelDTO implements Serializable {
 
     private Boolean isDeleted;
 
+    private Boolean active;
+
     private String createdBy;
 
     private Instant createdDate;
@@ -114,6 +116,14 @@ public class HkjJewelryModelDTO implements Serializable {
         this.isDeleted = isDeleted;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     public String getCreatedBy() {
         return createdBy;
     }
@@ -188,6 +198,7 @@ public class HkjJewelryModelDTO implements Serializable {
             ", color='" + getColor() + "'" +
             ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
+            ", active='" + getActive() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

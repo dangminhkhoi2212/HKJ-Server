@@ -20,12 +20,13 @@
       "id": "ID",
       "salary": "Salary",
       "notes": "Notes",
+      "payDate": "Pay Date",
       "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "employee": "Employee"
+      "userExtra": "User Extra"
     }
   }
 }

@@ -81,7 +81,7 @@ class HkjOrderImageCriteriaTest {
         hkjOrderImageCriteria.createdDate();
         hkjOrderImageCriteria.lastModifiedBy();
         hkjOrderImageCriteria.lastModifiedDate();
-        hkjOrderImageCriteria.orderId();
+        hkjOrderImageCriteria.hkjOrderId();
         hkjOrderImageCriteria.distinct();
     }
 
@@ -95,7 +95,7 @@ class HkjOrderImageCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getOrderId()) &&
+                condition.apply(criteria.getHkjOrderId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -114,7 +114,7 @@ class HkjOrderImageCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getOrderId(), copy.getOrderId()) &&
+                condition.apply(criteria.getHkjOrderId(), copy.getHkjOrderId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

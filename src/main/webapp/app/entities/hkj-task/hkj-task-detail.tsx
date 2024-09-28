@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { TextFormat, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './hkj-task.reducer';
@@ -131,9 +131,9 @@ export const HkjTaskDetail = () => {
           </dt>
           <dd>{hkjTaskEntity.employee ? hkjTaskEntity.employee.id : ''}</dd>
           <dt>
-            <Translate contentKey="serverApp.hkjTask.project">Project</Translate>
+            <Translate contentKey="serverApp.hkjTask.hkjProject">Hkj Project</Translate>
           </dt>
-          <dd>{hkjTaskEntity.project ? hkjTaskEntity.project.id : ''}</dd>
+          <dd>{hkjTaskEntity.hkjProject ? hkjTaskEntity.hkjProject.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-task" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

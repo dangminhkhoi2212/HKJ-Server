@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, isNumber, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjMaterial } from 'app/shared/model/hkj-material.model';
 import { getEntities as getHkjMaterials } from 'app/entities/hkj-material/hkj-material.reducer';
-import { IHkjTask } from 'app/shared/model/hkj-task.model';
 import { getEntities as getHkjTasks } from 'app/entities/hkj-task/hkj-task.reducer';
-import { IHkjMaterialUsage } from 'app/shared/model/hkj-material-usage.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-material-usage.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-material-usage.reducer';
 
 export const HkjMaterialUsageUpdate = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +27,7 @@ export const HkjMaterialUsageUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjMaterialUsage.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-material-usage' + location.search);
+    navigate(`/hkj-material-usage${location.search}`);
   };
 
   useEffect(() => {
@@ -51,7 +47,6 @@ export const HkjMaterialUsageUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
@@ -76,7 +71,7 @@ export const HkjMaterialUsageUpdate = () => {
       ...hkjMaterialUsageEntity,
       ...values,
       material: hkjMaterials.find(it => it.id.toString() === values.material?.toString()),
-      task: hkjTasks.find(it => it.id.toString() === values.task?.toString()),
+      hkjTask: hkjTasks.find(it => it.id.toString() === values.hkjTask?.toString()),
     };
 
     if (isNew) {
@@ -99,7 +94,7 @@ export const HkjMaterialUsageUpdate = () => {
           createdDate: convertDateTimeFromServer(hkjMaterialUsageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjMaterialUsageEntity.lastModifiedDate),
           material: hkjMaterialUsageEntity?.material?.id,
-          task: hkjMaterialUsageEntity?.task?.id,
+          hkjTask: hkjMaterialUsageEntity?.hkjTask?.id,
         };
 
   return (
@@ -232,10 +227,10 @@ export const HkjMaterialUsageUpdate = () => {
                   : null}
               </ValidatedField>
               <ValidatedField
-                id="hkj-material-usage-task"
-                name="task"
-                data-cy="task"
-                label={translate('serverApp.hkjMaterialUsage.task')}
+                id="hkj-material-usage-hkjTask"
+                name="hkjTask"
+                data-cy="hkjTask"
+                label={translate('serverApp.hkjMaterialUsage.hkjTask')}
                 type="select"
               >
                 <option value="" key="0" />

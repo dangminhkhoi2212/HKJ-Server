@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjMaterialUsageService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjMaterialUsageService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjMaterialUsageService.class);
 
     private final HkjMaterialUsageRepository hkjMaterialUsageRepository;
 
@@ -35,7 +35,7 @@ public class HkjMaterialUsageService {
      * @return the persisted entity.
      */
     public HkjMaterialUsageDTO save(HkjMaterialUsageDTO hkjMaterialUsageDTO) {
-        log.debug("Request to save HkjMaterialUsage : {}", hkjMaterialUsageDTO);
+        LOG.debug("Request to save HkjMaterialUsage : {}", hkjMaterialUsageDTO);
         HkjMaterialUsage hkjMaterialUsage = hkjMaterialUsageMapper.toEntity(hkjMaterialUsageDTO);
         hkjMaterialUsage = hkjMaterialUsageRepository.save(hkjMaterialUsage);
         return hkjMaterialUsageMapper.toDto(hkjMaterialUsage);
@@ -48,7 +48,7 @@ public class HkjMaterialUsageService {
      * @return the persisted entity.
      */
     public HkjMaterialUsageDTO update(HkjMaterialUsageDTO hkjMaterialUsageDTO) {
-        log.debug("Request to update HkjMaterialUsage : {}", hkjMaterialUsageDTO);
+        LOG.debug("Request to update HkjMaterialUsage : {}", hkjMaterialUsageDTO);
         HkjMaterialUsage hkjMaterialUsage = hkjMaterialUsageMapper.toEntity(hkjMaterialUsageDTO);
         hkjMaterialUsage.setIsPersisted();
         hkjMaterialUsage = hkjMaterialUsageRepository.save(hkjMaterialUsage);
@@ -62,7 +62,7 @@ public class HkjMaterialUsageService {
      * @return the persisted entity.
      */
     public Optional<HkjMaterialUsageDTO> partialUpdate(HkjMaterialUsageDTO hkjMaterialUsageDTO) {
-        log.debug("Request to partially update HkjMaterialUsage : {}", hkjMaterialUsageDTO);
+        LOG.debug("Request to partially update HkjMaterialUsage : {}", hkjMaterialUsageDTO);
 
         return hkjMaterialUsageRepository
             .findById(hkjMaterialUsageDTO.getId())
@@ -83,7 +83,7 @@ public class HkjMaterialUsageService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjMaterialUsageDTO> findOne(Long id) {
-        log.debug("Request to get HkjMaterialUsage : {}", id);
+        LOG.debug("Request to get HkjMaterialUsage : {}", id);
         return hkjMaterialUsageRepository.findById(id).map(hkjMaterialUsageMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjMaterialUsageService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjMaterialUsage : {}", id);
+        LOG.debug("Request to delete HkjMaterialUsage : {}", id);
         hkjMaterialUsageRepository.deleteById(id);
     }
 }

@@ -26,6 +26,7 @@
       "color": "Color",
       "notes": "Notes",
       "isDeleted": "Is Deleted",
+      "active": "Active",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",

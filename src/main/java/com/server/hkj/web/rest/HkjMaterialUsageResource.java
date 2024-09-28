@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-material-usages")
 public class HkjMaterialUsageResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjMaterialUsageResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjMaterialUsageResource.class);
 
     private static final String ENTITY_NAME = "hkjMaterialUsage";
 
@@ -66,7 +66,7 @@ public class HkjMaterialUsageResource {
     @PostMapping("")
     public ResponseEntity<HkjMaterialUsageDTO> createHkjMaterialUsage(@Valid @RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO)
         throws URISyntaxException {
-        log.debug("REST request to save HkjMaterialUsage : {}", hkjMaterialUsageDTO);
+        LOG.debug("REST request to save HkjMaterialUsage : {}", hkjMaterialUsageDTO);
         if (hkjMaterialUsageDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjMaterialUsage cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -91,7 +91,7 @@ public class HkjMaterialUsageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjMaterialUsage : {}, {}", id, hkjMaterialUsageDTO);
+        LOG.debug("REST request to update HkjMaterialUsage : {}, {}", id, hkjMaterialUsageDTO);
         if (hkjMaterialUsageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -125,7 +125,7 @@ public class HkjMaterialUsageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjMaterialUsage partially : {}, {}", id, hkjMaterialUsageDTO);
+        LOG.debug("REST request to partial update HkjMaterialUsage partially : {}, {}", id, hkjMaterialUsageDTO);
         if (hkjMaterialUsageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -157,7 +157,7 @@ public class HkjMaterialUsageResource {
         HkjMaterialUsageCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjMaterialUsages by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjMaterialUsages by criteria: {}", criteria);
 
         Page<HkjMaterialUsageDTO> page = hkjMaterialUsageQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -172,7 +172,7 @@ public class HkjMaterialUsageResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjMaterialUsages(HkjMaterialUsageCriteria criteria) {
-        log.debug("REST request to count HkjMaterialUsages by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjMaterialUsages by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjMaterialUsageQueryService.countByCriteria(criteria));
     }
 
@@ -184,7 +184,7 @@ public class HkjMaterialUsageResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjMaterialUsageDTO> getHkjMaterialUsage(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjMaterialUsage : {}", id);
+        LOG.debug("REST request to get HkjMaterialUsage : {}", id);
         Optional<HkjMaterialUsageDTO> hkjMaterialUsageDTO = hkjMaterialUsageService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjMaterialUsageDTO);
     }
@@ -197,7 +197,7 @@ public class HkjMaterialUsageResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjMaterialUsage(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjMaterialUsage : {}", id);
+        LOG.debug("REST request to delete HkjMaterialUsage : {}", id);
         hkjMaterialUsageService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

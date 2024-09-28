@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjProjectService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjProjectService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjProjectService.class);
 
     private final HkjProjectRepository hkjProjectRepository;
 
@@ -39,7 +39,7 @@ public class HkjProjectService {
      * @return the persisted entity.
      */
     public HkjProjectDTO save(HkjProjectDTO hkjProjectDTO) {
-        log.debug("Request to save HkjProject : {}", hkjProjectDTO);
+        LOG.debug("Request to save HkjProject : {}", hkjProjectDTO);
         HkjProject hkjProject = hkjProjectMapper.toEntity(hkjProjectDTO);
         hkjProject = hkjProjectRepository.save(hkjProject);
         return hkjProjectMapper.toDto(hkjProject);
@@ -52,7 +52,7 @@ public class HkjProjectService {
      * @return the persisted entity.
      */
     public HkjProjectDTO update(HkjProjectDTO hkjProjectDTO) {
-        log.debug("Request to update HkjProject : {}", hkjProjectDTO);
+        LOG.debug("Request to update HkjProject : {}", hkjProjectDTO);
         HkjProject hkjProject = hkjProjectMapper.toEntity(hkjProjectDTO);
         hkjProject.setIsPersisted();
         hkjProject = hkjProjectRepository.save(hkjProject);
@@ -66,7 +66,7 @@ public class HkjProjectService {
      * @return the persisted entity.
      */
     public Optional<HkjProjectDTO> partialUpdate(HkjProjectDTO hkjProjectDTO) {
-        log.debug("Request to partially update HkjProject : {}", hkjProjectDTO);
+        LOG.debug("Request to partially update HkjProject : {}", hkjProjectDTO);
 
         return hkjProjectRepository
             .findById(hkjProjectDTO.getId())
@@ -80,14 +80,14 @@ public class HkjProjectService {
     }
 
     /**
-     *  Get all the hkjProjects where HkjJewelryModel is {@code null}.
+     *  Get all the hkjProjects where Jewelry is {@code null}.
      *  @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<HkjProjectDTO> findAllWhereHkjJewelryModelIsNull() {
-        log.debug("Request to get all hkjProjects where HkjJewelryModel is null");
+    public List<HkjProjectDTO> findAllWhereJewelryIsNull() {
+        LOG.debug("Request to get all hkjProjects where Jewelry is null");
         return StreamSupport.stream(hkjProjectRepository.findAll().spliterator(), false)
-            .filter(hkjProject -> hkjProject.getHkjJewelryModel() == null)
+            .filter(hkjProject -> hkjProject.getJewelry() == null)
             .map(hkjProjectMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
@@ -98,7 +98,7 @@ public class HkjProjectService {
      */
     @Transactional(readOnly = true)
     public List<HkjProjectDTO> findAllWhereHkjOrderIsNull() {
-        log.debug("Request to get all hkjProjects where HkjOrder is null");
+        LOG.debug("Request to get all hkjProjects where HkjOrder is null");
         return StreamSupport.stream(hkjProjectRepository.findAll().spliterator(), false)
             .filter(hkjProject -> hkjProject.getHkjOrder() == null)
             .map(hkjProjectMapper::toDto)
@@ -113,7 +113,7 @@ public class HkjProjectService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjProjectDTO> findOne(Long id) {
-        log.debug("Request to get HkjProject : {}", id);
+        LOG.debug("Request to get HkjProject : {}", id);
         return hkjProjectRepository.findById(id).map(hkjProjectMapper::toDto);
     }
 
@@ -123,7 +123,7 @@ public class HkjProjectService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjProject : {}", id);
+        LOG.debug("Request to delete HkjProject : {}", id);
         hkjProjectRepository.deleteById(id);
     }
 }

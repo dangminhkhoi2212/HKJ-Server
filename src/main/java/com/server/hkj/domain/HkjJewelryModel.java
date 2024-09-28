@@ -56,6 +56,9 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
+    @Column(name = "active")
+    private Boolean active;
+
     // Inherited createdBy definition
     // Inherited createdDate definition
     // Inherited lastModifiedBy definition
@@ -63,7 +66,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "jewelry", "hkjOrder" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjProject project;
@@ -192,6 +195,19 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
         this.isDeleted = isDeleted;
     }
 
+    public Boolean getActive() {
+        return this.active;
+    }
+
+    public HkjJewelryModel active(Boolean active) {
+        this.setActive(active);
+        return this;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     // Inherited createdBy methods
     public HkjJewelryModel createdBy(String createdBy) {
         this.setCreatedBy(createdBy);
@@ -309,6 +325,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
             ", color='" + getColor() + "'" +
             ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
+            ", active='" + getActive() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

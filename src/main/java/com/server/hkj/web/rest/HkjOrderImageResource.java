@@ -31,7 +31,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-order-images")
 public class HkjOrderImageResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjOrderImageResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjOrderImageResource.class);
 
     private static final String ENTITY_NAME = "hkjOrderImage";
 
@@ -63,7 +63,7 @@ public class HkjOrderImageResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjOrderImageDTO> createHkjOrderImage(@RequestBody HkjOrderImageDTO hkjOrderImageDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjOrderImage : {}", hkjOrderImageDTO);
+        LOG.debug("REST request to save HkjOrderImage : {}", hkjOrderImageDTO);
         if (hkjOrderImageDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjOrderImage cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -88,7 +88,7 @@ public class HkjOrderImageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjOrderImageDTO hkjOrderImageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjOrderImage : {}, {}", id, hkjOrderImageDTO);
+        LOG.debug("REST request to update HkjOrderImage : {}, {}", id, hkjOrderImageDTO);
         if (hkjOrderImageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -122,7 +122,7 @@ public class HkjOrderImageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjOrderImageDTO hkjOrderImageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjOrderImage partially : {}, {}", id, hkjOrderImageDTO);
+        LOG.debug("REST request to partial update HkjOrderImage partially : {}, {}", id, hkjOrderImageDTO);
         if (hkjOrderImageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -154,7 +154,7 @@ public class HkjOrderImageResource {
         HkjOrderImageCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjOrderImages by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjOrderImages by criteria: {}", criteria);
 
         Page<HkjOrderImageDTO> page = hkjOrderImageQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -169,7 +169,7 @@ public class HkjOrderImageResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjOrderImages(HkjOrderImageCriteria criteria) {
-        log.debug("REST request to count HkjOrderImages by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjOrderImages by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjOrderImageQueryService.countByCriteria(criteria));
     }
 
@@ -181,7 +181,7 @@ public class HkjOrderImageResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjOrderImageDTO> getHkjOrderImage(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjOrderImage : {}", id);
+        LOG.debug("REST request to get HkjOrderImage : {}", id);
         Optional<HkjOrderImageDTO> hkjOrderImageDTO = hkjOrderImageService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjOrderImageDTO);
     }
@@ -194,7 +194,7 @@ public class HkjOrderImageResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjOrderImage(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjOrderImage : {}", id);
+        LOG.debug("REST request to delete HkjOrderImage : {}", id);
         hkjOrderImageService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

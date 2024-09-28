@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-temp-images")
 public class HkjTempImageResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTempImageResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTempImageResource.class);
 
     private static final String ENTITY_NAME = "hkjTempImage";
 
@@ -66,7 +66,7 @@ public class HkjTempImageResource {
     @PostMapping("")
     public ResponseEntity<HkjTempImageDTO> createHkjTempImage(@Valid @RequestBody HkjTempImageDTO hkjTempImageDTO)
         throws URISyntaxException {
-        log.debug("REST request to save HkjTempImage : {}", hkjTempImageDTO);
+        LOG.debug("REST request to save HkjTempImage : {}", hkjTempImageDTO);
         if (hkjTempImageDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjTempImage cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -91,7 +91,7 @@ public class HkjTempImageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjTempImageDTO hkjTempImageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjTempImage : {}, {}", id, hkjTempImageDTO);
+        LOG.debug("REST request to update HkjTempImage : {}, {}", id, hkjTempImageDTO);
         if (hkjTempImageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -125,7 +125,7 @@ public class HkjTempImageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjTempImageDTO hkjTempImageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjTempImage partially : {}, {}", id, hkjTempImageDTO);
+        LOG.debug("REST request to partial update HkjTempImage partially : {}, {}", id, hkjTempImageDTO);
         if (hkjTempImageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -157,7 +157,7 @@ public class HkjTempImageResource {
         HkjTempImageCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjTempImages by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjTempImages by criteria: {}", criteria);
 
         Page<HkjTempImageDTO> page = hkjTempImageQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -172,7 +172,7 @@ public class HkjTempImageResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjTempImages(HkjTempImageCriteria criteria) {
-        log.debug("REST request to count HkjTempImages by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjTempImages by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjTempImageQueryService.countByCriteria(criteria));
     }
 
@@ -184,7 +184,7 @@ public class HkjTempImageResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjTempImageDTO> getHkjTempImage(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjTempImage : {}", id);
+        LOG.debug("REST request to get HkjTempImage : {}", id);
         Optional<HkjTempImageDTO> hkjTempImageDTO = hkjTempImageService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjTempImageDTO);
     }
@@ -197,7 +197,7 @@ public class HkjTempImageResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjTempImage(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjTempImage : {}", id);
+        LOG.debug("REST request to delete HkjTempImage : {}", id);
         hkjTempImageService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

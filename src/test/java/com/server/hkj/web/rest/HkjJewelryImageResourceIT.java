@@ -82,14 +82,13 @@ class HkjJewelryImageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjJewelryImage createEntity(EntityManager em) {
-        HkjJewelryImage hkjJewelryImage = new HkjJewelryImage()
+    public static HkjJewelryImage createEntity() {
+        return new HkjJewelryImage()
             .url(DEFAULT_URL)
             .isSearchImage(DEFAULT_IS_SEARCH_IMAGE)
             .description(DEFAULT_DESCRIPTION)
             .tags(DEFAULT_TAGS)
             .isDeleted(DEFAULT_IS_DELETED);
-        return hkjJewelryImage;
     }
 
     /**
@@ -98,19 +97,18 @@ class HkjJewelryImageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjJewelryImage createUpdatedEntity(EntityManager em) {
-        HkjJewelryImage hkjJewelryImage = new HkjJewelryImage()
+    public static HkjJewelryImage createUpdatedEntity() {
+        return new HkjJewelryImage()
             .url(UPDATED_URL)
             .isSearchImage(UPDATED_IS_SEARCH_IMAGE)
             .description(UPDATED_DESCRIPTION)
             .tags(UPDATED_TAGS)
             .isDeleted(UPDATED_IS_DELETED);
-        return hkjJewelryImage;
     }
 
     @BeforeEach
     public void initTest() {
-        hkjJewelryImage = createEntity(em);
+        hkjJewelryImage = createEntity();
     }
 
     @AfterEach
@@ -492,7 +490,7 @@ class HkjJewelryImageResourceIT {
         HkjJewelryModel jewelryModel;
         if (TestUtil.findAll(em, HkjJewelryModel.class).isEmpty()) {
             hkjJewelryImageRepository.saveAndFlush(hkjJewelryImage);
-            jewelryModel = HkjJewelryModelResourceIT.createEntity(em);
+            jewelryModel = HkjJewelryModelResourceIT.createEntity();
         } else {
             jewelryModel = TestUtil.findAll(em, HkjJewelryModel.class).get(0);
         }
@@ -674,7 +672,7 @@ class HkjJewelryImageResourceIT {
         HkjJewelryImage partialUpdatedHkjJewelryImage = new HkjJewelryImage();
         partialUpdatedHkjJewelryImage.setId(hkjJewelryImage.getId());
 
-        partialUpdatedHkjJewelryImage.isSearchImage(UPDATED_IS_SEARCH_IMAGE);
+        partialUpdatedHkjJewelryImage.isDeleted(UPDATED_IS_DELETED);
 
         restHkjJewelryImageMockMvc
             .perform(

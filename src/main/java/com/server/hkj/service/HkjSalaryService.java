@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjSalaryService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjSalaryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjSalaryService.class);
 
     private final HkjSalaryRepository hkjSalaryRepository;
 
@@ -35,7 +35,7 @@ public class HkjSalaryService {
      * @return the persisted entity.
      */
     public HkjSalaryDTO save(HkjSalaryDTO hkjSalaryDTO) {
-        log.debug("Request to save HkjSalary : {}", hkjSalaryDTO);
+        LOG.debug("Request to save HkjSalary : {}", hkjSalaryDTO);
         HkjSalary hkjSalary = hkjSalaryMapper.toEntity(hkjSalaryDTO);
         hkjSalary = hkjSalaryRepository.save(hkjSalary);
         return hkjSalaryMapper.toDto(hkjSalary);
@@ -48,7 +48,7 @@ public class HkjSalaryService {
      * @return the persisted entity.
      */
     public HkjSalaryDTO update(HkjSalaryDTO hkjSalaryDTO) {
-        log.debug("Request to update HkjSalary : {}", hkjSalaryDTO);
+        LOG.debug("Request to update HkjSalary : {}", hkjSalaryDTO);
         HkjSalary hkjSalary = hkjSalaryMapper.toEntity(hkjSalaryDTO);
         hkjSalary.setIsPersisted();
         hkjSalary = hkjSalaryRepository.save(hkjSalary);
@@ -62,7 +62,7 @@ public class HkjSalaryService {
      * @return the persisted entity.
      */
     public Optional<HkjSalaryDTO> partialUpdate(HkjSalaryDTO hkjSalaryDTO) {
-        log.debug("Request to partially update HkjSalary : {}", hkjSalaryDTO);
+        LOG.debug("Request to partially update HkjSalary : {}", hkjSalaryDTO);
 
         return hkjSalaryRepository
             .findById(hkjSalaryDTO.getId())
@@ -83,7 +83,7 @@ public class HkjSalaryService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjSalaryDTO> findOne(Long id) {
-        log.debug("Request to get HkjSalary : {}", id);
+        LOG.debug("Request to get HkjSalary : {}", id);
         return hkjSalaryRepository.findById(id).map(hkjSalaryMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjSalaryService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjSalary : {}", id);
+        LOG.debug("Request to delete HkjSalary : {}", id);
         hkjSalaryRepository.deleteById(id);
     }
 }

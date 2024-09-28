@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat, getPaginationState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { JhiItemCount, JhiPagination, TextFormat, Translate, getPaginationState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -85,9 +85,8 @@ export const HkjTaskImage = () => {
     const order = paginationState.order;
     if (sortFieldName !== fieldName) {
       return faSort;
-    } else {
-      return order === ASC ? faSortUp : faSortDown;
     }
+    return order === ASC ? faSortUp : faSortDown;
   };
 
   return (
@@ -143,7 +142,7 @@ export const HkjTaskImage = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjTaskImage.task">Task</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjTaskImage.hkjTask">Hkj Task</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -169,7 +168,7 @@ export const HkjTaskImage = () => {
                       <TextFormat type="date" value={hkjTaskImage.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{hkjTaskImage.task ? <Link to={`/hkj-task/${hkjTaskImage.task.id}`}>{hkjTaskImage.task.id}</Link> : ''}</td>
+                  <td>{hkjTaskImage.hkjTask ? <Link to={`/hkj-task/${hkjTaskImage.hkjTask.id}`}>{hkjTaskImage.hkjTask.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-task-image/${hkjTaskImage.id}`} color="info" size="sm" data-cy="entityDetailsButton">

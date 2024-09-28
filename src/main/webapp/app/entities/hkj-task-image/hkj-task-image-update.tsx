@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjTask } from 'app/shared/model/hkj-task.model';
 import { getEntities as getHkjTasks } from 'app/entities/hkj-task/hkj-task.reducer';
-import { IHkjTaskImage } from 'app/shared/model/hkj-task-image.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-task-image.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-task-image.reducer';
 
 export const HkjTaskImageUpdate = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +25,7 @@ export const HkjTaskImageUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjTaskImage.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-task-image' + location.search);
+    navigate(`/hkj-task-image${location.search}`);
   };
 
   useEffect(() => {
@@ -47,7 +44,6 @@ export const HkjTaskImageUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
@@ -58,7 +54,7 @@ export const HkjTaskImageUpdate = () => {
     const entity = {
       ...hkjTaskImageEntity,
       ...values,
-      task: hkjTasks.find(it => it.id.toString() === values.task?.toString()),
+      hkjTask: hkjTasks.find(it => it.id.toString() === values.hkjTask?.toString()),
     };
 
     if (isNew) {
@@ -78,7 +74,7 @@ export const HkjTaskImageUpdate = () => {
           ...hkjTaskImageEntity,
           createdDate: convertDateTimeFromServer(hkjTaskImageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjTaskImageEntity.lastModifiedDate),
-          task: hkjTaskImageEntity?.task?.id,
+          hkjTask: hkjTaskImageEntity?.hkjTask?.id,
         };
 
   return (
@@ -162,10 +158,10 @@ export const HkjTaskImageUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-task-image-task"
-                name="task"
-                data-cy="task"
-                label={translate('serverApp.hkjTaskImage.task')}
+                id="hkj-task-image-hkjTask"
+                name="hkjTask"
+                data-cy="hkjTask"
+                label={translate('serverApp.hkjTaskImage.hkjTask')}
                 type="select"
               >
                 <option value="" key="0" />

@@ -53,15 +53,7 @@
   "jpaMetamodelFiltering": true,
   "name": "HkjTemplateStep",
   "pagination": "pagination",
-  "relationships": [
-    {
-      "otherEntityName": "hkjTemplate",
-      "otherEntityRelationshipName": "steps",
-      "relationshipName": "template",
-      "relationshipSide": "right",
-      "relationshipType": "many-to-one"
-    }
-  ],
+  "relationships": [],
   "searchEngine": "no",
   "service": "serviceClass"
 }

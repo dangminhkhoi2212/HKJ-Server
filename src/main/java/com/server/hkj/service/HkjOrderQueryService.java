@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjOrderQueryService extends QueryService<HkjOrder> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjOrderQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjOrderQueryService.class);
 
     private final HkjOrderRepository hkjOrderRepository;
 
@@ -45,7 +45,7 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
      */
     @Transactional(readOnly = true)
     public Page<HkjOrderDTO> findByCriteria(HkjOrderCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjOrder> specification = createSpecification(criteria);
         return hkjOrderRepository.findAll(specification, page).map(hkjOrderMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjOrderCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjOrder> specification = createSpecification(criteria);
         return hkjOrderRepository.count(specification);
     }
@@ -128,9 +128,8 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
             }
             if (criteria.getOrderImagesId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getOrderImagesId(),
-                        root -> root.join(HkjOrder_.orderImages, JoinType.LEFT).get(HkjOrderImage_.id)
+                    buildSpecification(criteria.getOrderImagesId(), root ->
+                        root.join(HkjOrder_.orderImages, JoinType.LEFT).get(HkjOrderImage_.id)
                     )
                 );
             }
@@ -141,9 +140,7 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
             }
             if (criteria.getJewelryId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getJewelryId(),
-                        root -> root.join(HkjOrder_.jewelry, JoinType.LEFT).get(HkjJewelryModel_.id)
+                    buildSpecification(criteria.getJewelryId(), root -> root.join(HkjOrder_.jewelry, JoinType.LEFT).get(HkjJewelryModel_.id)
                     )
                 );
             }

@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjProjectQueryService extends QueryService<HkjProject> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjProjectQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjProjectQueryService.class);
 
     private final HkjProjectRepository hkjProjectRepository;
 
@@ -45,7 +45,7 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
      */
     @Transactional(readOnly = true)
     public Page<HkjProjectDTO> findByCriteria(HkjProjectCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjProject> specification = createSpecification(criteria);
         return hkjProjectRepository.findAll(specification, page).map(hkjProjectMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjProjectCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjProject> specification = createSpecification(criteria);
         return hkjProjectRepository.count(specification);
     }
@@ -127,9 +127,7 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             }
             if (criteria.getCategoryId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getCategoryId(),
-                        root -> root.join(HkjProject_.category, JoinType.LEFT).get(HkjCategory_.id)
+                    buildSpecification(criteria.getCategoryId(), root -> root.join(HkjProject_.category, JoinType.LEFT).get(HkjCategory_.id)
                     )
                 );
             }
@@ -143,11 +141,10 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
                     buildSpecification(criteria.getManagerId(), root -> root.join(HkjProject_.manager, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
-            if (criteria.getHkjJewelryModelId() != null) {
+            if (criteria.getJewelryId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getHkjJewelryModelId(),
-                        root -> root.join(HkjProject_.hkjJewelryModel, JoinType.LEFT).get(HkjJewelryModel_.id)
+                    buildSpecification(criteria.getJewelryId(), root ->
+                        root.join(HkjProject_.jewelry, JoinType.LEFT).get(HkjJewelryModel_.id)
                     )
                 );
             }

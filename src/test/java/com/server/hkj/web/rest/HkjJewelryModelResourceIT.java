@@ -64,6 +64,9 @@ class HkjJewelryModelResourceIT {
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
 
+    private static final Boolean DEFAULT_ACTIVE = false;
+    private static final Boolean UPDATED_ACTIVE = true;
+
     private static final String ENTITY_API_URL = "/api/hkj-jewelry-models";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -95,8 +98,8 @@ class HkjJewelryModelResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjJewelryModel createEntity(EntityManager em) {
-        HkjJewelryModel hkjJewelryModel = new HkjJewelryModel()
+    public static HkjJewelryModel createEntity() {
+        return new HkjJewelryModel()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .isCustom(DEFAULT_IS_CUSTOM)
@@ -104,8 +107,8 @@ class HkjJewelryModelResourceIT {
             .price(DEFAULT_PRICE)
             .color(DEFAULT_COLOR)
             .notes(DEFAULT_NOTES)
-            .isDeleted(DEFAULT_IS_DELETED);
-        return hkjJewelryModel;
+            .isDeleted(DEFAULT_IS_DELETED)
+            .active(DEFAULT_ACTIVE);
     }
 
     /**
@@ -114,8 +117,8 @@ class HkjJewelryModelResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjJewelryModel createUpdatedEntity(EntityManager em) {
-        HkjJewelryModel hkjJewelryModel = new HkjJewelryModel()
+    public static HkjJewelryModel createUpdatedEntity() {
+        return new HkjJewelryModel()
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .isCustom(UPDATED_IS_CUSTOM)
@@ -123,13 +126,13 @@ class HkjJewelryModelResourceIT {
             .price(UPDATED_PRICE)
             .color(UPDATED_COLOR)
             .notes(UPDATED_NOTES)
-            .isDeleted(UPDATED_IS_DELETED);
-        return hkjJewelryModel;
+            .isDeleted(UPDATED_IS_DELETED)
+            .active(UPDATED_ACTIVE);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjJewelryModel = createEntity(em);
+        hkjJewelryModel = createEntity();
     }
 
     @AfterEach
@@ -227,7 +230,8 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
-            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
     }
 
     @Test
@@ -249,7 +253,8 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.price").value(sameNumber(DEFAULT_PRICE)))
             .andExpect(jsonPath("$.color").value(DEFAULT_COLOR))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
-            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()))
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
     }
 
     @Test
@@ -678,11 +683,41 @@ class HkjJewelryModelResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjJewelryModelsByActiveIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where active equals to
+        defaultHkjJewelryModelFiltering("active.equals=" + DEFAULT_ACTIVE, "active.equals=" + UPDATED_ACTIVE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByActiveIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where active in
+        defaultHkjJewelryModelFiltering("active.in=" + DEFAULT_ACTIVE + "," + UPDATED_ACTIVE, "active.in=" + UPDATED_ACTIVE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByActiveIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where active is not null
+        defaultHkjJewelryModelFiltering("active.specified=true", "active.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjJewelryModelsByProjectIsEqualToSomething() throws Exception {
         HkjProject project;
         if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
             hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
-            project = HkjProjectResourceIT.createEntity(em);
+            project = HkjProjectResourceIT.createEntity();
         } else {
             project = TestUtil.findAll(em, HkjProject.class).get(0);
         }
@@ -719,7 +754,8 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
-            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
 
         // Check, that the count call also returns 1
         restHkjJewelryModelMockMvc
@@ -775,7 +811,8 @@ class HkjJewelryModelResourceIT {
             .price(UPDATED_PRICE)
             .color(UPDATED_COLOR)
             .notes(UPDATED_NOTES)
-            .isDeleted(UPDATED_IS_DELETED);
+            .isDeleted(UPDATED_IS_DELETED)
+            .active(UPDATED_ACTIVE);
         HkjJewelryModelDTO hkjJewelryModelDTO = hkjJewelryModelMapper.toDto(updatedHkjJewelryModel);
 
         restHkjJewelryModelMockMvc
@@ -872,10 +909,12 @@ class HkjJewelryModelResourceIT {
 
         partialUpdatedHkjJewelryModel
             .name(UPDATED_NAME)
+            .description(UPDATED_DESCRIPTION)
             .isCustom(UPDATED_IS_CUSTOM)
-            .price(UPDATED_PRICE)
+            .weight(UPDATED_WEIGHT)
             .color(UPDATED_COLOR)
-            .notes(UPDATED_NOTES);
+            .isDeleted(UPDATED_IS_DELETED)
+            .active(UPDATED_ACTIVE);
 
         restHkjJewelryModelMockMvc
             .perform(
@@ -915,7 +954,8 @@ class HkjJewelryModelResourceIT {
             .price(UPDATED_PRICE)
             .color(UPDATED_COLOR)
             .notes(UPDATED_NOTES)
-            .isDeleted(UPDATED_IS_DELETED);
+            .isDeleted(UPDATED_IS_DELETED)
+            .active(UPDATED_ACTIVE);
 
         restHkjJewelryModelMockMvc
             .perform(

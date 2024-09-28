@@ -57,7 +57,8 @@ public class HkjJewelryModelAsserts {
             .satisfies(e -> assertThat(e.getPrice()).as("check price").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getPrice()))
             .satisfies(e -> assertThat(e.getColor()).as("check color").isEqualTo(actual.getColor()))
             .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
-            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()))
+            .satisfies(e -> assertThat(e.getActive()).as("check active").isEqualTo(actual.getActive()));
     }
 
     /**

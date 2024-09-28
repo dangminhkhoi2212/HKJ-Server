@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjCategoryQueryService extends QueryService<HkjCategory> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjCategoryQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjCategoryQueryService.class);
 
     private final HkjCategoryRepository hkjCategoryRepository;
 
@@ -45,7 +45,7 @@ public class HkjCategoryQueryService extends QueryService<HkjCategory> {
      */
     @Transactional(readOnly = true)
     public Page<HkjCategoryDTO> findByCriteria(HkjCategoryCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjCategory> specification = createSpecification(criteria);
         return hkjCategoryRepository.findAll(specification, page).map(hkjCategoryMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjCategoryQueryService extends QueryService<HkjCategory> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjCategoryCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjCategory> specification = createSpecification(criteria);
         return hkjCategoryRepository.count(specification);
     }
@@ -97,17 +97,15 @@ public class HkjCategoryQueryService extends QueryService<HkjCategory> {
             }
             if (criteria.getHkjProjectId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getHkjProjectId(),
-                        root -> root.join(HkjCategory_.hkjProject, JoinType.LEFT).get(HkjProject_.id)
+                    buildSpecification(criteria.getHkjProjectId(), root ->
+                        root.join(HkjCategory_.hkjProject, JoinType.LEFT).get(HkjProject_.id)
                     )
                 );
             }
             if (criteria.getHkjTemplateId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getHkjTemplateId(),
-                        root -> root.join(HkjCategory_.hkjTemplate, JoinType.LEFT).get(HkjTemplate_.id)
+                    buildSpecification(criteria.getHkjTemplateId(), root ->
+                        root.join(HkjCategory_.hkjTemplate, JoinType.LEFT).get(HkjTemplate_.id)
                     )
                 );
             }

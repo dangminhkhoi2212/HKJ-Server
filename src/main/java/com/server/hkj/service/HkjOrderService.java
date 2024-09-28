@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjOrderService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjOrderService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjOrderService.class);
 
     private final HkjOrderRepository hkjOrderRepository;
 
@@ -35,7 +35,7 @@ public class HkjOrderService {
      * @return the persisted entity.
      */
     public HkjOrderDTO save(HkjOrderDTO hkjOrderDTO) {
-        log.debug("Request to save HkjOrder : {}", hkjOrderDTO);
+        LOG.debug("Request to save HkjOrder : {}", hkjOrderDTO);
         HkjOrder hkjOrder = hkjOrderMapper.toEntity(hkjOrderDTO);
         hkjOrder = hkjOrderRepository.save(hkjOrder);
         return hkjOrderMapper.toDto(hkjOrder);
@@ -48,7 +48,7 @@ public class HkjOrderService {
      * @return the persisted entity.
      */
     public HkjOrderDTO update(HkjOrderDTO hkjOrderDTO) {
-        log.debug("Request to update HkjOrder : {}", hkjOrderDTO);
+        LOG.debug("Request to update HkjOrder : {}", hkjOrderDTO);
         HkjOrder hkjOrder = hkjOrderMapper.toEntity(hkjOrderDTO);
         hkjOrder.setIsPersisted();
         hkjOrder = hkjOrderRepository.save(hkjOrder);
@@ -62,7 +62,7 @@ public class HkjOrderService {
      * @return the persisted entity.
      */
     public Optional<HkjOrderDTO> partialUpdate(HkjOrderDTO hkjOrderDTO) {
-        log.debug("Request to partially update HkjOrder : {}", hkjOrderDTO);
+        LOG.debug("Request to partially update HkjOrder : {}", hkjOrderDTO);
 
         return hkjOrderRepository
             .findById(hkjOrderDTO.getId())
@@ -83,7 +83,7 @@ public class HkjOrderService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjOrderDTO> findOne(Long id) {
-        log.debug("Request to get HkjOrder : {}", id);
+        LOG.debug("Request to get HkjOrder : {}", id);
         return hkjOrderRepository.findById(id).map(hkjOrderMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjOrderService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjOrder : {}", id);
+        LOG.debug("Request to delete HkjOrder : {}", id);
         hkjOrderRepository.deleteById(id);
     }
 }

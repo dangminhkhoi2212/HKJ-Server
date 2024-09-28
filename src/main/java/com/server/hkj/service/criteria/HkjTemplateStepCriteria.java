@@ -36,7 +36,7 @@ public class HkjTemplateStepCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter templateId;
+    private LongFilter hkjTemplateId;
 
     private Boolean distinct;
 
@@ -50,7 +50,7 @@ public class HkjTemplateStepCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.templateId = other.optionalTemplateId().map(LongFilter::copy).orElse(null);
+        this.hkjTemplateId = other.optionalHkjTemplateId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -192,23 +192,23 @@ public class HkjTemplateStepCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getTemplateId() {
-        return templateId;
+    public LongFilter getHkjTemplateId() {
+        return hkjTemplateId;
     }
 
-    public Optional<LongFilter> optionalTemplateId() {
-        return Optional.ofNullable(templateId);
+    public Optional<LongFilter> optionalHkjTemplateId() {
+        return Optional.ofNullable(hkjTemplateId);
     }
 
-    public LongFilter templateId() {
-        if (templateId == null) {
-            setTemplateId(new LongFilter());
+    public LongFilter hkjTemplateId() {
+        if (hkjTemplateId == null) {
+            setHkjTemplateId(new LongFilter());
         }
-        return templateId;
+        return hkjTemplateId;
     }
 
-    public void setTemplateId(LongFilter templateId) {
-        this.templateId = templateId;
+    public void setHkjTemplateId(LongFilter hkjTemplateId) {
+        this.hkjTemplateId = hkjTemplateId;
     }
 
     public Boolean getDistinct() {
@@ -247,14 +247,14 @@ public class HkjTemplateStepCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(templateId, that.templateId) &&
+            Objects.equals(hkjTemplateId, that.hkjTemplateId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, templateId, distinct);
+        return Objects.hash(id, name, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, hkjTemplateId, distinct);
     }
 
     // prettier-ignore
@@ -268,7 +268,7 @@ public class HkjTemplateStepCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalTemplateId().map(f -> "templateId=" + f + ", ").orElse("") +
+            optionalHkjTemplateId().map(f -> "hkjTemplateId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

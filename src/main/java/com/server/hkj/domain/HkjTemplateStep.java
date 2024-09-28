@@ -41,7 +41,7 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "category", "steps", "creater" }, allowSetters = true)
-    private HkjTemplate template;
+    private HkjTemplate hkjTemplate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -125,16 +125,16 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
         return this;
     }
 
-    public HkjTemplate getTemplate() {
-        return this.template;
+    public HkjTemplate getHkjTemplate() {
+        return this.hkjTemplate;
     }
 
-    public void setTemplate(HkjTemplate hkjTemplate) {
-        this.template = hkjTemplate;
+    public void setHkjTemplate(HkjTemplate hkjTemplate) {
+        this.hkjTemplate = hkjTemplate;
     }
 
-    public HkjTemplateStep template(HkjTemplate hkjTemplate) {
-        this.setTemplate(hkjTemplate);
+    public HkjTemplateStep hkjTemplate(HkjTemplate hkjTemplate) {
+        this.setHkjTemplate(hkjTemplate);
         return this;
     }
 

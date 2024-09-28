@@ -4,7 +4,6 @@ import com.server.hkj.repository.UserExtraRepository;
 import com.server.hkj.service.UserExtraQueryService;
 import com.server.hkj.service.UserExtraService;
 import com.server.hkj.service.criteria.UserExtraCriteria;
-import com.server.hkj.service.dto.AccountDTO;
 import com.server.hkj.service.dto.UserExtraDTO;
 import com.server.hkj.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -21,15 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -42,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/user-extras")
 public class UserExtraResource {
 
-    private static final Logger log = LoggerFactory.getLogger(UserExtraResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserExtraResource.class);
 
     private static final String ENTITY_NAME = "userExtra";
 
@@ -74,24 +65,12 @@ public class UserExtraResource {
      */
     @PostMapping("")
     public ResponseEntity<UserExtraDTO> createUserExtra(@Valid @RequestBody UserExtraDTO userExtraDTO) throws URISyntaxException {
-        log.debug("REST request to save UserExtra : {}", userExtraDTO);
+        LOG.debug("REST request to save UserExtra : {}", userExtraDTO);
         if (userExtraDTO.getId() != null) {
             throw new BadRequestAlertException("A new userExtra cannot already have an ID", ENTITY_NAME, "idexists");
         }
         userExtraDTO = userExtraService.save(userExtraDTO);
         return ResponseEntity.created(new URI("/api/user-extras/" + userExtraDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, userExtraDTO.getId().toString()))
-            .body(userExtraDTO);
-    }
-
-    @PostMapping("/sync")
-    public ResponseEntity<UserExtraDTO> syncUserExtra(@Valid @RequestBody AccountDTO accountDTO) throws URISyntaxException {
-        log.debug("REST request to save UserExtra : {}", accountDTO);
-        if (accountDTO.getId() != null) {
-            throw new BadRequestAlertException("A new userExtra cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        UserExtraDTO userExtraDTO = userExtraService.syncAccount(accountDTO);
-        return ResponseEntity.created(new URI("/api/user-extras/sync" + userExtraDTO.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, userExtraDTO.getId().toString()))
             .body(userExtraDTO);
     }
@@ -111,7 +90,7 @@ public class UserExtraResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody UserExtraDTO userExtraDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update UserExtra : {}, {}", id, userExtraDTO);
+        LOG.debug("REST request to update UserExtra : {}, {}", id, userExtraDTO);
         if (userExtraDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -145,7 +124,7 @@ public class UserExtraResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody UserExtraDTO userExtraDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update UserExtra partially : {}, {}", id, userExtraDTO);
+        LOG.debug("REST request to partial update UserExtra partially : {}, {}", id, userExtraDTO);
         if (userExtraDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -177,7 +156,7 @@ public class UserExtraResource {
         UserExtraCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get UserExtras by criteria: {}", criteria);
+        LOG.debug("REST request to get UserExtras by criteria: {}", criteria);
 
         Page<UserExtraDTO> page = userExtraQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -192,7 +171,7 @@ public class UserExtraResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countUserExtras(UserExtraCriteria criteria) {
-        log.debug("REST request to count UserExtras by criteria: {}", criteria);
+        LOG.debug("REST request to count UserExtras by criteria: {}", criteria);
         return ResponseEntity.ok().body(userExtraQueryService.countByCriteria(criteria));
     }
 
@@ -204,7 +183,7 @@ public class UserExtraResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserExtraDTO> getUserExtra(@PathVariable("id") Long id) {
-        log.debug("REST request to get UserExtra : {}", id);
+        LOG.debug("REST request to get UserExtra : {}", id);
         Optional<UserExtraDTO> userExtraDTO = userExtraService.findOne(id);
         return ResponseUtil.wrapOrNotFound(userExtraDTO);
     }
@@ -217,7 +196,7 @@ public class UserExtraResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserExtra(@PathVariable("id") Long id) {
-        log.debug("REST request to delete UserExtra : {}", id);
+        LOG.debug("REST request to delete UserExtra : {}", id);
         userExtraService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

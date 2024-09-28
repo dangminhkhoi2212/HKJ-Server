@@ -51,26 +51,21 @@ public class HkjOrderAsserts {
         assertThat(expected)
             .as("Verify HkjOrder relevant properties")
             .satisfies(e -> assertThat(e.getOrderDate()).as("check orderDate").isEqualTo(actual.getOrderDate()))
-            .satisfies(
-                e -> assertThat(e.getExpectedDeliveryDate()).as("check expectedDeliveryDate").isEqualTo(actual.getExpectedDeliveryDate())
+            .satisfies(e ->
+                assertThat(e.getExpectedDeliveryDate()).as("check expectedDeliveryDate").isEqualTo(actual.getExpectedDeliveryDate())
             )
             .satisfies(e -> assertThat(e.getActualDeliveryDate()).as("check actualDeliveryDate").isEqualTo(actual.getActualDeliveryDate()))
             .satisfies(e -> assertThat(e.getSpecialRequests()).as("check specialRequests").isEqualTo(actual.getSpecialRequests()))
             .satisfies(e -> assertThat(e.getStatus()).as("check status").isEqualTo(actual.getStatus()))
             .satisfies(e -> assertThat(e.getCustomerRating()).as("check customerRating").isEqualTo(actual.getCustomerRating()))
-            .satisfies(
-                e ->
-                    assertThat(e.getTotalPrice())
-                        .as("check totalPrice")
-                        .usingComparator(bigDecimalCompareTo)
-                        .isEqualTo(actual.getTotalPrice())
+            .satisfies(e ->
+                assertThat(e.getTotalPrice()).as("check totalPrice").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getTotalPrice())
             )
-            .satisfies(
-                e ->
-                    assertThat(e.getDepositAmount())
-                        .as("check depositAmount")
-                        .usingComparator(bigDecimalCompareTo)
-                        .isEqualTo(actual.getDepositAmount())
+            .satisfies(e ->
+                assertThat(e.getDepositAmount())
+                    .as("check depositAmount")
+                    .usingComparator(bigDecimalCompareTo)
+                    .isEqualTo(actual.getDepositAmount())
             )
             .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));

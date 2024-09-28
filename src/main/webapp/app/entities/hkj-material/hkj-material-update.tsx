@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, isNumber, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjMaterial } from 'app/shared/model/hkj-material.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-material.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-material.reducer';
 
 export const HkjMaterialUpdate = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +23,7 @@ export const HkjMaterialUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjMaterial.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-material' + location.search);
+    navigate(`/hkj-material${location.search}`);
   };
 
   useEffect(() => {
@@ -42,7 +40,6 @@ export const HkjMaterialUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);

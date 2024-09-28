@@ -10,7 +10,7 @@ export interface IHkjTaskImage {
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  task?: IHkjTask | null;
+  hkjTask?: IHkjTask | null;
 }
 
 export const defaultValue: Readonly<IHkjTaskImage> = {

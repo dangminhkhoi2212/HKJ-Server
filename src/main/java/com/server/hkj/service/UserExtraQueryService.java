@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class UserExtraQueryService extends QueryService<UserExtra> {
 
-    private static final Logger log = LoggerFactory.getLogger(UserExtraQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserExtraQueryService.class);
 
     private final UserExtraRepository userExtraRepository;
 
@@ -45,7 +45,7 @@ public class UserExtraQueryService extends QueryService<UserExtra> {
      */
     @Transactional(readOnly = true)
     public Page<UserExtraDTO> findByCriteria(UserExtraCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<UserExtra> specification = createSpecification(criteria);
         return userExtraRepository.findAll(specification, page).map(userExtraMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class UserExtraQueryService extends QueryService<UserExtra> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(UserExtraCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<UserExtra> specification = createSpecification(criteria);
         return userExtraRepository.count(specification);
     }
@@ -86,6 +86,9 @@ public class UserExtraQueryService extends QueryService<UserExtra> {
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), UserExtra_.isDeleted));
             }
+            if (criteria.getActive() != null) {
+                specification = specification.and(buildSpecification(criteria.getActive(), UserExtra_.active));
+            }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), UserExtra_.createdBy));
             }
@@ -106,16 +109,6 @@ public class UserExtraQueryService extends QueryService<UserExtra> {
             if (criteria.getSalarysId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getSalarysId(), root -> root.join(UserExtra_.salarys, JoinType.LEFT).get(HkjSalary_.id))
-                );
-            }
-            if (criteria.getHireId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getHireId(), root -> root.join(UserExtra_.hires, JoinType.LEFT).get(HkjHire_.id))
-                );
-            }
-            if (criteria.getHkjTaskId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getHkjTaskId(), root -> root.join(UserExtra_.hkjTask, JoinType.LEFT).get(HkjTask_.id))
                 );
             }
         }

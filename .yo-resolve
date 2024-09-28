@@ -6,11 +6,12 @@ src/main/webapp/app/config/constants.ts skip
 src/main/docker/realm-config/jhipster-realm.json skip
 pom.xml skip
 src/main/java/com/server/hkj/service/UserService.java skip
+src/main/java/com/server/hkj/service/mapper/UserMapper.java skip
 src/main/java/com/server/hkj/service/dto/AdminUserDTO.java
 src/main/java/com/server/hkj/security/AuthoritiesConstants.java skip
 src/main/java/com/server/hkj/config/SecurityConfiguration.java skip
 
-src/main/java/com/server/hkj/service/dto/UserExtraDTO.java skip
+# src/main/java/com/server/hkj/service/dto/UserExtraDTO.java skip
 src/main/java/com/server/hkj/repository/UserExtraRepository.java skip
 src/main/java/com/server/hkj/service/UserExtraService.java skip
 src/main/java/com/server/hkj/web/rest/PublicUserResource.java skip

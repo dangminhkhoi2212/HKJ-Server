@@ -21,12 +21,12 @@ public interface HkjHireMapper extends EntityMapper<HkjHireDTO, HkjHire> {
     HkjHireDTO toDto(HkjHire s);
 
     @Named("hkjPositionId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     HkjPositionDTO toDtoHkjPositionId(HkjPosition hkjPosition);
 
     @Named("userExtraId")
-    @BeanMapping(ignoreByDefault = true)
+    @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
     UserExtraDTO toDtoUserExtraId(UserExtra userExtra);
 }

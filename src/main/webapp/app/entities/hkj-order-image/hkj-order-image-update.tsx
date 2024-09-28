@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjOrder } from 'app/shared/model/hkj-order.model';
 import { getEntities as getHkjOrders } from 'app/entities/hkj-order/hkj-order.reducer';
-import { IHkjOrderImage } from 'app/shared/model/hkj-order-image.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-order-image.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-order-image.reducer';
 
 export const HkjOrderImageUpdate = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +25,7 @@ export const HkjOrderImageUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjOrderImage.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-order-image' + location.search);
+    navigate(`/hkj-order-image${location.search}`);
   };
 
   useEffect(() => {
@@ -47,7 +44,6 @@ export const HkjOrderImageUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
@@ -58,7 +54,7 @@ export const HkjOrderImageUpdate = () => {
     const entity = {
       ...hkjOrderImageEntity,
       ...values,
-      order: hkjOrders.find(it => it.id.toString() === values.order?.toString()),
+      hkjOrder: hkjOrders.find(it => it.id.toString() === values.hkjOrder?.toString()),
     };
 
     if (isNew) {
@@ -78,7 +74,7 @@ export const HkjOrderImageUpdate = () => {
           ...hkjOrderImageEntity,
           createdDate: convertDateTimeFromServer(hkjOrderImageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjOrderImageEntity.lastModifiedDate),
-          order: hkjOrderImageEntity?.order?.id,
+          hkjOrder: hkjOrderImageEntity?.hkjOrder?.id,
         };
 
   return (
@@ -152,10 +148,10 @@ export const HkjOrderImageUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-order-image-order"
-                name="order"
-                data-cy="order"
-                label={translate('serverApp.hkjOrderImage.order')}
+                id="hkj-order-image-hkjOrder"
+                name="hkjOrder"
+                data-cy="hkjOrder"
+                label={translate('serverApp.hkjOrderImage.hkjOrder')}
                 type="select"
               >
                 <option value="" key="0" />

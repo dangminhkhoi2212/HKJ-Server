@@ -103,8 +103,8 @@ class HkjTaskResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTask createEntity(EntityManager em) {
-        HkjTask hkjTask = new HkjTask()
+    public static HkjTask createEntity() {
+        return new HkjTask()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .assignedDate(DEFAULT_ASSIGNED_DATE)
@@ -115,7 +115,6 @@ class HkjTaskResourceIT {
             .point(DEFAULT_POINT)
             .notes(DEFAULT_NOTES)
             .isDeleted(DEFAULT_IS_DELETED);
-        return hkjTask;
     }
 
     /**
@@ -124,8 +123,8 @@ class HkjTaskResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjTask createUpdatedEntity(EntityManager em) {
-        HkjTask hkjTask = new HkjTask()
+    public static HkjTask createUpdatedEntity() {
+        return new HkjTask()
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .assignedDate(UPDATED_ASSIGNED_DATE)
@@ -136,12 +135,11 @@ class HkjTaskResourceIT {
             .point(UPDATED_POINT)
             .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
-        return hkjTask;
     }
 
     @BeforeEach
     public void initTest() {
-        hkjTask = createEntity(em);
+        hkjTask = createEntity();
     }
 
     @AfterEach
@@ -759,7 +757,7 @@ class HkjTaskResourceIT {
         UserExtra employee;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjTaskRepository.saveAndFlush(hkjTask);
-            employee = UserExtraResourceIT.createEntity(em);
+            employee = UserExtraResourceIT.createEntity();
         } else {
             employee = TestUtil.findAll(em, UserExtra.class).get(0);
         }
@@ -777,24 +775,24 @@ class HkjTaskResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjTasksByProjectIsEqualToSomething() throws Exception {
-        HkjProject project;
+    void getAllHkjTasksByHkjProjectIsEqualToSomething() throws Exception {
+        HkjProject hkjProject;
         if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
             hkjTaskRepository.saveAndFlush(hkjTask);
-            project = HkjProjectResourceIT.createEntity(em);
+            hkjProject = HkjProjectResourceIT.createEntity();
         } else {
-            project = TestUtil.findAll(em, HkjProject.class).get(0);
+            hkjProject = TestUtil.findAll(em, HkjProject.class).get(0);
         }
-        em.persist(project);
+        em.persist(hkjProject);
         em.flush();
-        hkjTask.setProject(project);
+        hkjTask.setHkjProject(hkjProject);
         hkjTaskRepository.saveAndFlush(hkjTask);
-        Long projectId = project.getId();
-        // Get all the hkjTaskList where project equals to projectId
-        defaultHkjTaskShouldBeFound("projectId.equals=" + projectId);
+        Long hkjProjectId = hkjProject.getId();
+        // Get all the hkjTaskList where hkjProject equals to hkjProjectId
+        defaultHkjTaskShouldBeFound("hkjProjectId.equals=" + hkjProjectId);
 
-        // Get all the hkjTaskList where project equals to (projectId + 1)
-        defaultHkjTaskShouldNotBeFound("projectId.equals=" + (projectId + 1));
+        // Get all the hkjTaskList where hkjProject equals to (hkjProjectId + 1)
+        defaultHkjTaskShouldNotBeFound("hkjProjectId.equals=" + (hkjProjectId + 1));
     }
 
     private void defaultHkjTaskFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
@@ -971,7 +969,7 @@ class HkjTaskResourceIT {
         HkjTask partialUpdatedHkjTask = new HkjTask();
         partialUpdatedHkjTask.setId(hkjTask.getId());
 
-        partialUpdatedHkjTask.assignedDate(UPDATED_ASSIGNED_DATE).expectDate(UPDATED_EXPECT_DATE).priority(UPDATED_PRIORITY);
+        partialUpdatedHkjTask.description(UPDATED_DESCRIPTION).expectDate(UPDATED_EXPECT_DATE).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTaskMockMvc
             .perform(

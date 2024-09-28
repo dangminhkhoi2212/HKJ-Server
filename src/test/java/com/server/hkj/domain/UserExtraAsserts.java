@@ -51,7 +51,8 @@ public class UserExtraAsserts {
             .as("Verify UserExtra relevant properties")
             .satisfies(e -> assertThat(e.getPhone()).as("check phone").isEqualTo(actual.getPhone()))
             .satisfies(e -> assertThat(e.getAddress()).as("check address").isEqualTo(actual.getAddress()))
-            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
+            .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()))
+            .satisfies(e -> assertThat(e.getActive()).as("check active").isEqualTo(actual.getActive()));
     }
 
     /**
@@ -60,5 +61,7 @@ public class UserExtraAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertUserExtraUpdatableRelationshipsEquals(UserExtra expected, UserExtra actual) {}
+    public static void assertUserExtraUpdatableRelationshipsEquals(UserExtra expected, UserExtra actual) {
+        // empty method
+    }
 }

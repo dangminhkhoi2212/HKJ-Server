@@ -52,6 +52,7 @@ public class HkjSalaryAsserts {
             .as("Verify HkjSalary relevant properties")
             .satisfies(e -> assertThat(e.getSalary()).as("check salary").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getSalary()))
             .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
+            .satisfies(e -> assertThat(e.getPayDate()).as("check payDate").isEqualTo(actual.getPayDate()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
@@ -64,6 +65,6 @@ public class HkjSalaryAsserts {
     public static void assertHkjSalaryUpdatableRelationshipsEquals(HkjSalary expected, HkjSalary actual) {
         assertThat(expected)
             .as("Verify HkjSalary relationships")
-            .satisfies(e -> assertThat(e.getEmployee()).as("check employee").isEqualTo(actual.getEmployee()));
+            .satisfies(e -> assertThat(e.getUserExtra()).as("check userExtra").isEqualTo(actual.getUserExtra()));
     }
 }

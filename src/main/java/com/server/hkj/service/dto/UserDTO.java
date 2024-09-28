@@ -1,12 +1,15 @@
 package com.server.hkj.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.server.hkj.domain.User;
 import java.io.Serializable;
 import java.util.Objects;
+import lombok.Data;
 
 /**
  * A DTO representing a user, with only the public attributes.
  */
+@Data
 public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -14,6 +17,14 @@ public class UserDTO implements Serializable {
     private String id;
 
     private String login;
+
+    @JsonProperty("first_name")
+    private String firstName;
+
+    @JsonProperty("last_name")
+    private String lastName;
+
+    private String email;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -23,6 +34,9 @@ public class UserDTO implements Serializable {
         this.id = user.getId();
         // Customize it here if you need, or not, firstName/lastName/etc
         this.login = user.getLogin();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
     }
 
     public String getId() {

@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjMaterialService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjMaterialService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjMaterialService.class);
 
     private final HkjMaterialRepository hkjMaterialRepository;
 
@@ -39,7 +39,7 @@ public class HkjMaterialService {
      * @return the persisted entity.
      */
     public HkjMaterialDTO save(HkjMaterialDTO hkjMaterialDTO) {
-        log.debug("Request to save HkjMaterial : {}", hkjMaterialDTO);
+        LOG.debug("Request to save HkjMaterial : {}", hkjMaterialDTO);
         HkjMaterial hkjMaterial = hkjMaterialMapper.toEntity(hkjMaterialDTO);
         hkjMaterial = hkjMaterialRepository.save(hkjMaterial);
         return hkjMaterialMapper.toDto(hkjMaterial);
@@ -52,7 +52,7 @@ public class HkjMaterialService {
      * @return the persisted entity.
      */
     public HkjMaterialDTO update(HkjMaterialDTO hkjMaterialDTO) {
-        log.debug("Request to update HkjMaterial : {}", hkjMaterialDTO);
+        LOG.debug("Request to update HkjMaterial : {}", hkjMaterialDTO);
         HkjMaterial hkjMaterial = hkjMaterialMapper.toEntity(hkjMaterialDTO);
         hkjMaterial.setIsPersisted();
         hkjMaterial = hkjMaterialRepository.save(hkjMaterial);
@@ -66,7 +66,7 @@ public class HkjMaterialService {
      * @return the persisted entity.
      */
     public Optional<HkjMaterialDTO> partialUpdate(HkjMaterialDTO hkjMaterialDTO) {
-        log.debug("Request to partially update HkjMaterial : {}", hkjMaterialDTO);
+        LOG.debug("Request to partially update HkjMaterial : {}", hkjMaterialDTO);
 
         return hkjMaterialRepository
             .findById(hkjMaterialDTO.getId())
@@ -85,7 +85,7 @@ public class HkjMaterialService {
      */
     @Transactional(readOnly = true)
     public List<HkjMaterialDTO> findAllWhereHkjMaterialUsageIsNull() {
-        log.debug("Request to get all hkjMaterials where HkjMaterialUsage is null");
+        LOG.debug("Request to get all hkjMaterials where HkjMaterialUsage is null");
         return StreamSupport.stream(hkjMaterialRepository.findAll().spliterator(), false)
             .filter(hkjMaterial -> hkjMaterial.getHkjMaterialUsage() == null)
             .map(hkjMaterialMapper::toDto)
@@ -100,7 +100,7 @@ public class HkjMaterialService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjMaterialDTO> findOne(Long id) {
-        log.debug("Request to get HkjMaterial : {}", id);
+        LOG.debug("Request to get HkjMaterial : {}", id);
         return hkjMaterialRepository.findById(id).map(hkjMaterialMapper::toDto);
     }
 
@@ -110,7 +110,7 @@ public class HkjMaterialService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjMaterial : {}", id);
+        LOG.debug("Request to delete HkjMaterial : {}", id);
         hkjMaterialRepository.deleteById(id);
     }
 }

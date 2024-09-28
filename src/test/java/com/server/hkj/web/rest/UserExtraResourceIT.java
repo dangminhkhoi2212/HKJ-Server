@@ -46,6 +46,9 @@ class UserExtraResourceIT {
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
 
+    private static final Boolean DEFAULT_ACTIVE = false;
+    private static final Boolean UPDATED_ACTIVE = true;
+
     private static final String ENTITY_API_URL = "/api/user-extras";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -80,9 +83,8 @@ class UserExtraResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static UserExtra createEntity(EntityManager em) {
-        UserExtra userExtra = new UserExtra().phone(DEFAULT_PHONE).address(DEFAULT_ADDRESS).isDeleted(DEFAULT_IS_DELETED);
-        return userExtra;
+    public static UserExtra createEntity() {
+        return new UserExtra().phone(DEFAULT_PHONE).address(DEFAULT_ADDRESS).isDeleted(DEFAULT_IS_DELETED).active(DEFAULT_ACTIVE);
     }
 
     /**
@@ -91,14 +93,13 @@ class UserExtraResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static UserExtra createUpdatedEntity(EntityManager em) {
-        UserExtra userExtra = new UserExtra().phone(UPDATED_PHONE).address(UPDATED_ADDRESS).isDeleted(UPDATED_IS_DELETED);
-        return userExtra;
+    public static UserExtra createUpdatedEntity() {
+        return new UserExtra().phone(UPDATED_PHONE).address(UPDATED_ADDRESS).isDeleted(UPDATED_IS_DELETED).active(UPDATED_ACTIVE);
     }
 
     @BeforeEach
     public void initTest() {
-        userExtra = createEntity(em);
+        userExtra = createEntity();
     }
 
     @AfterEach
@@ -185,7 +186,8 @@ class UserExtraResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(userExtra.getId().intValue())))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
-            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
     }
 
     @Test
@@ -202,7 +204,8 @@ class UserExtraResourceIT {
             .andExpect(jsonPath("$.id").value(userExtra.getId().intValue()))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
-            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
+            .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()))
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
     }
 
     @Test
@@ -352,11 +355,41 @@ class UserExtraResourceIT {
 
     @Test
     @Transactional
+    void getAllUserExtrasByActiveIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
+
+        // Get all the userExtraList where active equals to
+        defaultUserExtraFiltering("active.equals=" + DEFAULT_ACTIVE, "active.equals=" + UPDATED_ACTIVE);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserExtrasByActiveIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
+
+        // Get all the userExtraList where active in
+        defaultUserExtraFiltering("active.in=" + DEFAULT_ACTIVE + "," + UPDATED_ACTIVE, "active.in=" + UPDATED_ACTIVE);
+    }
+
+    @Test
+    @Transactional
+    void getAllUserExtrasByActiveIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedUserExtra = userExtraRepository.saveAndFlush(userExtra);
+
+        // Get all the userExtraList where active is not null
+        defaultUserExtraFiltering("active.specified=true", "active.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllUserExtrasByUserIsEqualToSomething() throws Exception {
         User user;
         if (TestUtil.findAll(em, User.class).isEmpty()) {
             userExtraRepository.saveAndFlush(userExtra);
-            user = UserResourceIT.createEntity(em);
+            user = UserResourceIT.createEntity();
         } else {
             user = TestUtil.findAll(em, User.class).get(0);
         }
@@ -388,7 +421,8 @@ class UserExtraResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(userExtra.getId().intValue())))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
-            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
+            .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
 
         // Check, that the count call also returns 1
         restUserExtraMockMvc
@@ -436,7 +470,7 @@ class UserExtraResourceIT {
         UserExtra updatedUserExtra = userExtraRepository.findById(userExtra.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedUserExtra are not directly saved in db
         em.detach(updatedUserExtra);
-        updatedUserExtra.phone(UPDATED_PHONE).address(UPDATED_ADDRESS).isDeleted(UPDATED_IS_DELETED);
+        updatedUserExtra.phone(UPDATED_PHONE).address(UPDATED_ADDRESS).isDeleted(UPDATED_IS_DELETED).active(UPDATED_ACTIVE);
         UserExtraDTO userExtraDTO = userExtraMapper.toDto(updatedUserExtra);
 
         restUserExtraMockMvc
@@ -529,7 +563,7 @@ class UserExtraResourceIT {
         UserExtra partialUpdatedUserExtra = new UserExtra();
         partialUpdatedUserExtra.setId(userExtra.getId());
 
-        partialUpdatedUserExtra.address(UPDATED_ADDRESS).isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedUserExtra.address(UPDATED_ADDRESS).active(UPDATED_ACTIVE);
 
         restUserExtraMockMvc
             .perform(
@@ -561,7 +595,7 @@ class UserExtraResourceIT {
         UserExtra partialUpdatedUserExtra = new UserExtra();
         partialUpdatedUserExtra.setId(userExtra.getId());
 
-        partialUpdatedUserExtra.phone(UPDATED_PHONE).address(UPDATED_ADDRESS).isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedUserExtra.phone(UPDATED_PHONE).address(UPDATED_ADDRESS).isDeleted(UPDATED_IS_DELETED).active(UPDATED_ACTIVE);
 
         restUserExtraMockMvc
             .perform(

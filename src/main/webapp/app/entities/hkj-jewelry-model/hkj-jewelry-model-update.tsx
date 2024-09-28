@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjProject } from 'app/shared/model/hkj-project.model';
 import { getEntities as getHkjProjects } from 'app/entities/hkj-project/hkj-project.reducer';
-import { IHkjJewelryModel } from 'app/shared/model/hkj-jewelry-model.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-jewelry-model.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-jewelry-model.reducer';
 
 export const HkjJewelryModelUpdate = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +25,7 @@ export const HkjJewelryModelUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjJewelryModel.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-jewelry-model' + location.search);
+    navigate(`/hkj-jewelry-model${location.search}`);
   };
 
   useEffect(() => {
@@ -47,7 +44,6 @@ export const HkjJewelryModelUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
@@ -173,6 +169,14 @@ export const HkjJewelryModelUpdate = () => {
                 id="hkj-jewelry-model-isDeleted"
                 name="isDeleted"
                 data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
+                label={translate('serverApp.hkjJewelryModel.active')}
+                id="hkj-jewelry-model-active"
+                name="active"
+                data-cy="active"
                 check
                 type="checkbox"
               />

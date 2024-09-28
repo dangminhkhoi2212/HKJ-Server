@@ -53,9 +53,8 @@ public class HkjMaterialAsserts {
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
             .satisfies(e -> assertThat(e.getQuantity()).as("check quantity").isEqualTo(actual.getQuantity()))
             .satisfies(e -> assertThat(e.getUnit()).as("check unit").isEqualTo(actual.getUnit()))
-            .satisfies(
-                e ->
-                    assertThat(e.getUnitPrice()).as("check unitPrice").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getUnitPrice())
+            .satisfies(e ->
+                assertThat(e.getUnitPrice()).as("check unitPrice").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getUnitPrice())
             )
             .satisfies(e -> assertThat(e.getSupplier()).as("check supplier").isEqualTo(actual.getSupplier()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
@@ -67,5 +66,7 @@ public class HkjMaterialAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertHkjMaterialUpdatableRelationshipsEquals(HkjMaterial expected, HkjMaterial actual) {}
+    public static void assertHkjMaterialUpdatableRelationshipsEquals(HkjMaterial expected, HkjMaterial actual) {
+        // empty method
+    }
 }

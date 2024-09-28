@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjHireQueryService extends QueryService<HkjHire> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjHireQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjHireQueryService.class);
 
     private final HkjHireRepository hkjHireRepository;
 
@@ -45,7 +45,7 @@ public class HkjHireQueryService extends QueryService<HkjHire> {
      */
     @Transactional(readOnly = true)
     public Page<HkjHireDTO> findByCriteria(HkjHireCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjHire> specification = createSpecification(criteria);
         return hkjHireRepository.findAll(specification, page).map(hkjHireMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjHireQueryService extends QueryService<HkjHire> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjHireCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjHire> specification = createSpecification(criteria);
         return hkjHireRepository.count(specification);
     }

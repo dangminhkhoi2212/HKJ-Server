@@ -2,6 +2,6 @@
   "generator-jhipster": {
     "creationTimestamp": 1722581706163,
     "jdlStore": "./jhipster-jdl.jdl",
-    "jhipsterVersion": "8.6.0"
+    "jhipsterVersion": "8.7.1"
   }
 }

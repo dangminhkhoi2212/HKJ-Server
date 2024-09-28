@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjOrderImageService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjOrderImageService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjOrderImageService.class);
 
     private final HkjOrderImageRepository hkjOrderImageRepository;
 
@@ -35,7 +35,7 @@ public class HkjOrderImageService {
      * @return the persisted entity.
      */
     public HkjOrderImageDTO save(HkjOrderImageDTO hkjOrderImageDTO) {
-        log.debug("Request to save HkjOrderImage : {}", hkjOrderImageDTO);
+        LOG.debug("Request to save HkjOrderImage : {}", hkjOrderImageDTO);
         HkjOrderImage hkjOrderImage = hkjOrderImageMapper.toEntity(hkjOrderImageDTO);
         hkjOrderImage = hkjOrderImageRepository.save(hkjOrderImage);
         return hkjOrderImageMapper.toDto(hkjOrderImage);
@@ -48,7 +48,7 @@ public class HkjOrderImageService {
      * @return the persisted entity.
      */
     public HkjOrderImageDTO update(HkjOrderImageDTO hkjOrderImageDTO) {
-        log.debug("Request to update HkjOrderImage : {}", hkjOrderImageDTO);
+        LOG.debug("Request to update HkjOrderImage : {}", hkjOrderImageDTO);
         HkjOrderImage hkjOrderImage = hkjOrderImageMapper.toEntity(hkjOrderImageDTO);
         hkjOrderImage.setIsPersisted();
         hkjOrderImage = hkjOrderImageRepository.save(hkjOrderImage);
@@ -62,7 +62,7 @@ public class HkjOrderImageService {
      * @return the persisted entity.
      */
     public Optional<HkjOrderImageDTO> partialUpdate(HkjOrderImageDTO hkjOrderImageDTO) {
-        log.debug("Request to partially update HkjOrderImage : {}", hkjOrderImageDTO);
+        LOG.debug("Request to partially update HkjOrderImage : {}", hkjOrderImageDTO);
 
         return hkjOrderImageRepository
             .findById(hkjOrderImageDTO.getId())
@@ -83,7 +83,7 @@ public class HkjOrderImageService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjOrderImageDTO> findOne(Long id) {
-        log.debug("Request to get HkjOrderImage : {}", id);
+        LOG.debug("Request to get HkjOrderImage : {}", id);
         return hkjOrderImageRepository.findById(id).map(hkjOrderImageMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjOrderImageService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjOrderImage : {}", id);
+        LOG.debug("Request to delete HkjOrderImage : {}", id);
         hkjOrderImageRepository.deleteById(id);
     }
 }

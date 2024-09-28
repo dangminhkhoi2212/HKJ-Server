@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjTaskImageService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTaskImageService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTaskImageService.class);
 
     private final HkjTaskImageRepository hkjTaskImageRepository;
 
@@ -35,7 +35,7 @@ public class HkjTaskImageService {
      * @return the persisted entity.
      */
     public HkjTaskImageDTO save(HkjTaskImageDTO hkjTaskImageDTO) {
-        log.debug("Request to save HkjTaskImage : {}", hkjTaskImageDTO);
+        LOG.debug("Request to save HkjTaskImage : {}", hkjTaskImageDTO);
         HkjTaskImage hkjTaskImage = hkjTaskImageMapper.toEntity(hkjTaskImageDTO);
         hkjTaskImage = hkjTaskImageRepository.save(hkjTaskImage);
         return hkjTaskImageMapper.toDto(hkjTaskImage);
@@ -48,7 +48,7 @@ public class HkjTaskImageService {
      * @return the persisted entity.
      */
     public HkjTaskImageDTO update(HkjTaskImageDTO hkjTaskImageDTO) {
-        log.debug("Request to update HkjTaskImage : {}", hkjTaskImageDTO);
+        LOG.debug("Request to update HkjTaskImage : {}", hkjTaskImageDTO);
         HkjTaskImage hkjTaskImage = hkjTaskImageMapper.toEntity(hkjTaskImageDTO);
         hkjTaskImage.setIsPersisted();
         hkjTaskImage = hkjTaskImageRepository.save(hkjTaskImage);
@@ -62,7 +62,7 @@ public class HkjTaskImageService {
      * @return the persisted entity.
      */
     public Optional<HkjTaskImageDTO> partialUpdate(HkjTaskImageDTO hkjTaskImageDTO) {
-        log.debug("Request to partially update HkjTaskImage : {}", hkjTaskImageDTO);
+        LOG.debug("Request to partially update HkjTaskImage : {}", hkjTaskImageDTO);
 
         return hkjTaskImageRepository
             .findById(hkjTaskImageDTO.getId())
@@ -83,7 +83,7 @@ public class HkjTaskImageService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjTaskImageDTO> findOne(Long id) {
-        log.debug("Request to get HkjTaskImage : {}", id);
+        LOG.debug("Request to get HkjTaskImage : {}", id);
         return hkjTaskImageRepository.findById(id).map(hkjTaskImageMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjTaskImageService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjTaskImage : {}", id);
+        LOG.debug("Request to delete HkjTaskImage : {}", id);
         hkjTaskImageRepository.deleteById(id);
     }
 }

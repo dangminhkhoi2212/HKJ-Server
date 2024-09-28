@@ -37,14 +37,14 @@ class HkjMaterialUsageTest {
     }
 
     @Test
-    void taskTest() {
+    void hkjTaskTest() {
         HkjMaterialUsage hkjMaterialUsage = getHkjMaterialUsageRandomSampleGenerator();
         HkjTask hkjTaskBack = getHkjTaskRandomSampleGenerator();
 
-        hkjMaterialUsage.setTask(hkjTaskBack);
-        assertThat(hkjMaterialUsage.getTask()).isEqualTo(hkjTaskBack);
+        hkjMaterialUsage.setHkjTask(hkjTaskBack);
+        assertThat(hkjMaterialUsage.getHkjTask()).isEqualTo(hkjTaskBack);
 
-        hkjMaterialUsage.task(null);
-        assertThat(hkjMaterialUsage.getTask()).isNull();
+        hkjMaterialUsage.hkjTask(null);
+        assertThat(hkjMaterialUsage.getHkjTask()).isNull();
     }
 }

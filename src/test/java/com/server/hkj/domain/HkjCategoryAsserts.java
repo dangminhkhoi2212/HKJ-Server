@@ -59,5 +59,7 @@ public class HkjCategoryAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertHkjCategoryUpdatableRelationshipsEquals(HkjCategory expected, HkjCategory actual) {}
+    public static void assertHkjCategoryUpdatableRelationshipsEquals(HkjCategory expected, HkjCategory actual) {
+        // empty method
+    }
 }

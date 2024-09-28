@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjMaterialUsageQueryService extends QueryService<HkjMaterialUsage> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjMaterialUsageQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjMaterialUsageQueryService.class);
 
     private final HkjMaterialUsageRepository hkjMaterialUsageRepository;
 
@@ -48,7 +48,7 @@ public class HkjMaterialUsageQueryService extends QueryService<HkjMaterialUsage>
      */
     @Transactional(readOnly = true)
     public Page<HkjMaterialUsageDTO> findByCriteria(HkjMaterialUsageCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjMaterialUsage> specification = createSpecification(criteria);
         return hkjMaterialUsageRepository.findAll(specification, page).map(hkjMaterialUsageMapper::toDto);
     }
@@ -60,7 +60,7 @@ public class HkjMaterialUsageQueryService extends QueryService<HkjMaterialUsage>
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjMaterialUsageCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjMaterialUsage> specification = createSpecification(criteria);
         return hkjMaterialUsageRepository.count(specification);
     }
@@ -117,15 +117,15 @@ public class HkjMaterialUsageQueryService extends QueryService<HkjMaterialUsage>
             }
             if (criteria.getMaterialId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getMaterialId(),
-                        root -> root.join(HkjMaterialUsage_.material, JoinType.LEFT).get(HkjMaterial_.id)
+                    buildSpecification(criteria.getMaterialId(), root ->
+                        root.join(HkjMaterialUsage_.material, JoinType.LEFT).get(HkjMaterial_.id)
                     )
                 );
             }
-            if (criteria.getTaskId() != null) {
+            if (criteria.getHkjTaskId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getTaskId(), root -> root.join(HkjMaterialUsage_.task, JoinType.LEFT).get(HkjTask_.id))
+                    buildSpecification(criteria.getHkjTaskId(), root -> root.join(HkjMaterialUsage_.hkjTask, JoinType.LEFT).get(HkjTask_.id)
+                    )
                 );
             }
         }

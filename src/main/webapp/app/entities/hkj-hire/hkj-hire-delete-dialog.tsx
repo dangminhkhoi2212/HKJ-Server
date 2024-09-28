@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-import { getEntity, deleteEntity } from './hkj-hire.reducer';
+import { deleteEntity, getEntity } from './hkj-hire.reducer';
 
 export const HkjHireDeleteDialog = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ export const HkjHireDeleteDialog = () => {
   const updateSuccess = useAppSelector(state => state.hkjHire.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-hire' + pageLocation.search);
+    navigate(`/hkj-hire${pageLocation.search}`);
   };
 
   useEffect(() => {

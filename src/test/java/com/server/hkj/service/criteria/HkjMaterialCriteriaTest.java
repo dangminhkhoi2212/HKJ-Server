@@ -85,6 +85,7 @@ class HkjMaterialCriteriaTest {
         hkjMaterialCriteria.createdDate();
         hkjMaterialCriteria.lastModifiedBy();
         hkjMaterialCriteria.lastModifiedDate();
+        hkjMaterialCriteria.imagesId();
         hkjMaterialCriteria.hkjMaterialUsageId();
         hkjMaterialCriteria.distinct();
     }
@@ -103,6 +104,7 @@ class HkjMaterialCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
+                condition.apply(criteria.getImagesId()) &&
                 condition.apply(criteria.getHkjMaterialUsageId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
@@ -123,6 +125,7 @@ class HkjMaterialCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
+                condition.apply(criteria.getImagesId(), copy.getImagesId()) &&
                 condition.apply(criteria.getHkjMaterialUsageId(), copy.getHkjMaterialUsageId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"

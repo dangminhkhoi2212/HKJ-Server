@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-materials")
 public class HkjMaterialResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjMaterialResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjMaterialResource.class);
 
     private static final String ENTITY_NAME = "hkjMaterial";
 
@@ -65,7 +65,7 @@ public class HkjMaterialResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjMaterialDTO> createHkjMaterial(@Valid @RequestBody HkjMaterialDTO hkjMaterialDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjMaterial : {}", hkjMaterialDTO);
+        LOG.debug("REST request to save HkjMaterial : {}", hkjMaterialDTO);
         if (hkjMaterialDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjMaterial cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -90,7 +90,7 @@ public class HkjMaterialResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjMaterialDTO hkjMaterialDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjMaterial : {}, {}", id, hkjMaterialDTO);
+        LOG.debug("REST request to update HkjMaterial : {}, {}", id, hkjMaterialDTO);
         if (hkjMaterialDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -124,7 +124,7 @@ public class HkjMaterialResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjMaterialDTO hkjMaterialDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjMaterial partially : {}, {}", id, hkjMaterialDTO);
+        LOG.debug("REST request to partial update HkjMaterial partially : {}, {}", id, hkjMaterialDTO);
         if (hkjMaterialDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -156,7 +156,7 @@ public class HkjMaterialResource {
         HkjMaterialCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjMaterials by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjMaterials by criteria: {}", criteria);
 
         Page<HkjMaterialDTO> page = hkjMaterialQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -171,7 +171,7 @@ public class HkjMaterialResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjMaterials(HkjMaterialCriteria criteria) {
-        log.debug("REST request to count HkjMaterials by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjMaterials by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjMaterialQueryService.countByCriteria(criteria));
     }
 
@@ -183,7 +183,7 @@ public class HkjMaterialResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjMaterialDTO> getHkjMaterial(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjMaterial : {}", id);
+        LOG.debug("REST request to get HkjMaterial : {}", id);
         Optional<HkjMaterialDTO> hkjMaterialDTO = hkjMaterialService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjMaterialDTO);
     }
@@ -196,7 +196,7 @@ public class HkjMaterialResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjMaterial(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjMaterial : {}", id);
+        LOG.debug("REST request to delete HkjMaterial : {}", id);
         hkjMaterialService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

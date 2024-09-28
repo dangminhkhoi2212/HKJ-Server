@@ -94,7 +94,7 @@ class HkjProjectCriteriaTest {
         hkjProjectCriteria.categoryId();
         hkjProjectCriteria.tasksId();
         hkjProjectCriteria.managerId();
-        hkjProjectCriteria.hkjJewelryModelId();
+        hkjProjectCriteria.jewelryId();
         hkjProjectCriteria.hkjOrderId();
         hkjProjectCriteria.distinct();
     }
@@ -122,7 +122,7 @@ class HkjProjectCriteriaTest {
                 condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getTasksId()) &&
                 condition.apply(criteria.getManagerId()) &&
-                condition.apply(criteria.getHkjJewelryModelId()) &&
+                condition.apply(criteria.getJewelryId()) &&
                 condition.apply(criteria.getHkjOrderId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
@@ -152,7 +152,7 @@ class HkjProjectCriteriaTest {
                 condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getTasksId(), copy.getTasksId()) &&
                 condition.apply(criteria.getManagerId(), copy.getManagerId()) &&
-                condition.apply(criteria.getHkjJewelryModelId(), copy.getHkjJewelryModelId()) &&
+                condition.apply(criteria.getJewelryId(), copy.getJewelryId()) &&
                 condition.apply(criteria.getHkjOrderId(), copy.getHkjOrderId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"

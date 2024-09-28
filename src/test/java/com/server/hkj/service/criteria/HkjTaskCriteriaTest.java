@@ -89,10 +89,10 @@ class HkjTaskCriteriaTest {
         hkjTaskCriteria.createdDate();
         hkjTaskCriteria.lastModifiedBy();
         hkjTaskCriteria.lastModifiedDate();
-        hkjTaskCriteria.employeeId();
         hkjTaskCriteria.imagesId();
         hkjTaskCriteria.materialsId();
-        hkjTaskCriteria.projectId();
+        hkjTaskCriteria.employeeId();
+        hkjTaskCriteria.hkjProjectId();
         hkjTaskCriteria.distinct();
     }
 
@@ -114,10 +114,10 @@ class HkjTaskCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getEmployeeId()) &&
                 condition.apply(criteria.getImagesId()) &&
                 condition.apply(criteria.getMaterialsId()) &&
-                condition.apply(criteria.getProjectId()) &&
+                condition.apply(criteria.getEmployeeId()) &&
+                condition.apply(criteria.getHkjProjectId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -141,10 +141,10 @@ class HkjTaskCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getEmployeeId(), copy.getEmployeeId()) &&
                 condition.apply(criteria.getImagesId(), copy.getImagesId()) &&
                 condition.apply(criteria.getMaterialsId(), copy.getMaterialsId()) &&
-                condition.apply(criteria.getProjectId(), copy.getProjectId()) &&
+                condition.apply(criteria.getEmployeeId(), copy.getEmployeeId()) &&
+                condition.apply(criteria.getHkjProjectId(), copy.getHkjProjectId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

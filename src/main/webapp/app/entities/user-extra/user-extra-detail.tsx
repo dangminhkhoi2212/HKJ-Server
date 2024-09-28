@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { TextFormat, Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './user-extra.reducer';
@@ -50,6 +50,12 @@ export const UserExtraDetail = () => {
             </span>
           </dt>
           <dd>{userExtraEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="active">
+              <Translate contentKey="serverApp.userExtra.active">Active</Translate>
+            </span>
+          </dt>
+          <dd>{userExtraEntity.active ? 'true' : 'false'}</dd>
           <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.userExtra.createdBy">Created By</Translate>

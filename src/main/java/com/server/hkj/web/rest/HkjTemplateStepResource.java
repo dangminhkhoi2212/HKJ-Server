@@ -31,7 +31,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-template-steps")
 public class HkjTemplateStepResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTemplateStepResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTemplateStepResource.class);
 
     private static final String ENTITY_NAME = "hkjTemplateStep";
 
@@ -64,7 +64,7 @@ public class HkjTemplateStepResource {
     @PostMapping("")
     public ResponseEntity<HkjTemplateStepDTO> createHkjTemplateStep(@RequestBody HkjTemplateStepDTO hkjTemplateStepDTO)
         throws URISyntaxException {
-        log.debug("REST request to save HkjTemplateStep : {}", hkjTemplateStepDTO);
+        LOG.debug("REST request to save HkjTemplateStep : {}", hkjTemplateStepDTO);
         if (hkjTemplateStepDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjTemplateStep cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -89,7 +89,7 @@ public class HkjTemplateStepResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjTemplateStepDTO hkjTemplateStepDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjTemplateStep : {}, {}", id, hkjTemplateStepDTO);
+        LOG.debug("REST request to update HkjTemplateStep : {}, {}", id, hkjTemplateStepDTO);
         if (hkjTemplateStepDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -123,7 +123,7 @@ public class HkjTemplateStepResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjTemplateStepDTO hkjTemplateStepDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjTemplateStep partially : {}, {}", id, hkjTemplateStepDTO);
+        LOG.debug("REST request to partial update HkjTemplateStep partially : {}, {}", id, hkjTemplateStepDTO);
         if (hkjTemplateStepDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -155,7 +155,7 @@ public class HkjTemplateStepResource {
         HkjTemplateStepCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjTemplateSteps by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjTemplateSteps by criteria: {}", criteria);
 
         Page<HkjTemplateStepDTO> page = hkjTemplateStepQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -170,7 +170,7 @@ public class HkjTemplateStepResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjTemplateSteps(HkjTemplateStepCriteria criteria) {
-        log.debug("REST request to count HkjTemplateSteps by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjTemplateSteps by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjTemplateStepQueryService.countByCriteria(criteria));
     }
 
@@ -182,7 +182,7 @@ public class HkjTemplateStepResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjTemplateStepDTO> getHkjTemplateStep(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjTemplateStep : {}", id);
+        LOG.debug("REST request to get HkjTemplateStep : {}", id);
         Optional<HkjTemplateStepDTO> hkjTemplateStepDTO = hkjTemplateStepService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjTemplateStepDTO);
     }
@@ -195,7 +195,7 @@ public class HkjTemplateStepResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjTemplateStep(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjTemplateStep : {}", id);
+        LOG.debug("REST request to delete HkjTemplateStep : {}", id);
         hkjTemplateStepService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

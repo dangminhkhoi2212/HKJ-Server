@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjTemplateStepQueryService extends QueryService<HkjTemplateStep> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTemplateStepQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTemplateStepQueryService.class);
 
     private final HkjTemplateStepRepository hkjTemplateStepRepository;
 
@@ -45,7 +45,7 @@ public class HkjTemplateStepQueryService extends QueryService<HkjTemplateStep> {
      */
     @Transactional(readOnly = true)
     public Page<HkjTemplateStepDTO> findByCriteria(HkjTemplateStepCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjTemplateStep> specification = createSpecification(criteria);
         return hkjTemplateStepRepository.findAll(specification, page).map(hkjTemplateStepMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjTemplateStepQueryService extends QueryService<HkjTemplateStep> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjTemplateStepCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjTemplateStep> specification = createSpecification(criteria);
         return hkjTemplateStepRepository.count(specification);
     }
@@ -97,11 +97,10 @@ public class HkjTemplateStepQueryService extends QueryService<HkjTemplateStep> {
                     buildRangeSpecification(criteria.getLastModifiedDate(), HkjTemplateStep_.lastModifiedDate)
                 );
             }
-            if (criteria.getTemplateId() != null) {
+            if (criteria.getHkjTemplateId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getTemplateId(),
-                        root -> root.join(HkjTemplateStep_.template, JoinType.LEFT).get(HkjTemplate_.id)
+                    buildSpecification(criteria.getHkjTemplateId(), root ->
+                        root.join(HkjTemplateStep_.hkjTemplate, JoinType.LEFT).get(HkjTemplate_.id)
                     )
                 );
             }

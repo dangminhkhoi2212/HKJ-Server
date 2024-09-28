@@ -20,6 +20,10 @@
       "fieldType": "Boolean"
     },
     {
+      "fieldName": "active",
+      "fieldType": "Boolean"
+    },
+    {
       "auditField": true,
       "autoGenerate": true,
       "columnType": "varchar(50)",
@@ -68,16 +72,8 @@
     },
     {
       "otherEntityName": "hkjSalary",
-      "otherEntityRelationshipName": "employee",
       "relationshipName": "salarys",
       "relationshipSide": "left",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "hkjHire",
-      "otherEntityRelationshipName": "employee",
-      "relationshipName": "hire",
-      "relationshipSide": "right",
       "relationshipType": "one-to-many"
     }
   ],

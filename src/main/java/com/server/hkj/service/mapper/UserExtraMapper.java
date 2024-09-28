@@ -4,10 +4,7 @@ import com.server.hkj.domain.User;
 import com.server.hkj.domain.UserExtra;
 import com.server.hkj.service.dto.UserDTO;
 import com.server.hkj.service.dto.UserExtraDTO;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 /**
  * Mapper for the entity {@link UserExtra} and its DTO {@link UserExtraDTO}.

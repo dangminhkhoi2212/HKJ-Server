@@ -33,7 +33,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-task-images")
 public class HkjTaskImageResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTaskImageResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTaskImageResource.class);
 
     private static final String ENTITY_NAME = "hkjTaskImage";
 
@@ -66,7 +66,7 @@ public class HkjTaskImageResource {
     @PostMapping("")
     public ResponseEntity<HkjTaskImageDTO> createHkjTaskImage(@Valid @RequestBody HkjTaskImageDTO hkjTaskImageDTO)
         throws URISyntaxException {
-        log.debug("REST request to save HkjTaskImage : {}", hkjTaskImageDTO);
+        LOG.debug("REST request to save HkjTaskImage : {}", hkjTaskImageDTO);
         if (hkjTaskImageDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjTaskImage cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -91,7 +91,7 @@ public class HkjTaskImageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @Valid @RequestBody HkjTaskImageDTO hkjTaskImageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjTaskImage : {}, {}", id, hkjTaskImageDTO);
+        LOG.debug("REST request to update HkjTaskImage : {}, {}", id, hkjTaskImageDTO);
         if (hkjTaskImageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -125,7 +125,7 @@ public class HkjTaskImageResource {
         @PathVariable(value = "id", required = false) final Long id,
         @NotNull @RequestBody HkjTaskImageDTO hkjTaskImageDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjTaskImage partially : {}, {}", id, hkjTaskImageDTO);
+        LOG.debug("REST request to partial update HkjTaskImage partially : {}, {}", id, hkjTaskImageDTO);
         if (hkjTaskImageDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -157,7 +157,7 @@ public class HkjTaskImageResource {
         HkjTaskImageCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjTaskImages by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjTaskImages by criteria: {}", criteria);
 
         Page<HkjTaskImageDTO> page = hkjTaskImageQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -172,7 +172,7 @@ public class HkjTaskImageResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjTaskImages(HkjTaskImageCriteria criteria) {
-        log.debug("REST request to count HkjTaskImages by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjTaskImages by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjTaskImageQueryService.countByCriteria(criteria));
     }
 
@@ -184,7 +184,7 @@ public class HkjTaskImageResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjTaskImageDTO> getHkjTaskImage(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjTaskImage : {}", id);
+        LOG.debug("REST request to get HkjTaskImage : {}", id);
         Optional<HkjTaskImageDTO> hkjTaskImageDTO = hkjTaskImageService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjTaskImageDTO);
     }
@@ -197,7 +197,7 @@ public class HkjTaskImageResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjTaskImage(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjTaskImage : {}", id);
+        LOG.debug("REST request to delete HkjTaskImage : {}", id);
         hkjTaskImageService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

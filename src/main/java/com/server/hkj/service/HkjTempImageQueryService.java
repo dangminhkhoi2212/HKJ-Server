@@ -25,7 +25,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjTempImageQueryService extends QueryService<HkjTempImage> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTempImageQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTempImageQueryService.class);
 
     private final HkjTempImageRepository hkjTempImageRepository;
 
@@ -44,7 +44,7 @@ public class HkjTempImageQueryService extends QueryService<HkjTempImage> {
      */
     @Transactional(readOnly = true)
     public Page<HkjTempImageDTO> findByCriteria(HkjTempImageCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjTempImage> specification = createSpecification(criteria);
         return hkjTempImageRepository.findAll(specification, page).map(hkjTempImageMapper::toDto);
     }
@@ -56,7 +56,7 @@ public class HkjTempImageQueryService extends QueryService<HkjTempImage> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjTempImageCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjTempImage> specification = createSpecification(criteria);
         return hkjTempImageRepository.count(specification);
     }

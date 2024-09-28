@@ -72,9 +72,8 @@ class HkjCategoryResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjCategory createEntity(EntityManager em) {
-        HkjCategory hkjCategory = new HkjCategory().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
-        return hkjCategory;
+    public static HkjCategory createEntity() {
+        return new HkjCategory().name(DEFAULT_NAME).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -83,14 +82,13 @@ class HkjCategoryResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjCategory createUpdatedEntity(EntityManager em) {
-        HkjCategory hkjCategory = new HkjCategory().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
-        return hkjCategory;
+    public static HkjCategory createUpdatedEntity() {
+        return new HkjCategory().name(UPDATED_NAME).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjCategory = createEntity(em);
+        hkjCategory = createEntity();
     }
 
     @AfterEach
@@ -429,8 +427,6 @@ class HkjCategoryResourceIT {
         // Update the hkjCategory using partial update
         HkjCategory partialUpdatedHkjCategory = new HkjCategory();
         partialUpdatedHkjCategory.setId(hkjCategory.getId());
-
-        partialUpdatedHkjCategory.isDeleted(UPDATED_IS_DELETED);
 
         restHkjCategoryMockMvc
             .perform(

@@ -31,7 +31,7 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/hkj-templates")
 public class HkjTemplateResource {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTemplateResource.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTemplateResource.class);
 
     private static final String ENTITY_NAME = "hkjTemplate";
 
@@ -63,7 +63,7 @@ public class HkjTemplateResource {
      */
     @PostMapping("")
     public ResponseEntity<HkjTemplateDTO> createHkjTemplate(@RequestBody HkjTemplateDTO hkjTemplateDTO) throws URISyntaxException {
-        log.debug("REST request to save HkjTemplate : {}", hkjTemplateDTO);
+        LOG.debug("REST request to save HkjTemplate : {}", hkjTemplateDTO);
         if (hkjTemplateDTO.getId() != null) {
             throw new BadRequestAlertException("A new hkjTemplate cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -88,7 +88,7 @@ public class HkjTemplateResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjTemplateDTO hkjTemplateDTO
     ) throws URISyntaxException {
-        log.debug("REST request to update HkjTemplate : {}, {}", id, hkjTemplateDTO);
+        LOG.debug("REST request to update HkjTemplate : {}, {}", id, hkjTemplateDTO);
         if (hkjTemplateDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -122,7 +122,7 @@ public class HkjTemplateResource {
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody HkjTemplateDTO hkjTemplateDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update HkjTemplate partially : {}, {}", id, hkjTemplateDTO);
+        LOG.debug("REST request to partial update HkjTemplate partially : {}, {}", id, hkjTemplateDTO);
         if (hkjTemplateDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
@@ -154,7 +154,7 @@ public class HkjTemplateResource {
         HkjTemplateCriteria criteria,
         @org.springdoc.core.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get HkjTemplates by criteria: {}", criteria);
+        LOG.debug("REST request to get HkjTemplates by criteria: {}", criteria);
 
         Page<HkjTemplateDTO> page = hkjTemplateQueryService.findByCriteria(criteria, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
@@ -169,7 +169,7 @@ public class HkjTemplateResource {
      */
     @GetMapping("/count")
     public ResponseEntity<Long> countHkjTemplates(HkjTemplateCriteria criteria) {
-        log.debug("REST request to count HkjTemplates by criteria: {}", criteria);
+        LOG.debug("REST request to count HkjTemplates by criteria: {}", criteria);
         return ResponseEntity.ok().body(hkjTemplateQueryService.countByCriteria(criteria));
     }
 
@@ -181,7 +181,7 @@ public class HkjTemplateResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<HkjTemplateDTO> getHkjTemplate(@PathVariable("id") Long id) {
-        log.debug("REST request to get HkjTemplate : {}", id);
+        LOG.debug("REST request to get HkjTemplate : {}", id);
         Optional<HkjTemplateDTO> hkjTemplateDTO = hkjTemplateService.findOne(id);
         return ResponseUtil.wrapOrNotFound(hkjTemplateDTO);
     }
@@ -194,7 +194,7 @@ public class HkjTemplateResource {
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteHkjTemplate(@PathVariable("id") Long id) {
-        log.debug("REST request to delete HkjTemplate : {}", id);
+        LOG.debug("REST request to delete HkjTemplate : {}", id);
         hkjTemplateService.delete(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

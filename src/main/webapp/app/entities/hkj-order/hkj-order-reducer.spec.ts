@@ -5,15 +5,14 @@ import sinon from 'sinon';
 
 import { EntityState } from 'app/shared/reducers/reducer.utils';
 import { IHkjOrder, defaultValue } from 'app/shared/model/hkj-order.model';
-import reducer, { createEntity, deleteEntity, getEntities, getEntity, updateEntity, partialUpdateEntity, reset } from './hkj-order.reducer';
+import reducer, { createEntity, deleteEntity, getEntities, getEntity, partialUpdateEntity, reset, updateEntity } from './hkj-order.reducer';
 
 describe('Entities reducer tests', () => {
   function isEmpty(element): boolean {
     if (element instanceof Array) {
       return element.length === 0;
-    } else {
-      return Object.keys(element).length === 0;
     }
+    return Object.keys(element).length === 0;
   }
 
   const initialState: EntityState<IHkjOrder> = {

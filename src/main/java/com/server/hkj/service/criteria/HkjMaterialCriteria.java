@@ -44,6 +44,8 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
+    private LongFilter imagesId;
+
     private LongFilter hkjMaterialUsageId;
 
     private Boolean distinct;
@@ -62,6 +64,7 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
+        this.imagesId = other.optionalImagesId().map(LongFilter::copy).orElse(null);
         this.hkjMaterialUsageId = other.optionalHkjMaterialUsageId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -280,6 +283,25 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public LongFilter getImagesId() {
+        return imagesId;
+    }
+
+    public Optional<LongFilter> optionalImagesId() {
+        return Optional.ofNullable(imagesId);
+    }
+
+    public LongFilter imagesId() {
+        if (imagesId == null) {
+            setImagesId(new LongFilter());
+        }
+        return imagesId;
+    }
+
+    public void setImagesId(LongFilter imagesId) {
+        this.imagesId = imagesId;
+    }
+
     public LongFilter getHkjMaterialUsageId() {
         return hkjMaterialUsageId;
     }
@@ -339,6 +361,7 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
+            Objects.equals(imagesId, that.imagesId) &&
             Objects.equals(hkjMaterialUsageId, that.hkjMaterialUsageId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -358,6 +381,7 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
+            imagesId,
             hkjMaterialUsageId,
             distinct
         );
@@ -378,6 +402,7 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
+            optionalImagesId().map(f -> "imagesId=" + f + ", ").orElse("") +
             optionalHkjMaterialUsageId().map(f -> "hkjMaterialUsageId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

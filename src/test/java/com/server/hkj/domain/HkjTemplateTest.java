@@ -46,19 +46,19 @@ class HkjTemplateTest {
 
         hkjTemplate.addSteps(hkjTemplateStepBack);
         assertThat(hkjTemplate.getSteps()).containsOnly(hkjTemplateStepBack);
-        assertThat(hkjTemplateStepBack.getTemplate()).isEqualTo(hkjTemplate);
+        assertThat(hkjTemplateStepBack.getHkjTemplate()).isEqualTo(hkjTemplate);
 
         hkjTemplate.removeSteps(hkjTemplateStepBack);
         assertThat(hkjTemplate.getSteps()).doesNotContain(hkjTemplateStepBack);
-        assertThat(hkjTemplateStepBack.getTemplate()).isNull();
+        assertThat(hkjTemplateStepBack.getHkjTemplate()).isNull();
 
         hkjTemplate.steps(new HashSet<>(Set.of(hkjTemplateStepBack)));
         assertThat(hkjTemplate.getSteps()).containsOnly(hkjTemplateStepBack);
-        assertThat(hkjTemplateStepBack.getTemplate()).isEqualTo(hkjTemplate);
+        assertThat(hkjTemplateStepBack.getHkjTemplate()).isEqualTo(hkjTemplate);
 
         hkjTemplate.setSteps(new HashSet<>());
         assertThat(hkjTemplate.getSteps()).doesNotContain(hkjTemplateStepBack);
-        assertThat(hkjTemplateStepBack.getTemplate()).isNull();
+        assertThat(hkjTemplateStepBack.getHkjTemplate()).isNull();
     }
 
     @Test

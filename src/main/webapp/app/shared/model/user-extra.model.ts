@@ -6,6 +6,7 @@ export interface IUserExtra {
   phone?: string;
   address?: string | null;
   isDeleted?: boolean | null;
+  active?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
@@ -15,4 +16,5 @@ export interface IUserExtra {
 
 export const defaultValue: Readonly<IUserExtra> = {
   isDeleted: false,
+  active: false,
 };

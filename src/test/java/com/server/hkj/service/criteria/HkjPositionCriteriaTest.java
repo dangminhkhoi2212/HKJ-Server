@@ -81,7 +81,6 @@ class HkjPositionCriteriaTest {
         hkjPositionCriteria.createdDate();
         hkjPositionCriteria.lastModifiedBy();
         hkjPositionCriteria.lastModifiedDate();
-        hkjPositionCriteria.hireId();
         hkjPositionCriteria.distinct();
     }
 
@@ -95,7 +94,6 @@ class HkjPositionCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getHireId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -111,7 +109,6 @@ class HkjPositionCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getHireId(), copy.getHireId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

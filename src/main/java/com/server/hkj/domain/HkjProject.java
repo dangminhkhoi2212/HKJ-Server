@@ -88,18 +88,18 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @JoinColumn(unique = true)
     private HkjCategory category;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjProject")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "employee", "images", "materials", "project" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "materials", "employee", "hkjProject" }, allowSetters = true)
     private Set<HkjTask> tasks = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
     private UserExtra manager;
 
     @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
-    private HkjJewelryModel hkjJewelryModel;
+    private HkjJewelryModel jewelry;
 
     @JsonIgnoreProperties(value = { "project", "orderImages", "customer", "jewelry" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
@@ -336,10 +336,10 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     public void setTasks(Set<HkjTask> hkjTasks) {
         if (this.tasks != null) {
-            this.tasks.forEach(i -> i.setProject(null));
+            this.tasks.forEach(i -> i.setHkjProject(null));
         }
         if (hkjTasks != null) {
-            hkjTasks.forEach(i -> i.setProject(this));
+            hkjTasks.forEach(i -> i.setHkjProject(this));
         }
         this.tasks = hkjTasks;
     }
@@ -351,13 +351,13 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     public HkjProject addTasks(HkjTask hkjTask) {
         this.tasks.add(hkjTask);
-        hkjTask.setProject(this);
+        hkjTask.setHkjProject(this);
         return this;
     }
 
     public HkjProject removeTasks(HkjTask hkjTask) {
         this.tasks.remove(hkjTask);
-        hkjTask.setProject(null);
+        hkjTask.setHkjProject(null);
         return this;
     }
 
@@ -374,22 +374,22 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return this;
     }
 
-    public HkjJewelryModel getHkjJewelryModel() {
-        return this.hkjJewelryModel;
+    public HkjJewelryModel getJewelry() {
+        return this.jewelry;
     }
 
-    public void setHkjJewelryModel(HkjJewelryModel hkjJewelryModel) {
-        if (this.hkjJewelryModel != null) {
-            this.hkjJewelryModel.setProject(null);
+    public void setJewelry(HkjJewelryModel hkjJewelryModel) {
+        if (this.jewelry != null) {
+            this.jewelry.setProject(null);
         }
         if (hkjJewelryModel != null) {
             hkjJewelryModel.setProject(this);
         }
-        this.hkjJewelryModel = hkjJewelryModel;
+        this.jewelry = hkjJewelryModel;
     }
 
-    public HkjProject hkjJewelryModel(HkjJewelryModel hkjJewelryModel) {
-        this.setHkjJewelryModel(hkjJewelryModel);
+    public HkjProject jewelry(HkjJewelryModel hkjJewelryModel) {
+        this.setJewelry(hkjJewelryModel);
         return this;
     }
 

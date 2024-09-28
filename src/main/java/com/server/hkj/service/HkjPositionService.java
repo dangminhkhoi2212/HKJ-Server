@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjPositionService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjPositionService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjPositionService.class);
 
     private final HkjPositionRepository hkjPositionRepository;
 
@@ -35,7 +35,7 @@ public class HkjPositionService {
      * @return the persisted entity.
      */
     public HkjPositionDTO save(HkjPositionDTO hkjPositionDTO) {
-        log.debug("Request to save HkjPosition : {}", hkjPositionDTO);
+        LOG.debug("Request to save HkjPosition : {}", hkjPositionDTO);
         HkjPosition hkjPosition = hkjPositionMapper.toEntity(hkjPositionDTO);
         hkjPosition = hkjPositionRepository.save(hkjPosition);
         return hkjPositionMapper.toDto(hkjPosition);
@@ -48,7 +48,7 @@ public class HkjPositionService {
      * @return the persisted entity.
      */
     public HkjPositionDTO update(HkjPositionDTO hkjPositionDTO) {
-        log.debug("Request to update HkjPosition : {}", hkjPositionDTO);
+        LOG.debug("Request to update HkjPosition : {}", hkjPositionDTO);
         HkjPosition hkjPosition = hkjPositionMapper.toEntity(hkjPositionDTO);
         hkjPosition.setIsPersisted();
         hkjPosition = hkjPositionRepository.save(hkjPosition);
@@ -62,7 +62,7 @@ public class HkjPositionService {
      * @return the persisted entity.
      */
     public Optional<HkjPositionDTO> partialUpdate(HkjPositionDTO hkjPositionDTO) {
-        log.debug("Request to partially update HkjPosition : {}", hkjPositionDTO);
+        LOG.debug("Request to partially update HkjPosition : {}", hkjPositionDTO);
 
         return hkjPositionRepository
             .findById(hkjPositionDTO.getId())
@@ -83,7 +83,7 @@ public class HkjPositionService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjPositionDTO> findOne(Long id) {
-        log.debug("Request to get HkjPosition : {}", id);
+        LOG.debug("Request to get HkjPosition : {}", id);
         return hkjPositionRepository.findById(id).map(hkjPositionMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjPositionService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjPosition : {}", id);
+        LOG.debug("Request to delete HkjPosition : {}", id);
         hkjPositionRepository.deleteById(id);
     }
 }

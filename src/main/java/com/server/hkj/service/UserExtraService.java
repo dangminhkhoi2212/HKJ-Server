@@ -68,6 +68,7 @@ public class UserExtraService {
     public UserExtraDTO update(UserExtraDTO userExtraDTO) {
         log.debug("Request to update UserExtra : {}", userExtraDTO);
         UserExtra userExtra = userExtraMapper.toEntity(userExtraDTO);
+        userExtra.setIsPersisted();
         userExtra = userExtraRepository.save(userExtra);
         return userExtraMapper.toDto(userExtra);
     }

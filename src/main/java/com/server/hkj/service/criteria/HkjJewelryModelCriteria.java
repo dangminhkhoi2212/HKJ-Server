@@ -40,6 +40,8 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     private BooleanFilter isDeleted;
 
+    private BooleanFilter active;
+
     private StringFilter createdBy;
 
     private InstantFilter createdDate;
@@ -66,6 +68,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.color = other.optionalColor().map(StringFilter::copy).orElse(null);
         this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
+        this.active = other.optionalActive().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
@@ -251,6 +254,25 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.isDeleted = isDeleted;
     }
 
+    public BooleanFilter getActive() {
+        return active;
+    }
+
+    public Optional<BooleanFilter> optionalActive() {
+        return Optional.ofNullable(active);
+    }
+
+    public BooleanFilter active() {
+        if (active == null) {
+            setActive(new BooleanFilter());
+        }
+        return active;
+    }
+
+    public void setActive(BooleanFilter active) {
+        this.active = active;
+    }
+
     public StringFilter getCreatedBy() {
         return createdBy;
     }
@@ -403,6 +425,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             Objects.equals(color, that.color) &&
             Objects.equals(notes, that.notes) &&
             Objects.equals(isDeleted, that.isDeleted) &&
+            Objects.equals(active, that.active) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
@@ -425,6 +448,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             color,
             notes,
             isDeleted,
+            active,
             createdBy,
             createdDate,
             lastModifiedBy,
@@ -448,6 +472,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             optionalColor().map(f -> "color=" + f + ", ").orElse("") +
             optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
+            optionalActive().map(f -> "active=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +

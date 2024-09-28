@@ -50,11 +50,10 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "hires" }, allowSetters = true)
     private HkjPosition position;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys", "hires", "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
     private UserExtra employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

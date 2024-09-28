@@ -26,7 +26,7 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class HkjTaskQueryService extends QueryService<HkjTask> {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjTaskQueryService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjTaskQueryService.class);
 
     private final HkjTaskRepository hkjTaskRepository;
 
@@ -45,7 +45,7 @@ public class HkjTaskQueryService extends QueryService<HkjTask> {
      */
     @Transactional(readOnly = true)
     public Page<HkjTaskDTO> findByCriteria(HkjTaskCriteria criteria, Pageable page) {
-        log.debug("find by criteria : {}, page: {}", criteria, page);
+        LOG.debug("find by criteria : {}, page: {}", criteria, page);
         final Specification<HkjTask> specification = createSpecification(criteria);
         return hkjTaskRepository.findAll(specification, page).map(hkjTaskMapper::toDto);
     }
@@ -57,7 +57,7 @@ public class HkjTaskQueryService extends QueryService<HkjTask> {
      */
     @Transactional(readOnly = true)
     public long countByCriteria(HkjTaskCriteria criteria) {
-        log.debug("count by criteria : {}", criteria);
+        LOG.debug("count by criteria : {}", criteria);
         final Specification<HkjTask> specification = createSpecification(criteria);
         return hkjTaskRepository.count(specification);
     }
@@ -119,11 +119,6 @@ public class HkjTaskQueryService extends QueryService<HkjTask> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjTask_.lastModifiedDate));
             }
-            if (criteria.getEmployeeId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjTask_.employee, JoinType.LEFT).get(UserExtra_.id))
-                );
-            }
             if (criteria.getImagesId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getImagesId(), root -> root.join(HkjTask_.images, JoinType.LEFT).get(HkjTaskImage_.id))
@@ -131,15 +126,20 @@ public class HkjTaskQueryService extends QueryService<HkjTask> {
             }
             if (criteria.getMaterialsId() != null) {
                 specification = specification.and(
-                    buildSpecification(
-                        criteria.getMaterialsId(),
-                        root -> root.join(HkjTask_.materials, JoinType.LEFT).get(HkjMaterialUsage_.id)
+                    buildSpecification(criteria.getMaterialsId(), root ->
+                        root.join(HkjTask_.materials, JoinType.LEFT).get(HkjMaterialUsage_.id)
                     )
                 );
             }
-            if (criteria.getProjectId() != null) {
+            if (criteria.getEmployeeId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getProjectId(), root -> root.join(HkjTask_.project, JoinType.LEFT).get(HkjProject_.id))
+                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjTask_.employee, JoinType.LEFT).get(UserExtra_.id))
+                );
+            }
+            if (criteria.getHkjProjectId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getHkjProjectId(), root -> root.join(HkjTask_.hkjProject, JoinType.LEFT).get(HkjProject_.id)
+                    )
                 );
             }
         }

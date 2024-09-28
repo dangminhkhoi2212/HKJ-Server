@@ -69,6 +69,6 @@ public class HkjMaterialUsageAsserts {
         assertThat(expected)
             .as("Verify HkjMaterialUsage relationships")
             .satisfies(e -> assertThat(e.getMaterial()).as("check material").isEqualTo(actual.getMaterial()))
-            .satisfies(e -> assertThat(e.getTask()).as("check task").isEqualTo(actual.getTask()));
+            .satisfies(e -> assertThat(e.getHkjTask()).as("check hkjTask").isEqualTo(actual.getHkjTask()));
     }
 }

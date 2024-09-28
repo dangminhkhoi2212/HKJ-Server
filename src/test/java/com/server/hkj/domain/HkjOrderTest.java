@@ -47,19 +47,19 @@ class HkjOrderTest {
 
         hkjOrder.addOrderImages(hkjOrderImageBack);
         assertThat(hkjOrder.getOrderImages()).containsOnly(hkjOrderImageBack);
-        assertThat(hkjOrderImageBack.getOrder()).isEqualTo(hkjOrder);
+        assertThat(hkjOrderImageBack.getHkjOrder()).isEqualTo(hkjOrder);
 
         hkjOrder.removeOrderImages(hkjOrderImageBack);
         assertThat(hkjOrder.getOrderImages()).doesNotContain(hkjOrderImageBack);
-        assertThat(hkjOrderImageBack.getOrder()).isNull();
+        assertThat(hkjOrderImageBack.getHkjOrder()).isNull();
 
         hkjOrder.orderImages(new HashSet<>(Set.of(hkjOrderImageBack)));
         assertThat(hkjOrder.getOrderImages()).containsOnly(hkjOrderImageBack);
-        assertThat(hkjOrderImageBack.getOrder()).isEqualTo(hkjOrder);
+        assertThat(hkjOrderImageBack.getHkjOrder()).isEqualTo(hkjOrder);
 
         hkjOrder.setOrderImages(new HashSet<>());
         assertThat(hkjOrder.getOrderImages()).doesNotContain(hkjOrderImageBack);
-        assertThat(hkjOrderImageBack.getOrder()).isNull();
+        assertThat(hkjOrderImageBack.getHkjOrder()).isNull();
     }
 
     @Test

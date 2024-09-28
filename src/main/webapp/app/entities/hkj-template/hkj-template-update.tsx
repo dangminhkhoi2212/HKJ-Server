@@ -1,19 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
-import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { Button, Col, Row } from 'reactstrap';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IHkjCategory } from 'app/shared/model/hkj-category.model';
 import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
-import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
-import { IHkjTemplate } from 'app/shared/model/hkj-template.model';
-import { getEntity, updateEntity, createEntity, reset } from './hkj-template.reducer';
+import { createEntity, getEntity, reset, updateEntity } from './hkj-template.reducer';
 
 export const HkjTemplateUpdate = () => {
   const dispatch = useAppDispatch();
@@ -31,7 +27,7 @@ export const HkjTemplateUpdate = () => {
   const updateSuccess = useAppSelector(state => state.hkjTemplate.updateSuccess);
 
   const handleClose = () => {
-    navigate('/hkj-template' + location.search);
+    navigate(`/hkj-template${location.search}`);
   };
 
   useEffect(() => {
@@ -51,7 +47,6 @@ export const HkjTemplateUpdate = () => {
     }
   }, [updateSuccess]);
 
-  // eslint-disable-next-line complexity
   const saveEntity = values => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);

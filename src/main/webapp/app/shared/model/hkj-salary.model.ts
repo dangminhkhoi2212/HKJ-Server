@@ -5,12 +5,13 @@ export interface IHkjSalary {
   id?: number;
   salary?: number | null;
   notes?: string | null;
+  payDate?: dayjs.Dayjs | null;
   isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  employee?: IUserExtra | null;
+  userExtra?: IUserExtra | null;
 }
 
 export const defaultValue: Readonly<IHkjSalary> = {

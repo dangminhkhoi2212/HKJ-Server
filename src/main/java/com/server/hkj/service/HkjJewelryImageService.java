@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class HkjJewelryImageService {
 
-    private static final Logger log = LoggerFactory.getLogger(HkjJewelryImageService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HkjJewelryImageService.class);
 
     private final HkjJewelryImageRepository hkjJewelryImageRepository;
 
@@ -35,7 +35,7 @@ public class HkjJewelryImageService {
      * @return the persisted entity.
      */
     public HkjJewelryImageDTO save(HkjJewelryImageDTO hkjJewelryImageDTO) {
-        log.debug("Request to save HkjJewelryImage : {}", hkjJewelryImageDTO);
+        LOG.debug("Request to save HkjJewelryImage : {}", hkjJewelryImageDTO);
         HkjJewelryImage hkjJewelryImage = hkjJewelryImageMapper.toEntity(hkjJewelryImageDTO);
         hkjJewelryImage = hkjJewelryImageRepository.save(hkjJewelryImage);
         return hkjJewelryImageMapper.toDto(hkjJewelryImage);
@@ -48,7 +48,7 @@ public class HkjJewelryImageService {
      * @return the persisted entity.
      */
     public HkjJewelryImageDTO update(HkjJewelryImageDTO hkjJewelryImageDTO) {
-        log.debug("Request to update HkjJewelryImage : {}", hkjJewelryImageDTO);
+        LOG.debug("Request to update HkjJewelryImage : {}", hkjJewelryImageDTO);
         HkjJewelryImage hkjJewelryImage = hkjJewelryImageMapper.toEntity(hkjJewelryImageDTO);
         hkjJewelryImage.setIsPersisted();
         hkjJewelryImage = hkjJewelryImageRepository.save(hkjJewelryImage);
@@ -62,7 +62,7 @@ public class HkjJewelryImageService {
      * @return the persisted entity.
      */
     public Optional<HkjJewelryImageDTO> partialUpdate(HkjJewelryImageDTO hkjJewelryImageDTO) {
-        log.debug("Request to partially update HkjJewelryImage : {}", hkjJewelryImageDTO);
+        LOG.debug("Request to partially update HkjJewelryImage : {}", hkjJewelryImageDTO);
 
         return hkjJewelryImageRepository
             .findById(hkjJewelryImageDTO.getId())
@@ -83,7 +83,7 @@ public class HkjJewelryImageService {
      */
     @Transactional(readOnly = true)
     public Optional<HkjJewelryImageDTO> findOne(Long id) {
-        log.debug("Request to get HkjJewelryImage : {}", id);
+        LOG.debug("Request to get HkjJewelryImage : {}", id);
         return hkjJewelryImageRepository.findById(id).map(hkjJewelryImageMapper::toDto);
     }
 
@@ -93,7 +93,7 @@ public class HkjJewelryImageService {
      * @param id the id of the entity.
      */
     public void delete(Long id) {
-        log.debug("Request to delete HkjJewelryImage : {}", id);
+        LOG.debug("Request to delete HkjJewelryImage : {}", id);
         hkjJewelryImageRepository.deleteById(id);
     }
 }

@@ -21,7 +21,7 @@ export interface IHkjTask {
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
   employee?: IUserExtra | null;
-  project?: IHkjProject | null;
+  hkjProject?: IHkjProject | null;
 }
 
 export const defaultValue: Readonly<IHkjTask> = {

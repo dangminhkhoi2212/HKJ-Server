@@ -73,9 +73,8 @@ class HkjOrderImageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjOrderImage createEntity(EntityManager em) {
-        HkjOrderImage hkjOrderImage = new HkjOrderImage().url(DEFAULT_URL).isDeleted(DEFAULT_IS_DELETED);
-        return hkjOrderImage;
+    public static HkjOrderImage createEntity() {
+        return new HkjOrderImage().url(DEFAULT_URL).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -84,14 +83,13 @@ class HkjOrderImageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static HkjOrderImage createUpdatedEntity(EntityManager em) {
-        HkjOrderImage hkjOrderImage = new HkjOrderImage().url(UPDATED_URL).isDeleted(UPDATED_IS_DELETED);
-        return hkjOrderImage;
+    public static HkjOrderImage createUpdatedEntity() {
+        return new HkjOrderImage().url(UPDATED_URL).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
     public void initTest() {
-        hkjOrderImage = createEntity(em);
+        hkjOrderImage = createEntity();
     }
 
     @AfterEach
@@ -283,24 +281,24 @@ class HkjOrderImageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjOrderImagesByOrderIsEqualToSomething() throws Exception {
-        HkjOrder order;
+    void getAllHkjOrderImagesByHkjOrderIsEqualToSomething() throws Exception {
+        HkjOrder hkjOrder;
         if (TestUtil.findAll(em, HkjOrder.class).isEmpty()) {
             hkjOrderImageRepository.saveAndFlush(hkjOrderImage);
-            order = HkjOrderResourceIT.createEntity(em);
+            hkjOrder = HkjOrderResourceIT.createEntity();
         } else {
-            order = TestUtil.findAll(em, HkjOrder.class).get(0);
+            hkjOrder = TestUtil.findAll(em, HkjOrder.class).get(0);
         }
-        em.persist(order);
+        em.persist(hkjOrder);
         em.flush();
-        hkjOrderImage.setOrder(order);
+        hkjOrderImage.setHkjOrder(hkjOrder);
         hkjOrderImageRepository.saveAndFlush(hkjOrderImage);
-        Long orderId = order.getId();
-        // Get all the hkjOrderImageList where order equals to orderId
-        defaultHkjOrderImageShouldBeFound("orderId.equals=" + orderId);
+        Long hkjOrderId = hkjOrder.getId();
+        // Get all the hkjOrderImageList where hkjOrder equals to hkjOrderId
+        defaultHkjOrderImageShouldBeFound("hkjOrderId.equals=" + hkjOrderId);
 
-        // Get all the hkjOrderImageList where order equals to (orderId + 1)
-        defaultHkjOrderImageShouldNotBeFound("orderId.equals=" + (orderId + 1));
+        // Get all the hkjOrderImageList where hkjOrder equals to (hkjOrderId + 1)
+        defaultHkjOrderImageShouldNotBeFound("hkjOrderId.equals=" + (hkjOrderId + 1));
     }
 
     private void defaultHkjOrderImageFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
