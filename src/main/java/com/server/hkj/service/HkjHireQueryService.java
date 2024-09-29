@@ -1,11 +1,19 @@
 package com.server.hkj.service;
 
-import com.server.hkj.domain.*; // for static metamodels
+// for static metamodels
 import com.server.hkj.domain.HkjHire;
+import com.server.hkj.domain.HkjHire_;
+import com.server.hkj.domain.HkjPosition_;
+import com.server.hkj.domain.User;
+import com.server.hkj.domain.UserExtra;
+import com.server.hkj.domain.UserExtra_;
+import com.server.hkj.domain.User_;
 import com.server.hkj.repository.HkjHireRepository;
 import com.server.hkj.service.criteria.HkjHireCriteria;
 import com.server.hkj.service.dto.HkjHireDTO;
 import com.server.hkj.service.mapper.HkjHireMapper;
+import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +23,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
+import tech.jhipster.service.filter.StringFilter;
 
 /**
  * Service for executing complex queries for {@link HkjHire} entities in the database.
@@ -111,7 +120,41 @@ public class HkjHireQueryService extends QueryService<HkjHire> {
                     buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjHire_.employee, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
+            if (criteria.getEmployeeName() != null) {
+                specification = specification.and(buildEmployeeNameSpecification(criteria.getEmployeeName()));
+            }
+            if (criteria.getPositionName() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getPositionName(), root ->
+                        root.join(HkjHire_.position, JoinType.LEFT).get(HkjPosition_.name)
+                    )
+                );
+            }
         }
         return specification;
+    }
+
+    /**
+     * Builds a specification for filtering HkjHire entities by employee name.
+     *
+     * @param employeeName a StringFilter object containing the employee name to filter by
+     * @return a Specification object that can be used to filter HkjHire entities by employee name
+     */
+    public static Specification<HkjHire> buildEmployeeNameSpecification(StringFilter employeeName) {
+        return (root, query, criteriaBuilder) -> {
+            if (employeeName == null || employeeName.getEquals() == null) {
+                return null;
+            }
+
+            Join<HkjHire, UserExtra> employeeJoin = root.join(HkjHire_.employee, JoinType.LEFT);
+            Join<UserExtra, User> userJoin = employeeJoin.join(UserExtra_.user, JoinType.LEFT);
+
+            Expression<String> fullName = criteriaBuilder.concat(
+                criteriaBuilder.concat(userJoin.get(User_.firstName), " "),
+                userJoin.get(User_.lastName)
+            );
+
+            return criteriaBuilder.like(criteriaBuilder.lower(fullName), "%" + employeeName.getEquals().toLowerCase() + "%");
+        };
     }
 }
