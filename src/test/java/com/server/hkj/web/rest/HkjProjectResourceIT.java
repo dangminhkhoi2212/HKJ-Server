@@ -46,6 +46,9 @@ class HkjProjectResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COVER_IMAGE = "AAAAAAAAAA";
+    private static final String UPDATED_COVER_IMAGE = "BBBBBBBBBB";
+
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
@@ -115,6 +118,7 @@ class HkjProjectResourceIT {
     public static HkjProject createEntity() {
         return new HkjProject()
             .name(DEFAULT_NAME)
+            .coverImage(DEFAULT_COVER_IMAGE)
             .description(DEFAULT_DESCRIPTION)
             .startDate(DEFAULT_START_DATE)
             .expectDate(DEFAULT_EXPECT_DATE)
@@ -137,6 +141,7 @@ class HkjProjectResourceIT {
     public static HkjProject createUpdatedEntity() {
         return new HkjProject()
             .name(UPDATED_NAME)
+            .coverImage(UPDATED_COVER_IMAGE)
             .description(UPDATED_DESCRIPTION)
             .startDate(UPDATED_START_DATE)
             .expectDate(UPDATED_EXPECT_DATE)
@@ -288,6 +293,7 @@ class HkjProjectResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjProject.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].expectDate").value(hasItem(DEFAULT_EXPECT_DATE.toString())))
@@ -314,6 +320,7 @@ class HkjProjectResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjProject.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.coverImage").value(DEFAULT_COVER_IMAGE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.startDate").value(DEFAULT_START_DATE.toString()))
             .andExpect(jsonPath("$.expectDate").value(DEFAULT_EXPECT_DATE.toString()))
@@ -390,6 +397,59 @@ class HkjProjectResourceIT {
 
         // Get all the hkjProjectList where name does not contain
         defaultHkjProjectFiltering("name.doesNotContain=" + UPDATED_NAME, "name.doesNotContain=" + DEFAULT_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByCoverImageIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
+
+        // Get all the hkjProjectList where coverImage equals to
+        defaultHkjProjectFiltering("coverImage.equals=" + DEFAULT_COVER_IMAGE, "coverImage.equals=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByCoverImageIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
+
+        // Get all the hkjProjectList where coverImage in
+        defaultHkjProjectFiltering(
+            "coverImage.in=" + DEFAULT_COVER_IMAGE + "," + UPDATED_COVER_IMAGE,
+            "coverImage.in=" + UPDATED_COVER_IMAGE
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByCoverImageIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
+
+        // Get all the hkjProjectList where coverImage is not null
+        defaultHkjProjectFiltering("coverImage.specified=true", "coverImage.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByCoverImageContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
+
+        // Get all the hkjProjectList where coverImage contains
+        defaultHkjProjectFiltering("coverImage.contains=" + DEFAULT_COVER_IMAGE, "coverImage.contains=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByCoverImageNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
+
+        // Get all the hkjProjectList where coverImage does not contain
+        defaultHkjProjectFiltering("coverImage.doesNotContain=" + UPDATED_COVER_IMAGE, "coverImage.doesNotContain=" + DEFAULT_COVER_IMAGE);
     }
 
     @Test
@@ -922,6 +982,7 @@ class HkjProjectResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjProject.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].startDate").value(hasItem(DEFAULT_START_DATE.toString())))
             .andExpect(jsonPath("$.[*].expectDate").value(hasItem(DEFAULT_EXPECT_DATE.toString())))
@@ -982,6 +1043,7 @@ class HkjProjectResourceIT {
         em.detach(updatedHkjProject);
         updatedHkjProject
             .name(UPDATED_NAME)
+            .coverImage(UPDATED_COVER_IMAGE)
             .description(UPDATED_DESCRIPTION)
             .startDate(UPDATED_START_DATE)
             .expectDate(UPDATED_EXPECT_DATE)
@@ -1086,10 +1148,10 @@ class HkjProjectResourceIT {
         partialUpdatedHkjProject.setId(hkjProject.getId());
 
         partialUpdatedHkjProject
-            .startDate(UPDATED_START_DATE)
+            .description(UPDATED_DESCRIPTION)
+            .endDate(UPDATED_END_DATE)
             .status(UPDATED_STATUS)
-            .priority(UPDATED_PRIORITY)
-            .qualityCheck(UPDATED_QUALITY_CHECK);
+            .actualCost(UPDATED_ACTUAL_COST);
 
         restHkjProjectMockMvc
             .perform(
@@ -1123,6 +1185,7 @@ class HkjProjectResourceIT {
 
         partialUpdatedHkjProject
             .name(UPDATED_NAME)
+            .coverImage(UPDATED_COVER_IMAGE)
             .description(UPDATED_DESCRIPTION)
             .startDate(UPDATED_START_DATE)
             .expectDate(UPDATED_EXPECT_DATE)

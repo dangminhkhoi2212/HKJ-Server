@@ -80,6 +80,9 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), HkjProject_.name));
             }
+            if (criteria.getCoverImage() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getCoverImage(), HkjProject_.coverImage));
+            }
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), HkjProject_.description));
             }
@@ -141,10 +144,10 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
                     buildSpecification(criteria.getManagerId(), root -> root.join(HkjProject_.manager, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
-            if (criteria.getJewelryId() != null) {
+            if (criteria.getHkjJewelryModelId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getJewelryId(), root ->
-                        root.join(HkjProject_.jewelry, JoinType.LEFT).get(HkjJewelryModel_.id)
+                    buildSpecification(criteria.getHkjJewelryModelId(), root ->
+                        root.join(HkjProject_.hkjJewelryModel, JoinType.LEFT).get(HkjJewelryModel_.id)
                     )
                 );
             }

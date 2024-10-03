@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "name": "Name",
+      "coverImage": "Cover Image",
       "description": "Description",
       "assignedDate": "Assigned Date",
       "expectDate": "Expect Date",
@@ -32,9 +33,9 @@
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
+      "employee": "Employee",
       "images": "Images",
       "materials": "Materials",
-      "employee": "Employee",
       "hkjProject": "Hkj Project"
     }
   }

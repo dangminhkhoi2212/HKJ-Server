@@ -44,6 +44,8 @@ public class UserExtraCriteria implements Serializable, Criteria {
 
     private LongFilter salarysId;
 
+    private LongFilter hkjTaskId;
+
     private Boolean distinct;
 
     public UserExtraCriteria() {}
@@ -60,6 +62,7 @@ public class UserExtraCriteria implements Serializable, Criteria {
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
         this.userId = other.optionalUserId().map(StringFilter::copy).orElse(null);
         this.salarysId = other.optionalSalarysId().map(LongFilter::copy).orElse(null);
+        this.hkjTaskId = other.optionalHkjTaskId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -277,6 +280,25 @@ public class UserExtraCriteria implements Serializable, Criteria {
         this.salarysId = salarysId;
     }
 
+    public LongFilter getHkjTaskId() {
+        return hkjTaskId;
+    }
+
+    public Optional<LongFilter> optionalHkjTaskId() {
+        return Optional.ofNullable(hkjTaskId);
+    }
+
+    public LongFilter hkjTaskId() {
+        if (hkjTaskId == null) {
+            setHkjTaskId(new LongFilter());
+        }
+        return hkjTaskId;
+    }
+
+    public void setHkjTaskId(LongFilter hkjTaskId) {
+        this.hkjTaskId = hkjTaskId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -317,6 +339,7 @@ public class UserExtraCriteria implements Serializable, Criteria {
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
             Objects.equals(userId, that.userId) &&
             Objects.equals(salarysId, that.salarysId) &&
+            Objects.equals(hkjTaskId, that.hkjTaskId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -335,6 +358,7 @@ public class UserExtraCriteria implements Serializable, Criteria {
             lastModifiedDate,
             userId,
             salarysId,
+            hkjTaskId,
             distinct
         );
     }
@@ -354,6 +378,7 @@ public class UserExtraCriteria implements Serializable, Criteria {
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
             optionalUserId().map(f -> "userId=" + f + ", ").orElse("") +
             optionalSalarysId().map(f -> "salarysId=" + f + ", ").orElse("") +
+            optionalHkjTaskId().map(f -> "hkjTaskId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

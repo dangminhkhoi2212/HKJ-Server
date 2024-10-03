@@ -281,24 +281,24 @@ class HkjMaterialImageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjMaterialImagesByHkjMaterialIsEqualToSomething() throws Exception {
-        HkjMaterial hkjMaterial;
+    void getAllHkjMaterialImagesByMaterialIsEqualToSomething() throws Exception {
+        HkjMaterial material;
         if (TestUtil.findAll(em, HkjMaterial.class).isEmpty()) {
             hkjMaterialImageRepository.saveAndFlush(hkjMaterialImage);
-            hkjMaterial = HkjMaterialResourceIT.createEntity();
+            material = HkjMaterialResourceIT.createEntity();
         } else {
-            hkjMaterial = TestUtil.findAll(em, HkjMaterial.class).get(0);
+            material = TestUtil.findAll(em, HkjMaterial.class).get(0);
         }
-        em.persist(hkjMaterial);
+        em.persist(material);
         em.flush();
-        hkjMaterialImage.setHkjMaterial(hkjMaterial);
+        hkjMaterialImage.setMaterial(material);
         hkjMaterialImageRepository.saveAndFlush(hkjMaterialImage);
-        Long hkjMaterialId = hkjMaterial.getId();
-        // Get all the hkjMaterialImageList where hkjMaterial equals to hkjMaterialId
-        defaultHkjMaterialImageShouldBeFound("hkjMaterialId.equals=" + hkjMaterialId);
+        Long materialId = material.getId();
+        // Get all the hkjMaterialImageList where material equals to materialId
+        defaultHkjMaterialImageShouldBeFound("materialId.equals=" + materialId);
 
-        // Get all the hkjMaterialImageList where hkjMaterial equals to (hkjMaterialId + 1)
-        defaultHkjMaterialImageShouldNotBeFound("hkjMaterialId.equals=" + (hkjMaterialId + 1));
+        // Get all the hkjMaterialImageList where material equals to (materialId + 1)
+        defaultHkjMaterialImageShouldNotBeFound("materialId.equals=" + (materialId + 1));
     }
 
     private void defaultHkjMaterialImageFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

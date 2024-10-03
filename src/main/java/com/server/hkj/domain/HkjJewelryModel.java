@@ -38,6 +38,9 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Column(name = "description", length = 1000)
     private String description;
 
+    @Column(name = "cover_image")
+    private String coverImage;
+
     @Column(name = "is_custom")
     private Boolean isCustom;
 
@@ -66,7 +69,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "jewelry", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjProject project;
@@ -115,6 +118,19 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCoverImage() {
+        return this.coverImage;
+    }
+
+    public HkjJewelryModel coverImage(String coverImage) {
+        this.setCoverImage(coverImage);
+        return this;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
     }
 
     public Boolean getIsCustom() {
@@ -319,6 +335,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
+            ", coverImage='" + getCoverImage() + "'" +
             ", isCustom='" + getIsCustom() + "'" +
             ", weight=" + getWeight() +
             ", price=" + getPrice() +

@@ -51,6 +51,9 @@ class HkjHireResourceIT {
     private static final BigDecimal UPDATED_BEGIN_SALARY = new BigDecimal(2);
     private static final BigDecimal SMALLER_BEGIN_SALARY = new BigDecimal(1 - 1);
 
+    private static final String DEFAULT_NOTES = "AAAAAAAAAA";
+    private static final String UPDATED_NOTES = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
 
@@ -90,6 +93,7 @@ class HkjHireResourceIT {
             .beginDate(DEFAULT_BEGIN_DATE)
             .endDate(DEFAULT_END_DATE)
             .beginSalary(DEFAULT_BEGIN_SALARY)
+            .notes(DEFAULT_NOTES)
             .isDeleted(DEFAULT_IS_DELETED);
     }
 
@@ -104,6 +108,7 @@ class HkjHireResourceIT {
             .beginDate(UPDATED_BEGIN_DATE)
             .endDate(UPDATED_END_DATE)
             .beginSalary(UPDATED_BEGIN_SALARY)
+            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
     }
 
@@ -213,6 +218,7 @@ class HkjHireResourceIT {
             .andExpect(jsonPath("$.[*].beginDate").value(hasItem(DEFAULT_BEGIN_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].beginSalary").value(hasItem(sameNumber(DEFAULT_BEGIN_SALARY))))
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
@@ -231,6 +237,7 @@ class HkjHireResourceIT {
             .andExpect(jsonPath("$.beginDate").value(DEFAULT_BEGIN_DATE.toString()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.beginSalary").value(sameNumber(DEFAULT_BEGIN_SALARY)))
+            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
@@ -390,6 +397,56 @@ class HkjHireResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjHiresByNotesIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where notes equals to
+        defaultHkjHireFiltering("notes.equals=" + DEFAULT_NOTES, "notes.equals=" + UPDATED_NOTES);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByNotesIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where notes in
+        defaultHkjHireFiltering("notes.in=" + DEFAULT_NOTES + "," + UPDATED_NOTES, "notes.in=" + UPDATED_NOTES);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByNotesIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where notes is not null
+        defaultHkjHireFiltering("notes.specified=true", "notes.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByNotesContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where notes contains
+        defaultHkjHireFiltering("notes.contains=" + DEFAULT_NOTES, "notes.contains=" + UPDATED_NOTES);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjHiresByNotesNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
+
+        // Get all the hkjHireList where notes does not contain
+        defaultHkjHireFiltering("notes.doesNotContain=" + UPDATED_NOTES, "notes.doesNotContain=" + DEFAULT_NOTES);
+    }
+
+    @Test
+    @Transactional
     void getAllHkjHiresByIsDeletedIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjHire = hkjHireRepository.saveAndFlush(hkjHire);
@@ -479,6 +536,7 @@ class HkjHireResourceIT {
             .andExpect(jsonPath("$.[*].beginDate").value(hasItem(DEFAULT_BEGIN_DATE.toString())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].beginSalary").value(hasItem(sameNumber(DEFAULT_BEGIN_SALARY))))
+            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
@@ -531,6 +589,7 @@ class HkjHireResourceIT {
             .beginDate(UPDATED_BEGIN_DATE)
             .endDate(UPDATED_END_DATE)
             .beginSalary(UPDATED_BEGIN_SALARY)
+            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
         HkjHireDTO hkjHireDTO = hkjHireMapper.toDto(updatedHkjHire);
 
@@ -624,7 +683,7 @@ class HkjHireResourceIT {
         HkjHire partialUpdatedHkjHire = new HkjHire();
         partialUpdatedHkjHire.setId(hkjHire.getId());
 
-        partialUpdatedHkjHire.beginSalary(UPDATED_BEGIN_SALARY).isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedHkjHire.beginSalary(UPDATED_BEGIN_SALARY).notes(UPDATED_NOTES);
 
         restHkjHireMockMvc
             .perform(
@@ -657,6 +716,7 @@ class HkjHireResourceIT {
             .beginDate(UPDATED_BEGIN_DATE)
             .endDate(UPDATED_END_DATE)
             .beginSalary(UPDATED_BEGIN_SALARY)
+            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
 
         restHkjHireMockMvc

@@ -44,6 +44,9 @@ class HkjJewelryModelResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COVER_IMAGE = "AAAAAAAAAA";
+    private static final String UPDATED_COVER_IMAGE = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_IS_CUSTOM = false;
     private static final Boolean UPDATED_IS_CUSTOM = true;
 
@@ -102,6 +105,7 @@ class HkjJewelryModelResourceIT {
         return new HkjJewelryModel()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
+            .coverImage(DEFAULT_COVER_IMAGE)
             .isCustom(DEFAULT_IS_CUSTOM)
             .weight(DEFAULT_WEIGHT)
             .price(DEFAULT_PRICE)
@@ -121,6 +125,7 @@ class HkjJewelryModelResourceIT {
         return new HkjJewelryModel()
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
+            .coverImage(UPDATED_COVER_IMAGE)
             .isCustom(UPDATED_IS_CUSTOM)
             .weight(UPDATED_WEIGHT)
             .price(UPDATED_PRICE)
@@ -225,6 +230,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjJewelryModel.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].isCustom").value(hasItem(DEFAULT_IS_CUSTOM.booleanValue())))
             .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
@@ -248,6 +254,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.id").value(hkjJewelryModel.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
+            .andExpect(jsonPath("$.coverImage").value(DEFAULT_COVER_IMAGE))
             .andExpect(jsonPath("$.isCustom").value(DEFAULT_IS_CUSTOM.booleanValue()))
             .andExpect(jsonPath("$.weight").value(DEFAULT_WEIGHT.doubleValue()))
             .andExpect(jsonPath("$.price").value(sameNumber(DEFAULT_PRICE)))
@@ -375,6 +382,62 @@ class HkjJewelryModelResourceIT {
         defaultHkjJewelryModelFiltering(
             "description.doesNotContain=" + UPDATED_DESCRIPTION,
             "description.doesNotContain=" + DEFAULT_DESCRIPTION
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByCoverImageIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where coverImage equals to
+        defaultHkjJewelryModelFiltering("coverImage.equals=" + DEFAULT_COVER_IMAGE, "coverImage.equals=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByCoverImageIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where coverImage in
+        defaultHkjJewelryModelFiltering(
+            "coverImage.in=" + DEFAULT_COVER_IMAGE + "," + UPDATED_COVER_IMAGE,
+            "coverImage.in=" + UPDATED_COVER_IMAGE
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByCoverImageIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where coverImage is not null
+        defaultHkjJewelryModelFiltering("coverImage.specified=true", "coverImage.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByCoverImageContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where coverImage contains
+        defaultHkjJewelryModelFiltering("coverImage.contains=" + DEFAULT_COVER_IMAGE, "coverImage.contains=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByCoverImageNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where coverImage does not contain
+        defaultHkjJewelryModelFiltering(
+            "coverImage.doesNotContain=" + UPDATED_COVER_IMAGE,
+            "coverImage.doesNotContain=" + DEFAULT_COVER_IMAGE
         );
     }
 
@@ -749,6 +812,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjJewelryModel.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
+            .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].isCustom").value(hasItem(DEFAULT_IS_CUSTOM.booleanValue())))
             .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
@@ -806,6 +870,7 @@ class HkjJewelryModelResourceIT {
         updatedHkjJewelryModel
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
+            .coverImage(UPDATED_COVER_IMAGE)
             .isCustom(UPDATED_IS_CUSTOM)
             .weight(UPDATED_WEIGHT)
             .price(UPDATED_PRICE)
@@ -910,9 +975,10 @@ class HkjJewelryModelResourceIT {
         partialUpdatedHkjJewelryModel
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
+            .coverImage(UPDATED_COVER_IMAGE)
             .isCustom(UPDATED_IS_CUSTOM)
-            .weight(UPDATED_WEIGHT)
-            .color(UPDATED_COLOR)
+            .price(UPDATED_PRICE)
+            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED)
             .active(UPDATED_ACTIVE);
 
@@ -949,6 +1015,7 @@ class HkjJewelryModelResourceIT {
         partialUpdatedHkjJewelryModel
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
+            .coverImage(UPDATED_COVER_IMAGE)
             .isCustom(UPDATED_IS_CUSTOM)
             .weight(UPDATED_WEIGHT)
             .price(UPDATED_PRICE)

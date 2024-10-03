@@ -64,7 +64,7 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
     private HkjMaterial material;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images", "materials", "employee", "hkjProject" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "employee", "images", "materials", "hkjProject" }, allowSetters = true)
     private HkjTask hkjTask;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

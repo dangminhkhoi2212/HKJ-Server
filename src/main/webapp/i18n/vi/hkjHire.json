@@ -21,6 +21,7 @@
       "beginDate": "Begin Date",
       "endDate": "End Date",
       "beginSalary": "Begin Salary",
+      "notes": "Notes",
       "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",

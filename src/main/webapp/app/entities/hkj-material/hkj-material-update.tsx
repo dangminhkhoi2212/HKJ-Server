@@ -148,6 +148,13 @@ export const HkjMaterialUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjMaterial.coverImage')}
+                id="hkj-material-coverImage"
+                name="coverImage"
+                data-cy="coverImage"
+                type="text"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjMaterial.isDeleted')}
                 id="hkj-material-isDeleted"
                 name="isDeleted"

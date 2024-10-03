@@ -125,6 +125,10 @@ export const HkjHire = () => {
                   <Translate contentKey="serverApp.hkjHire.beginSalary">Begin Salary</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('beginSalary')} />
                 </th>
+                <th className="hand" onClick={sort('notes')}>
+                  <Translate contentKey="serverApp.hkjHire.notes">Notes</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
+                </th>
                 <th className="hand" onClick={sort('isDeleted')}>
                   <Translate contentKey="serverApp.hkjHire.isDeleted">Is Deleted</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
@@ -165,6 +169,7 @@ export const HkjHire = () => {
                   <td>{hkjHire.beginDate ? <TextFormat type="date" value={hkjHire.beginDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{hkjHire.endDate ? <TextFormat type="date" value={hkjHire.endDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{hkjHire.beginSalary}</td>
+                  <td>{hkjHire.notes}</td>
                   <td>{hkjHire.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjHire.createdBy}</td>
                   <td>{hkjHire.createdDate ? <TextFormat type="date" value={hkjHire.createdDate} format={APP_DATE_FORMAT} /> : null}</td>

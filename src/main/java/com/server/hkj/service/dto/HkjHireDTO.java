@@ -22,6 +22,8 @@ public class HkjHireDTO implements Serializable {
 
     private BigDecimal beginSalary;
 
+    private String notes;
+
     private Boolean isDeleted;
 
     private String createdBy;
@@ -66,6 +68,14 @@ public class HkjHireDTO implements Serializable {
 
     public void setBeginSalary(BigDecimal beginSalary) {
         this.beginSalary = beginSalary;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -153,6 +163,7 @@ public class HkjHireDTO implements Serializable {
             ", beginDate='" + getBeginDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             ", beginSalary=" + getBeginSalary() +
+            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

@@ -136,6 +136,13 @@ export const HkjTaskUpdate = () => {
                 }}
               />
               <ValidatedField
+                label={translate('serverApp.hkjTask.coverImage')}
+                id="hkj-task-coverImage"
+                name="coverImage"
+                data-cy="coverImage"
+                type="text"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjTask.description')}
                 id="hkj-task-description"
                 name="description"

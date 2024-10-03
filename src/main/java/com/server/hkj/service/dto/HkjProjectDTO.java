@@ -19,6 +19,8 @@ public class HkjProjectDTO implements Serializable {
     @NotNull
     private String name;
 
+    private String coverImage;
+
     @Size(max = 1000)
     private String description;
 
@@ -72,6 +74,14 @@ public class HkjProjectDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
     }
 
     public String getDescription() {
@@ -237,6 +247,7 @@ public class HkjProjectDTO implements Serializable {
         return "HkjProjectDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", coverImage='" + getCoverImage() + "'" +
             ", description='" + getDescription() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", expectDate='" + getExpectDate() + "'" +

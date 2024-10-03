@@ -76,6 +76,7 @@ class HkjProjectCriteriaTest {
     private static void setAllFilters(HkjProjectCriteria hkjProjectCriteria) {
         hkjProjectCriteria.id();
         hkjProjectCriteria.name();
+        hkjProjectCriteria.coverImage();
         hkjProjectCriteria.description();
         hkjProjectCriteria.startDate();
         hkjProjectCriteria.expectDate();
@@ -94,7 +95,7 @@ class HkjProjectCriteriaTest {
         hkjProjectCriteria.categoryId();
         hkjProjectCriteria.tasksId();
         hkjProjectCriteria.managerId();
-        hkjProjectCriteria.jewelryId();
+        hkjProjectCriteria.hkjJewelryModelId();
         hkjProjectCriteria.hkjOrderId();
         hkjProjectCriteria.distinct();
     }
@@ -104,6 +105,7 @@ class HkjProjectCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getName()) &&
+                condition.apply(criteria.getCoverImage()) &&
                 condition.apply(criteria.getDescription()) &&
                 condition.apply(criteria.getStartDate()) &&
                 condition.apply(criteria.getExpectDate()) &&
@@ -122,7 +124,7 @@ class HkjProjectCriteriaTest {
                 condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getTasksId()) &&
                 condition.apply(criteria.getManagerId()) &&
-                condition.apply(criteria.getJewelryId()) &&
+                condition.apply(criteria.getHkjJewelryModelId()) &&
                 condition.apply(criteria.getHkjOrderId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
@@ -134,6 +136,7 @@ class HkjProjectCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getName(), copy.getName()) &&
+                condition.apply(criteria.getCoverImage(), copy.getCoverImage()) &&
                 condition.apply(criteria.getDescription(), copy.getDescription()) &&
                 condition.apply(criteria.getStartDate(), copy.getStartDate()) &&
                 condition.apply(criteria.getExpectDate(), copy.getExpectDate()) &&
@@ -152,7 +155,7 @@ class HkjProjectCriteriaTest {
                 condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getTasksId(), copy.getTasksId()) &&
                 condition.apply(criteria.getManagerId(), copy.getManagerId()) &&
-                condition.apply(criteria.getJewelryId(), copy.getJewelryId()) &&
+                condition.apply(criteria.getHkjJewelryModelId(), copy.getHkjJewelryModelId()) &&
                 condition.apply(criteria.getHkjOrderId(), copy.getHkjOrderId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"

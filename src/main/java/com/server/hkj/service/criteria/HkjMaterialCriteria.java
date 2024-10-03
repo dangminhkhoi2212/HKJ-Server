@@ -34,6 +34,8 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
 
     private StringFilter supplier;
 
+    private StringFilter coverImage;
+
     private BooleanFilter isDeleted;
 
     private StringFilter createdBy;
@@ -59,6 +61,7 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         this.unit = other.optionalUnit().map(StringFilter::copy).orElse(null);
         this.unitPrice = other.optionalUnitPrice().map(BigDecimalFilter::copy).orElse(null);
         this.supplier = other.optionalSupplier().map(StringFilter::copy).orElse(null);
+        this.coverImage = other.optionalCoverImage().map(StringFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
@@ -186,6 +189,25 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
 
     public void setSupplier(StringFilter supplier) {
         this.supplier = supplier;
+    }
+
+    public StringFilter getCoverImage() {
+        return coverImage;
+    }
+
+    public Optional<StringFilter> optionalCoverImage() {
+        return Optional.ofNullable(coverImage);
+    }
+
+    public StringFilter coverImage() {
+        if (coverImage == null) {
+            setCoverImage(new StringFilter());
+        }
+        return coverImage;
+    }
+
+    public void setCoverImage(StringFilter coverImage) {
+        this.coverImage = coverImage;
     }
 
     public BooleanFilter getIsDeleted() {
@@ -356,6 +378,7 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             Objects.equals(unit, that.unit) &&
             Objects.equals(unitPrice, that.unitPrice) &&
             Objects.equals(supplier, that.supplier) &&
+            Objects.equals(coverImage, that.coverImage) &&
             Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
@@ -376,6 +399,7 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             unit,
             unitPrice,
             supplier,
+            coverImage,
             isDeleted,
             createdBy,
             createdDate,
@@ -397,6 +421,7 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             optionalUnit().map(f -> "unit=" + f + ", ").orElse("") +
             optionalUnitPrice().map(f -> "unitPrice=" + f + ", ").orElse("") +
             optionalSupplier().map(f -> "supplier=" + f + ", ").orElse("") +
+            optionalCoverImage().map(f -> "coverImage=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +

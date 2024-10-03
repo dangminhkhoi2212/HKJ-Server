@@ -80,6 +80,9 @@ public class HkjTaskQueryService extends QueryService<HkjTask> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), HkjTask_.name));
             }
+            if (criteria.getCoverImage() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getCoverImage(), HkjTask_.coverImage));
+            }
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), HkjTask_.description));
             }
@@ -119,6 +122,11 @@ public class HkjTaskQueryService extends QueryService<HkjTask> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjTask_.lastModifiedDate));
             }
+            if (criteria.getEmployeeId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjTask_.employee, JoinType.LEFT).get(UserExtra_.id))
+                );
+            }
             if (criteria.getImagesId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getImagesId(), root -> root.join(HkjTask_.images, JoinType.LEFT).get(HkjTaskImage_.id))
@@ -129,11 +137,6 @@ public class HkjTaskQueryService extends QueryService<HkjTask> {
                     buildSpecification(criteria.getMaterialsId(), root ->
                         root.join(HkjTask_.materials, JoinType.LEFT).get(HkjMaterialUsage_.id)
                     )
-                );
-            }
-            if (criteria.getEmployeeId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjTask_.employee, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
             if (criteria.getHkjProjectId() != null) {

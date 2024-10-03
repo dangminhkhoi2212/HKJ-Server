@@ -28,6 +28,8 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     private StringFilter description;
 
+    private StringFilter coverImage;
+
     private BooleanFilter isCustom;
 
     private DoubleFilter weight;
@@ -62,6 +64,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.name = other.optionalName().map(StringFilter::copy).orElse(null);
         this.description = other.optionalDescription().map(StringFilter::copy).orElse(null);
+        this.coverImage = other.optionalCoverImage().map(StringFilter::copy).orElse(null);
         this.isCustom = other.optionalIsCustom().map(BooleanFilter::copy).orElse(null);
         this.weight = other.optionalWeight().map(DoubleFilter::copy).orElse(null);
         this.price = other.optionalPrice().map(BigDecimalFilter::copy).orElse(null);
@@ -138,6 +141,25 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     public void setDescription(StringFilter description) {
         this.description = description;
+    }
+
+    public StringFilter getCoverImage() {
+        return coverImage;
+    }
+
+    public Optional<StringFilter> optionalCoverImage() {
+        return Optional.ofNullable(coverImage);
+    }
+
+    public StringFilter coverImage() {
+        if (coverImage == null) {
+            setCoverImage(new StringFilter());
+        }
+        return coverImage;
+    }
+
+    public void setCoverImage(StringFilter coverImage) {
+        this.coverImage = coverImage;
     }
 
     public BooleanFilter getIsCustom() {
@@ -419,6 +441,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
+            Objects.equals(coverImage, that.coverImage) &&
             Objects.equals(isCustom, that.isCustom) &&
             Objects.equals(weight, that.weight) &&
             Objects.equals(price, that.price) &&
@@ -442,6 +465,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             id,
             name,
             description,
+            coverImage,
             isCustom,
             weight,
             price,
@@ -466,6 +490,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalName().map(f -> "name=" + f + ", ").orElse("") +
             optionalDescription().map(f -> "description=" + f + ", ").orElse("") +
+            optionalCoverImage().map(f -> "coverImage=" + f + ", ").orElse("") +
             optionalIsCustom().map(f -> "isCustom=" + f + ", ").orElse("") +
             optionalWeight().map(f -> "weight=" + f + ", ").orElse("") +
             optionalPrice().map(f -> "price=" + f + ", ").orElse("") +

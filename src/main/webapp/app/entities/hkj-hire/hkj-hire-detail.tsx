@@ -51,6 +51,12 @@ export const HkjHireDetail = () => {
           </dt>
           <dd>{hkjHireEntity.beginSalary}</dd>
           <dt>
+            <span id="notes">
+              <Translate contentKey="serverApp.hkjHire.notes">Notes</Translate>
+            </span>
+          </dt>
+          <dd>{hkjHireEntity.notes}</dd>
+          <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjHire.isDeleted">Is Deleted</Translate>
             </span>

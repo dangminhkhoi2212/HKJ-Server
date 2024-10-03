@@ -62,6 +62,8 @@ public class HkjProjectCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
+    private StringFilter coverImage;
+
     private StringFilter description;
 
     private InstantFilter startDate;
@@ -98,7 +100,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
 
     private LongFilter managerId;
 
-    private LongFilter jewelryId;
+    private LongFilter hkjJewelryModelId;
 
     private LongFilter hkjOrderId;
 
@@ -109,6 +111,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
     public HkjProjectCriteria(HkjProjectCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.name = other.optionalName().map(StringFilter::copy).orElse(null);
+        this.coverImage = other.optionalCoverImage().map(StringFilter::copy).orElse(null);
         this.description = other.optionalDescription().map(StringFilter::copy).orElse(null);
         this.startDate = other.optionalStartDate().map(InstantFilter::copy).orElse(null);
         this.expectDate = other.optionalExpectDate().map(InstantFilter::copy).orElse(null);
@@ -127,7 +130,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
         this.tasksId = other.optionalTasksId().map(LongFilter::copy).orElse(null);
         this.managerId = other.optionalManagerId().map(LongFilter::copy).orElse(null);
-        this.jewelryId = other.optionalJewelryId().map(LongFilter::copy).orElse(null);
+        this.hkjJewelryModelId = other.optionalHkjJewelryModelId().map(LongFilter::copy).orElse(null);
         this.hkjOrderId = other.optionalHkjOrderId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -173,6 +176,25 @@ public class HkjProjectCriteria implements Serializable, Criteria {
 
     public void setName(StringFilter name) {
         this.name = name;
+    }
+
+    public StringFilter getCoverImage() {
+        return coverImage;
+    }
+
+    public Optional<StringFilter> optionalCoverImage() {
+        return Optional.ofNullable(coverImage);
+    }
+
+    public StringFilter coverImage() {
+        if (coverImage == null) {
+            setCoverImage(new StringFilter());
+        }
+        return coverImage;
+    }
+
+    public void setCoverImage(StringFilter coverImage) {
+        this.coverImage = coverImage;
     }
 
     public StringFilter getDescription() {
@@ -517,23 +539,23 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.managerId = managerId;
     }
 
-    public LongFilter getJewelryId() {
-        return jewelryId;
+    public LongFilter getHkjJewelryModelId() {
+        return hkjJewelryModelId;
     }
 
-    public Optional<LongFilter> optionalJewelryId() {
-        return Optional.ofNullable(jewelryId);
+    public Optional<LongFilter> optionalHkjJewelryModelId() {
+        return Optional.ofNullable(hkjJewelryModelId);
     }
 
-    public LongFilter jewelryId() {
-        if (jewelryId == null) {
-            setJewelryId(new LongFilter());
+    public LongFilter hkjJewelryModelId() {
+        if (hkjJewelryModelId == null) {
+            setHkjJewelryModelId(new LongFilter());
         }
-        return jewelryId;
+        return hkjJewelryModelId;
     }
 
-    public void setJewelryId(LongFilter jewelryId) {
-        this.jewelryId = jewelryId;
+    public void setHkjJewelryModelId(LongFilter hkjJewelryModelId) {
+        this.hkjJewelryModelId = hkjJewelryModelId;
     }
 
     public LongFilter getHkjOrderId() {
@@ -586,6 +608,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(coverImage, that.coverImage) &&
             Objects.equals(description, that.description) &&
             Objects.equals(startDate, that.startDate) &&
             Objects.equals(expectDate, that.expectDate) &&
@@ -604,7 +627,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             Objects.equals(categoryId, that.categoryId) &&
             Objects.equals(tasksId, that.tasksId) &&
             Objects.equals(managerId, that.managerId) &&
-            Objects.equals(jewelryId, that.jewelryId) &&
+            Objects.equals(hkjJewelryModelId, that.hkjJewelryModelId) &&
             Objects.equals(hkjOrderId, that.hkjOrderId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -615,6 +638,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         return Objects.hash(
             id,
             name,
+            coverImage,
             description,
             startDate,
             expectDate,
@@ -633,7 +657,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             categoryId,
             tasksId,
             managerId,
-            jewelryId,
+            hkjJewelryModelId,
             hkjOrderId,
             distinct
         );
@@ -645,6 +669,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         return "HkjProjectCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalName().map(f -> "name=" + f + ", ").orElse("") +
+            optionalCoverImage().map(f -> "coverImage=" + f + ", ").orElse("") +
             optionalDescription().map(f -> "description=" + f + ", ").orElse("") +
             optionalStartDate().map(f -> "startDate=" + f + ", ").orElse("") +
             optionalExpectDate().map(f -> "expectDate=" + f + ", ").orElse("") +
@@ -663,7 +688,7 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
             optionalTasksId().map(f -> "tasksId=" + f + ", ").orElse("") +
             optionalManagerId().map(f -> "managerId=" + f + ", ").orElse("") +
-            optionalJewelryId().map(f -> "jewelryId=" + f + ", ").orElse("") +
+            optionalHkjJewelryModelId().map(f -> "hkjJewelryModelId=" + f + ", ").orElse("") +
             optionalHkjOrderId().map(f -> "hkjOrderId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

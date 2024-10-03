@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "name": "Name",
+      "coverImage": "Cover Image",
       "description": "Description",
       "startDate": "Start Date",
       "expectDate": "Expect Date",
@@ -37,7 +38,7 @@
       "category": "Category",
       "tasks": "Tasks",
       "manager": "Manager",
-      "jewelry": "Jewelry",
+      "hkjJewelryModel": "Hkj Jewelry Model",
       "hkjOrder": "Hkj Order"
     }
   }

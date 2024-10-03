@@ -11,7 +11,16 @@ src/main/java/com/server/hkj/service/dto/AdminUserDTO.java
 src/main/java/com/server/hkj/security/AuthoritiesConstants.java skip
 src/main/java/com/server/hkj/config/SecurityConfiguration.java skip
 
-# src/main/java/com/server/hkj/service/dto/UserExtraDTO.java skip
+src/main/java/com/server/hkj/service/dto/UserExtraDTO.java skip
 src/main/java/com/server/hkj/repository/UserExtraRepository.java skip
 src/main/java/com/server/hkj/service/UserExtraService.java skip
 src/main/java/com/server/hkj/web/rest/PublicUserResource.java skip
+
+src/main/java/com/server/hkj/service/dto/UserDTO.java skip
+
+src/main/java/com/server/hkj/service/HkjHireQueryService.java skip
+src/main/java/com/server/hkj/service/mapper/HkjHireMapper.java skip
+src/main/java/com/server/hkj/service/criteria/HkjHireCriteria.java skip
+
+src/main/java/com/server/hkj/service/dto/HkjMaterialDTO.java skip
+src/main/java/com/server/hkj/service/mapper/HkjMaterialMapper.java skip

@@ -77,9 +77,9 @@ export const HkjMaterialImageDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjMaterialImage.hkjMaterial">Hkj Material</Translate>
+            <Translate contentKey="serverApp.hkjMaterialImage.material">Material</Translate>
           </dt>
-          <dd>{hkjMaterialImageEntity.hkjMaterial ? hkjMaterialImageEntity.hkjMaterial.id : ''}</dd>
+          <dd>{hkjMaterialImageEntity.material ? hkjMaterialImageEntity.material.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-material-image" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

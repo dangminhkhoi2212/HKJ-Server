@@ -129,6 +129,13 @@ export const HkjJewelryModelUpdate = () => {
                 }}
               />
               <ValidatedField
+                label={translate('serverApp.hkjJewelryModel.coverImage')}
+                id="hkj-jewelry-model-coverImage"
+                name="coverImage"
+                data-cy="coverImage"
+                type="text"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjJewelryModel.isCustom')}
                 id="hkj-jewelry-model-isCustom"
                 name="isCustom"

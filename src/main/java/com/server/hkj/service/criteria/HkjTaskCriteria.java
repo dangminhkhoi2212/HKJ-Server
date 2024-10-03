@@ -62,6 +62,8 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
+    private StringFilter coverImage;
+
     private StringFilter description;
 
     private InstantFilter assignedDate;
@@ -88,11 +90,11 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
+    private LongFilter employeeId;
+
     private LongFilter imagesId;
 
     private LongFilter materialsId;
-
-    private LongFilter employeeId;
 
     private LongFilter hkjProjectId;
 
@@ -103,6 +105,7 @@ public class HkjTaskCriteria implements Serializable, Criteria {
     public HkjTaskCriteria(HkjTaskCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.name = other.optionalName().map(StringFilter::copy).orElse(null);
+        this.coverImage = other.optionalCoverImage().map(StringFilter::copy).orElse(null);
         this.description = other.optionalDescription().map(StringFilter::copy).orElse(null);
         this.assignedDate = other.optionalAssignedDate().map(InstantFilter::copy).orElse(null);
         this.expectDate = other.optionalExpectDate().map(InstantFilter::copy).orElse(null);
@@ -116,9 +119,9 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
+        this.employeeId = other.optionalEmployeeId().map(LongFilter::copy).orElse(null);
         this.imagesId = other.optionalImagesId().map(LongFilter::copy).orElse(null);
         this.materialsId = other.optionalMaterialsId().map(LongFilter::copy).orElse(null);
-        this.employeeId = other.optionalEmployeeId().map(LongFilter::copy).orElse(null);
         this.hkjProjectId = other.optionalHkjProjectId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -164,6 +167,25 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     public void setName(StringFilter name) {
         this.name = name;
+    }
+
+    public StringFilter getCoverImage() {
+        return coverImage;
+    }
+
+    public Optional<StringFilter> optionalCoverImage() {
+        return Optional.ofNullable(coverImage);
+    }
+
+    public StringFilter coverImage() {
+        if (coverImage == null) {
+            setCoverImage(new StringFilter());
+        }
+        return coverImage;
+    }
+
+    public void setCoverImage(StringFilter coverImage) {
+        this.coverImage = coverImage;
     }
 
     public StringFilter getDescription() {
@@ -413,6 +435,25 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public LongFilter getEmployeeId() {
+        return employeeId;
+    }
+
+    public Optional<LongFilter> optionalEmployeeId() {
+        return Optional.ofNullable(employeeId);
+    }
+
+    public LongFilter employeeId() {
+        if (employeeId == null) {
+            setEmployeeId(new LongFilter());
+        }
+        return employeeId;
+    }
+
+    public void setEmployeeId(LongFilter employeeId) {
+        this.employeeId = employeeId;
+    }
+
     public LongFilter getImagesId() {
         return imagesId;
     }
@@ -449,25 +490,6 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     public void setMaterialsId(LongFilter materialsId) {
         this.materialsId = materialsId;
-    }
-
-    public LongFilter getEmployeeId() {
-        return employeeId;
-    }
-
-    public Optional<LongFilter> optionalEmployeeId() {
-        return Optional.ofNullable(employeeId);
-    }
-
-    public LongFilter employeeId() {
-        if (employeeId == null) {
-            setEmployeeId(new LongFilter());
-        }
-        return employeeId;
-    }
-
-    public void setEmployeeId(LongFilter employeeId) {
-        this.employeeId = employeeId;
     }
 
     public LongFilter getHkjProjectId() {
@@ -520,6 +542,7 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(coverImage, that.coverImage) &&
             Objects.equals(description, that.description) &&
             Objects.equals(assignedDate, that.assignedDate) &&
             Objects.equals(expectDate, that.expectDate) &&
@@ -533,9 +556,9 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
+            Objects.equals(employeeId, that.employeeId) &&
             Objects.equals(imagesId, that.imagesId) &&
             Objects.equals(materialsId, that.materialsId) &&
-            Objects.equals(employeeId, that.employeeId) &&
             Objects.equals(hkjProjectId, that.hkjProjectId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -546,6 +569,7 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         return Objects.hash(
             id,
             name,
+            coverImage,
             description,
             assignedDate,
             expectDate,
@@ -559,9 +583,9 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
+            employeeId,
             imagesId,
             materialsId,
-            employeeId,
             hkjProjectId,
             distinct
         );
@@ -573,6 +597,7 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         return "HkjTaskCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalName().map(f -> "name=" + f + ", ").orElse("") +
+            optionalCoverImage().map(f -> "coverImage=" + f + ", ").orElse("") +
             optionalDescription().map(f -> "description=" + f + ", ").orElse("") +
             optionalAssignedDate().map(f -> "assignedDate=" + f + ", ").orElse("") +
             optionalExpectDate().map(f -> "expectDate=" + f + ", ").orElse("") +
@@ -586,9 +611,9 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
+            optionalEmployeeId().map(f -> "employeeId=" + f + ", ").orElse("") +
             optionalImagesId().map(f -> "imagesId=" + f + ", ").orElse("") +
             optionalMaterialsId().map(f -> "materialsId=" + f + ", ").orElse("") +
-            optionalEmployeeId().map(f -> "employeeId=" + f + ", ").orElse("") +
             optionalHkjProjectId().map(f -> "hkjProjectId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

@@ -1,14 +1,17 @@
 package com.server.hkj.service.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Set;
+import lombok.Data;
 
 /**
  * A DTO for the {@link com.server.hkj.domain.HkjMaterial} entity.
  */
+@Data
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class HkjMaterialDTO implements Serializable {
 
@@ -26,6 +29,10 @@ public class HkjMaterialDTO implements Serializable {
     private BigDecimal unitPrice;
 
     private String supplier;
+
+    private String coverImage;
+
+    private Set<HkjMaterialImageDTO> images;
 
     private Boolean isDeleted;
 
@@ -83,6 +90,14 @@ public class HkjMaterialDTO implements Serializable {
 
     public void setSupplier(String supplier) {
         this.supplier = supplier;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
     }
 
     public Boolean getIsDeleted() {
@@ -156,6 +171,7 @@ public class HkjMaterialDTO implements Serializable {
             ", unit='" + getUnit() + "'" +
             ", unitPrice=" + getUnitPrice() +
             ", supplier='" + getSupplier() + "'" +
+            ", coverImage='" + getCoverImage() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

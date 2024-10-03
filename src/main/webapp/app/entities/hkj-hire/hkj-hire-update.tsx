@@ -145,6 +145,7 @@ export const HkjHireUpdate = () => {
                 data-cy="beginSalary"
                 type="text"
               />
+              <ValidatedField label={translate('serverApp.hkjHire.notes')} id="hkj-hire-notes" name="notes" data-cy="notes" type="text" />
               <ValidatedField
                 label={translate('serverApp.hkjHire.isDeleted')}
                 id="hkj-hire-isDeleted"

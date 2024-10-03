@@ -7,6 +7,7 @@ export interface IHkjMaterial {
   unit?: string;
   unitPrice?: number | null;
   supplier?: string | null;
+  coverImage?: string | null;
   isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;

@@ -7,6 +7,7 @@ export interface IHkjHire {
   beginDate?: dayjs.Dayjs;
   endDate?: dayjs.Dayjs;
   beginSalary?: number | null;
+  notes?: string | null;
   isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;

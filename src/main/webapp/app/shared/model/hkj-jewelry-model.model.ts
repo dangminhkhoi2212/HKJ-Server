@@ -5,6 +5,7 @@ export interface IHkjJewelryModel {
   id?: number;
   name?: string;
   description?: string | null;
+  coverImage?: string | null;
   isCustom?: boolean | null;
   weight?: number | null;
   price?: number | null;

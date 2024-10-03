@@ -48,6 +48,9 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
     @Column(name = "supplier")
     private String supplier;
 
+    @Column(name = "cover_image")
+    private String coverImage;
+
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
@@ -58,9 +61,9 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjMaterial")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "material")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "hkjMaterial" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "material" }, allowSetters = true)
     private Set<HkjMaterialImage> images = new HashSet<>();
 
     @JsonIgnoreProperties(value = { "material", "hkjTask" }, allowSetters = true)
@@ -147,6 +150,19 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
         this.supplier = supplier;
     }
 
+    public String getCoverImage() {
+        return this.coverImage;
+    }
+
+    public HkjMaterial coverImage(String coverImage) {
+        this.setCoverImage(coverImage);
+        return this;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
     public Boolean getIsDeleted() {
         return this.isDeleted;
     }
@@ -207,10 +223,10 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
 
     public void setImages(Set<HkjMaterialImage> hkjMaterialImages) {
         if (this.images != null) {
-            this.images.forEach(i -> i.setHkjMaterial(null));
+            this.images.forEach(i -> i.setMaterial(null));
         }
         if (hkjMaterialImages != null) {
-            hkjMaterialImages.forEach(i -> i.setHkjMaterial(this));
+            hkjMaterialImages.forEach(i -> i.setMaterial(this));
         }
         this.images = hkjMaterialImages;
     }
@@ -222,13 +238,13 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
 
     public HkjMaterial addImages(HkjMaterialImage hkjMaterialImage) {
         this.images.add(hkjMaterialImage);
-        hkjMaterialImage.setHkjMaterial(this);
+        hkjMaterialImage.setMaterial(this);
         return this;
     }
 
     public HkjMaterial removeImages(HkjMaterialImage hkjMaterialImage) {
         this.images.remove(hkjMaterialImage);
-        hkjMaterialImage.setHkjMaterial(null);
+        hkjMaterialImage.setMaterial(null);
         return this;
     }
 
@@ -280,6 +296,7 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
             ", unit='" + getUnit() + "'" +
             ", unitPrice=" + getUnitPrice() +
             ", supplier='" + getSupplier() + "'" +
+            ", coverImage='" + getCoverImage() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

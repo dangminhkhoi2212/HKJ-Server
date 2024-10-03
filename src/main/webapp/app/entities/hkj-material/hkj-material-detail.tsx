@@ -63,6 +63,12 @@ export const HkjMaterialDetail = () => {
           </dt>
           <dd>{hkjMaterialEntity.supplier}</dd>
           <dt>
+            <span id="coverImage">
+              <Translate contentKey="serverApp.hkjMaterial.coverImage">Cover Image</Translate>
+            </span>
+          </dt>
+          <dd>{hkjMaterialEntity.coverImage}</dd>
+          <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjMaterial.isDeleted">Is Deleted</Translate>
             </span>

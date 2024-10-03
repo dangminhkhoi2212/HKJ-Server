@@ -24,7 +24,7 @@ public class HkjMaterialImageDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjMaterialDTO hkjMaterial;
+    private HkjMaterialDTO material;
 
     public Long getId() {
         return id;
@@ -82,12 +82,12 @@ public class HkjMaterialImageDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjMaterialDTO getHkjMaterial() {
-        return hkjMaterial;
+    public HkjMaterialDTO getMaterial() {
+        return material;
     }
 
-    public void setHkjMaterial(HkjMaterialDTO hkjMaterial) {
-        this.hkjMaterial = hkjMaterial;
+    public void setMaterial(HkjMaterialDTO material) {
+        this.material = material;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class HkjMaterialImageDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", hkjMaterial=" + getHkjMaterial() +
+            ", material=" + getMaterial() +
             "}";
     }
 }

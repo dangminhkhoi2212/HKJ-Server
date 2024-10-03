@@ -29,6 +29,18 @@ class HkjTaskTest {
     }
 
     @Test
+    void employeeTest() {
+        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
+        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
+
+        hkjTask.setEmployee(userExtraBack);
+        assertThat(hkjTask.getEmployee()).isEqualTo(userExtraBack);
+
+        hkjTask.employee(null);
+        assertThat(hkjTask.getEmployee()).isNull();
+    }
+
+    @Test
     void imagesTest() {
         HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
         HkjTaskImage hkjTaskImageBack = getHkjTaskImageRandomSampleGenerator();
@@ -70,18 +82,6 @@ class HkjTaskTest {
         hkjTask.setMaterials(new HashSet<>());
         assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
         assertThat(hkjMaterialUsageBack.getHkjTask()).isNull();
-    }
-
-    @Test
-    void employeeTest() {
-        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
-        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
-
-        hkjTask.setEmployee(userExtraBack);
-        assertThat(hkjTask.getEmployee()).isEqualTo(userExtraBack);
-
-        hkjTask.employee(null);
-        assertThat(hkjTask.getEmployee()).isNull();
     }
 
     @Test

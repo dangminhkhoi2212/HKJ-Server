@@ -75,7 +75,7 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "jewelry", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private HkjProject project;
@@ -86,7 +86,7 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     private Set<HkjOrderImage> orderImages = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
     private UserExtra customer;
 
     @ManyToOne(fetch = FetchType.LAZY)

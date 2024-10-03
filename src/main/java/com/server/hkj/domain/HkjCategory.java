@@ -39,7 +39,7 @@ public class HkjCategory extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "jewelry", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "category")
     private HkjProject hkjProject;
 

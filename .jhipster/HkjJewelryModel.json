@@ -18,6 +18,10 @@
       "fieldValidateRulesMaxlength": "1000"
     },
     {
+      "fieldName": "coverImage",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "isCustom",
       "fieldType": "Boolean"
     },
@@ -87,7 +91,6 @@
   "relationships": [
     {
       "otherEntityName": "hkjProject",
-      "otherEntityRelationshipName": "jewelry",
       "relationshipName": "project",
       "relationshipSide": "left",
       "relationshipType": "one-to-one"

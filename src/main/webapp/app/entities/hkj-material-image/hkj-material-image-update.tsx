@@ -54,7 +54,7 @@ export const HkjMaterialImageUpdate = () => {
     const entity = {
       ...hkjMaterialImageEntity,
       ...values,
-      hkjMaterial: hkjMaterials.find(it => it.id.toString() === values.hkjMaterial?.toString()),
+      material: hkjMaterials.find(it => it.id.toString() === values.material?.toString()),
     };
 
     if (isNew) {
@@ -74,7 +74,7 @@ export const HkjMaterialImageUpdate = () => {
           ...hkjMaterialImageEntity,
           createdDate: convertDateTimeFromServer(hkjMaterialImageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjMaterialImageEntity.lastModifiedDate),
-          hkjMaterial: hkjMaterialImageEntity?.hkjMaterial?.id,
+          material: hkjMaterialImageEntity?.material?.id,
         };
 
   return (
@@ -148,10 +148,10 @@ export const HkjMaterialImageUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-material-image-hkjMaterial"
-                name="hkjMaterial"
-                data-cy="hkjMaterial"
-                label={translate('serverApp.hkjMaterialImage.hkjMaterial')}
+                id="hkj-material-image-material"
+                name="material"
+                data-cy="material"
+                label={translate('serverApp.hkjMaterialImage.material')}
                 type="select"
               >
                 <option value="" key="0" />

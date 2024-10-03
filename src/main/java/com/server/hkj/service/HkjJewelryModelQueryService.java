@@ -83,6 +83,9 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
             if (criteria.getDescription() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getDescription(), HkjJewelryModel_.description));
             }
+            if (criteria.getCoverImage() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getCoverImage(), HkjJewelryModel_.coverImage));
+            }
             if (criteria.getIsCustom() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsCustom(), HkjJewelryModel_.isCustom));
             }

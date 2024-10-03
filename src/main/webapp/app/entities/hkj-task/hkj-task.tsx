@@ -116,6 +116,10 @@ export const HkjTask = () => {
                 <th className="hand" onClick={sort('name')}>
                   <Translate contentKey="serverApp.hkjTask.name">Name</Translate> <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                 </th>
+                <th className="hand" onClick={sort('coverImage')}>
+                  <Translate contentKey="serverApp.hkjTask.coverImage">Cover Image</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('coverImage')} />
+                </th>
                 <th className="hand" onClick={sort('description')}>
                   <Translate contentKey="serverApp.hkjTask.description">Description</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('description')} />
@@ -186,6 +190,7 @@ export const HkjTask = () => {
                     </Button>
                   </td>
                   <td>{hkjTask.name}</td>
+                  <td>{hkjTask.coverImage}</td>
                   <td>{hkjTask.description}</td>
                   <td>{hkjTask.assignedDate ? <TextFormat type="date" value={hkjTask.assignedDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{hkjTask.expectDate ? <TextFormat type="date" value={hkjTask.expectDate} format={APP_DATE_FORMAT} /> : null}</td>

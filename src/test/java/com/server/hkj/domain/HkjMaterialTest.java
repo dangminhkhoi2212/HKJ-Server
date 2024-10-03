@@ -33,19 +33,19 @@ class HkjMaterialTest {
 
         hkjMaterial.addImages(hkjMaterialImageBack);
         assertThat(hkjMaterial.getImages()).containsOnly(hkjMaterialImageBack);
-        assertThat(hkjMaterialImageBack.getHkjMaterial()).isEqualTo(hkjMaterial);
+        assertThat(hkjMaterialImageBack.getMaterial()).isEqualTo(hkjMaterial);
 
         hkjMaterial.removeImages(hkjMaterialImageBack);
         assertThat(hkjMaterial.getImages()).doesNotContain(hkjMaterialImageBack);
-        assertThat(hkjMaterialImageBack.getHkjMaterial()).isNull();
+        assertThat(hkjMaterialImageBack.getMaterial()).isNull();
 
         hkjMaterial.images(new HashSet<>(Set.of(hkjMaterialImageBack)));
         assertThat(hkjMaterial.getImages()).containsOnly(hkjMaterialImageBack);
-        assertThat(hkjMaterialImageBack.getHkjMaterial()).isEqualTo(hkjMaterial);
+        assertThat(hkjMaterialImageBack.getMaterial()).isEqualTo(hkjMaterial);
 
         hkjMaterial.setImages(new HashSet<>());
         assertThat(hkjMaterial.getImages()).doesNotContain(hkjMaterialImageBack);
-        assertThat(hkjMaterialImageBack.getHkjMaterial()).isNull();
+        assertThat(hkjMaterialImageBack.getMaterial()).isNull();
     }
 
     @Test

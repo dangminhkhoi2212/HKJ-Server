@@ -54,6 +54,9 @@ class HkjMaterialResourceIT {
     private static final String DEFAULT_SUPPLIER = "AAAAAAAAAA";
     private static final String UPDATED_SUPPLIER = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COVER_IMAGE = "AAAAAAAAAA";
+    private static final String UPDATED_COVER_IMAGE = "BBBBBBBBBB";
+
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
 
@@ -95,6 +98,7 @@ class HkjMaterialResourceIT {
             .unit(DEFAULT_UNIT)
             .unitPrice(DEFAULT_UNIT_PRICE)
             .supplier(DEFAULT_SUPPLIER)
+            .coverImage(DEFAULT_COVER_IMAGE)
             .isDeleted(DEFAULT_IS_DELETED);
     }
 
@@ -111,6 +115,7 @@ class HkjMaterialResourceIT {
             .unit(UPDATED_UNIT)
             .unitPrice(UPDATED_UNIT_PRICE)
             .supplier(UPDATED_SUPPLIER)
+            .coverImage(UPDATED_COVER_IMAGE)
             .isDeleted(UPDATED_IS_DELETED);
     }
 
@@ -247,6 +252,7 @@ class HkjMaterialResourceIT {
             .andExpect(jsonPath("$.[*].unit").value(hasItem(DEFAULT_UNIT)))
             .andExpect(jsonPath("$.[*].unitPrice").value(hasItem(sameNumber(DEFAULT_UNIT_PRICE))))
             .andExpect(jsonPath("$.[*].supplier").value(hasItem(DEFAULT_SUPPLIER)))
+            .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
@@ -267,6 +273,7 @@ class HkjMaterialResourceIT {
             .andExpect(jsonPath("$.unit").value(DEFAULT_UNIT))
             .andExpect(jsonPath("$.unitPrice").value(sameNumber(DEFAULT_UNIT_PRICE)))
             .andExpect(jsonPath("$.supplier").value(DEFAULT_SUPPLIER))
+            .andExpect(jsonPath("$.coverImage").value(DEFAULT_COVER_IMAGE))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
@@ -580,6 +587,59 @@ class HkjMaterialResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjMaterialsByCoverImageIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
+
+        // Get all the hkjMaterialList where coverImage equals to
+        defaultHkjMaterialFiltering("coverImage.equals=" + DEFAULT_COVER_IMAGE, "coverImage.equals=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjMaterialsByCoverImageIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
+
+        // Get all the hkjMaterialList where coverImage in
+        defaultHkjMaterialFiltering(
+            "coverImage.in=" + DEFAULT_COVER_IMAGE + "," + UPDATED_COVER_IMAGE,
+            "coverImage.in=" + UPDATED_COVER_IMAGE
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjMaterialsByCoverImageIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
+
+        // Get all the hkjMaterialList where coverImage is not null
+        defaultHkjMaterialFiltering("coverImage.specified=true", "coverImage.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjMaterialsByCoverImageContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
+
+        // Get all the hkjMaterialList where coverImage contains
+        defaultHkjMaterialFiltering("coverImage.contains=" + DEFAULT_COVER_IMAGE, "coverImage.contains=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjMaterialsByCoverImageNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
+
+        // Get all the hkjMaterialList where coverImage does not contain
+        defaultHkjMaterialFiltering("coverImage.doesNotContain=" + UPDATED_COVER_IMAGE, "coverImage.doesNotContain=" + DEFAULT_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
     void getAllHkjMaterialsByIsDeletedIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
@@ -627,6 +687,7 @@ class HkjMaterialResourceIT {
             .andExpect(jsonPath("$.[*].unit").value(hasItem(DEFAULT_UNIT)))
             .andExpect(jsonPath("$.[*].unitPrice").value(hasItem(sameNumber(DEFAULT_UNIT_PRICE))))
             .andExpect(jsonPath("$.[*].supplier").value(hasItem(DEFAULT_SUPPLIER)))
+            .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
@@ -681,6 +742,7 @@ class HkjMaterialResourceIT {
             .unit(UPDATED_UNIT)
             .unitPrice(UPDATED_UNIT_PRICE)
             .supplier(UPDATED_SUPPLIER)
+            .coverImage(UPDATED_COVER_IMAGE)
             .isDeleted(UPDATED_IS_DELETED);
         HkjMaterialDTO hkjMaterialDTO = hkjMaterialMapper.toDto(updatedHkjMaterial);
 
@@ -774,7 +836,7 @@ class HkjMaterialResourceIT {
         HkjMaterial partialUpdatedHkjMaterial = new HkjMaterial();
         partialUpdatedHkjMaterial.setId(hkjMaterial.getId());
 
-        partialUpdatedHkjMaterial.name(UPDATED_NAME).quantity(UPDATED_QUANTITY).unitPrice(UPDATED_UNIT_PRICE);
+        partialUpdatedHkjMaterial.name(UPDATED_NAME).quantity(UPDATED_QUANTITY).unitPrice(UPDATED_UNIT_PRICE).isDeleted(UPDATED_IS_DELETED);
 
         restHkjMaterialMockMvc
             .perform(
@@ -812,6 +874,7 @@ class HkjMaterialResourceIT {
             .unit(UPDATED_UNIT)
             .unitPrice(UPDATED_UNIT_PRICE)
             .supplier(UPDATED_SUPPLIER)
+            .coverImage(UPDATED_COVER_IMAGE)
             .isDeleted(UPDATED_IS_DELETED);
 
         restHkjMaterialMockMvc

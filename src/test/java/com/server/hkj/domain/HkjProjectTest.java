@@ -76,16 +76,16 @@ class HkjProjectTest {
     }
 
     @Test
-    void jewelryTest() {
+    void hkjJewelryModelTest() {
         HkjProject hkjProject = getHkjProjectRandomSampleGenerator();
         HkjJewelryModel hkjJewelryModelBack = getHkjJewelryModelRandomSampleGenerator();
 
-        hkjProject.setJewelry(hkjJewelryModelBack);
-        assertThat(hkjProject.getJewelry()).isEqualTo(hkjJewelryModelBack);
+        hkjProject.setHkjJewelryModel(hkjJewelryModelBack);
+        assertThat(hkjProject.getHkjJewelryModel()).isEqualTo(hkjJewelryModelBack);
         assertThat(hkjJewelryModelBack.getProject()).isEqualTo(hkjProject);
 
-        hkjProject.jewelry(null);
-        assertThat(hkjProject.getJewelry()).isNull();
+        hkjProject.hkjJewelryModel(null);
+        assertThat(hkjProject.getHkjJewelryModel()).isNull();
         assertThat(hkjJewelryModelBack.getProject()).isNull();
     }
 

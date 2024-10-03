@@ -1,9 +1,11 @@
 package com.server.hkj.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.server.hkj.domain.Authority;
 import com.server.hkj.domain.User;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Set;
 import lombok.Data;
 
 /**
@@ -25,6 +27,8 @@ public class UserDTO implements Serializable {
     private String lastName;
 
     private String email;
+
+    private Set<Authority> authorities;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.

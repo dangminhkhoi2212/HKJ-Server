@@ -78,6 +78,7 @@ class HkjHireCriteriaTest {
         hkjHireCriteria.beginDate();
         hkjHireCriteria.endDate();
         hkjHireCriteria.beginSalary();
+        hkjHireCriteria.notes();
         hkjHireCriteria.isDeleted();
         hkjHireCriteria.createdBy();
         hkjHireCriteria.createdDate();
@@ -95,6 +96,7 @@ class HkjHireCriteriaTest {
                 condition.apply(criteria.getBeginDate()) &&
                 condition.apply(criteria.getEndDate()) &&
                 condition.apply(criteria.getBeginSalary()) &&
+                condition.apply(criteria.getNotes()) &&
                 condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
@@ -114,6 +116,7 @@ class HkjHireCriteriaTest {
                 condition.apply(criteria.getBeginDate(), copy.getBeginDate()) &&
                 condition.apply(criteria.getEndDate(), copy.getEndDate()) &&
                 condition.apply(criteria.getBeginSalary(), copy.getBeginSalary()) &&
+                condition.apply(criteria.getNotes(), copy.getNotes()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&

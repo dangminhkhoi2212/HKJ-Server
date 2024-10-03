@@ -36,6 +36,9 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "cover_image")
+    private String coverImage;
+
     @Size(max = 1000)
     @Column(name = "description", length = 1000)
     private String description;
@@ -90,16 +93,16 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjProject")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "images", "materials", "employee", "hkjProject" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "employee", "images", "materials", "hkjProject" }, allowSetters = true)
     private Set<HkjTask> tasks = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
     private UserExtra manager;
 
     @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
-    private HkjJewelryModel jewelry;
+    private HkjJewelryModel hkjJewelryModel;
 
     @JsonIgnoreProperties(value = { "project", "orderImages", "customer", "jewelry" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
@@ -131,6 +134,19 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCoverImage() {
+        return this.coverImage;
+    }
+
+    public HkjProject coverImage(String coverImage) {
+        this.setCoverImage(coverImage);
+        return this;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
     }
 
     public String getDescription() {
@@ -374,22 +390,22 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return this;
     }
 
-    public HkjJewelryModel getJewelry() {
-        return this.jewelry;
+    public HkjJewelryModel getHkjJewelryModel() {
+        return this.hkjJewelryModel;
     }
 
-    public void setJewelry(HkjJewelryModel hkjJewelryModel) {
-        if (this.jewelry != null) {
-            this.jewelry.setProject(null);
+    public void setHkjJewelryModel(HkjJewelryModel hkjJewelryModel) {
+        if (this.hkjJewelryModel != null) {
+            this.hkjJewelryModel.setProject(null);
         }
         if (hkjJewelryModel != null) {
             hkjJewelryModel.setProject(this);
         }
-        this.jewelry = hkjJewelryModel;
+        this.hkjJewelryModel = hkjJewelryModel;
     }
 
-    public HkjProject jewelry(HkjJewelryModel hkjJewelryModel) {
-        this.setJewelry(hkjJewelryModel);
+    public HkjProject hkjJewelryModel(HkjJewelryModel hkjJewelryModel) {
+        this.setHkjJewelryModel(hkjJewelryModel);
         return this;
     }
 
@@ -437,6 +453,7 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return "HkjProject{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", coverImage='" + getCoverImage() + "'" +
             ", description='" + getDescription() + "'" +
             ", startDate='" + getStartDate() + "'" +
             ", expectDate='" + getExpectDate() + "'" +

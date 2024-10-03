@@ -144,7 +144,7 @@ export const HkjMaterialImage = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjMaterialImage.hkjMaterial">Hkj Material</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjMaterialImage.material">Material</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -172,8 +172,8 @@ export const HkjMaterialImage = () => {
                     ) : null}
                   </td>
                   <td>
-                    {hkjMaterialImage.hkjMaterial ? (
-                      <Link to={`/hkj-material/${hkjMaterialImage.hkjMaterial.id}`}>{hkjMaterialImage.hkjMaterial.id}</Link>
+                    {hkjMaterialImage.material ? (
+                      <Link to={`/hkj-material/${hkjMaterialImage.material.id}`}>{hkjMaterialImage.material.id}</Link>
                     ) : (
                       ''
                     )}

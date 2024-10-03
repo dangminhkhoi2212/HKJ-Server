@@ -80,6 +80,7 @@ class HkjMaterialCriteriaTest {
         hkjMaterialCriteria.unit();
         hkjMaterialCriteria.unitPrice();
         hkjMaterialCriteria.supplier();
+        hkjMaterialCriteria.coverImage();
         hkjMaterialCriteria.isDeleted();
         hkjMaterialCriteria.createdBy();
         hkjMaterialCriteria.createdDate();
@@ -99,6 +100,7 @@ class HkjMaterialCriteriaTest {
                 condition.apply(criteria.getUnit()) &&
                 condition.apply(criteria.getUnitPrice()) &&
                 condition.apply(criteria.getSupplier()) &&
+                condition.apply(criteria.getCoverImage()) &&
                 condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
@@ -120,6 +122,7 @@ class HkjMaterialCriteriaTest {
                 condition.apply(criteria.getUnit(), copy.getUnit()) &&
                 condition.apply(criteria.getUnitPrice(), copy.getUnitPrice()) &&
                 condition.apply(criteria.getSupplier(), copy.getSupplier()) &&
+                condition.apply(criteria.getCoverImage(), copy.getCoverImage()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&

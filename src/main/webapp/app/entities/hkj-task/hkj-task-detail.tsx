@@ -39,6 +39,12 @@ export const HkjTaskDetail = () => {
           </dt>
           <dd>{hkjTaskEntity.name}</dd>
           <dt>
+            <span id="coverImage">
+              <Translate contentKey="serverApp.hkjTask.coverImage">Cover Image</Translate>
+            </span>
+          </dt>
+          <dd>{hkjTaskEntity.coverImage}</dd>
+          <dt>
             <span id="description">
               <Translate contentKey="serverApp.hkjTask.description">Description</Translate>
             </span>

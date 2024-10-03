@@ -45,6 +45,12 @@ export const HkjJewelryModelDetail = () => {
           </dt>
           <dd>{hkjJewelryModelEntity.description}</dd>
           <dt>
+            <span id="coverImage">
+              <Translate contentKey="serverApp.hkjJewelryModel.coverImage">Cover Image</Translate>
+            </span>
+          </dt>
+          <dd>{hkjJewelryModelEntity.coverImage}</dd>
+          <dt>
             <span id="isCustom">
               <Translate contentKey="serverApp.hkjJewelryModel.isCustom">Is Custom</Translate>
             </span>

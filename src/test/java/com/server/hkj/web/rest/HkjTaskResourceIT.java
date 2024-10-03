@@ -44,6 +44,9 @@ class HkjTaskResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_COVER_IMAGE = "AAAAAAAAAA";
+    private static final String UPDATED_COVER_IMAGE = "BBBBBBBBBB";
+
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
@@ -106,6 +109,7 @@ class HkjTaskResourceIT {
     public static HkjTask createEntity() {
         return new HkjTask()
             .name(DEFAULT_NAME)
+            .coverImage(DEFAULT_COVER_IMAGE)
             .description(DEFAULT_DESCRIPTION)
             .assignedDate(DEFAULT_ASSIGNED_DATE)
             .expectDate(DEFAULT_EXPECT_DATE)
@@ -126,6 +130,7 @@ class HkjTaskResourceIT {
     public static HkjTask createUpdatedEntity() {
         return new HkjTask()
             .name(UPDATED_NAME)
+            .coverImage(UPDATED_COVER_IMAGE)
             .description(UPDATED_DESCRIPTION)
             .assignedDate(UPDATED_ASSIGNED_DATE)
             .expectDate(UPDATED_EXPECT_DATE)
@@ -292,6 +297,7 @@ class HkjTaskResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTask.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].assignedDate").value(hasItem(DEFAULT_ASSIGNED_DATE.toString())))
             .andExpect(jsonPath("$.[*].expectDate").value(hasItem(DEFAULT_EXPECT_DATE.toString())))
@@ -316,6 +322,7 @@ class HkjTaskResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjTask.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.coverImage").value(DEFAULT_COVER_IMAGE))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.assignedDate").value(DEFAULT_ASSIGNED_DATE.toString()))
             .andExpect(jsonPath("$.expectDate").value(DEFAULT_EXPECT_DATE.toString()))
@@ -390,6 +397,56 @@ class HkjTaskResourceIT {
 
         // Get all the hkjTaskList where name does not contain
         defaultHkjTaskFiltering("name.doesNotContain=" + UPDATED_NAME, "name.doesNotContain=" + DEFAULT_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTasksByCoverImageIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
+
+        // Get all the hkjTaskList where coverImage equals to
+        defaultHkjTaskFiltering("coverImage.equals=" + DEFAULT_COVER_IMAGE, "coverImage.equals=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTasksByCoverImageIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
+
+        // Get all the hkjTaskList where coverImage in
+        defaultHkjTaskFiltering("coverImage.in=" + DEFAULT_COVER_IMAGE + "," + UPDATED_COVER_IMAGE, "coverImage.in=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTasksByCoverImageIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
+
+        // Get all the hkjTaskList where coverImage is not null
+        defaultHkjTaskFiltering("coverImage.specified=true", "coverImage.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTasksByCoverImageContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
+
+        // Get all the hkjTaskList where coverImage contains
+        defaultHkjTaskFiltering("coverImage.contains=" + DEFAULT_COVER_IMAGE, "coverImage.contains=" + UPDATED_COVER_IMAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjTasksByCoverImageNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
+
+        // Get all the hkjTaskList where coverImage does not contain
+        defaultHkjTaskFiltering("coverImage.doesNotContain=" + UPDATED_COVER_IMAGE, "coverImage.doesNotContain=" + DEFAULT_COVER_IMAGE);
     }
 
     @Test
@@ -810,6 +867,7 @@ class HkjTaskResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjTask.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].assignedDate").value(hasItem(DEFAULT_ASSIGNED_DATE.toString())))
             .andExpect(jsonPath("$.[*].expectDate").value(hasItem(DEFAULT_EXPECT_DATE.toString())))
@@ -868,6 +926,7 @@ class HkjTaskResourceIT {
         em.detach(updatedHkjTask);
         updatedHkjTask
             .name(UPDATED_NAME)
+            .coverImage(UPDATED_COVER_IMAGE)
             .description(UPDATED_DESCRIPTION)
             .assignedDate(UPDATED_ASSIGNED_DATE)
             .expectDate(UPDATED_EXPECT_DATE)
@@ -969,7 +1028,7 @@ class HkjTaskResourceIT {
         HkjTask partialUpdatedHkjTask = new HkjTask();
         partialUpdatedHkjTask.setId(hkjTask.getId());
 
-        partialUpdatedHkjTask.description(UPDATED_DESCRIPTION).expectDate(UPDATED_EXPECT_DATE).isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedHkjTask.coverImage(UPDATED_COVER_IMAGE).assignedDate(UPDATED_ASSIGNED_DATE).notes(UPDATED_NOTES);
 
         restHkjTaskMockMvc
             .perform(
@@ -1000,6 +1059,7 @@ class HkjTaskResourceIT {
 
         partialUpdatedHkjTask
             .name(UPDATED_NAME)
+            .coverImage(UPDATED_COVER_IMAGE)
             .description(UPDATED_DESCRIPTION)
             .assignedDate(UPDATED_ASSIGNED_DATE)
             .expectDate(UPDATED_EXPECT_DATE)

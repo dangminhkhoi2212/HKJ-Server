@@ -62,6 +62,6 @@ public class HkjMaterialImageAsserts {
     public static void assertHkjMaterialImageUpdatableRelationshipsEquals(HkjMaterialImage expected, HkjMaterialImage actual) {
         assertThat(expected)
             .as("Verify HkjMaterialImage relationships")
-            .satisfies(e -> assertThat(e.getHkjMaterial()).as("check hkjMaterial").isEqualTo(actual.getHkjMaterial()));
+            .satisfies(e -> assertThat(e.getMaterial()).as("check material").isEqualTo(actual.getMaterial()));
     }
 }

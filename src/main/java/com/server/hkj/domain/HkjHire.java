@@ -39,6 +39,9 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
     @Column(name = "begin_salary", precision = 21, scale = 2)
     private BigDecimal beginSalary;
 
+    @Column(name = "notes")
+    private String notes;
+
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
@@ -53,7 +56,7 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
     private HkjPosition position;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
     private UserExtra employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -108,6 +111,19 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
 
     public void setBeginSalary(BigDecimal beginSalary) {
         this.beginSalary = beginSalary;
+    }
+
+    public String getNotes() {
+        return this.notes;
+    }
+
+    public HkjHire notes(String notes) {
+        this.setNotes(notes);
+        return this;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -217,6 +233,7 @@ public class HkjHire extends AbstractAuditingEntity<Long> implements Serializabl
             ", beginDate='" + getBeginDate() + "'" +
             ", endDate='" + getEndDate() + "'" +
             ", beginSalary=" + getBeginSalary() +
+            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

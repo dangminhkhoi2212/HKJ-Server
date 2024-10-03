@@ -21,6 +21,10 @@
       "fieldType": "BigDecimal"
     },
     {
+      "fieldName": "notes",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "isDeleted",
       "fieldType": "Boolean"
     },

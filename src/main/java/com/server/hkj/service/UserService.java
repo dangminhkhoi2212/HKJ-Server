@@ -8,9 +8,10 @@ import com.server.hkj.repository.AuthorityRepository;
 import com.server.hkj.repository.UserExtraRepository;
 import com.server.hkj.repository.UserRepository;
 import com.server.hkj.security.AuthoritiesConstants;
-import com.server.hkj.security.SecurityUtils;
 import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
+import com.server.hkj.service.dto.UserExtraDTO;
+import com.server.hkj.service.mapper.UserExtraMapper;
 import com.server.hkj.service.mapper.UserMapper;
 import java.time.Instant;
 import java.util.HashSet;
@@ -51,12 +52,15 @@ public class UserService {
 
     private final UserExtraService userExtraService;
 
+    private final UserExtraMapper userExtraMapper;
+
     public UserService(
         UserRepository userRepository,
         AuthorityRepository authorityRepository,
         CacheManager cacheManager,
         UserExtraRepository userExtraRepository,
-        UserExtraService userExtraService
+        UserExtraService userExtraService,
+        UserExtraMapper userExtraMapper
     ) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
@@ -64,6 +68,7 @@ public class UserService {
         this.cacheManager = cacheManager;
         this.userMapper = new UserMapper();
         this.userExtraService = userExtraService;
+        this.userExtraMapper = userExtraMapper;
     }
 
     public void updateUser(User user) {
@@ -86,38 +91,41 @@ public class UserService {
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
      */
-    public void updateUser(
+    public UserExtraDTO updateUser(
+        String login,
         String firstName,
         String lastName,
         String email,
         String langKey,
         String imageUrl,
         String phoneNumber,
-        String addressString
+        String addressString,
+        Set<Authority> authorities
     ) {
-        SecurityUtils.getCurrentUserLogin()
-            .flatMap(userRepository::findOneByLogin)
-            .ifPresent(user -> {
-                user.setFirstName(firstName);
-                user.setLastName(lastName);
-                user.setEmail(email != null ? email.toLowerCase() : null);
-                user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
-                userRepository.save(user);
+        User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("No user found with login: " + login));
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email != null ? email.toLowerCase() : null);
+        user.setLangKey(langKey);
+        user.setImageUrl(imageUrl);
+        user.setAuthorities(authorities);
+        userRepository.save(user);
 
-                UserExtra userExtra = userExtraRepository
-                    .findOneByUserLogin(user.getLogin())
-                    .orElseGet(() -> {
-                        UserExtra newUserExtra = new UserExtra();
-                        newUserExtra.setUser(user);
-                        return newUserExtra;
-                    });
-
-                userExtra = userExtraService.setDetails(userExtra, phoneNumber, addressString);
-                userExtraRepository.save(userExtra);
-
-                clearUserCaches(user);
+        UserExtra userExtra = userExtraRepository
+            .findOneByUserLogin(user.getLogin())
+            .orElseGet(() -> {
+                UserExtra newUserExtra = new UserExtra();
+                newUserExtra.setUser(user);
+                newUserExtra = userExtraService.setDetails(newUserExtra, phoneNumber, addressString);
+                userExtraRepository.save(newUserExtra);
+                return newUserExtra;
             });
+
+        userExtra = userExtraService.setDetails(userExtra, phoneNumber, addressString);
+        userExtra.setUser(user);
+        userExtraRepository.save(userExtra);
+        log.debug("Changed Information for User updateUser: {}", userExtra);
+        return userExtraMapper.toDto(userExtra);
     }
 
     @Transactional(readOnly = true)
@@ -188,18 +196,19 @@ public class UserService {
     private UserExtra updateExistingUser(User existingUser, User user, Map<String, Object> details) {
         log.info("Updating user '{}' in local database", user.getLogin());
         //update authorities
-        existingUser.setAuthorities(user.getAuthorities());
-        userRepository.save(existingUser);
-        updateUser(
-            existingUser.getFirstName(),
-            existingUser.getLastName(),
-            existingUser.getEmail(),
-            existingUser.getLangKey(),
-            existingUser.getImageUrl(),
+        UserExtraDTO userExtra = updateUser(
+            user.getLogin(),
+            user.getFirstName(),
+            user.getLastName(),
+            user.getEmail(),
+            user.getLangKey(),
+            user.getImageUrl(),
             getDetailString(details, "phone_number"),
-            getDetailString(details, "address_string")
+            getDetailString(details, "address_string"),
+            user.getAuthorities()
         );
-        return userExtraRepository.findOneByUserLogin(existingUser.getLogin()).get();
+        log.debug("Caching user '{}' in local database updateExistingUser", userExtra);
+        return userExtraMapper.toEntity(userExtra);
     }
 
     private Map<String, Object> getAttributes(AbstractAuthenticationToken authToken) {
@@ -245,10 +254,15 @@ public class UserService {
     @Transactional
     public AdminUserDTO getUserFromAuthentication(AbstractAuthenticationToken authToken) {
         Map<String, Object> attributes = getAttributes(authToken);
+
         UserExtra userExtra = getUser(attributes);
+        log.debug("USEREXTRA: {}", userExtra);
         User user = userExtra.getUser();
+        log.debug("USER: {}", user);
+
         user.setAuthorities(getAuthoritiesFromToken(authToken));
         UserExtra userExtraSync = syncUserWithIdP(attributes, user);
+        log.debug("Changed information about user: {}", userExtraSync);
         return new AdminUserDTO(userExtraSync != null ? userExtraSync : userExtra);
     }
 

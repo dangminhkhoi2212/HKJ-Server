@@ -77,6 +77,7 @@ class HkjJewelryModelCriteriaTest {
         hkjJewelryModelCriteria.id();
         hkjJewelryModelCriteria.name();
         hkjJewelryModelCriteria.description();
+        hkjJewelryModelCriteria.coverImage();
         hkjJewelryModelCriteria.isCustom();
         hkjJewelryModelCriteria.weight();
         hkjJewelryModelCriteria.price();
@@ -99,6 +100,7 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getName()) &&
                 condition.apply(criteria.getDescription()) &&
+                condition.apply(criteria.getCoverImage()) &&
                 condition.apply(criteria.getIsCustom()) &&
                 condition.apply(criteria.getWeight()) &&
                 condition.apply(criteria.getPrice()) &&
@@ -126,6 +128,7 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getName(), copy.getName()) &&
                 condition.apply(criteria.getDescription(), copy.getDescription()) &&
+                condition.apply(criteria.getCoverImage(), copy.getCoverImage()) &&
                 condition.apply(criteria.getIsCustom(), copy.getIsCustom()) &&
                 condition.apply(criteria.getWeight(), copy.getWeight()) &&
                 condition.apply(criteria.getPrice(), copy.getPrice()) &&

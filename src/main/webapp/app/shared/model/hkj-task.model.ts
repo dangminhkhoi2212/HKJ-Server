@@ -7,6 +7,7 @@ import { HkjPriority } from 'app/shared/model/enumerations/hkj-priority.model';
 export interface IHkjTask {
   id?: number;
   name?: string;
+  coverImage?: string | null;
   description?: string | null;
   assignedDate?: dayjs.Dayjs;
   expectDate?: dayjs.Dayjs;

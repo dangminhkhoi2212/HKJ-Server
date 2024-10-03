@@ -100,10 +100,10 @@ public class HkjMaterialImageQueryService extends QueryService<HkjMaterialImage>
                     buildRangeSpecification(criteria.getLastModifiedDate(), HkjMaterialImage_.lastModifiedDate)
                 );
             }
-            if (criteria.getHkjMaterialId() != null) {
+            if (criteria.getMaterialId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getHkjMaterialId(), root ->
-                        root.join(HkjMaterialImage_.hkjMaterial, JoinType.LEFT).get(HkjMaterial_.id)
+                    buildSpecification(criteria.getMaterialId(), root ->
+                        root.join(HkjMaterialImage_.material, JoinType.LEFT).get(HkjMaterial_.id)
                     )
                 );
             }

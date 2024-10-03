@@ -117,6 +117,10 @@ export const HkjProject = () => {
                   <Translate contentKey="serverApp.hkjProject.name">Name</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                 </th>
+                <th className="hand" onClick={sort('coverImage')}>
+                  <Translate contentKey="serverApp.hkjProject.coverImage">Cover Image</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('coverImage')} />
+                </th>
                 <th className="hand" onClick={sort('description')}>
                   <Translate contentKey="serverApp.hkjProject.description">Description</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('description')} />
@@ -195,6 +199,7 @@ export const HkjProject = () => {
                     </Button>
                   </td>
                   <td>{hkjProject.name}</td>
+                  <td>{hkjProject.coverImage}</td>
                   <td>{hkjProject.description}</td>
                   <td>{hkjProject.startDate ? <TextFormat type="date" value={hkjProject.startDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>

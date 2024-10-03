@@ -92,6 +92,9 @@ public class HkjMaterialQueryService extends QueryService<HkjMaterial> {
             if (criteria.getSupplier() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSupplier(), HkjMaterial_.supplier));
             }
+            if (criteria.getCoverImage() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getCoverImage(), HkjMaterial_.coverImage));
+            }
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjMaterial_.isDeleted));
             }

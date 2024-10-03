@@ -36,7 +36,7 @@ public class HkjMaterialImageCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter hkjMaterialId;
+    private LongFilter materialId;
 
     private Boolean distinct;
 
@@ -50,7 +50,7 @@ public class HkjMaterialImageCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.hkjMaterialId = other.optionalHkjMaterialId().map(LongFilter::copy).orElse(null);
+        this.materialId = other.optionalMaterialId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -192,23 +192,23 @@ public class HkjMaterialImageCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getHkjMaterialId() {
-        return hkjMaterialId;
+    public LongFilter getMaterialId() {
+        return materialId;
     }
 
-    public Optional<LongFilter> optionalHkjMaterialId() {
-        return Optional.ofNullable(hkjMaterialId);
+    public Optional<LongFilter> optionalMaterialId() {
+        return Optional.ofNullable(materialId);
     }
 
-    public LongFilter hkjMaterialId() {
-        if (hkjMaterialId == null) {
-            setHkjMaterialId(new LongFilter());
+    public LongFilter materialId() {
+        if (materialId == null) {
+            setMaterialId(new LongFilter());
         }
-        return hkjMaterialId;
+        return materialId;
     }
 
-    public void setHkjMaterialId(LongFilter hkjMaterialId) {
-        this.hkjMaterialId = hkjMaterialId;
+    public void setMaterialId(LongFilter materialId) {
+        this.materialId = materialId;
     }
 
     public Boolean getDistinct() {
@@ -247,14 +247,14 @@ public class HkjMaterialImageCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(hkjMaterialId, that.hkjMaterialId) &&
+            Objects.equals(materialId, that.materialId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, url, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, hkjMaterialId, distinct);
+        return Objects.hash(id, url, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, materialId, distinct);
     }
 
     // prettier-ignore
@@ -268,7 +268,7 @@ public class HkjMaterialImageCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalHkjMaterialId().map(f -> "hkjMaterialId=" + f + ", ").orElse("") +
+            optionalMaterialId().map(f -> "materialId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

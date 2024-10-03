@@ -9,7 +9,7 @@ export interface IHkjMaterialImage {
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  hkjMaterial?: IHkjMaterial | null;
+  material?: IHkjMaterial | null;
 }
 
 export const defaultValue: Readonly<IHkjMaterialImage> = {

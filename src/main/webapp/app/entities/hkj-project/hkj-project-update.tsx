@@ -139,6 +139,13 @@ export const HkjProjectUpdate = () => {
                 }}
               />
               <ValidatedField
+                label={translate('serverApp.hkjProject.coverImage')}
+                id="hkj-project-coverImage"
+                name="coverImage"
+                data-cy="coverImage"
+                type="text"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjProject.description')}
                 id="hkj-project-description"
                 name="description"

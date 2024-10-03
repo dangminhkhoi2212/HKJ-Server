@@ -20,6 +20,8 @@ public class HkjJewelryModelDTO implements Serializable {
     @Size(max = 1000)
     private String description;
 
+    private String coverImage;
+
     private Boolean isCustom;
 
     private Double weight;
@@ -66,6 +68,14 @@ public class HkjJewelryModelDTO implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
     }
 
     public Boolean getIsCustom() {
@@ -192,6 +202,7 @@ public class HkjJewelryModelDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
+            ", coverImage='" + getCoverImage() + "'" +
             ", isCustom='" + getIsCustom() + "'" +
             ", weight=" + getWeight() +
             ", price=" + getPrice() +

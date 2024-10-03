@@ -18,6 +18,7 @@ public class HkjMaterialTestSamples {
             .quantity(1)
             .unit("unit1")
             .supplier("supplier1")
+            .coverImage("coverImage1")
             .createdBy("createdBy1")
             .lastModifiedBy("lastModifiedBy1");
     }
@@ -29,6 +30,7 @@ public class HkjMaterialTestSamples {
             .quantity(2)
             .unit("unit2")
             .supplier("supplier2")
+            .coverImage("coverImage2")
             .createdBy("createdBy2")
             .lastModifiedBy("lastModifiedBy2");
     }
@@ -40,6 +42,7 @@ public class HkjMaterialTestSamples {
             .quantity(intCount.incrementAndGet())
             .unit(UUID.randomUUID().toString())
             .supplier(UUID.randomUUID().toString())
+            .coverImage(UUID.randomUUID().toString())
             .createdBy(UUID.randomUUID().toString())
             .lastModifiedBy(UUID.randomUUID().toString());
     }

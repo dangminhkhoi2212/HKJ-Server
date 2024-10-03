@@ -52,7 +52,7 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
     private Set<HkjTemplateStep> steps = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
     private UserExtra creater;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

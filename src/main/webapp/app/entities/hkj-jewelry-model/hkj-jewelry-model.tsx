@@ -122,6 +122,10 @@ export const HkjJewelryModel = () => {
                   <Translate contentKey="serverApp.hkjJewelryModel.description">Description</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('description')} />
                 </th>
+                <th className="hand" onClick={sort('coverImage')}>
+                  <Translate contentKey="serverApp.hkjJewelryModel.coverImage">Cover Image</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('coverImage')} />
+                </th>
                 <th className="hand" onClick={sort('isCustom')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.isCustom">Is Custom</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('isCustom')} />
@@ -182,6 +186,7 @@ export const HkjJewelryModel = () => {
                   </td>
                   <td>{hkjJewelryModel.name}</td>
                   <td>{hkjJewelryModel.description}</td>
+                  <td>{hkjJewelryModel.coverImage}</td>
                   <td>{hkjJewelryModel.isCustom ? 'true' : 'false'}</td>
                   <td>{hkjJewelryModel.weight}</td>
                   <td>{hkjJewelryModel.price}</td>

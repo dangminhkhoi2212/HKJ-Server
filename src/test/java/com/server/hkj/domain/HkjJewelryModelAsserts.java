@@ -52,6 +52,7 @@ public class HkjJewelryModelAsserts {
             .as("Verify HkjJewelryModel relevant properties")
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
             .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
+            .satisfies(e -> assertThat(e.getCoverImage()).as("check coverImage").isEqualTo(actual.getCoverImage()))
             .satisfies(e -> assertThat(e.getIsCustom()).as("check isCustom").isEqualTo(actual.getIsCustom()))
             .satisfies(e -> assertThat(e.getWeight()).as("check weight").isEqualTo(actual.getWeight()))
             .satisfies(e -> assertThat(e.getPrice()).as("check price").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getPrice()))

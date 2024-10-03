@@ -95,6 +95,9 @@ public class HkjHireQueryService extends QueryService<HkjHire> {
             if (criteria.getBeginSalary() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getBeginSalary(), HkjHire_.beginSalary));
             }
+            if (criteria.getNotes() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjHire_.notes));
+            }
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjHire_.isDeleted));
             }

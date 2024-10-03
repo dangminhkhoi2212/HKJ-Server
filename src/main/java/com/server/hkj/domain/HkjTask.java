@@ -35,6 +35,9 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "cover_image")
+    private String coverImage;
+
     @Size(max = 1000)
     @Column(name = "description", length = 1000)
     private String description;
@@ -79,6 +82,11 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Transient
     private boolean isPersisted;
 
+    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(unique = true)
+    private UserExtra employee;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTask")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "hkjTask" }, allowSetters = true)
@@ -90,11 +98,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     private Set<HkjMaterialUsage> materials = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
-    private UserExtra employee;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "jewelry", "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
     private HkjProject hkjProject;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -123,6 +127,19 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCoverImage() {
+        return this.coverImage;
+    }
+
+    public HkjTask coverImage(String coverImage) {
+        this.setCoverImage(coverImage);
+        return this;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
     }
 
     public String getDescription() {
@@ -283,6 +300,19 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
+    public UserExtra getEmployee() {
+        return this.employee;
+    }
+
+    public void setEmployee(UserExtra userExtra) {
+        this.employee = userExtra;
+    }
+
+    public HkjTask employee(UserExtra userExtra) {
+        this.setEmployee(userExtra);
+        return this;
+    }
+
     public Set<HkjTaskImage> getImages() {
         return this.images;
     }
@@ -345,19 +375,6 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
-    public UserExtra getEmployee() {
-        return this.employee;
-    }
-
-    public void setEmployee(UserExtra userExtra) {
-        this.employee = userExtra;
-    }
-
-    public HkjTask employee(UserExtra userExtra) {
-        this.setEmployee(userExtra);
-        return this;
-    }
-
     public HkjProject getHkjProject() {
         return this.hkjProject;
     }
@@ -396,6 +413,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
         return "HkjTask{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", coverImage='" + getCoverImage() + "'" +
             ", description='" + getDescription() + "'" +
             ", assignedDate='" + getAssignedDate() + "'" +
             ", expectDate='" + getExpectDate() + "'" +

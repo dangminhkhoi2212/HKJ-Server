@@ -24,14 +24,14 @@ class HkjMaterialImageTest {
     }
 
     @Test
-    void hkjMaterialTest() {
+    void materialTest() {
         HkjMaterialImage hkjMaterialImage = getHkjMaterialImageRandomSampleGenerator();
         HkjMaterial hkjMaterialBack = getHkjMaterialRandomSampleGenerator();
 
-        hkjMaterialImage.setHkjMaterial(hkjMaterialBack);
-        assertThat(hkjMaterialImage.getHkjMaterial()).isEqualTo(hkjMaterialBack);
+        hkjMaterialImage.setMaterial(hkjMaterialBack);
+        assertThat(hkjMaterialImage.getMaterial()).isEqualTo(hkjMaterialBack);
 
-        hkjMaterialImage.hkjMaterial(null);
-        assertThat(hkjMaterialImage.getHkjMaterial()).isNull();
+        hkjMaterialImage.material(null);
+        assertThat(hkjMaterialImage.getMaterial()).isNull();
     }
 }

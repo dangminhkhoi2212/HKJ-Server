@@ -41,7 +41,7 @@ public class HkjMaterialImage extends AbstractAuditingEntity<Long> implements Se
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "images", "hkjMaterialUsage" }, allowSetters = true)
-    private HkjMaterial hkjMaterial;
+    private HkjMaterial material;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -125,16 +125,16 @@ public class HkjMaterialImage extends AbstractAuditingEntity<Long> implements Se
         return this;
     }
 
-    public HkjMaterial getHkjMaterial() {
-        return this.hkjMaterial;
+    public HkjMaterial getMaterial() {
+        return this.material;
     }
 
-    public void setHkjMaterial(HkjMaterial hkjMaterial) {
-        this.hkjMaterial = hkjMaterial;
+    public void setMaterial(HkjMaterial hkjMaterial) {
+        this.material = hkjMaterial;
     }
 
-    public HkjMaterialImage hkjMaterial(HkjMaterial hkjMaterial) {
-        this.setHkjMaterial(hkjMaterial);
+    public HkjMaterialImage material(HkjMaterial hkjMaterial) {
+        this.setMaterial(hkjMaterial);
         return this;
     }
 

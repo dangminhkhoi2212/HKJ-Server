@@ -80,14 +80,14 @@ public class HkjProjectService {
     }
 
     /**
-     *  Get all the hkjProjects where Jewelry is {@code null}.
+     *  Get all the hkjProjects where HkjJewelryModel is {@code null}.
      *  @return the list of entities.
      */
     @Transactional(readOnly = true)
-    public List<HkjProjectDTO> findAllWhereJewelryIsNull() {
-        LOG.debug("Request to get all hkjProjects where Jewelry is null");
+    public List<HkjProjectDTO> findAllWhereHkjJewelryModelIsNull() {
+        LOG.debug("Request to get all hkjProjects where HkjJewelryModel is null");
         return StreamSupport.stream(hkjProjectRepository.findAll().spliterator(), false)
-            .filter(hkjProject -> hkjProject.getJewelry() == null)
+            .filter(hkjProject -> hkjProject.getHkjJewelryModel() == null)
             .map(hkjProjectMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

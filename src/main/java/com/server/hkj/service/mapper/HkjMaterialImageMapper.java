@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjMaterialImageMapper extends EntityMapper<HkjMaterialImageDTO, HkjMaterialImage> {
-    @Mapping(target = "hkjMaterial", source = "hkjMaterial", qualifiedByName = "hkjMaterialId")
+    @Mapping(target = "material", source = "material", qualifiedByName = "hkjMaterialId")
     HkjMaterialImageDTO toDto(HkjMaterialImage s);
 
     @Named("hkjMaterialId")

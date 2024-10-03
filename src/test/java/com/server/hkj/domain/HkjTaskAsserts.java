@@ -50,6 +50,7 @@ public class HkjTaskAsserts {
         assertThat(expected)
             .as("Verify HkjTask relevant properties")
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
+            .satisfies(e -> assertThat(e.getCoverImage()).as("check coverImage").isEqualTo(actual.getCoverImage()))
             .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
             .satisfies(e -> assertThat(e.getAssignedDate()).as("check assignedDate").isEqualTo(actual.getAssignedDate()))
             .satisfies(e -> assertThat(e.getExpectDate()).as("check expectDate").isEqualTo(actual.getExpectDate()))

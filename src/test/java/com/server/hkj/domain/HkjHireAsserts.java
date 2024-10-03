@@ -58,6 +58,7 @@ public class HkjHireAsserts {
                     .usingComparator(bigDecimalCompareTo)
                     .isEqualTo(actual.getBeginSalary())
             )
+            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 

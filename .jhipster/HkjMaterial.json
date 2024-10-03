@@ -30,6 +30,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "coverImage",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "isDeleted",
       "fieldType": "Boolean"
     },
@@ -75,6 +79,7 @@
   "relationships": [
     {
       "otherEntityName": "hkjMaterialImage",
+      "otherEntityRelationshipName": "material",
       "relationshipName": "images",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"

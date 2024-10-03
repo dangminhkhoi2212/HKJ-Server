@@ -12,6 +12,10 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "coverImage",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "description",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
@@ -121,13 +125,6 @@
       "relationshipName": "manager",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "hkjJewelryModel",
-      "otherEntityRelationshipName": "project",
-      "relationshipName": "jewelry",
-      "relationshipSide": "right",
-      "relationshipType": "one-to-one"
     }
   ],
   "searchEngine": "no",

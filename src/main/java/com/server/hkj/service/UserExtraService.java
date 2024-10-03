@@ -9,6 +9,7 @@ import com.server.hkj.service.dto.AccountDTO;
 import com.server.hkj.service.dto.UserExtraDTO;
 import com.server.hkj.service.mapper.AccountMapper;
 import com.server.hkj.service.mapper.UserExtraMapper;
+import jakarta.validation.Valid;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -133,7 +134,7 @@ public class UserExtraService {
         return userExtra;
     }
 
-    public UserExtraDTO syncAccount(AccountDTO accountDTO) {
+    public UserExtraDTO syncAccount(@Valid AccountDTO accountDTO) {
         User user = new User();
         user.setId(accountDTO.getUserId());
         user.setLogin(accountDTO.getLogin());

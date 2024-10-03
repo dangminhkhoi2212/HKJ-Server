@@ -12,6 +12,10 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "coverImage",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "description",
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
@@ -101,6 +105,12 @@
   "pagination": "pagination",
   "relationships": [
     {
+      "otherEntityName": "userExtra",
+      "relationshipName": "employee",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
       "otherEntityName": "hkjTaskImage",
       "relationshipName": "images",
       "relationshipSide": "left",
@@ -111,12 +121,6 @@
       "relationshipName": "materials",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "userExtra",
-      "relationshipName": "employee",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",
