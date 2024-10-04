@@ -41,17 +41,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-
     private final AuthorityRepository authorityRepository;
-
     private final UserExtraRepository userExtraRepository;
-
     private final CacheManager cacheManager;
-
     private final UserMapper userMapper;
-
     private final UserExtraService userExtraService;
-
     private final UserExtraMapper userExtraMapper;
 
     public UserService(
@@ -76,9 +70,9 @@ public class UserService {
         if (existingUser.isPresent()) {
             User newUser = userMapper.partialUpdate(existingUser.get(), user);
             userRepository.save(newUser);
-            log.info("Changed Information for User: {}", newUser);
-            this.clearUserCaches(newUser);
-            this.clearUserCaches(existingUser.get());
+            log.debug("Changed Information for User: {}", newUser);
+            clearUserCaches(newUser);
+            clearUserCaches(existingUser.get());
         }
     }
 
@@ -103,28 +97,30 @@ public class UserService {
         Set<Authority> authorities
     ) {
         User user = userRepository.findOneByLogin(login).orElseThrow(() -> new RuntimeException("No user found with login: " + login));
+
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setEmail(email != null ? email.toLowerCase() : null);
+        if (email != null) {
+            user.setEmail(email.toLowerCase());
+        }
         user.setLangKey(langKey);
         user.setImageUrl(imageUrl);
         user.setAuthorities(authorities);
         userRepository.save(user);
+        clearUserCaches(user);
 
-        UserExtra userExtra = userExtraRepository
-            .findOneByUserLogin(user.getLogin())
-            .orElseGet(() -> {
-                UserExtra newUserExtra = new UserExtra();
-                newUserExtra.setUser(user);
-                newUserExtra = userExtraService.setDetails(newUserExtra, phoneNumber, addressString);
-                userExtraRepository.save(newUserExtra);
-                return newUserExtra;
-            });
+        Optional<UserExtra> userExtraOptional = userExtraRepository.findOneByUserLogin(login);
+        UserExtra userExtra;
+        if (userExtraOptional.isPresent()) {
+            userExtra = userExtraOptional.get();
+        } else {
+            userExtra = new UserExtra();
+            userExtra.setUser(user);
+        }
 
         userExtra = userExtraService.setDetails(userExtra, phoneNumber, addressString);
-        userExtra.setUser(user);
         userExtraRepository.save(userExtra);
-        log.debug("Changed Information for User updateUser: {}", userExtra);
+        log.debug("Changed Information for User Extra: {}", userExtra);
         return userExtraMapper.toDto(userExtra);
     }
 
@@ -152,95 +148,74 @@ public class UserService {
         return authorityRepository.findAll().stream().map(Authority::getName).toList();
     }
 
-    private String getDetailString(Map<String, Object> details, String key) {
-        return details.get(key) != null ? details.get(key).toString() : "";
-    }
-
-    private void saveAuthority(String authorityName) {
-        log.info("Saving authority '{}' in local database", authorityName);
-        Authority authority = new Authority();
-        authority.setName(authorityName);
-        authorityRepository.save(authority);
-    }
-
     private UserExtra syncUserWithIdP(Map<String, Object> details, User user) {
-        // save authorities in to sync user roles/groups between IdP and JHipster's local database
-        Set<String> dbAuthorities = new HashSet<>(getAuthorities());
+        // Save authorities to sync user roles/groups between IdP and JHipster's local database
+        Set<String> dbAuthoritiesSet = new HashSet<>(getAuthorities());
         user
             .getAuthorities()
             .stream()
             .map(Authority::getName)
-            .filter(authority -> !dbAuthorities.contains(authority) && AuthoritiesConstants.AUTHORITIES.contains(authority))
-            .forEach(this::saveAuthority);
+            .filter(authority -> !dbAuthoritiesSet.contains(authority) && AuthoritiesConstants.AUTHORITIES.contains(authority))
+            .forEach(authority -> {
+                log.debug("Saving authority '{}' in local database", authority);
+                Authority authorityToSave = new Authority();
+                authorityToSave.setName(authority);
+                authorityRepository.save(authorityToSave);
+            });
 
-        // save account in to sync users between IdP and JHipster's local database
-        return userRepository
-            .findOneByLogin(user.getLogin())
-            .map(existingUser -> updateExistingUser(existingUser, user, details))
-            .orElseGet(() -> createNewUser(user, details));
-    }
-
-    private UserExtra createNewUser(User user, Map<String, Object> details) {
-        log.info("Saving user '{}' in local database", user.getLogin());
-        User newUser = userRepository.save(user);
-        UserExtra userExtra = new UserExtra();
-        userExtra.setUser(newUser);
-        userExtra.setPhone(getDetailString(details, "phone_number"));
-        userExtra.setAddress(getDetailString(details, "address_string"));
-        userExtraRepository.save(userExtra);
-        clearUserCaches(user);
-        clearUserCaches(newUser);
-        return userExtra;
-    }
-
-    private UserExtra updateExistingUser(User existingUser, User user, Map<String, Object> details) {
-        log.info("Updating user '{}' in local database", user.getLogin());
-        //update authorities
-        UserExtraDTO userExtra = updateUser(
-            user.getLogin(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getEmail(),
-            user.getLangKey(),
-            user.getImageUrl(),
-            getDetailString(details, "phone_number"),
-            getDetailString(details, "address_string"),
-            user.getAuthorities()
-        );
-        log.debug("Caching user '{}' in local database updateExistingUser", userExtra);
-        return userExtraMapper.toEntity(userExtra);
-    }
-
-    private Map<String, Object> getAttributes(AbstractAuthenticationToken authToken) {
-        if (authToken instanceof OAuth2AuthenticationToken) {
-            return ((OAuth2AuthenticationToken) authToken).getPrincipal().getAttributes();
-        } else if (authToken instanceof JwtAuthenticationToken) {
-            return ((JwtAuthenticationToken) authToken).getTokenAttributes();
+        Optional<User> existingUser = userRepository.findOneByLogin(user.getLogin());
+        if (existingUser.isPresent()) {
+            if (details.get("updated_at") != null) {
+                Instant dbModifiedDate = existingUser.get().getLastModifiedDate();
+                Instant idpModifiedDate = details.get("updated_at") instanceof Instant
+                    ? (Instant) details.get("updated_at")
+                    : Instant.ofEpochSecond((Integer) details.get("updated_at"));
+                if (idpModifiedDate.isAfter(dbModifiedDate)) {
+                    log.debug("Updating user '{}' in local database", user.getLogin());
+                    updateUser(
+                        user.getLogin(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getEmail(),
+                        user.getLangKey(),
+                        user.getImageUrl(),
+                        getDetailString(details, "phone_number"),
+                        getDetailString(details, "address_string"),
+                        user.getAuthorities()
+                    );
+                }
+            } else {
+                log.debug("Updating user '{}' in local database without timestamp check", user.getLogin());
+                updateUser(
+                    user.getLogin(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    user.getLangKey(),
+                    user.getImageUrl(),
+                    getDetailString(details, "phone_number"),
+                    getDetailString(details, "address_string"),
+                    user.getAuthorities()
+                );
+            }
+            return userExtraRepository
+                .findOneByUserLogin(user.getLogin())
+                .orElseThrow(() -> new RuntimeException("UserExtra not found after update"));
+        } else {
+            log.debug("Saving new user '{}' in local database", user.getLogin());
+            userRepository.save(user);
+            UserExtra userExtra = new UserExtra();
+            userExtra.setUser(user);
+            userExtra.setPhone(getDetailString(details, "phone_number"));
+            userExtra.setAddress(getDetailString(details, "address_string"));
+            userExtraRepository.save(userExtra);
+            clearUserCaches(user);
+            return userExtra;
         }
-        throw new IllegalArgumentException("AuthenticationToken is not OAuth2 or JWT!");
     }
 
-    private boolean shouldUpdate(User existingUser, Map<String, Object> details) {
-        if (details.get("updated_at") == null) return true;
-        Instant dbModifiedDate = existingUser.getLastModifiedDate();
-        Instant idpModifiedDate = details.get("updated_at") instanceof Instant
-            ? (Instant) details.get("updated_at")
-            : Instant.ofEpochSecond((Integer) details.get("updated_at"));
-        return idpModifiedDate.isAfter(dbModifiedDate);
-    }
-
-    private Set<Authority> getAuthoritiesFromToken(AbstractAuthenticationToken authToken) {
-        return authToken
-            .getAuthorities()
-            .stream()
-            .map(GrantedAuthority::getAuthority)
-            .filter(AuthoritiesConstants.AUTHORITIES::contains)
-            .map(authorityName -> {
-                Authority auth = new Authority();
-                auth.setName(authorityName);
-                return auth;
-            })
-            .collect(Collectors.toSet());
+    private String getDetailString(Map<String, Object> details, String key) {
+        return details.get(key) != null ? details.get(key).toString() : "";
     }
 
     /**
@@ -250,67 +225,89 @@ public class UserService {
      * @param authToken the authentication token.
      * @return the user from the authentication.
      */
-
     @Transactional
     public AdminUserDTO getUserFromAuthentication(AbstractAuthenticationToken authToken) {
-        Map<String, Object> attributes = getAttributes(authToken);
+        Map<String, Object> attributes;
+        if (authToken instanceof OAuth2AuthenticationToken) {
+            attributes = ((OAuth2AuthenticationToken) authToken).getPrincipal().getAttributes();
+        } else if (authToken instanceof JwtAuthenticationToken) {
+            attributes = ((JwtAuthenticationToken) authToken).getTokenAttributes();
+        } else {
+            throw new IllegalArgumentException("AuthenticationToken is not OAuth2 or JWT!");
+        }
 
         UserExtra userExtra = getUser(attributes);
-        log.debug("USEREXTRA: {}", userExtra);
         User user = userExtra.getUser();
-        log.debug("USER: {}", user);
 
-        user.setAuthorities(getAuthoritiesFromToken(authToken));
-        UserExtra userExtraSync = syncUserWithIdP(attributes, user);
-        log.debug("Changed information about user: {}", userExtraSync);
-        return new AdminUserDTO(userExtraSync != null ? userExtraSync : userExtra);
+        Set<Authority> authorities = authToken
+            .getAuthorities()
+            .stream()
+            .map(GrantedAuthority::getAuthority)
+            .filter(AuthoritiesConstants.AUTHORITIES::contains)
+            .map(authority -> {
+                Authority auth = new Authority();
+                auth.setName(authority);
+                return auth;
+            })
+            .collect(Collectors.toSet());
+
+        user.setAuthorities(authorities);
+        User savedUser = userRepository.save(user);
+        UserExtra syncedUserExtra = syncUserWithIdP(attributes, savedUser);
+        return new AdminUserDTO(syncedUserExtra);
     }
 
     private static UserExtra getUser(Map<String, Object> details) {
         User user = new User();
         UserExtra userExtra = new UserExtra();
+
         Boolean activated = Boolean.TRUE;
         String sub = String.valueOf(details.get("sub"));
-        String username = null;
-        if (details.get("preferred_username") != null) {
-            username = ((String) details.get("preferred_username")).toLowerCase();
-        }
-        // handle resource server JWT, where sub claim is email and uid is ID
+        String username = details.get("preferred_username") != null ? ((String) details.get("preferred_username")).toLowerCase() : null;
+
+        // Handle resource server JWT, where sub claim is email and uid is ID
         if (details.get("uid") != null) {
             user.setId((String) details.get("uid"));
             user.setLogin(sub);
         } else {
             user.setId(sub);
         }
+
         if (username != null) {
             user.setLogin(username);
         } else if (user.getLogin() == null) {
             user.setLogin(user.getId());
         }
+
+        // Set name fields
         if (details.get("given_name") != null) {
             user.setFirstName((String) details.get("given_name"));
         } else if (details.get("name") != null) {
             user.setFirstName((String) details.get("name"));
         }
+
         if (details.get("family_name") != null) {
             user.setLastName((String) details.get("family_name"));
         }
 
+        // Set email and activation status
         if (details.get("email_verified") != null) {
             activated = (Boolean) details.get("email_verified");
         }
+
         if (details.get("email") != null) {
             user.setEmail(((String) details.get("email")).toLowerCase());
         } else if (sub.contains("|") && (username != null && username.contains("@"))) {
-            // special handling for Auth0
+            // Special handling for Auth0
             user.setEmail(username);
         } else {
             user.setEmail(sub);
         }
+
+        // Set language
         if (details.get("langKey") != null) {
             user.setLangKey((String) details.get("langKey"));
         } else if (details.get("locale") != null) {
-            // trim off country code if it exists
             String locale = (String) details.get("locale");
             if (locale.contains("_")) {
                 locale = locale.substring(0, locale.indexOf('_'));
@@ -319,21 +316,20 @@ public class UserService {
             }
             user.setLangKey(locale.toLowerCase());
         } else {
-            // set langKey to default if not specified by IdP
             user.setLangKey(Constants.DEFAULT_LANGUAGE);
         }
+
         if (details.get("picture") != null) {
             user.setImageUrl((String) details.get("picture"));
         }
+
         user.setActivated(activated);
 
-        if (details.get("phone_number") != null) {
-            userExtra.setPhone(details.get("phone_number").toString());
-        }
-        if (details.get("address_string") != null) {
-            userExtra.setAddress(details.get("address_string").toString());
-        }
+        // Set UserExtra fields
         userExtra.setUser(user);
+        userExtra.setPhone(details.get("phone_number") != null ? details.get("phone_number").toString() : "");
+        userExtra.setAddress(details.get("address_string") != null ? details.get("address_string").toString() : "");
+
         return userExtra;
     }
 
