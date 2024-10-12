@@ -170,13 +170,13 @@ export const HkjOrder = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjOrder.project">Project</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
                   <Translate contentKey="serverApp.hkjOrder.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   <Translate contentKey="serverApp.hkjOrder.jewelry">Jewelry</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjOrder.project">Project</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -217,9 +217,9 @@ export const HkjOrder = () => {
                       <TextFormat type="date" value={hkjOrder.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{hkjOrder.project ? <Link to={`/hkj-project/${hkjOrder.project.id}`}>{hkjOrder.project.id}</Link> : ''}</td>
                   <td>{hkjOrder.customer ? <Link to={`/user-extra/${hkjOrder.customer.id}`}>{hkjOrder.customer.id}</Link> : ''}</td>
                   <td>{hkjOrder.jewelry ? <Link to={`/hkj-jewelry-model/${hkjOrder.jewelry.id}`}>{hkjOrder.jewelry.id}</Link> : ''}</td>
+                  <td>{hkjOrder.project ? <Link to={`/hkj-project/${hkjOrder.project.id}`}>{hkjOrder.project.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-order/${hkjOrder.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -21,6 +21,7 @@ import HkjMaterial from './hkj-material';
 import HkjMaterialUsage from './hkj-material-usage';
 import HkjOrderImage from './hkj-order-image';
 import HkjMaterialImage from './hkj-material-image';
+import HkjTrackSearchImage from './hkj-track-search-image';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -46,6 +47,7 @@ export default () => {
         <Route path="hkj-material-usage/*" element={<HkjMaterialUsage />} />
         <Route path="hkj-order-image/*" element={<HkjOrderImage />} />
         <Route path="hkj-material-image/*" element={<HkjMaterialImage />} />
+        <Route path="hkj-track-search-image/*" element={<HkjTrackSearchImage />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>

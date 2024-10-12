@@ -13,9 +13,7 @@
     },
     {
       "fieldName": "description",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "1000"
+      "fieldType": "String"
     },
     {
       "fieldName": "coverImage",
@@ -90,17 +88,23 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjProject",
-      "relationshipName": "project",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityName": "hkjJewelryImage",
       "otherEntityRelationshipName": "jewelryModel",
       "relationshipName": "images",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "hkjCategory",
+      "relationshipName": "category",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjProject",
+      "relationshipName": "project",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

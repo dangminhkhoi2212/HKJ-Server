@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
 import { getEntities as getHkjProjects } from 'app/entities/hkj-project/hkj-project.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-jewelry-model.reducer';
 
@@ -18,6 +19,7 @@ export const HkjJewelryModelUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
   const hkjProjects = useAppSelector(state => state.hkjProject.entities);
   const hkjJewelryModelEntity = useAppSelector(state => state.hkjJewelryModel.entity);
   const loading = useAppSelector(state => state.hkjJewelryModel.loading);
@@ -35,6 +37,7 @@ export const HkjJewelryModelUpdate = () => {
       dispatch(getEntity(id));
     }
 
+    dispatch(getHkjCategories({}));
     dispatch(getHkjProjects({}));
   }, []);
 
@@ -60,6 +63,7 @@ export const HkjJewelryModelUpdate = () => {
     const entity = {
       ...hkjJewelryModelEntity,
       ...values,
+      category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
       project: hkjProjects.find(it => it.id.toString() === values.project?.toString()),
     };
 
@@ -80,6 +84,7 @@ export const HkjJewelryModelUpdate = () => {
           ...hkjJewelryModelEntity,
           createdDate: convertDateTimeFromServer(hkjJewelryModelEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjJewelryModelEntity.lastModifiedDate),
+          category: hkjJewelryModelEntity?.category?.id,
           project: hkjJewelryModelEntity?.project?.id,
         };
 
@@ -124,9 +129,6 @@ export const HkjJewelryModelUpdate = () => {
                 name="description"
                 data-cy="description"
                 type="text"
-                validate={{
-                  maxLength: { value: 1000, message: translate('entity.validation.maxlength', { max: 1000 }) },
-                }}
               />
               <ValidatedField
                 label={translate('serverApp.hkjJewelryModel.coverImage')}
@@ -217,6 +219,22 @@ export const HkjJewelryModelUpdate = () => {
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
+              <ValidatedField
+                id="hkj-jewelry-model-category"
+                name="category"
+                data-cy="category"
+                label={translate('serverApp.hkjJewelryModel.category')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjCategories
+                  ? hkjCategories.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <ValidatedField
                 id="hkj-jewelry-model-project"
                 name="project"

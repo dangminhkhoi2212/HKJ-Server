@@ -131,10 +131,6 @@ export const HkjOrderDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjOrder.project">Project</Translate>
-          </dt>
-          <dd>{hkjOrderEntity.project ? hkjOrderEntity.project.id : ''}</dd>
-          <dt>
             <Translate contentKey="serverApp.hkjOrder.customer">Customer</Translate>
           </dt>
           <dd>{hkjOrderEntity.customer ? hkjOrderEntity.customer.id : ''}</dd>
@@ -142,6 +138,10 @@ export const HkjOrderDetail = () => {
             <Translate contentKey="serverApp.hkjOrder.jewelry">Jewelry</Translate>
           </dt>
           <dd>{hkjOrderEntity.jewelry ? hkjOrderEntity.jewelry.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjOrder.project">Project</Translate>
+          </dt>
+          <dd>{hkjOrderEntity.project ? hkjOrderEntity.project.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-order" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

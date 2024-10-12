@@ -145,13 +145,13 @@ export const HkjProjectDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjProject.category">Category</Translate>
-          </dt>
-          <dd>{hkjProjectEntity.category ? hkjProjectEntity.category.id : ''}</dd>
-          <dt>
             <Translate contentKey="serverApp.hkjProject.manager">Manager</Translate>
           </dt>
           <dd>{hkjProjectEntity.manager ? hkjProjectEntity.manager.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjProject.category">Category</Translate>
+          </dt>
+          <dd>{hkjProjectEntity.category ? hkjProjectEntity.category.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-project" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

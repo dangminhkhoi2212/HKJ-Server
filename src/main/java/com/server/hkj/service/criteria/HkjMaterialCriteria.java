@@ -48,8 +48,6 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
 
     private LongFilter imagesId;
 
-    private LongFilter hkjMaterialUsageId;
-
     private Boolean distinct;
 
     public HkjMaterialCriteria() {}
@@ -68,7 +66,6 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
         this.imagesId = other.optionalImagesId().map(LongFilter::copy).orElse(null);
-        this.hkjMaterialUsageId = other.optionalHkjMaterialUsageId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -324,25 +321,6 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         this.imagesId = imagesId;
     }
 
-    public LongFilter getHkjMaterialUsageId() {
-        return hkjMaterialUsageId;
-    }
-
-    public Optional<LongFilter> optionalHkjMaterialUsageId() {
-        return Optional.ofNullable(hkjMaterialUsageId);
-    }
-
-    public LongFilter hkjMaterialUsageId() {
-        if (hkjMaterialUsageId == null) {
-            setHkjMaterialUsageId(new LongFilter());
-        }
-        return hkjMaterialUsageId;
-    }
-
-    public void setHkjMaterialUsageId(LongFilter hkjMaterialUsageId) {
-        this.hkjMaterialUsageId = hkjMaterialUsageId;
-    }
-
     public Boolean getDistinct() {
         return distinct;
     }
@@ -385,7 +363,6 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
             Objects.equals(imagesId, that.imagesId) &&
-            Objects.equals(hkjMaterialUsageId, that.hkjMaterialUsageId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -406,7 +383,6 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             lastModifiedBy,
             lastModifiedDate,
             imagesId,
-            hkjMaterialUsageId,
             distinct
         );
     }
@@ -428,7 +404,6 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
             optionalImagesId().map(f -> "imagesId=" + f + ", ").orElse("") +
-            optionalHkjMaterialUsageId().map(f -> "hkjMaterialUsageId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

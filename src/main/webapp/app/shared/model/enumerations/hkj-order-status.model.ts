@@ -1,11 +1,13 @@
 export enum HkjOrderStatus {
   NEW = 'NEW',
 
-  PROCESSING = 'PROCESSING',
+  IN_PROCESS = 'IN_PROCESS',
 
   COMPLETED = 'COMPLETED',
 
   DELIVERED = 'DELIVERED',
 
   LATED = 'LATED',
+
+  CANCEL = 'CANCEL',
 }

@@ -17,7 +17,6 @@ public class HkjJewelryModelDTO implements Serializable {
     @NotNull
     private String name;
 
-    @Size(max = 1000)
     private String description;
 
     private String coverImage;
@@ -43,6 +42,8 @@ public class HkjJewelryModelDTO implements Serializable {
     private String lastModifiedBy;
 
     private Instant lastModifiedDate;
+
+    private HkjCategoryDTO category;
 
     private HkjProjectDTO project;
 
@@ -166,6 +167,14 @@ public class HkjJewelryModelDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
+    public HkjCategoryDTO getCategory() {
+        return category;
+    }
+
+    public void setCategory(HkjCategoryDTO category) {
+        this.category = category;
+    }
+
     public HkjProjectDTO getProject() {
         return project;
     }
@@ -214,6 +223,7 @@ public class HkjJewelryModelDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
+            ", category=" + getCategory() +
             ", project=" + getProject() +
             "}";
     }

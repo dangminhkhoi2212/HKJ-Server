@@ -34,8 +34,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Size(max = 1000)
-    @Column(name = "description", length = 1000)
+    @Column(name = "description")
     private String description;
 
     @Column(name = "cover_image")
@@ -69,15 +68,17 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private HkjProject project;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "jewelryModel")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "jewelryModel" }, allowSetters = true)
     private Set<HkjJewelryImage> images = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private HkjCategory category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "tasks", "manager", "category" }, allowSetters = true)
+    private HkjProject project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -265,19 +266,6 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
         return this;
     }
 
-    public HkjProject getProject() {
-        return this.project;
-    }
-
-    public void setProject(HkjProject hkjProject) {
-        this.project = hkjProject;
-    }
-
-    public HkjJewelryModel project(HkjProject hkjProject) {
-        this.setProject(hkjProject);
-        return this;
-    }
-
     public Set<HkjJewelryImage> getImages() {
         return this.images;
     }
@@ -306,6 +294,32 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     public HkjJewelryModel removeImages(HkjJewelryImage hkjJewelryImage) {
         this.images.remove(hkjJewelryImage);
         hkjJewelryImage.setJewelryModel(null);
+        return this;
+    }
+
+    public HkjCategory getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(HkjCategory hkjCategory) {
+        this.category = hkjCategory;
+    }
+
+    public HkjJewelryModel category(HkjCategory hkjCategory) {
+        this.setCategory(hkjCategory);
+        return this;
+    }
+
+    public HkjProject getProject() {
+        return this.project;
+    }
+
+    public void setProject(HkjProject hkjProject) {
+        this.project = hkjProject;
+    }
+
+    public HkjJewelryModel project(HkjProject hkjProject) {
+        this.setProject(hkjProject);
         return this;
     }
 

@@ -1,17 +1,14 @@
 package com.server.hkj.service.dto;
 
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
-import java.util.Set;
-import lombok.Data;
 
 /**
  * A DTO for the {@link com.server.hkj.domain.HkjMaterial} entity.
  */
-@Data
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class HkjMaterialDTO implements Serializable {
 
@@ -31,8 +28,6 @@ public class HkjMaterialDTO implements Serializable {
     private String supplier;
 
     private String coverImage;
-
-    private Set<HkjMaterialImageDTO> images;
 
     private Boolean isDeleted;
 

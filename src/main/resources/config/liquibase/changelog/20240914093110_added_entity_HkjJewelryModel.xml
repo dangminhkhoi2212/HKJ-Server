@@ -17,7 +17,7 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="description" type="varchar(1000)">
+            <column name="description" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="cover_image" type="varchar(255)">
@@ -56,8 +56,11 @@
             <column name="last_modified_date" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
+            <column name="category_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="project_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_jewelry_model__project_id" />
+                <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>

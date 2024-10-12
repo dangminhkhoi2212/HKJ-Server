@@ -4,11 +4,7 @@ import com.server.hkj.domain.HkjCategory;
 import com.server.hkj.repository.HkjCategoryRepository;
 import com.server.hkj.service.dto.HkjCategoryDTO;
 import com.server.hkj.service.mapper.HkjCategoryMapper;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -77,32 +73,6 @@ public class HkjCategoryService {
             })
             .map(hkjCategoryRepository::save)
             .map(hkjCategoryMapper::toDto);
-    }
-
-    /**
-     *  Get all the hkjCategories where HkjProject is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<HkjCategoryDTO> findAllWhereHkjProjectIsNull() {
-        LOG.debug("Request to get all hkjCategories where HkjProject is null");
-        return StreamSupport.stream(hkjCategoryRepository.findAll().spliterator(), false)
-            .filter(hkjCategory -> hkjCategory.getHkjProject() == null)
-            .map(hkjCategoryMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
-
-    /**
-     *  Get all the hkjCategories where HkjTemplate is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<HkjCategoryDTO> findAllWhereHkjTemplateIsNull() {
-        LOG.debug("Request to get all hkjCategories where HkjTemplate is null");
-        return StreamSupport.stream(hkjCategoryRepository.findAll().spliterator(), false)
-            .filter(hkjCategory -> hkjCategory.getHkjTemplate() == null)
-            .map(hkjCategoryMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

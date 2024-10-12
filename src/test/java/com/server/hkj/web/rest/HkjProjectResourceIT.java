@@ -62,7 +62,7 @@ class HkjProjectResourceIT {
     private static final Instant UPDATED_END_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final HkjOrderStatus DEFAULT_STATUS = HkjOrderStatus.NEW;
-    private static final HkjOrderStatus UPDATED_STATUS = HkjOrderStatus.PROCESSING;
+    private static final HkjOrderStatus UPDATED_STATUS = HkjOrderStatus.IN_PROCESS;
 
     private static final HkjPriority DEFAULT_PRIORITY = HkjPriority.LOW;
     private static final HkjPriority UPDATED_PRIORITY = HkjPriority.MEDIUM;
@@ -925,28 +925,6 @@ class HkjProjectResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjProjectsByCategoryIsEqualToSomething() throws Exception {
-        HkjCategory category;
-        if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
-            hkjProjectRepository.saveAndFlush(hkjProject);
-            category = HkjCategoryResourceIT.createEntity();
-        } else {
-            category = TestUtil.findAll(em, HkjCategory.class).get(0);
-        }
-        em.persist(category);
-        em.flush();
-        hkjProject.setCategory(category);
-        hkjProjectRepository.saveAndFlush(hkjProject);
-        Long categoryId = category.getId();
-        // Get all the hkjProjectList where category equals to categoryId
-        defaultHkjProjectShouldBeFound("categoryId.equals=" + categoryId);
-
-        // Get all the hkjProjectList where category equals to (categoryId + 1)
-        defaultHkjProjectShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
-    }
-
-    @Test
-    @Transactional
     void getAllHkjProjectsByManagerIsEqualToSomething() throws Exception {
         UserExtra manager;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
@@ -965,6 +943,28 @@ class HkjProjectResourceIT {
 
         // Get all the hkjProjectList where manager equals to (managerId + 1)
         defaultHkjProjectShouldNotBeFound("managerId.equals=" + (managerId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjProjectsByCategoryIsEqualToSomething() throws Exception {
+        HkjCategory category;
+        if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
+            hkjProjectRepository.saveAndFlush(hkjProject);
+            category = HkjCategoryResourceIT.createEntity();
+        } else {
+            category = TestUtil.findAll(em, HkjCategory.class).get(0);
+        }
+        em.persist(category);
+        em.flush();
+        hkjProject.setCategory(category);
+        hkjProjectRepository.saveAndFlush(hkjProject);
+        Long categoryId = category.getId();
+        // Get all the hkjProjectList where category equals to categoryId
+        defaultHkjProjectShouldBeFound("categoryId.equals=" + categoryId);
+
+        // Get all the hkjProjectList where category equals to (categoryId + 1)
+        defaultHkjProjectShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
     }
 
     private void defaultHkjProjectFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

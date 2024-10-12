@@ -29,18 +29,6 @@ class HkjOrderTest {
     }
 
     @Test
-    void projectTest() {
-        HkjOrder hkjOrder = getHkjOrderRandomSampleGenerator();
-        HkjProject hkjProjectBack = getHkjProjectRandomSampleGenerator();
-
-        hkjOrder.setProject(hkjProjectBack);
-        assertThat(hkjOrder.getProject()).isEqualTo(hkjProjectBack);
-
-        hkjOrder.project(null);
-        assertThat(hkjOrder.getProject()).isNull();
-    }
-
-    @Test
     void orderImagesTest() {
         HkjOrder hkjOrder = getHkjOrderRandomSampleGenerator();
         HkjOrderImage hkjOrderImageBack = getHkjOrderImageRandomSampleGenerator();
@@ -84,5 +72,17 @@ class HkjOrderTest {
 
         hkjOrder.jewelry(null);
         assertThat(hkjOrder.getJewelry()).isNull();
+    }
+
+    @Test
+    void projectTest() {
+        HkjOrder hkjOrder = getHkjOrderRandomSampleGenerator();
+        HkjProject hkjProjectBack = getHkjProjectRandomSampleGenerator();
+
+        hkjOrder.setProject(hkjProjectBack);
+        assertThat(hkjOrder.getProject()).isEqualTo(hkjProjectBack);
+
+        hkjOrder.project(null);
+        assertThat(hkjOrder.getProject()).isNull();
     }
 }

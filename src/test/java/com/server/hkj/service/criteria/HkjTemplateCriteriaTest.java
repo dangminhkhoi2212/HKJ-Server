@@ -81,9 +81,8 @@ class HkjTemplateCriteriaTest {
         hkjTemplateCriteria.createdDate();
         hkjTemplateCriteria.lastModifiedBy();
         hkjTemplateCriteria.lastModifiedDate();
-        hkjTemplateCriteria.categoryId();
         hkjTemplateCriteria.stepsId();
-        hkjTemplateCriteria.createrId();
+        hkjTemplateCriteria.categoryId();
         hkjTemplateCriteria.distinct();
     }
 
@@ -97,9 +96,8 @@ class HkjTemplateCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getStepsId()) &&
-                condition.apply(criteria.getCreaterId()) &&
+                condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -115,9 +113,8 @@ class HkjTemplateCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getStepsId(), copy.getStepsId()) &&
-                condition.apply(criteria.getCreaterId(), copy.getCreaterId()) &&
+                condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

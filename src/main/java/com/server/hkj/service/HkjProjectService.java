@@ -4,11 +4,7 @@ import com.server.hkj.domain.HkjProject;
 import com.server.hkj.repository.HkjProjectRepository;
 import com.server.hkj.service.dto.HkjProjectDTO;
 import com.server.hkj.service.mapper.HkjProjectMapper;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -77,32 +73,6 @@ public class HkjProjectService {
             })
             .map(hkjProjectRepository::save)
             .map(hkjProjectMapper::toDto);
-    }
-
-    /**
-     *  Get all the hkjProjects where HkjJewelryModel is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<HkjProjectDTO> findAllWhereHkjJewelryModelIsNull() {
-        LOG.debug("Request to get all hkjProjects where HkjJewelryModel is null");
-        return StreamSupport.stream(hkjProjectRepository.findAll().spliterator(), false)
-            .filter(hkjProject -> hkjProject.getHkjJewelryModel() == null)
-            .map(hkjProjectMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
-    }
-
-    /**
-     *  Get all the hkjProjects where HkjOrder is {@code null}.
-     *  @return the list of entities.
-     */
-    @Transactional(readOnly = true)
-    public List<HkjProjectDTO> findAllWhereHkjOrderIsNull() {
-        LOG.debug("Request to get all hkjProjects where HkjOrder is null");
-        return StreamSupport.stream(hkjProjectRepository.findAll().spliterator(), false)
-            .filter(hkjProject -> hkjProject.getHkjOrder() == null)
-            .map(hkjProjectMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

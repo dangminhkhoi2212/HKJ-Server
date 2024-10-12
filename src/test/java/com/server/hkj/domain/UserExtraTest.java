@@ -1,7 +1,6 @@
 package com.server.hkj.domain;
 
 import static com.server.hkj.domain.HkjSalaryTestSamples.*;
-import static com.server.hkj.domain.HkjTaskTestSamples.*;
 import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -46,19 +45,5 @@ class UserExtraTest {
         userExtra.setSalarys(new HashSet<>());
         assertThat(userExtra.getSalarys()).doesNotContain(hkjSalaryBack);
         assertThat(hkjSalaryBack.getUserExtra()).isNull();
-    }
-
-    @Test
-    void hkjTaskTest() {
-        UserExtra userExtra = getUserExtraRandomSampleGenerator();
-        HkjTask hkjTaskBack = getHkjTaskRandomSampleGenerator();
-
-        userExtra.setHkjTask(hkjTaskBack);
-        assertThat(userExtra.getHkjTask()).isEqualTo(hkjTaskBack);
-        assertThat(hkjTaskBack.getEmployee()).isEqualTo(userExtra);
-
-        userExtra.hkjTask(null);
-        assertThat(userExtra.getHkjTask()).isNull();
-        assertThat(hkjTaskBack.getEmployee()).isNull();
     }
 }

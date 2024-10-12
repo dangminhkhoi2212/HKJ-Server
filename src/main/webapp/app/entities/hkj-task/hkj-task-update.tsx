@@ -68,7 +68,7 @@ export const HkjTaskUpdate = () => {
       ...hkjTaskEntity,
       ...values,
       employee: userExtras.find(it => it.id.toString() === values.employee?.toString()),
-      hkjProject: hkjProjects.find(it => it.id.toString() === values.hkjProject?.toString()),
+      project: hkjProjects.find(it => it.id.toString() === values.project?.toString()),
     };
 
     if (isNew) {
@@ -97,7 +97,7 @@ export const HkjTaskUpdate = () => {
           createdDate: convertDateTimeFromServer(hkjTaskEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjTaskEntity.lastModifiedDate),
           employee: hkjTaskEntity?.employee?.id,
-          hkjProject: hkjTaskEntity?.hkjProject?.id,
+          project: hkjTaskEntity?.project?.id,
         };
 
   return (
@@ -148,9 +148,6 @@ export const HkjTaskUpdate = () => {
                 name="description"
                 data-cy="description"
                 type="text"
-                validate={{
-                  maxLength: { value: 1000, message: translate('entity.validation.maxlength', { max: 1000 }) },
-                }}
               />
               <ValidatedField
                 label={translate('serverApp.hkjTask.assignedDate')}
@@ -220,16 +217,7 @@ export const HkjTaskUpdate = () => {
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
               />
-              <ValidatedField
-                label={translate('serverApp.hkjTask.notes')}
-                id="hkj-task-notes"
-                name="notes"
-                data-cy="notes"
-                type="text"
-                validate={{
-                  maxLength: { value: 1000, message: translate('entity.validation.maxlength', { max: 1000 }) },
-                }}
-              />
+              <ValidatedField label={translate('serverApp.hkjTask.notes')} id="hkj-task-notes" name="notes" data-cy="notes" type="text" />
               <ValidatedField
                 label={translate('serverApp.hkjTask.isDeleted')}
                 id="hkj-task-isDeleted"
@@ -285,10 +273,10 @@ export const HkjTaskUpdate = () => {
                   : null}
               </ValidatedField>
               <ValidatedField
-                id="hkj-task-hkjProject"
-                name="hkjProject"
-                data-cy="hkjProject"
-                label={translate('serverApp.hkjTask.hkjProject')}
+                id="hkj-task-project"
+                name="project"
+                data-cy="project"
+                label={translate('serverApp.hkjTask.project')}
                 type="select"
               >
                 <option value="" key="0" />

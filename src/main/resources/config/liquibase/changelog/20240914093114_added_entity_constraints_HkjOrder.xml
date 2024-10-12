@@ -10,13 +10,6 @@
     -->
     <changeSet id="20240914093114-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="project_id"
-                                 baseTableName="hkj_order"
-                                 constraintName="fk_hkj_order__project_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="hkj_project"
-                                 />
-
         <addForeignKeyConstraint baseColumnNames="customer_id"
                                  baseTableName="hkj_order"
                                  constraintName="fk_hkj_order__customer_id"
@@ -29,6 +22,13 @@
                                  constraintName="fk_hkj_order__jewelry_id"
                                  referencedColumnNames="id"
                                  referencedTableName="hkj_jewelry_model"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="project_id"
+                                 baseTableName="hkj_order"
+                                 constraintName="fk_hkj_order__project_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_project"
                                  />
     </changeSet>
 </databaseChangeLog>

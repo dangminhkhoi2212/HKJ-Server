@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
+import com.server.hkj.domain.HkjCategory;
 import com.server.hkj.domain.HkjJewelryModel;
 import com.server.hkj.domain.HkjProject;
 import com.server.hkj.repository.HkjJewelryModelRepository;
@@ -772,6 +773,28 @@ class HkjJewelryModelResourceIT {
 
         // Get all the hkjJewelryModelList where active is not null
         defaultHkjJewelryModelFiltering("active.specified=true", "active.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByCategoryIsEqualToSomething() throws Exception {
+        HkjCategory category;
+        if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
+            hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+            category = HkjCategoryResourceIT.createEntity();
+        } else {
+            category = TestUtil.findAll(em, HkjCategory.class).get(0);
+        }
+        em.persist(category);
+        em.flush();
+        hkjJewelryModel.setCategory(category);
+        hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+        Long categoryId = category.getId();
+        // Get all the hkjJewelryModelList where category equals to categoryId
+        defaultHkjJewelryModelShouldBeFound("categoryId.equals=" + categoryId);
+
+        // Get all the hkjJewelryModelList where category equals to (categoryId + 1)
+        defaultHkjJewelryModelShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
     }
 
     @Test

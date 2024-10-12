@@ -3,7 +3,6 @@ package com.server.hkj.domain;
 import static com.server.hkj.domain.HkjCategoryTestSamples.*;
 import static com.server.hkj.domain.HkjTemplateStepTestSamples.*;
 import static com.server.hkj.domain.HkjTemplateTestSamples.*;
-import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
@@ -25,18 +24,6 @@ class HkjTemplateTest {
 
         hkjTemplate2 = getHkjTemplateSample2();
         assertThat(hkjTemplate1).isNotEqualTo(hkjTemplate2);
-    }
-
-    @Test
-    void categoryTest() {
-        HkjTemplate hkjTemplate = getHkjTemplateRandomSampleGenerator();
-        HkjCategory hkjCategoryBack = getHkjCategoryRandomSampleGenerator();
-
-        hkjTemplate.setCategory(hkjCategoryBack);
-        assertThat(hkjTemplate.getCategory()).isEqualTo(hkjCategoryBack);
-
-        hkjTemplate.category(null);
-        assertThat(hkjTemplate.getCategory()).isNull();
     }
 
     @Test
@@ -62,14 +49,14 @@ class HkjTemplateTest {
     }
 
     @Test
-    void createrTest() {
+    void categoryTest() {
         HkjTemplate hkjTemplate = getHkjTemplateRandomSampleGenerator();
-        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
+        HkjCategory hkjCategoryBack = getHkjCategoryRandomSampleGenerator();
 
-        hkjTemplate.setCreater(userExtraBack);
-        assertThat(hkjTemplate.getCreater()).isEqualTo(userExtraBack);
+        hkjTemplate.setCategory(hkjCategoryBack);
+        assertThat(hkjTemplate.getCategory()).isEqualTo(hkjCategoryBack);
 
-        hkjTemplate.creater(null);
-        assertThat(hkjTemplate.getCreater()).isNull();
+        hkjTemplate.category(null);
+        assertThat(hkjTemplate.getCategory()).isNull();
     }
 }

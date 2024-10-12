@@ -39,8 +39,7 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Column(name = "cover_image")
     private String coverImage;
 
-    @Size(max = 1000)
-    @Column(name = "description", length = 1000)
+    @Column(name = "description")
     private String description;
 
     @NotNull
@@ -72,8 +71,7 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Column(name = "quality_check")
     private Boolean qualityCheck;
 
-    @Size(max = 1000)
-    @Column(name = "notes", length = 1000)
+    @Column(name = "notes")
     private String notes;
 
     @Column(name = "is_deleted")
@@ -86,27 +84,17 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "hkjProject", "hkjTemplate" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private HkjCategory category;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjProject")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "employee", "images", "materials", "hkjProject" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "materials", "employee", "project" }, allowSetters = true)
     private Set<HkjTask> tasks = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
     private UserExtra manager;
 
-    @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
-    private HkjJewelryModel hkjJewelryModel;
-
-    @JsonIgnoreProperties(value = { "project", "orderImages", "customer", "jewelry" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "project")
-    private HkjOrder hkjOrder;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private HkjCategory category;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -333,29 +321,16 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return this;
     }
 
-    public HkjCategory getCategory() {
-        return this.category;
-    }
-
-    public void setCategory(HkjCategory hkjCategory) {
-        this.category = hkjCategory;
-    }
-
-    public HkjProject category(HkjCategory hkjCategory) {
-        this.setCategory(hkjCategory);
-        return this;
-    }
-
     public Set<HkjTask> getTasks() {
         return this.tasks;
     }
 
     public void setTasks(Set<HkjTask> hkjTasks) {
         if (this.tasks != null) {
-            this.tasks.forEach(i -> i.setHkjProject(null));
+            this.tasks.forEach(i -> i.setProject(null));
         }
         if (hkjTasks != null) {
-            hkjTasks.forEach(i -> i.setHkjProject(this));
+            hkjTasks.forEach(i -> i.setProject(this));
         }
         this.tasks = hkjTasks;
     }
@@ -367,13 +342,13 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     public HkjProject addTasks(HkjTask hkjTask) {
         this.tasks.add(hkjTask);
-        hkjTask.setHkjProject(this);
+        hkjTask.setProject(this);
         return this;
     }
 
     public HkjProject removeTasks(HkjTask hkjTask) {
         this.tasks.remove(hkjTask);
-        hkjTask.setHkjProject(null);
+        hkjTask.setProject(null);
         return this;
     }
 
@@ -390,41 +365,16 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return this;
     }
 
-    public HkjJewelryModel getHkjJewelryModel() {
-        return this.hkjJewelryModel;
+    public HkjCategory getCategory() {
+        return this.category;
     }
 
-    public void setHkjJewelryModel(HkjJewelryModel hkjJewelryModel) {
-        if (this.hkjJewelryModel != null) {
-            this.hkjJewelryModel.setProject(null);
-        }
-        if (hkjJewelryModel != null) {
-            hkjJewelryModel.setProject(this);
-        }
-        this.hkjJewelryModel = hkjJewelryModel;
+    public void setCategory(HkjCategory hkjCategory) {
+        this.category = hkjCategory;
     }
 
-    public HkjProject hkjJewelryModel(HkjJewelryModel hkjJewelryModel) {
-        this.setHkjJewelryModel(hkjJewelryModel);
-        return this;
-    }
-
-    public HkjOrder getHkjOrder() {
-        return this.hkjOrder;
-    }
-
-    public void setHkjOrder(HkjOrder hkjOrder) {
-        if (this.hkjOrder != null) {
-            this.hkjOrder.setProject(null);
-        }
-        if (hkjOrder != null) {
-            hkjOrder.setProject(this);
-        }
-        this.hkjOrder = hkjOrder;
-    }
-
-    public HkjProject hkjOrder(HkjOrder hkjOrder) {
-        this.setHkjOrder(hkjOrder);
+    public HkjProject category(HkjCategory hkjCategory) {
+        this.setCategory(hkjCategory);
         return this;
     }
 

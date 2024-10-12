@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity HkjTrackSearchImage.
+    -->
+    <changeSet id="20241006100957-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="hkj_track_search_image"
+                                 constraintName="fk_hkj_track_search_image__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_extra"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="jewelry_id"
+                                 baseTableName="hkj_track_search_image"
+                                 constraintName="fk_hkj_track_search_image__jewelry_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_jewelry_model"
+                                 />
+    </changeSet>
+</databaseChangeLog>

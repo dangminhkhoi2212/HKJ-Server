@@ -38,8 +38,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Column(name = "cover_image")
     private String coverImage;
 
-    @Size(max = 1000)
-    @Column(name = "description", length = 1000)
+    @Column(name = "description")
     private String description;
 
     @NotNull
@@ -68,8 +67,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Column(name = "point")
     private Integer point;
 
-    @Size(max = 1000)
-    @Column(name = "notes", length = 1000)
+    @Column(name = "notes")
     private String notes;
 
     @Column(name = "is_deleted")
@@ -82,11 +80,6 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private UserExtra employee;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTask")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "hkjTask" }, allowSetters = true)
@@ -98,8 +91,12 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     private Set<HkjMaterialUsage> materials = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
-    private HkjProject hkjProject;
+    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
+    private UserExtra employee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "tasks", "manager", "category" }, allowSetters = true)
+    private HkjProject project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -300,19 +297,6 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
-    public UserExtra getEmployee() {
-        return this.employee;
-    }
-
-    public void setEmployee(UserExtra userExtra) {
-        this.employee = userExtra;
-    }
-
-    public HkjTask employee(UserExtra userExtra) {
-        this.setEmployee(userExtra);
-        return this;
-    }
-
     public Set<HkjTaskImage> getImages() {
         return this.images;
     }
@@ -375,16 +359,29 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
-    public HkjProject getHkjProject() {
-        return this.hkjProject;
+    public UserExtra getEmployee() {
+        return this.employee;
     }
 
-    public void setHkjProject(HkjProject hkjProject) {
-        this.hkjProject = hkjProject;
+    public void setEmployee(UserExtra userExtra) {
+        this.employee = userExtra;
     }
 
-    public HkjTask hkjProject(HkjProject hkjProject) {
-        this.setHkjProject(hkjProject);
+    public HkjTask employee(UserExtra userExtra) {
+        this.setEmployee(userExtra);
+        return this;
+    }
+
+    public HkjProject getProject() {
+        return this.project;
+    }
+
+    public void setProject(HkjProject hkjProject) {
+        this.project = hkjProject;
+    }
+
+    public HkjTask project(HkjProject hkjProject) {
+        this.setProject(hkjProject);
         return this;
     }
 

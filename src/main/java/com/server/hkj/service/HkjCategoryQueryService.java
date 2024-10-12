@@ -6,7 +6,6 @@ import com.server.hkj.repository.HkjCategoryRepository;
 import com.server.hkj.service.criteria.HkjCategoryCriteria;
 import com.server.hkj.service.dto.HkjCategoryDTO;
 import com.server.hkj.service.mapper.HkjCategoryMapper;
-import jakarta.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -94,20 +93,6 @@ public class HkjCategoryQueryService extends QueryService<HkjCategory> {
             }
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjCategory_.lastModifiedDate));
-            }
-            if (criteria.getHkjProjectId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getHkjProjectId(), root ->
-                        root.join(HkjCategory_.hkjProject, JoinType.LEFT).get(HkjProject_.id)
-                    )
-                );
-            }
-            if (criteria.getHkjTemplateId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getHkjTemplateId(), root ->
-                        root.join(HkjCategory_.hkjTemplate, JoinType.LEFT).get(HkjTemplate_.id)
-                    )
-                );
             }
         }
         return specification;

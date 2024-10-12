@@ -25,7 +25,8 @@
         "hkjMaterial": "Hkj Material",
         "hkjMaterialUsage": "Hkj Material Usage",
         "hkjOrderImage": "Hkj Order Image",
-        "hkjMaterialImage": "Hkj Material Image"
+        "hkjMaterialImage": "Hkj Material Image",
+        "hkjTrackSearchImage": "Hkj Track Search Image"
       },
       "account": {
         "main": "Tài khoản",

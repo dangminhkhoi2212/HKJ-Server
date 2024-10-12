@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { IHkjCategory } from 'app/shared/model/hkj-category.model';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { IHkjCategory } from 'app/shared/model/hkj-category.model';
 import { HkjOrderStatus } from 'app/shared/model/enumerations/hkj-order-status.model';
 import { HkjPriority } from 'app/shared/model/enumerations/hkj-priority.model';
 
@@ -23,8 +23,8 @@ export interface IHkjProject {
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  category?: IHkjCategory | null;
   manager?: IUserExtra | null;
+  category?: IHkjCategory | null;
 }
 
 export const defaultValue: Readonly<IHkjProject> = {

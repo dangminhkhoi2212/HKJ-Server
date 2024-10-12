@@ -117,13 +117,6 @@ public class HkjMaterialQueryService extends QueryService<HkjMaterial> {
                     )
                 );
             }
-            if (criteria.getHkjMaterialUsageId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getHkjMaterialUsageId(), root ->
-                        root.join(HkjMaterial_.hkjMaterialUsage, JoinType.LEFT).get(HkjMaterialUsage_.id)
-                    )
-                );
-            }
         }
         return specification;
     }

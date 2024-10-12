@@ -92,11 +92,9 @@ class HkjProjectCriteriaTest {
         hkjProjectCriteria.createdDate();
         hkjProjectCriteria.lastModifiedBy();
         hkjProjectCriteria.lastModifiedDate();
-        hkjProjectCriteria.categoryId();
         hkjProjectCriteria.tasksId();
         hkjProjectCriteria.managerId();
-        hkjProjectCriteria.hkjJewelryModelId();
-        hkjProjectCriteria.hkjOrderId();
+        hkjProjectCriteria.categoryId();
         hkjProjectCriteria.distinct();
     }
 
@@ -121,11 +119,9 @@ class HkjProjectCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getTasksId()) &&
                 condition.apply(criteria.getManagerId()) &&
-                condition.apply(criteria.getHkjJewelryModelId()) &&
-                condition.apply(criteria.getHkjOrderId()) &&
+                condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -152,11 +148,9 @@ class HkjProjectCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getTasksId(), copy.getTasksId()) &&
                 condition.apply(criteria.getManagerId(), copy.getManagerId()) &&
-                condition.apply(criteria.getHkjJewelryModelId(), copy.getHkjJewelryModelId()) &&
-                condition.apply(criteria.getHkjOrderId(), copy.getHkjOrderId()) &&
+                condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

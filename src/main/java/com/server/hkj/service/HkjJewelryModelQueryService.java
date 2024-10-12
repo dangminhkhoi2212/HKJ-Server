@@ -121,17 +121,24 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
                     buildRangeSpecification(criteria.getLastModifiedDate(), HkjJewelryModel_.lastModifiedDate)
                 );
             }
-            if (criteria.getProjectId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getProjectId(), root ->
-                        root.join(HkjJewelryModel_.project, JoinType.LEFT).get(HkjProject_.id)
-                    )
-                );
-            }
             if (criteria.getImagesId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getImagesId(), root ->
                         root.join(HkjJewelryModel_.images, JoinType.LEFT).get(HkjJewelryImage_.id)
+                    )
+                );
+            }
+            if (criteria.getCategoryId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getCategoryId(), root ->
+                        root.join(HkjJewelryModel_.category, JoinType.LEFT).get(HkjCategory_.id)
+                    )
+                );
+            }
+            if (criteria.getProjectId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getProjectId(), root ->
+                        root.join(HkjJewelryModel_.project, JoinType.LEFT).get(HkjProject_.id)
                     )
                 );
             }

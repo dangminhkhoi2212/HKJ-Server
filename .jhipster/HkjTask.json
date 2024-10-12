@@ -17,9 +17,7 @@
     },
     {
       "fieldName": "description",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "1000"
+      "fieldType": "String"
     },
     {
       "fieldName": "assignedDate",
@@ -39,7 +37,7 @@
       "fieldName": "status",
       "fieldType": "HkjOrderStatus",
       "fieldValidateRules": ["required"],
-      "fieldValues": "NEW,PROCESSING,COMPLETED,DELIVERED,LATED"
+      "fieldValues": "NEW,IN_PROCESS,COMPLETED,DELIVERED,LATED,CANCEL"
     },
     {
       "fieldName": "priority",
@@ -56,9 +54,7 @@
     },
     {
       "fieldName": "notes",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "1000"
+      "fieldType": "String"
     },
     {
       "fieldName": "isDeleted",
@@ -105,12 +101,6 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "userExtra",
-      "relationshipName": "employee",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityName": "hkjTaskImage",
       "relationshipName": "images",
       "relationshipSide": "left",
@@ -121,6 +111,19 @@
       "relationshipName": "materials",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "userExtra",
+      "relationshipName": "employee",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjProject",
+      "otherEntityRelationshipName": "tasks",
+      "relationshipName": "project",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

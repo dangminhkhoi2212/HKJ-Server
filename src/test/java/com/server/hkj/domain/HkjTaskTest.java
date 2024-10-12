@@ -29,18 +29,6 @@ class HkjTaskTest {
     }
 
     @Test
-    void employeeTest() {
-        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
-        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
-
-        hkjTask.setEmployee(userExtraBack);
-        assertThat(hkjTask.getEmployee()).isEqualTo(userExtraBack);
-
-        hkjTask.employee(null);
-        assertThat(hkjTask.getEmployee()).isNull();
-    }
-
-    @Test
     void imagesTest() {
         HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
         HkjTaskImage hkjTaskImageBack = getHkjTaskImageRandomSampleGenerator();
@@ -85,14 +73,26 @@ class HkjTaskTest {
     }
 
     @Test
-    void hkjProjectTest() {
+    void employeeTest() {
+        HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
+        UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
+
+        hkjTask.setEmployee(userExtraBack);
+        assertThat(hkjTask.getEmployee()).isEqualTo(userExtraBack);
+
+        hkjTask.employee(null);
+        assertThat(hkjTask.getEmployee()).isNull();
+    }
+
+    @Test
+    void projectTest() {
         HkjTask hkjTask = getHkjTaskRandomSampleGenerator();
         HkjProject hkjProjectBack = getHkjProjectRandomSampleGenerator();
 
-        hkjTask.setHkjProject(hkjProjectBack);
-        assertThat(hkjTask.getHkjProject()).isEqualTo(hkjProjectBack);
+        hkjTask.setProject(hkjProjectBack);
+        assertThat(hkjTask.getProject()).isEqualTo(hkjProjectBack);
 
-        hkjTask.hkjProject(null);
-        assertThat(hkjTask.getHkjProject()).isNull();
+        hkjTask.project(null);
+        assertThat(hkjTask.getProject()).isNull();
     }
 }

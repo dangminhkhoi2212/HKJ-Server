@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
+import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
 import { HkjOrderStatus } from 'app/shared/model/enumerations/hkj-order-status.model';
 import { HkjPriority } from 'app/shared/model/enumerations/hkj-priority.model';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-project.reducer';
@@ -21,8 +21,8 @@ export const HkjProjectUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
   const userExtras = useAppSelector(state => state.userExtra.entities);
+  const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
   const hkjProjectEntity = useAppSelector(state => state.hkjProject.entity);
   const loading = useAppSelector(state => state.hkjProject.loading);
   const updating = useAppSelector(state => state.hkjProject.updating);
@@ -41,8 +41,8 @@ export const HkjProjectUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getHkjCategories({}));
     dispatch(getUserExtras({}));
+    dispatch(getHkjCategories({}));
   }, []);
 
   useEffect(() => {
@@ -70,8 +70,8 @@ export const HkjProjectUpdate = () => {
     const entity = {
       ...hkjProjectEntity,
       ...values,
-      category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
       manager: userExtras.find(it => it.id.toString() === values.manager?.toString()),
+      category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
     };
 
     if (isNew) {
@@ -99,8 +99,8 @@ export const HkjProjectUpdate = () => {
           endDate: convertDateTimeFromServer(hkjProjectEntity.endDate),
           createdDate: convertDateTimeFromServer(hkjProjectEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjProjectEntity.lastModifiedDate),
-          category: hkjProjectEntity?.category?.id,
           manager: hkjProjectEntity?.manager?.id,
+          category: hkjProjectEntity?.category?.id,
         };
 
   return (
@@ -151,9 +151,6 @@ export const HkjProjectUpdate = () => {
                 name="description"
                 data-cy="description"
                 type="text"
-                validate={{
-                  maxLength: { value: 1000, message: translate('entity.validation.maxlength', { max: 1000 }) },
-                }}
               />
               <ValidatedField
                 label={translate('serverApp.hkjProject.startDate')}
@@ -236,9 +233,6 @@ export const HkjProjectUpdate = () => {
                 name="notes"
                 data-cy="notes"
                 type="text"
-                validate={{
-                  maxLength: { value: 1000, message: translate('entity.validation.maxlength', { max: 1000 }) },
-                }}
               />
               <ValidatedField
                 label={translate('serverApp.hkjProject.isDeleted')}
@@ -279,22 +273,6 @@ export const HkjProjectUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-project-category"
-                name="category"
-                data-cy="category"
-                label={translate('serverApp.hkjProject.category')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {hkjCategories
-                  ? hkjCategories.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
                 id="hkj-project-manager"
                 name="manager"
                 data-cy="manager"
@@ -304,6 +282,22 @@ export const HkjProjectUpdate = () => {
                 <option value="" key="0" />
                 {userExtras
                   ? userExtras.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-project-category"
+                name="category"
+                data-cy="category"
+                label={translate('serverApp.hkjProject.category')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjCategories
+                  ? hkjCategories.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

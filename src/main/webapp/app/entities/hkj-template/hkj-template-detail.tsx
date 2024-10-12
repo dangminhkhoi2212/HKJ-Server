@@ -80,10 +80,6 @@ export const HkjTemplateDetail = () => {
             <Translate contentKey="serverApp.hkjTemplate.category">Category</Translate>
           </dt>
           <dd>{hkjTemplateEntity.category ? hkjTemplateEntity.category.id : ''}</dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjTemplate.creater">Creater</Translate>
-          </dt>
-          <dd>{hkjTemplateEntity.creater ? hkjTemplateEntity.creater.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-template" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

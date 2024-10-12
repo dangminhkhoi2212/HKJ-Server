@@ -45,7 +45,7 @@ public class HkjTaskImage extends AbstractAuditingEntity<Long> implements Serial
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "employee", "images", "materials", "hkjProject" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "materials", "employee", "project" }, allowSetters = true)
     private HkjTask hkjTask;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

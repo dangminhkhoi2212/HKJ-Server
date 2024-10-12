@@ -33,10 +33,10 @@
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "employee": "Employee",
       "images": "Images",
       "materials": "Materials",
-      "hkjProject": "Hkj Project"
+      "employee": "Employee",
+      "project": "Project"
     }
   }
 }

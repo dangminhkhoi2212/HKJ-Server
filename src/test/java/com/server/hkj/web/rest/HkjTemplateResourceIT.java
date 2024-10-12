@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
 import com.server.hkj.domain.HkjCategory;
 import com.server.hkj.domain.HkjTemplate;
-import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.HkjTemplateRepository;
 import com.server.hkj.service.dto.HkjTemplateDTO;
 import com.server.hkj.service.mapper.HkjTemplateMapper;
@@ -294,28 +293,6 @@ class HkjTemplateResourceIT {
 
         // Get all the hkjTemplateList where category equals to (categoryId + 1)
         defaultHkjTemplateShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjTemplatesByCreaterIsEqualToSomething() throws Exception {
-        UserExtra creater;
-        if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
-            hkjTemplateRepository.saveAndFlush(hkjTemplate);
-            creater = UserExtraResourceIT.createEntity();
-        } else {
-            creater = TestUtil.findAll(em, UserExtra.class).get(0);
-        }
-        em.persist(creater);
-        em.flush();
-        hkjTemplate.setCreater(creater);
-        hkjTemplateRepository.saveAndFlush(hkjTemplate);
-        Long createrId = creater.getId();
-        // Get all the hkjTemplateList where creater equals to createrId
-        defaultHkjTemplateShouldBeFound("createrId.equals=" + createrId);
-
-        // Get all the hkjTemplateList where creater equals to (createrId + 1)
-        defaultHkjTemplateShouldNotBeFound("createrId.equals=" + (createrId + 1));
     }
 
     private void defaultHkjTemplateFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

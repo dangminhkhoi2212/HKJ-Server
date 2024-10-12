@@ -40,7 +40,7 @@ public class HkjMaterialImage extends AbstractAuditingEntity<Long> implements Se
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images", "hkjMaterialUsage" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
     private HkjMaterial material;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

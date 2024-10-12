@@ -39,14 +39,6 @@ public class HkjCategory extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "category")
-    private HkjProject hkjProject;
-
-    @JsonIgnoreProperties(value = { "category", "steps", "creater" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "category")
-    private HkjTemplate hkjTemplate;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -126,44 +118,6 @@ public class HkjCategory extends AbstractAuditingEntity<Long> implements Seriali
 
     public HkjCategory setIsPersisted() {
         this.isPersisted = true;
-        return this;
-    }
-
-    public HkjProject getHkjProject() {
-        return this.hkjProject;
-    }
-
-    public void setHkjProject(HkjProject hkjProject) {
-        if (this.hkjProject != null) {
-            this.hkjProject.setCategory(null);
-        }
-        if (hkjProject != null) {
-            hkjProject.setCategory(this);
-        }
-        this.hkjProject = hkjProject;
-    }
-
-    public HkjCategory hkjProject(HkjProject hkjProject) {
-        this.setHkjProject(hkjProject);
-        return this;
-    }
-
-    public HkjTemplate getHkjTemplate() {
-        return this.hkjTemplate;
-    }
-
-    public void setHkjTemplate(HkjTemplate hkjTemplate) {
-        if (this.hkjTemplate != null) {
-            this.hkjTemplate.setCategory(null);
-        }
-        if (hkjTemplate != null) {
-            hkjTemplate.setCategory(this);
-        }
-        this.hkjTemplate = hkjTemplate;
-    }
-
-    public HkjCategory hkjTemplate(HkjTemplate hkjTemplate) {
-        this.setHkjTemplate(hkjTemplate);
         return this;
     }
 

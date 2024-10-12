@@ -182,10 +182,10 @@ export const HkjProject = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjProject.category">Category</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjProject.manager">Manager</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjProject.manager">Manager</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjProject.category">Category</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -227,8 +227,8 @@ export const HkjProject = () => {
                       <TextFormat type="date" value={hkjProject.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{hkjProject.category ? <Link to={`/hkj-category/${hkjProject.category.id}`}>{hkjProject.category.id}</Link> : ''}</td>
                   <td>{hkjProject.manager ? <Link to={`/user-extra/${hkjProject.manager.id}`}>{hkjProject.manager.id}</Link> : ''}</td>
+                  <td>{hkjProject.category ? <Link to={`/hkj-category/${hkjProject.category.id}`}>{hkjProject.category.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-project/${hkjProject.id}`} color="info" size="sm" data-cy="entityDetailsButton">

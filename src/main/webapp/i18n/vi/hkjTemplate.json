@@ -24,9 +24,8 @@
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "category": "Category",
       "steps": "Steps",
-      "creater": "Creater"
+      "category": "Category"
     }
   }
 }

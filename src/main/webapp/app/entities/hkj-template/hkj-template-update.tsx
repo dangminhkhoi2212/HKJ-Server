@@ -8,7 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
-import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-template.reducer';
 
 export const HkjTemplateUpdate = () => {
@@ -20,7 +19,6 @@ export const HkjTemplateUpdate = () => {
   const isNew = id === undefined;
 
   const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
-  const userExtras = useAppSelector(state => state.userExtra.entities);
   const hkjTemplateEntity = useAppSelector(state => state.hkjTemplate.entity);
   const loading = useAppSelector(state => state.hkjTemplate.loading);
   const updating = useAppSelector(state => state.hkjTemplate.updating);
@@ -38,7 +36,6 @@ export const HkjTemplateUpdate = () => {
     }
 
     dispatch(getHkjCategories({}));
-    dispatch(getUserExtras({}));
   }, []);
 
   useEffect(() => {
@@ -58,7 +55,6 @@ export const HkjTemplateUpdate = () => {
       ...hkjTemplateEntity,
       ...values,
       category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
-      creater: userExtras.find(it => it.id.toString() === values.creater?.toString()),
     };
 
     if (isNew) {
@@ -79,7 +75,6 @@ export const HkjTemplateUpdate = () => {
           createdDate: convertDateTimeFromServer(hkjTemplateEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjTemplateEntity.lastModifiedDate),
           category: hkjTemplateEntity?.category?.id,
-          creater: hkjTemplateEntity?.creater?.id,
         };
 
   return (
@@ -162,22 +157,6 @@ export const HkjTemplateUpdate = () => {
                 <option value="" key="0" />
                 {hkjCategories
                   ? hkjCategories.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="hkj-template-creater"
-                name="creater"
-                data-cy="creater"
-                label={translate('serverApp.hkjTemplate.creater')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {userExtras
-                  ? userExtras.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

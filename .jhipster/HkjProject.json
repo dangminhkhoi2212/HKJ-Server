@@ -17,9 +17,7 @@
     },
     {
       "fieldName": "description",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "1000"
+      "fieldType": "String"
     },
     {
       "fieldName": "startDate",
@@ -38,7 +36,7 @@
       "fieldName": "status",
       "fieldType": "HkjOrderStatus",
       "fieldValidateRules": ["required"],
-      "fieldValues": "NEW,PROCESSING,COMPLETED,DELIVERED,LATED"
+      "fieldValues": "NEW,IN_PROCESS,COMPLETED,DELIVERED,LATED,CANCEL"
     },
     {
       "fieldName": "priority",
@@ -60,9 +58,7 @@
     },
     {
       "fieldName": "notes",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "1000"
+      "fieldType": "String"
     },
     {
       "fieldName": "isDeleted",
@@ -109,13 +105,8 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjCategory",
-      "relationshipName": "category",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityName": "hkjTask",
+      "otherEntityRelationshipName": "project",
       "relationshipName": "tasks",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
@@ -123,6 +114,12 @@
     {
       "otherEntityName": "userExtra",
       "relationshipName": "manager",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjCategory",
+      "relationshipName": "category",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

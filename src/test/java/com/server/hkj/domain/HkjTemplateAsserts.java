@@ -62,7 +62,6 @@ public class HkjTemplateAsserts {
     public static void assertHkjTemplateUpdatableRelationshipsEquals(HkjTemplate expected, HkjTemplate actual) {
         assertThat(expected)
             .as("Verify HkjTemplate relationships")
-            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
-            .satisfies(e -> assertThat(e.getCreater()).as("check creater").isEqualTo(actual.getCreater()));
+            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()));
     }
 }

@@ -41,19 +41,13 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "hkjProject", "hkjTemplate" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private HkjCategory category;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTemplate")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "hkjTemplate" }, allowSetters = true)
     private Set<HkjTemplateStep> steps = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
-    private UserExtra creater;
+    private HkjCategory category;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -137,19 +131,6 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
         return this;
     }
 
-    public HkjCategory getCategory() {
-        return this.category;
-    }
-
-    public void setCategory(HkjCategory hkjCategory) {
-        this.category = hkjCategory;
-    }
-
-    public HkjTemplate category(HkjCategory hkjCategory) {
-        this.setCategory(hkjCategory);
-        return this;
-    }
-
     public Set<HkjTemplateStep> getSteps() {
         return this.steps;
     }
@@ -181,16 +162,16 @@ public class HkjTemplate extends AbstractAuditingEntity<Long> implements Seriali
         return this;
     }
 
-    public UserExtra getCreater() {
-        return this.creater;
+    public HkjCategory getCategory() {
+        return this.category;
     }
 
-    public void setCreater(UserExtra userExtra) {
-        this.creater = userExtra;
+    public void setCategory(HkjCategory hkjCategory) {
+        this.category = hkjCategory;
     }
 
-    public HkjTemplate creater(UserExtra userExtra) {
-        this.setCreater(userExtra);
+    public HkjTemplate category(HkjCategory hkjCategory) {
+        this.setCategory(hkjCategory);
         return this;
     }
 

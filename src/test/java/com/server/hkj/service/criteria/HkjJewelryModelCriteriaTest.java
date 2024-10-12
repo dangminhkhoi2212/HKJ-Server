@@ -89,8 +89,9 @@ class HkjJewelryModelCriteriaTest {
         hkjJewelryModelCriteria.createdDate();
         hkjJewelryModelCriteria.lastModifiedBy();
         hkjJewelryModelCriteria.lastModifiedDate();
-        hkjJewelryModelCriteria.projectId();
         hkjJewelryModelCriteria.imagesId();
+        hkjJewelryModelCriteria.categoryId();
+        hkjJewelryModelCriteria.projectId();
         hkjJewelryModelCriteria.distinct();
     }
 
@@ -112,8 +113,9 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getProjectId()) &&
                 condition.apply(criteria.getImagesId()) &&
+                condition.apply(criteria.getCategoryId()) &&
+                condition.apply(criteria.getProjectId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -140,8 +142,9 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getProjectId(), copy.getProjectId()) &&
                 condition.apply(criteria.getImagesId(), copy.getImagesId()) &&
+                condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
+                condition.apply(criteria.getProjectId(), copy.getProjectId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

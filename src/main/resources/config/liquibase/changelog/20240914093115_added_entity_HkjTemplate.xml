@@ -33,9 +33,6 @@
                 <constraints nullable="false" />
             </column>
             <column name="category_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_template__category_id" />
-            </column>
-            <column name="creater_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

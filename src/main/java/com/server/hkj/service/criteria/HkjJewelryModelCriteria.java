@@ -52,9 +52,11 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter projectId;
-
     private LongFilter imagesId;
+
+    private LongFilter categoryId;
+
+    private LongFilter projectId;
 
     private Boolean distinct;
 
@@ -76,8 +78,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
         this.imagesId = other.optionalImagesId().map(LongFilter::copy).orElse(null);
+        this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
+        this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -371,25 +374,6 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getProjectId() {
-        return projectId;
-    }
-
-    public Optional<LongFilter> optionalProjectId() {
-        return Optional.ofNullable(projectId);
-    }
-
-    public LongFilter projectId() {
-        if (projectId == null) {
-            setProjectId(new LongFilter());
-        }
-        return projectId;
-    }
-
-    public void setProjectId(LongFilter projectId) {
-        this.projectId = projectId;
-    }
-
     public LongFilter getImagesId() {
         return imagesId;
     }
@@ -407,6 +391,44 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     public void setImagesId(LongFilter imagesId) {
         this.imagesId = imagesId;
+    }
+
+    public LongFilter getCategoryId() {
+        return categoryId;
+    }
+
+    public Optional<LongFilter> optionalCategoryId() {
+        return Optional.ofNullable(categoryId);
+    }
+
+    public LongFilter categoryId() {
+        if (categoryId == null) {
+            setCategoryId(new LongFilter());
+        }
+        return categoryId;
+    }
+
+    public void setCategoryId(LongFilter categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public LongFilter getProjectId() {
+        return projectId;
+    }
+
+    public Optional<LongFilter> optionalProjectId() {
+        return Optional.ofNullable(projectId);
+    }
+
+    public LongFilter projectId() {
+        if (projectId == null) {
+            setProjectId(new LongFilter());
+        }
+        return projectId;
+    }
+
+    public void setProjectId(LongFilter projectId) {
+        this.projectId = projectId;
     }
 
     public Boolean getDistinct() {
@@ -453,8 +475,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(projectId, that.projectId) &&
             Objects.equals(imagesId, that.imagesId) &&
+            Objects.equals(categoryId, that.categoryId) &&
+            Objects.equals(projectId, that.projectId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -477,8 +500,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
-            projectId,
             imagesId,
+            categoryId,
+            projectId,
             distinct
         );
     }
@@ -502,8 +526,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
             optionalImagesId().map(f -> "imagesId=" + f + ", ").orElse("") +
+            optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
+            optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

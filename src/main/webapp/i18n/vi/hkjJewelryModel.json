@@ -32,8 +32,9 @@
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "project": "Project",
-      "images": "Images"
+      "images": "Images",
+      "category": "Category",
+      "project": "Project"
     }
   }
 }

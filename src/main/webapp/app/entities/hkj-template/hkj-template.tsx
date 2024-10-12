@@ -140,9 +140,6 @@ export const HkjTemplate = () => {
                 <th>
                   <Translate contentKey="serverApp.hkjTemplate.category">Category</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="serverApp.hkjTemplate.creater">Creater</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th />
               </tr>
             </thead>
@@ -169,7 +166,6 @@ export const HkjTemplate = () => {
                   <td>
                     {hkjTemplate.category ? <Link to={`/hkj-category/${hkjTemplate.category.id}`}>{hkjTemplate.category.id}</Link> : ''}
                   </td>
-                  <td>{hkjTemplate.creater ? <Link to={`/user-extra/${hkjTemplate.creater.id}`}>{hkjTemplate.creater.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-template/${hkjTemplate.id}`} color="info" size="sm" data-cy="entityDetailsButton">

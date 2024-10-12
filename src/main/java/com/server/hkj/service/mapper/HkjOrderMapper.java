@@ -15,15 +15,10 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjOrderMapper extends EntityMapper<HkjOrderDTO, HkjOrder> {
-    @Mapping(target = "project", source = "project", qualifiedByName = "hkjProjectId")
     @Mapping(target = "customer", source = "customer", qualifiedByName = "userExtraId")
     @Mapping(target = "jewelry", source = "jewelry", qualifiedByName = "hkjJewelryModelId")
+    @Mapping(target = "project", source = "project", qualifiedByName = "hkjProjectId")
     HkjOrderDTO toDto(HkjOrder s);
-
-    @Named("hkjProjectId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    HkjProjectDTO toDtoHkjProjectId(HkjProject hkjProject);
 
     @Named("userExtraId")
     @BeanMapping(ignoreByDefault = true)
@@ -34,4 +29,9 @@ public interface HkjOrderMapper extends EntityMapper<HkjOrderDTO, HkjOrder> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     HkjJewelryModelDTO toDtoHkjJewelryModelId(HkjJewelryModel hkjJewelryModel);
+
+    @Named("hkjProjectId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    HkjProjectDTO toDtoHkjProjectId(HkjProject hkjProject);
 }

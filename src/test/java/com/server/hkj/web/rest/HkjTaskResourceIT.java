@@ -60,7 +60,7 @@ class HkjTaskResourceIT {
     private static final Instant UPDATED_COMPLETED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final HkjOrderStatus DEFAULT_STATUS = HkjOrderStatus.NEW;
-    private static final HkjOrderStatus UPDATED_STATUS = HkjOrderStatus.PROCESSING;
+    private static final HkjOrderStatus UPDATED_STATUS = HkjOrderStatus.IN_PROCESS;
 
     private static final HkjPriority DEFAULT_PRIORITY = HkjPriority.LOW;
     private static final HkjPriority UPDATED_PRIORITY = HkjPriority.MEDIUM;
@@ -832,24 +832,24 @@ class HkjTaskResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjTasksByHkjProjectIsEqualToSomething() throws Exception {
-        HkjProject hkjProject;
+    void getAllHkjTasksByProjectIsEqualToSomething() throws Exception {
+        HkjProject project;
         if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
             hkjTaskRepository.saveAndFlush(hkjTask);
-            hkjProject = HkjProjectResourceIT.createEntity();
+            project = HkjProjectResourceIT.createEntity();
         } else {
-            hkjProject = TestUtil.findAll(em, HkjProject.class).get(0);
+            project = TestUtil.findAll(em, HkjProject.class).get(0);
         }
-        em.persist(hkjProject);
+        em.persist(project);
         em.flush();
-        hkjTask.setHkjProject(hkjProject);
+        hkjTask.setProject(project);
         hkjTaskRepository.saveAndFlush(hkjTask);
-        Long hkjProjectId = hkjProject.getId();
-        // Get all the hkjTaskList where hkjProject equals to hkjProjectId
-        defaultHkjTaskShouldBeFound("hkjProjectId.equals=" + hkjProjectId);
+        Long projectId = project.getId();
+        // Get all the hkjTaskList where project equals to projectId
+        defaultHkjTaskShouldBeFound("projectId.equals=" + projectId);
 
-        // Get all the hkjTaskList where hkjProject equals to (hkjProjectId + 1)
-        defaultHkjTaskShouldNotBeFound("hkjProjectId.equals=" + (hkjProjectId + 1));
+        // Get all the hkjTaskList where project equals to (projectId + 1)
+        defaultHkjTaskShouldNotBeFound("projectId.equals=" + (projectId + 1));
     }
 
     private void defaultHkjTaskFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

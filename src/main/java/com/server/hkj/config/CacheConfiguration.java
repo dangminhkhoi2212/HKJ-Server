@@ -77,6 +77,7 @@ public class CacheConfiguration {
             createCache(cm, com.server.hkj.domain.HkjMaterialUsage.class.getName());
             createCache(cm, com.server.hkj.domain.HkjOrderImage.class.getName());
             createCache(cm, com.server.hkj.domain.HkjMaterialImage.class.getName());
+            createCache(cm, com.server.hkj.domain.HkjTrackSearchImage.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

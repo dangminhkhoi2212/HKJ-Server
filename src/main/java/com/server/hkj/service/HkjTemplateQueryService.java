@@ -95,21 +95,16 @@ public class HkjTemplateQueryService extends QueryService<HkjTemplate> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjTemplate_.lastModifiedDate));
             }
-            if (criteria.getCategoryId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getCategoryId(), root ->
-                        root.join(HkjTemplate_.category, JoinType.LEFT).get(HkjCategory_.id)
-                    )
-                );
-            }
             if (criteria.getStepsId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getStepsId(), root -> root.join(HkjTemplate_.steps, JoinType.LEFT).get(HkjTemplateStep_.id))
                 );
             }
-            if (criteria.getCreaterId() != null) {
+            if (criteria.getCategoryId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getCreaterId(), root -> root.join(HkjTemplate_.creater, JoinType.LEFT).get(UserExtra_.id))
+                    buildSpecification(criteria.getCategoryId(), root ->
+                        root.join(HkjTemplate_.category, JoinType.LEFT).get(HkjCategory_.id)
+                    )
                 );
             }
         }

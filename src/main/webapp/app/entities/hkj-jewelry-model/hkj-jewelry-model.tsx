@@ -171,6 +171,9 @@ export const HkjJewelryModel = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
+                  <Translate contentKey="serverApp.hkjJewelryModel.category">Category</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   <Translate contentKey="serverApp.hkjJewelryModel.project">Project</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -205,6 +208,13 @@ export const HkjJewelryModel = () => {
                     {hkjJewelryModel.lastModifiedDate ? (
                       <TextFormat type="date" value={hkjJewelryModel.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
+                  </td>
+                  <td>
+                    {hkjJewelryModel.category ? (
+                      <Link to={`/hkj-category/${hkjJewelryModel.category.id}`}>{hkjJewelryModel.category.id}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td>
                     {hkjJewelryModel.project ? (

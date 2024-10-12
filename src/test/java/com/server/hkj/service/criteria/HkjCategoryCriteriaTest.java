@@ -81,8 +81,6 @@ class HkjCategoryCriteriaTest {
         hkjCategoryCriteria.createdDate();
         hkjCategoryCriteria.lastModifiedBy();
         hkjCategoryCriteria.lastModifiedDate();
-        hkjCategoryCriteria.hkjProjectId();
-        hkjCategoryCriteria.hkjTemplateId();
         hkjCategoryCriteria.distinct();
     }
 
@@ -96,8 +94,6 @@ class HkjCategoryCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getHkjProjectId()) &&
-                condition.apply(criteria.getHkjTemplateId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -113,8 +109,6 @@ class HkjCategoryCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getHkjProjectId(), copy.getHkjProjectId()) &&
-                condition.apply(criteria.getHkjTemplateId(), copy.getHkjTemplateId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

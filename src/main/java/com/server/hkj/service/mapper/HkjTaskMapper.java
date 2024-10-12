@@ -14,7 +14,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface HkjTaskMapper extends EntityMapper<HkjTaskDTO, HkjTask> {
     @Mapping(target = "employee", source = "employee", qualifiedByName = "userExtraId")
-    @Mapping(target = "hkjProject", source = "hkjProject", qualifiedByName = "hkjProjectId")
+    @Mapping(target = "project", source = "project", qualifiedByName = "hkjProjectId")
     HkjTaskDTO toDto(HkjTask s);
 
     @Named("userExtraId")

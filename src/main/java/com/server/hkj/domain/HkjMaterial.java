@@ -66,10 +66,6 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
     @JsonIgnoreProperties(value = { "material" }, allowSetters = true)
     private Set<HkjMaterialImage> images = new HashSet<>();
 
-    @JsonIgnoreProperties(value = { "material", "hkjTask" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "material")
-    private HkjMaterialUsage hkjMaterialUsage;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -245,25 +241,6 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
     public HkjMaterial removeImages(HkjMaterialImage hkjMaterialImage) {
         this.images.remove(hkjMaterialImage);
         hkjMaterialImage.setMaterial(null);
-        return this;
-    }
-
-    public HkjMaterialUsage getHkjMaterialUsage() {
-        return this.hkjMaterialUsage;
-    }
-
-    public void setHkjMaterialUsage(HkjMaterialUsage hkjMaterialUsage) {
-        if (this.hkjMaterialUsage != null) {
-            this.hkjMaterialUsage.setMaterial(null);
-        }
-        if (hkjMaterialUsage != null) {
-            hkjMaterialUsage.setMaterial(this);
-        }
-        this.hkjMaterialUsage = hkjMaterialUsage;
-    }
-
-    public HkjMaterial hkjMaterialUsage(HkjMaterialUsage hkjMaterialUsage) {
-        this.setHkjMaterialUsage(hkjMaterialUsage);
         return this;
     }
 

@@ -23,7 +23,7 @@
             <column name="actual_delivery_date" type="${datetimeType}">
                 <constraints nullable="true" />
             </column>
-            <column name="special_requests" type="varchar(1000)">
+            <column name="special_requests" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="status" type="varchar(255)">
@@ -38,7 +38,7 @@
             <column name="deposit_amount" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="notes" type="varchar(1000)">
+            <column name="notes" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="is_deleted" type="boolean">
@@ -56,13 +56,13 @@
             <column name="last_modified_date" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="project_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_hkj_order__project_id" />
-            </column>
             <column name="customer_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="jewelry_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="project_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

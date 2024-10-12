@@ -1,0 +1,11 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1728461798881-1">
+        <addColumn tableName="hkj_project">
+            <column name="jewelry_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1728461798881-2">
+        <addForeignKeyConstraint baseColumnNames="jewelry_id" baseTableName="hkj_project" constraintName="FK9nk6cnj9htbla8w0uoh7qic94" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_jewelry_model" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

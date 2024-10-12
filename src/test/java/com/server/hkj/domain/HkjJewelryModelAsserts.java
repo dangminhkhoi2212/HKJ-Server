@@ -71,6 +71,7 @@ public class HkjJewelryModelAsserts {
     public static void assertHkjJewelryModelUpdatableRelationshipsEquals(HkjJewelryModel expected, HkjJewelryModel actual) {
         assertThat(expected)
             .as("Verify HkjJewelryModel relationships")
+            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
             .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()));
     }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1728362294134-1">
+        <addColumn tableName="hkj_jewelry_model">
+            <column name="category_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1728362294134-2">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="hkj_jewelry_model" constraintName="FKp7rgvm421hwpj5n152r1lnvx5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_category" validate="true"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1728362294134-3">
+        <dropUniqueConstraint constraintName="uc_hkj_jewelry_modelproject_id_col" tableName="hkj_jewelry_model"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1728362294134-4">
+        <dropUniqueConstraint constraintName="uc_hkj_projectcategory_id_col" tableName="hkj_project"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1728362294134-5">
+        <dropUniqueConstraint constraintName="uc_hkj_taskemployee_id_col" tableName="hkj_task"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1728362294134-6">
+        <dropUniqueConstraint constraintName="ux_hkj_material_usage__material_id" tableName="hkj_material_usage"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1728362294134-7">
+        <dropUniqueConstraint constraintName="ux_hkj_order__project_id" tableName="hkj_order"/>
+    </changeSet>
+</databaseChangeLog>

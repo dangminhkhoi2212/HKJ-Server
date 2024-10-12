@@ -5,8 +5,9 @@ package com.server.hkj.domain.enumeration;
  */
 public enum HkjOrderStatus {
     NEW,
-    PROCESSING,
+    IN_PROCESS,
     COMPLETED,
     DELIVERED,
     LATED,
+    CANCEL,
 }

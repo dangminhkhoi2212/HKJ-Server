@@ -22,7 +22,6 @@ public class HkjOrderDTO implements Serializable {
 
     private Instant actualDeliveryDate;
 
-    @Size(max = 1000)
     private String specialRequests;
 
     @NotNull
@@ -36,7 +35,6 @@ public class HkjOrderDTO implements Serializable {
 
     private BigDecimal depositAmount;
 
-    @Size(max = 1000)
     private String notes;
 
     private Boolean isDeleted;
@@ -49,11 +47,11 @@ public class HkjOrderDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjProjectDTO project;
-
     private UserExtraDTO customer;
 
     private HkjJewelryModelDTO jewelry;
+
+    private HkjProjectDTO project;
 
     public Long getId() {
         return id;
@@ -175,14 +173,6 @@ public class HkjOrderDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjProjectDTO getProject() {
-        return project;
-    }
-
-    public void setProject(HkjProjectDTO project) {
-        this.project = project;
-    }
-
     public UserExtraDTO getCustomer() {
         return customer;
     }
@@ -197,6 +187,14 @@ public class HkjOrderDTO implements Serializable {
 
     public void setJewelry(HkjJewelryModelDTO jewelry) {
         this.jewelry = jewelry;
+    }
+
+    public HkjProjectDTO getProject() {
+        return project;
+    }
+
+    public void setProject(HkjProjectDTO project) {
+        this.project = project;
     }
 
     @Override
@@ -239,9 +237,9 @@ public class HkjOrderDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", project=" + getProject() +
             ", customer=" + getCustomer() +
             ", jewelry=" + getJewelry() +
+            ", project=" + getProject() +
             "}";
     }
 }

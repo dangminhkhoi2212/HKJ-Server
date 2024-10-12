@@ -41,8 +41,7 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Column(name = "actual_delivery_date")
     private Instant actualDeliveryDate;
 
-    @Size(max = 1000)
-    @Column(name = "special_requests", length = 1000)
+    @Column(name = "special_requests")
     private String specialRequests;
 
     @NotNull
@@ -61,8 +60,7 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Column(name = "deposit_amount", precision = 21, scale = 2)
     private BigDecimal depositAmount;
 
-    @Size(max = 1000)
-    @Column(name = "notes", length = 1000)
+    @Column(name = "notes")
     private String notes;
 
     @Column(name = "is_deleted")
@@ -75,23 +73,22 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "category", "tasks", "manager", "hkjJewelryModel", "hkjOrder" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
-    private HkjProject project;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjOrder")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "hkjOrder" }, allowSetters = true)
     private Set<HkjOrderImage> orderImages = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "user", "salarys", "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
     private UserExtra customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "category", "project" }, allowSetters = true)
     private HkjJewelryModel jewelry;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "tasks", "manager", "category" }, allowSetters = true)
+    private HkjProject project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -279,19 +276,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         return this;
     }
 
-    public HkjProject getProject() {
-        return this.project;
-    }
-
-    public void setProject(HkjProject hkjProject) {
-        this.project = hkjProject;
-    }
-
-    public HkjOrder project(HkjProject hkjProject) {
-        this.setProject(hkjProject);
-        return this;
-    }
-
     public Set<HkjOrderImage> getOrderImages() {
         return this.orderImages;
     }
@@ -346,6 +330,19 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public HkjOrder jewelry(HkjJewelryModel hkjJewelryModel) {
         this.setJewelry(hkjJewelryModel);
+        return this;
+    }
+
+    public HkjProject getProject() {
+        return this.project;
+    }
+
+    public void setProject(HkjProject hkjProject) {
+        this.project = hkjProject;
+    }
+
+    public HkjOrder project(HkjProject hkjProject) {
+        this.setProject(hkjProject);
         return this;
     }
 

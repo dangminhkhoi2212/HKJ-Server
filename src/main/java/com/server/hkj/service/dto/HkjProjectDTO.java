@@ -21,7 +21,6 @@ public class HkjProjectDTO implements Serializable {
 
     private String coverImage;
 
-    @Size(max = 1000)
     private String description;
 
     @NotNull
@@ -43,7 +42,6 @@ public class HkjProjectDTO implements Serializable {
 
     private Boolean qualityCheck;
 
-    @Size(max = 1000)
     private String notes;
 
     private Boolean isDeleted;
@@ -56,9 +54,9 @@ public class HkjProjectDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjCategoryDTO category;
-
     private UserExtraDTO manager;
+
+    private HkjCategoryDTO category;
 
     public Long getId() {
         return id;
@@ -204,20 +202,20 @@ public class HkjProjectDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjCategoryDTO getCategory() {
-        return category;
-    }
-
-    public void setCategory(HkjCategoryDTO category) {
-        this.category = category;
-    }
-
     public UserExtraDTO getManager() {
         return manager;
     }
 
     public void setManager(UserExtraDTO manager) {
         this.manager = manager;
+    }
+
+    public HkjCategoryDTO getCategory() {
+        return category;
+    }
+
+    public void setCategory(HkjCategoryDTO category) {
+        this.category = category;
     }
 
     @Override
@@ -263,8 +261,8 @@ public class HkjProjectDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", category=" + getCategory() +
             ", manager=" + getManager() +
+            ", category=" + getCategory() +
             "}";
     }
 }

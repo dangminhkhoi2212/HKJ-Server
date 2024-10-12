@@ -36,11 +36,9 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter categoryId;
-
     private LongFilter stepsId;
 
-    private LongFilter createrId;
+    private LongFilter categoryId;
 
     private Boolean distinct;
 
@@ -54,9 +52,8 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
         this.stepsId = other.optionalStepsId().map(LongFilter::copy).orElse(null);
-        this.createrId = other.optionalCreaterId().map(LongFilter::copy).orElse(null);
+        this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -198,25 +195,6 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getCategoryId() {
-        return categoryId;
-    }
-
-    public Optional<LongFilter> optionalCategoryId() {
-        return Optional.ofNullable(categoryId);
-    }
-
-    public LongFilter categoryId() {
-        if (categoryId == null) {
-            setCategoryId(new LongFilter());
-        }
-        return categoryId;
-    }
-
-    public void setCategoryId(LongFilter categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public LongFilter getStepsId() {
         return stepsId;
     }
@@ -236,23 +214,23 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
         this.stepsId = stepsId;
     }
 
-    public LongFilter getCreaterId() {
-        return createrId;
+    public LongFilter getCategoryId() {
+        return categoryId;
     }
 
-    public Optional<LongFilter> optionalCreaterId() {
-        return Optional.ofNullable(createrId);
+    public Optional<LongFilter> optionalCategoryId() {
+        return Optional.ofNullable(categoryId);
     }
 
-    public LongFilter createrId() {
-        if (createrId == null) {
-            setCreaterId(new LongFilter());
+    public LongFilter categoryId() {
+        if (categoryId == null) {
+            setCategoryId(new LongFilter());
         }
-        return createrId;
+        return categoryId;
     }
 
-    public void setCreaterId(LongFilter createrId) {
-        this.createrId = createrId;
+    public void setCategoryId(LongFilter categoryId) {
+        this.categoryId = categoryId;
     }
 
     public Boolean getDistinct() {
@@ -291,28 +269,15 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(categoryId, that.categoryId) &&
             Objects.equals(stepsId, that.stepsId) &&
-            Objects.equals(createrId, that.createrId) &&
+            Objects.equals(categoryId, that.categoryId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            name,
-            isDeleted,
-            createdBy,
-            createdDate,
-            lastModifiedBy,
-            lastModifiedDate,
-            categoryId,
-            stepsId,
-            createrId,
-            distinct
-        );
+        return Objects.hash(id, name, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, stepsId, categoryId, distinct);
     }
 
     // prettier-ignore
@@ -326,9 +291,8 @@ public class HkjTemplateCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
             optionalStepsId().map(f -> "stepsId=" + f + ", ").orElse("") +
-            optionalCreaterId().map(f -> "createrId=" + f + ", ").orElse("") +
+            optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

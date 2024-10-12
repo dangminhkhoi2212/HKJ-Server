@@ -56,7 +56,7 @@ class HkjOrderResourceIT {
     private static final String UPDATED_SPECIAL_REQUESTS = "BBBBBBBBBB";
 
     private static final HkjOrderStatus DEFAULT_STATUS = HkjOrderStatus.NEW;
-    private static final HkjOrderStatus UPDATED_STATUS = HkjOrderStatus.PROCESSING;
+    private static final HkjOrderStatus UPDATED_STATUS = HkjOrderStatus.IN_PROCESS;
 
     private static final Integer DEFAULT_CUSTOMER_RATING = 1;
     private static final Integer UPDATED_CUSTOMER_RATING = 2;
@@ -814,28 +814,6 @@ class HkjOrderResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjOrdersByProjectIsEqualToSomething() throws Exception {
-        HkjProject project;
-        if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
-            hkjOrderRepository.saveAndFlush(hkjOrder);
-            project = HkjProjectResourceIT.createEntity();
-        } else {
-            project = TestUtil.findAll(em, HkjProject.class).get(0);
-        }
-        em.persist(project);
-        em.flush();
-        hkjOrder.setProject(project);
-        hkjOrderRepository.saveAndFlush(hkjOrder);
-        Long projectId = project.getId();
-        // Get all the hkjOrderList where project equals to projectId
-        defaultHkjOrderShouldBeFound("projectId.equals=" + projectId);
-
-        // Get all the hkjOrderList where project equals to (projectId + 1)
-        defaultHkjOrderShouldNotBeFound("projectId.equals=" + (projectId + 1));
-    }
-
-    @Test
-    @Transactional
     void getAllHkjOrdersByCustomerIsEqualToSomething() throws Exception {
         UserExtra customer;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
@@ -876,6 +854,28 @@ class HkjOrderResourceIT {
 
         // Get all the hkjOrderList where jewelry equals to (jewelryId + 1)
         defaultHkjOrderShouldNotBeFound("jewelryId.equals=" + (jewelryId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjOrdersByProjectIsEqualToSomething() throws Exception {
+        HkjProject project;
+        if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
+            hkjOrderRepository.saveAndFlush(hkjOrder);
+            project = HkjProjectResourceIT.createEntity();
+        } else {
+            project = TestUtil.findAll(em, HkjProject.class).get(0);
+        }
+        em.persist(project);
+        em.flush();
+        hkjOrder.setProject(project);
+        hkjOrderRepository.saveAndFlush(hkjOrder);
+        Long projectId = project.getId();
+        // Get all the hkjOrderList where project equals to projectId
+        defaultHkjOrderShouldBeFound("projectId.equals=" + projectId);
+
+        // Get all the hkjOrderList where project equals to (projectId + 1)
+        defaultHkjOrderShouldNotBeFound("projectId.equals=" + (projectId + 1));
     }
 
     private void defaultHkjOrderFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

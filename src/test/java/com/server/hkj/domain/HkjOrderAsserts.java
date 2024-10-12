@@ -80,8 +80,8 @@ public class HkjOrderAsserts {
     public static void assertHkjOrderUpdatableRelationshipsEquals(HkjOrder expected, HkjOrder actual) {
         assertThat(expected)
             .as("Verify HkjOrder relationships")
-            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()))
             .satisfies(e -> assertThat(e.getCustomer()).as("check customer").isEqualTo(actual.getCustomer()))
-            .satisfies(e -> assertThat(e.getJewelry()).as("check jewelry").isEqualTo(actual.getJewelry()));
+            .satisfies(e -> assertThat(e.getJewelry()).as("check jewelry").isEqualTo(actual.getJewelry()))
+            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()));
     }
 }

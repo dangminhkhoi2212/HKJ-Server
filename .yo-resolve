@@ -13,6 +13,8 @@ src/main/java/com/server/hkj/config/SecurityConfiguration.java skip
 
 src/main/java/com/server/hkj/service/dto/UserExtraDTO.java skip
 src/main/java/com/server/hkj/repository/UserExtraRepository.java skip
+src/main/java/com/server/hkj/service/mapper/UserExtraMapper.java skip
+src/main/java/com/server/hkj/web/rest/UserExtraResource.java skip
 src/main/java/com/server/hkj/service/UserExtraService.java skip
 src/main/java/com/server/hkj/web/rest/PublicUserResource.java skip
 
@@ -24,3 +26,10 @@ src/main/java/com/server/hkj/service/criteria/HkjHireCriteria.java skip
 
 src/main/java/com/server/hkj/service/dto/HkjMaterialDTO.java skip
 src/main/java/com/server/hkj/service/mapper/HkjMaterialMapper.java skip
+
+src/main/resources/config/liquibase/master.xml skip
+src/main/java/com/server/hkj/service/mapper/HkjTemplateMapper.java skip
+src/main/java/com/server/hkj/service/mapper/HkjTemplateMapper.java skip
+
+src/main/java/com/server/hkj/service/mapper/HkjProjectMapper.java skip
+jhipster-jdl.jdl skip

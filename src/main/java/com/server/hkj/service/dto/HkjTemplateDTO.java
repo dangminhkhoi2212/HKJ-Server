@@ -26,8 +26,6 @@ public class HkjTemplateDTO implements Serializable {
 
     private HkjCategoryDTO category;
 
-    private UserExtraDTO creater;
-
     public Long getId() {
         return id;
     }
@@ -92,14 +90,6 @@ public class HkjTemplateDTO implements Serializable {
         this.category = category;
     }
 
-    public UserExtraDTO getCreater() {
-        return creater;
-    }
-
-    public void setCreater(UserExtraDTO creater) {
-        this.creater = creater;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -133,7 +123,6 @@ public class HkjTemplateDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", category=" + getCategory() +
-            ", creater=" + getCreater() +
             "}";
     }
 }

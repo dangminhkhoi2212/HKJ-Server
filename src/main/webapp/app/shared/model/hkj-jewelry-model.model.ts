@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { IHkjCategory } from 'app/shared/model/hkj-category.model';
 import { IHkjProject } from 'app/shared/model/hkj-project.model';
 
 export interface IHkjJewelryModel {
@@ -17,6 +18,7 @@ export interface IHkjJewelryModel {
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
+  category?: IHkjCategory | null;
   project?: IHkjProject | null;
 }
 

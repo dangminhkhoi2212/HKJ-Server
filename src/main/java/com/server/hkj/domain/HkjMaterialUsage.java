@@ -58,13 +58,12 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
     @Transient
     private boolean isPersisted;
 
-    @JsonIgnoreProperties(value = { "images", "hkjMaterialUsage" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
     private HkjMaterial material;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "employee", "images", "materials", "hkjProject" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "materials", "employee", "project" }, allowSetters = true)
     private HkjTask hkjTask;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

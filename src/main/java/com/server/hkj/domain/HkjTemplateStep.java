@@ -40,7 +40,7 @@ public class HkjTemplateStep extends AbstractAuditingEntity<Long> implements Ser
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "category", "steps", "creater" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "steps", "category" }, allowSetters = true)
     private HkjTemplate hkjTemplate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

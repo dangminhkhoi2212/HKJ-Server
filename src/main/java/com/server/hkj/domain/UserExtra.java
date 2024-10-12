@@ -58,10 +58,6 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
     @JsonIgnoreProperties(value = { "userExtra" }, allowSetters = true)
     private Set<HkjSalary> salarys = new HashSet<>();
 
-    @JsonIgnoreProperties(value = { "employee", "images", "materials", "hkjProject" }, allowSetters = true)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee")
-    private HkjTask hkjTask;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -211,25 +207,6 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
     public UserExtra removeSalarys(HkjSalary hkjSalary) {
         this.salarys.remove(hkjSalary);
         hkjSalary.setUserExtra(null);
-        return this;
-    }
-
-    public HkjTask getHkjTask() {
-        return this.hkjTask;
-    }
-
-    public void setHkjTask(HkjTask hkjTask) {
-        if (this.hkjTask != null) {
-            this.hkjTask.setEmployee(null);
-        }
-        if (hkjTask != null) {
-            hkjTask.setEmployee(this);
-        }
-        this.hkjTask = hkjTask;
-    }
-
-    public UserExtra hkjTask(HkjTask hkjTask) {
-        this.setHkjTask(hkjTask);
         return this;
     }
 

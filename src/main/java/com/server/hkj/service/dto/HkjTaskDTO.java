@@ -20,7 +20,6 @@ public class HkjTaskDTO implements Serializable {
 
     private String coverImage;
 
-    @Size(max = 1000)
     private String description;
 
     @NotNull
@@ -41,7 +40,6 @@ public class HkjTaskDTO implements Serializable {
     @Max(value = 100)
     private Integer point;
 
-    @Size(max = 1000)
     private String notes;
 
     private Boolean isDeleted;
@@ -56,7 +54,7 @@ public class HkjTaskDTO implements Serializable {
 
     private UserExtraDTO employee;
 
-    private HkjProjectDTO hkjProject;
+    private HkjProjectDTO project;
 
     public Long getId() {
         return id;
@@ -194,12 +192,12 @@ public class HkjTaskDTO implements Serializable {
         this.employee = employee;
     }
 
-    public HkjProjectDTO getHkjProject() {
-        return hkjProject;
+    public HkjProjectDTO getProject() {
+        return project;
     }
 
-    public void setHkjProject(HkjProjectDTO hkjProject) {
-        this.hkjProject = hkjProject;
+    public void setProject(HkjProjectDTO project) {
+        this.project = project;
     }
 
     @Override
@@ -244,7 +242,7 @@ public class HkjTaskDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", employee=" + getEmployee() +
-            ", hkjProject=" + getHkjProject() +
+            ", project=" + getProject() +
             "}";
     }
 }

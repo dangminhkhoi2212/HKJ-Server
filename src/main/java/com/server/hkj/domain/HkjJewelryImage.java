@@ -52,7 +52,7 @@ public class HkjJewelryImage extends AbstractAuditingEntity<Long> implements Ser
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "project", "images" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "category", "project" }, allowSetters = true)
     private HkjJewelryModel jewelryModel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -125,6 +125,10 @@ export const HkjJewelryModelDetail = () => {
             ) : null}
           </dd>
           <dt>
+            <Translate contentKey="serverApp.hkjJewelryModel.category">Category</Translate>
+          </dt>
+          <dd>{hkjJewelryModelEntity.category ? hkjJewelryModelEntity.category.id : ''}</dd>
+          <dt>
             <Translate contentKey="serverApp.hkjJewelryModel.project">Project</Translate>
           </dt>
           <dd>{hkjJewelryModelEntity.project ? hkjJewelryModelEntity.project.id : ''}</dd>

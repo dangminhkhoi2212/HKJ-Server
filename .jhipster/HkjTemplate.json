@@ -55,20 +55,14 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjCategory",
-      "relationshipName": "category",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityName": "hkjTemplateStep",
       "relationshipName": "steps",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "userExtra",
-      "relationshipName": "creater",
+      "otherEntityName": "hkjCategory",
+      "relationshipName": "category",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

@@ -70,13 +70,13 @@ public class HkjOrderCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter projectId;
-
     private LongFilter orderImagesId;
 
     private LongFilter customerId;
 
     private LongFilter jewelryId;
+
+    private LongFilter projectId;
 
     private Boolean distinct;
 
@@ -98,10 +98,10 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
         this.orderImagesId = other.optionalOrderImagesId().map(LongFilter::copy).orElse(null);
         this.customerId = other.optionalCustomerId().map(LongFilter::copy).orElse(null);
         this.jewelryId = other.optionalJewelryId().map(LongFilter::copy).orElse(null);
+        this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -395,25 +395,6 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getProjectId() {
-        return projectId;
-    }
-
-    public Optional<LongFilter> optionalProjectId() {
-        return Optional.ofNullable(projectId);
-    }
-
-    public LongFilter projectId() {
-        if (projectId == null) {
-            setProjectId(new LongFilter());
-        }
-        return projectId;
-    }
-
-    public void setProjectId(LongFilter projectId) {
-        this.projectId = projectId;
-    }
-
     public LongFilter getOrderImagesId() {
         return orderImagesId;
     }
@@ -471,6 +452,25 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.jewelryId = jewelryId;
     }
 
+    public LongFilter getProjectId() {
+        return projectId;
+    }
+
+    public Optional<LongFilter> optionalProjectId() {
+        return Optional.ofNullable(projectId);
+    }
+
+    public LongFilter projectId() {
+        if (projectId == null) {
+            setProjectId(new LongFilter());
+        }
+        return projectId;
+    }
+
+    public void setProjectId(LongFilter projectId) {
+        this.projectId = projectId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -515,10 +515,10 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(projectId, that.projectId) &&
             Objects.equals(orderImagesId, that.orderImagesId) &&
             Objects.equals(customerId, that.customerId) &&
             Objects.equals(jewelryId, that.jewelryId) &&
+            Objects.equals(projectId, that.projectId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -541,10 +541,10 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
-            projectId,
             orderImagesId,
             customerId,
             jewelryId,
+            projectId,
             distinct
         );
     }
@@ -568,10 +568,10 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
             optionalOrderImagesId().map(f -> "orderImagesId=" + f + ", ").orElse("") +
             optionalCustomerId().map(f -> "customerId=" + f + ", ").orElse("") +
             optionalJewelryId().map(f -> "jewelryId=" + f + ", ").orElse("") +
+            optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }
