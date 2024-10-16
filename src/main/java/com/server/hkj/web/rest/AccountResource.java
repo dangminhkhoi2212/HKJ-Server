@@ -1,7 +1,7 @@
 package com.server.hkj.web.rest;
 
 import com.server.hkj.service.UserService;
-import com.server.hkj.service.dto.AdminUserDTO;
+import com.server.hkj.service.dto.AccountDTO;
 import java.security.Principal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +43,7 @@ public class AccountResource {
      * @throws AccountResourceException {@code 500 (Internal Server Error)} if the user couldn't be returned.
      */
     @GetMapping("/account")
-    public AdminUserDTO getAccount(Principal principal) {
+    public AccountDTO getAccount(Principal principal) {
         if (principal instanceof AbstractAuthenticationToken) {
             return userService.getUserFromAuthentication((AbstractAuthenticationToken) principal);
         } else {

@@ -8,9 +8,11 @@ import com.server.hkj.repository.AuthorityRepository;
 import com.server.hkj.repository.UserExtraRepository;
 import com.server.hkj.repository.UserRepository;
 import com.server.hkj.security.AuthoritiesConstants;
+import com.server.hkj.service.dto.AccountDTO;
 import com.server.hkj.service.dto.AdminUserDTO;
 import com.server.hkj.service.dto.UserDTO;
 import com.server.hkj.service.dto.UserExtraDTO;
+import com.server.hkj.service.mapper.AccountMapper;
 import com.server.hkj.service.mapper.UserExtraMapper;
 import com.server.hkj.service.mapper.UserMapper;
 import java.time.Instant;
@@ -47,6 +49,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final UserExtraService userExtraService;
     private final UserExtraMapper userExtraMapper;
+    private final AccountMapper accountMapper;
 
     public UserService(
         UserRepository userRepository,
@@ -54,7 +57,8 @@ public class UserService {
         CacheManager cacheManager,
         UserExtraRepository userExtraRepository,
         UserExtraService userExtraService,
-        UserExtraMapper userExtraMapper
+        UserExtraMapper userExtraMapper,
+        AccountMapper accountMapper
     ) {
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
@@ -63,6 +67,7 @@ public class UserService {
         this.userMapper = new UserMapper();
         this.userExtraService = userExtraService;
         this.userExtraMapper = userExtraMapper;
+        this.accountMapper = accountMapper;
     }
 
     public void updateUser(User user) {
@@ -226,7 +231,7 @@ public class UserService {
      * @return the user from the authentication.
      */
     @Transactional
-    public AdminUserDTO getUserFromAuthentication(AbstractAuthenticationToken authToken) {
+    public AccountDTO getUserFromAuthentication(AbstractAuthenticationToken authToken) {
         Map<String, Object> attributes;
         if (authToken instanceof OAuth2AuthenticationToken) {
             attributes = ((OAuth2AuthenticationToken) authToken).getPrincipal().getAttributes();
@@ -254,7 +259,7 @@ public class UserService {
         user.setAuthorities(authorities);
         User savedUser = userRepository.save(user);
         UserExtra syncedUserExtra = syncUserWithIdP(attributes, savedUser);
-        return new AdminUserDTO(syncedUserExtra);
+        return accountMapper.toDto(syncedUserExtra);
     }
 
     private static UserExtra getUser(Map<String, Object> details) {

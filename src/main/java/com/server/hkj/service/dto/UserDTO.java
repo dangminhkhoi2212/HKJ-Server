@@ -1,6 +1,5 @@
 package com.server.hkj.service.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.server.hkj.domain.Authority;
 import com.server.hkj.domain.User;
 import java.io.Serializable;
@@ -20,10 +19,8 @@ public class UserDTO implements Serializable {
 
     private String login;
 
-    @JsonProperty("first_name")
     private String firstName;
 
-    @JsonProperty("last_name")
     private String lastName;
 
     private String email;

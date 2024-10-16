@@ -5,13 +5,19 @@ import com.server.hkj.domain.UserExtra;
 import com.server.hkj.service.dto.AccountDTO;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.mapstruct.*;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 /**
  * Mapper for the entity {@link UserExtra} and its DTO {@link AccountDTO}.
  */
 @Mapper(componentModel = "spring")
 public interface AccountMapper extends EntityMapper<AccountDTO, UserExtra> {
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "user.id", target = "userId")
     @Mapping(source = "user.login", target = "login")
     @Mapping(source = "user.firstName", target = "firstName")

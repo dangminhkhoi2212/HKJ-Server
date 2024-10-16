@@ -20,5 +20,7 @@ public interface UserExtraMapper extends EntityMapper<UserExtraDTO, UserExtra> {
     @Named("userId")
     @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
     UserDTO toDtoUserId(User user);
 }
