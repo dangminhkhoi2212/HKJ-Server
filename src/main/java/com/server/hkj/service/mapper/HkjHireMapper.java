@@ -2,9 +2,11 @@ package com.server.hkj.service.mapper;
 
 import com.server.hkj.domain.HkjHire;
 import com.server.hkj.domain.HkjPosition;
+import com.server.hkj.domain.User;
 import com.server.hkj.domain.UserExtra;
 import com.server.hkj.service.dto.HkjHireDTO;
 import com.server.hkj.service.dto.HkjPositionDTO;
+import com.server.hkj.service.dto.UserDTO;
 import com.server.hkj.service.dto.UserExtraDTO;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
@@ -28,5 +30,14 @@ public interface HkjHireMapper extends EntityMapper<HkjHireDTO, HkjHire> {
     @Named("userExtraId")
     @BeanMapping(ignoreByDefault = false)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "user", source = "user", qualifiedByName = "userId")
     UserExtraDTO toDtoUserExtraId(UserExtra userExtra);
+
+    @Named("userId")
+    @BeanMapping(ignoreByDefault = false)
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "firstName", source = "firstName")
+    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "email", source = "email")
+    UserDTO toDtoUserId(User user);
 }

@@ -171,6 +171,21 @@ public class UserMapper {
         if (newUser.getLangKey() != null) {
             user.setLangKey(newUser.getLangKey());
         }
+        if (newUser.getAuthorities() != null) {
+            user.setAuthorities(newUser.getAuthorities());
+        }
+        if (newUser.getCreatedBy() != null) {
+            user.setCreatedBy(newUser.getCreatedBy());
+        }
+        if (newUser.getCreatedDate() != null) {
+            user.setCreatedDate(newUser.getCreatedDate());
+        }
+        if (newUser.getLastModifiedBy() != null) {
+            user.setLastModifiedBy(newUser.getLastModifiedBy());
+        }
+        if (newUser.getLastModifiedDate() != null) {
+            user.setLastModifiedDate(newUser.getLastModifiedDate());
+        }
         user.setActivated(newUser.isActivated());
         return user;
     }
