@@ -170,6 +170,8 @@ public class UserService {
 
         Optional<User> existingUser = userRepository.findOneByLogin(user.getLogin());
         if (existingUser.isPresent()) {
+            User dbUser = existingUser.get();
+            userRepository.save(userMapper.partialUpdate(dbUser, user));
             if (details.get("updated_at") != null) {
                 Instant dbModifiedDate = existingUser.get().getLastModifiedDate();
                 Instant idpModifiedDate = details.get("updated_at") instanceof Instant
@@ -257,8 +259,7 @@ public class UserService {
             .collect(Collectors.toSet());
 
         user.setAuthorities(authorities);
-        User savedUser = userRepository.save(user);
-        UserExtra syncedUserExtra = syncUserWithIdP(attributes, savedUser);
+        UserExtra syncedUserExtra = syncUserWithIdP(attributes, user);
         return accountMapper.toDto(syncedUserExtra);
     }
 
