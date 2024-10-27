@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
 import { getEntities as getHkjJewelryModels } from 'app/entities/hkj-jewelry-model/hkj-jewelry-model.reducer';
 import { getEntities as getHkjProjects } from 'app/entities/hkj-project/hkj-project.reducer';
+import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
 import { HkjOrderStatus } from 'app/shared/model/enumerations/hkj-order-status.model';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-order.reducer';
 
@@ -24,6 +25,7 @@ export const HkjOrderUpdate = () => {
   const userExtras = useAppSelector(state => state.userExtra.entities);
   const hkjJewelryModels = useAppSelector(state => state.hkjJewelryModel.entities);
   const hkjProjects = useAppSelector(state => state.hkjProject.entities);
+  const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
   const hkjOrderEntity = useAppSelector(state => state.hkjOrder.entity);
   const loading = useAppSelector(state => state.hkjOrder.loading);
   const updating = useAppSelector(state => state.hkjOrder.updating);
@@ -44,6 +46,7 @@ export const HkjOrderUpdate = () => {
     dispatch(getUserExtras({}));
     dispatch(getHkjJewelryModels({}));
     dispatch(getHkjProjects({}));
+    dispatch(getHkjCategories({}));
   }, []);
 
   useEffect(() => {
@@ -65,6 +68,9 @@ export const HkjOrderUpdate = () => {
     if (values.totalPrice !== undefined && typeof values.totalPrice !== 'number') {
       values.totalPrice = Number(values.totalPrice);
     }
+    if (values.budget !== undefined && typeof values.budget !== 'number') {
+      values.budget = Number(values.budget);
+    }
     if (values.depositAmount !== undefined && typeof values.depositAmount !== 'number') {
       values.depositAmount = Number(values.depositAmount);
     }
@@ -77,6 +83,7 @@ export const HkjOrderUpdate = () => {
       customer: userExtras.find(it => it.id.toString() === values.customer?.toString()),
       jewelry: hkjJewelryModels.find(it => it.id.toString() === values.jewelry?.toString()),
       project: hkjProjects.find(it => it.id.toString() === values.project?.toString()),
+      category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
     };
 
     if (isNew) {
@@ -106,6 +113,7 @@ export const HkjOrderUpdate = () => {
           customer: hkjOrderEntity?.customer?.id,
           jewelry: hkjOrderEntity?.jewelry?.id,
           project: hkjOrderEntity?.project?.id,
+          category: hkjOrderEntity?.category?.id,
         };
 
   return (
@@ -166,6 +174,9 @@ export const HkjOrderUpdate = () => {
                 name="specialRequests"
                 data-cy="specialRequests"
                 type="text"
+                validate={{
+                  maxLength: { value: 5000, message: translate('entity.validation.maxlength', { max: 5000 }) },
+                }}
               />
               <ValidatedField
                 label={translate('serverApp.hkjOrder.status')}
@@ -200,13 +211,19 @@ export const HkjOrderUpdate = () => {
                 type="text"
               />
               <ValidatedField
+                label={translate('serverApp.hkjOrder.budget')}
+                id="hkj-order-budget"
+                name="budget"
+                data-cy="budget"
+                type="text"
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjOrder.depositAmount')}
                 id="hkj-order-depositAmount"
                 name="depositAmount"
                 data-cy="depositAmount"
                 type="text"
               />
-              <ValidatedField label={translate('serverApp.hkjOrder.notes')} id="hkj-order-notes" name="notes" data-cy="notes" type="text" />
               <ValidatedField
                 label={translate('serverApp.hkjOrder.isDeleted')}
                 id="hkj-order-isDeleted"
@@ -287,6 +304,22 @@ export const HkjOrderUpdate = () => {
                 <option value="" key="0" />
                 {hkjProjects
                   ? hkjProjects.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-order-category"
+                name="category"
+                data-cy="category"
+                label={translate('serverApp.hkjOrder.category')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjCategories
+                  ? hkjCategories.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

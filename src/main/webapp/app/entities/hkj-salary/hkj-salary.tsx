@@ -146,7 +146,7 @@ export const HkjSalary = () => {
                   <FontAwesomeIcon icon={getSortIconByFieldName('lastModifiedDate')} />
                 </th>
                 <th>
-                  <Translate contentKey="serverApp.hkjSalary.userExtra">User Extra</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="serverApp.hkjSalary.employee">Employee</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -173,7 +173,7 @@ export const HkjSalary = () => {
                       <TextFormat type="date" value={hkjSalary.lastModifiedDate} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{hkjSalary.userExtra ? <Link to={`/user-extra/${hkjSalary.userExtra.id}`}>{hkjSalary.userExtra.id}</Link> : ''}</td>
+                  <td>{hkjSalary.employee ? <Link to={`/user-extra/${hkjSalary.employee.id}`}>{hkjSalary.employee.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-salary/${hkjSalary.id}`} color="info" size="sm" data-cy="entityDetailsButton">

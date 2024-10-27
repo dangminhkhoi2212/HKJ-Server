@@ -31,10 +31,15 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     private Long id;
 
     @NotNull
+    @Column(name = "sku", nullable = false, unique = true)
+    private String sku;
+
+    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @Size(max = 10000)
+    @Column(name = "description", length = 10000)
     private String description;
 
     @Column(name = "cover_image")
@@ -57,6 +62,9 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     @Column(name = "is_deleted")
     private Boolean isDeleted;
+
+    @Column(name = "is_cover_search")
+    private Boolean isCoverSearch;
 
     @Column(name = "active")
     private Boolean active;
@@ -93,6 +101,19 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSku() {
+        return this.sku;
+    }
+
+    public HkjJewelryModel sku(String sku) {
+        this.setSku(sku);
+        return this;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public String getName() {
@@ -210,6 +231,19 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Boolean getIsCoverSearch() {
+        return this.isCoverSearch;
+    }
+
+    public HkjJewelryModel isCoverSearch(Boolean isCoverSearch) {
+        this.setIsCoverSearch(isCoverSearch);
+        return this;
+    }
+
+    public void setIsCoverSearch(Boolean isCoverSearch) {
+        this.isCoverSearch = isCoverSearch;
     }
 
     public Boolean getActive() {
@@ -347,6 +381,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     public String toString() {
         return "HkjJewelryModel{" +
             "id=" + getId() +
+            ", sku='" + getSku() + "'" +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", coverImage='" + getCoverImage() + "'" +
@@ -356,6 +391,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
             ", color='" + getColor() + "'" +
             ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
+            ", isCoverSearch='" + getIsCoverSearch() + "'" +
             ", active='" + getActive() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

@@ -39,6 +39,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class HkjJewelryModelResourceIT {
 
+    private static final String DEFAULT_SKU = "AAAAAAAAAA";
+    private static final String UPDATED_SKU = "BBBBBBBBBB";
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -67,6 +70,9 @@ class HkjJewelryModelResourceIT {
 
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
+
+    private static final Boolean DEFAULT_IS_COVER_SEARCH = false;
+    private static final Boolean UPDATED_IS_COVER_SEARCH = true;
 
     private static final Boolean DEFAULT_ACTIVE = false;
     private static final Boolean UPDATED_ACTIVE = true;
@@ -104,6 +110,7 @@ class HkjJewelryModelResourceIT {
      */
     public static HkjJewelryModel createEntity() {
         return new HkjJewelryModel()
+            .sku(DEFAULT_SKU)
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION)
             .coverImage(DEFAULT_COVER_IMAGE)
@@ -113,6 +120,7 @@ class HkjJewelryModelResourceIT {
             .color(DEFAULT_COLOR)
             .notes(DEFAULT_NOTES)
             .isDeleted(DEFAULT_IS_DELETED)
+            .isCoverSearch(DEFAULT_IS_COVER_SEARCH)
             .active(DEFAULT_ACTIVE);
     }
 
@@ -124,6 +132,7 @@ class HkjJewelryModelResourceIT {
      */
     public static HkjJewelryModel createUpdatedEntity() {
         return new HkjJewelryModel()
+            .sku(UPDATED_SKU)
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .coverImage(UPDATED_COVER_IMAGE)
@@ -133,6 +142,7 @@ class HkjJewelryModelResourceIT {
             .color(UPDATED_COLOR)
             .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED)
+            .isCoverSearch(UPDATED_IS_COVER_SEARCH)
             .active(UPDATED_ACTIVE);
     }
 
@@ -200,6 +210,25 @@ class HkjJewelryModelResourceIT {
 
     @Test
     @Transactional
+    void checkSkuIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        hkjJewelryModel.setSku(null);
+
+        // Create the HkjJewelryModel, which fails.
+        HkjJewelryModelDTO hkjJewelryModelDTO = hkjJewelryModelMapper.toDto(hkjJewelryModel);
+
+        restHkjJewelryModelMockMvc
+            .perform(
+                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(hkjJewelryModelDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkNameIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
@@ -229,6 +258,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjJewelryModel.getId().intValue())))
+            .andExpect(jsonPath("$.[*].sku").value(hasItem(DEFAULT_SKU)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
@@ -238,6 +268,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())))
+            .andExpect(jsonPath("$.[*].isCoverSearch").value(hasItem(DEFAULT_IS_COVER_SEARCH.booleanValue())))
             .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
     }
 
@@ -253,6 +284,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjJewelryModel.getId().intValue()))
+            .andExpect(jsonPath("$.sku").value(DEFAULT_SKU))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.coverImage").value(DEFAULT_COVER_IMAGE))
@@ -262,6 +294,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.color").value(DEFAULT_COLOR))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()))
+            .andExpect(jsonPath("$.isCoverSearch").value(DEFAULT_IS_COVER_SEARCH.booleanValue()))
             .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
     }
 
@@ -278,6 +311,56 @@ class HkjJewelryModelResourceIT {
         defaultHkjJewelryModelFiltering("id.greaterThanOrEqual=" + id, "id.greaterThan=" + id);
 
         defaultHkjJewelryModelFiltering("id.lessThanOrEqual=" + id, "id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsBySkuIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where sku equals to
+        defaultHkjJewelryModelFiltering("sku.equals=" + DEFAULT_SKU, "sku.equals=" + UPDATED_SKU);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsBySkuIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where sku in
+        defaultHkjJewelryModelFiltering("sku.in=" + DEFAULT_SKU + "," + UPDATED_SKU, "sku.in=" + UPDATED_SKU);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsBySkuIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where sku is not null
+        defaultHkjJewelryModelFiltering("sku.specified=true", "sku.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsBySkuContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where sku contains
+        defaultHkjJewelryModelFiltering("sku.contains=" + DEFAULT_SKU, "sku.contains=" + UPDATED_SKU);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsBySkuNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where sku does not contain
+        defaultHkjJewelryModelFiltering("sku.doesNotContain=" + UPDATED_SKU, "sku.doesNotContain=" + DEFAULT_SKU);
     }
 
     @Test
@@ -747,6 +830,42 @@ class HkjJewelryModelResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjJewelryModelsByIsCoverSearchIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where isCoverSearch equals to
+        defaultHkjJewelryModelFiltering(
+            "isCoverSearch.equals=" + DEFAULT_IS_COVER_SEARCH,
+            "isCoverSearch.equals=" + UPDATED_IS_COVER_SEARCH
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByIsCoverSearchIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where isCoverSearch in
+        defaultHkjJewelryModelFiltering(
+            "isCoverSearch.in=" + DEFAULT_IS_COVER_SEARCH + "," + UPDATED_IS_COVER_SEARCH,
+            "isCoverSearch.in=" + UPDATED_IS_COVER_SEARCH
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjJewelryModelsByIsCoverSearchIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
+
+        // Get all the hkjJewelryModelList where isCoverSearch is not null
+        defaultHkjJewelryModelFiltering("isCoverSearch.specified=true", "isCoverSearch.specified=false");
+    }
+
+    @Test
+    @Transactional
     void getAllHkjJewelryModelsByActiveIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjJewelryModel = hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
@@ -833,6 +952,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjJewelryModel.getId().intValue())))
+            .andExpect(jsonPath("$.[*].sku").value(hasItem(DEFAULT_SKU)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
@@ -842,6 +962,7 @@ class HkjJewelryModelResourceIT {
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())))
+            .andExpect(jsonPath("$.[*].isCoverSearch").value(hasItem(DEFAULT_IS_COVER_SEARCH.booleanValue())))
             .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
 
         // Check, that the count call also returns 1
@@ -891,6 +1012,7 @@ class HkjJewelryModelResourceIT {
         // Disconnect from session so that the updates on updatedHkjJewelryModel are not directly saved in db
         em.detach(updatedHkjJewelryModel);
         updatedHkjJewelryModel
+            .sku(UPDATED_SKU)
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .coverImage(UPDATED_COVER_IMAGE)
@@ -900,6 +1022,7 @@ class HkjJewelryModelResourceIT {
             .color(UPDATED_COLOR)
             .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED)
+            .isCoverSearch(UPDATED_IS_COVER_SEARCH)
             .active(UPDATED_ACTIVE);
         HkjJewelryModelDTO hkjJewelryModelDTO = hkjJewelryModelMapper.toDto(updatedHkjJewelryModel);
 
@@ -996,11 +1119,12 @@ class HkjJewelryModelResourceIT {
         partialUpdatedHkjJewelryModel.setId(hkjJewelryModel.getId());
 
         partialUpdatedHkjJewelryModel
+            .sku(UPDATED_SKU)
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .coverImage(UPDATED_COVER_IMAGE)
-            .isCustom(UPDATED_IS_CUSTOM)
-            .price(UPDATED_PRICE)
+            .weight(UPDATED_WEIGHT)
+            .color(UPDATED_COLOR)
             .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED)
             .active(UPDATED_ACTIVE);
@@ -1036,6 +1160,7 @@ class HkjJewelryModelResourceIT {
         partialUpdatedHkjJewelryModel.setId(hkjJewelryModel.getId());
 
         partialUpdatedHkjJewelryModel
+            .sku(UPDATED_SKU)
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION)
             .coverImage(UPDATED_COVER_IMAGE)
@@ -1045,6 +1170,7 @@ class HkjJewelryModelResourceIT {
             .color(UPDATED_COLOR)
             .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED)
+            .isCoverSearch(UPDATED_IS_COVER_SEARCH)
             .active(UPDATED_ACTIVE);
 
         restHkjJewelryModelMockMvc

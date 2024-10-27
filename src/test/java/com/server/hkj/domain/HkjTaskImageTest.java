@@ -24,14 +24,14 @@ class HkjTaskImageTest {
     }
 
     @Test
-    void hkjTaskTest() {
+    void taskTest() {
         HkjTaskImage hkjTaskImage = getHkjTaskImageRandomSampleGenerator();
         HkjTask hkjTaskBack = getHkjTaskRandomSampleGenerator();
 
-        hkjTaskImage.setHkjTask(hkjTaskBack);
-        assertThat(hkjTaskImage.getHkjTask()).isEqualTo(hkjTaskBack);
+        hkjTaskImage.setTask(hkjTaskBack);
+        assertThat(hkjTaskImage.getTask()).isEqualTo(hkjTaskBack);
 
-        hkjTaskImage.hkjTask(null);
-        assertThat(hkjTaskImage.getHkjTask()).isNull();
+        hkjTaskImage.task(null);
+        assertThat(hkjTaskImage.getTask()).isNull();
     }
 }

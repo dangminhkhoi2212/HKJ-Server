@@ -148,6 +148,9 @@ export const HkjTaskUpdate = () => {
                 name="description"
                 data-cy="description"
                 type="text"
+                validate={{
+                  maxLength: { value: 10000, message: translate('entity.validation.maxlength', { max: 10000 }) },
+                }}
               />
               <ValidatedField
                 label={translate('serverApp.hkjTask.assignedDate')}

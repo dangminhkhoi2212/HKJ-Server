@@ -63,6 +63,6 @@ public class HkjTaskImageAsserts {
     public static void assertHkjTaskImageUpdatableRelationshipsEquals(HkjTaskImage expected, HkjTaskImage actual) {
         assertThat(expected)
             .as("Verify HkjTaskImage relationships")
-            .satisfies(e -> assertThat(e.getHkjTask()).as("check hkjTask").isEqualTo(actual.getHkjTask()));
+            .satisfies(e -> assertThat(e.getTask()).as("check task").isEqualTo(actual.getTask()));
     }
 }

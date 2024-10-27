@@ -48,7 +48,7 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
-    private UserExtra userExtra;
+    private UserExtra employee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -158,16 +158,16 @@ public class HkjSalary extends AbstractAuditingEntity<Long> implements Serializa
         return this;
     }
 
-    public UserExtra getUserExtra() {
-        return this.userExtra;
+    public UserExtra getEmployee() {
+        return this.employee;
     }
 
-    public void setUserExtra(UserExtra userExtra) {
-        this.userExtra = userExtra;
+    public void setEmployee(UserExtra userExtra) {
+        this.employee = userExtra;
     }
 
-    public HkjSalary userExtra(UserExtra userExtra) {
-        this.setUserExtra(userExtra);
+    public HkjSalary employee(UserExtra userExtra) {
+        this.setEmployee(userExtra);
         return this;
     }
 

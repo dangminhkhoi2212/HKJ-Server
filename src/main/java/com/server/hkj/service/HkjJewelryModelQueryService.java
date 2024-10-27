@@ -77,6 +77,9 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), HkjJewelryModel_.id));
             }
+            if (criteria.getSku() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getSku(), HkjJewelryModel_.sku));
+            }
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), HkjJewelryModel_.name));
             }
@@ -103,6 +106,9 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
             }
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjJewelryModel_.isDeleted));
+            }
+            if (criteria.getIsCoverSearch() != null) {
+                specification = specification.and(buildSpecification(criteria.getIsCoverSearch(), HkjJewelryModel_.isCoverSearch));
             }
             if (criteria.getActive() != null) {
                 specification = specification.and(buildSpecification(criteria.getActive(), HkjJewelryModel_.active));

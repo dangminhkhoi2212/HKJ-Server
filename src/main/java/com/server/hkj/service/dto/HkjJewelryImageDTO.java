@@ -1,14 +1,18 @@
 package com.server.hkj.service.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
  * A DTO for the {@link com.server.hkj.domain.HkjJewelryImage} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Data
+@AllArgsConstructor
 public class HkjJewelryImageDTO implements Serializable {
 
     private Long id;

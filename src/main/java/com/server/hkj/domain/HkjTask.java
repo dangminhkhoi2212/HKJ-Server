@@ -38,7 +38,8 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Column(name = "cover_image")
     private String coverImage;
 
-    @Column(name = "description")
+    @Size(max = 10000)
+    @Column(name = "description", length = 10000)
     private String description;
 
     @NotNull
@@ -80,14 +81,14 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Transient
     private boolean isPersisted;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTask")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "task" }, allowSetters = true)
     private Set<HkjTaskImage> images = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjTask")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "material", "hkjTask" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "material", "task" }, allowSetters = true)
     private Set<HkjMaterialUsage> materials = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -303,10 +304,10 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public void setImages(Set<HkjTaskImage> hkjTaskImages) {
         if (this.images != null) {
-            this.images.forEach(i -> i.setHkjTask(null));
+            this.images.forEach(i -> i.setTask(null));
         }
         if (hkjTaskImages != null) {
-            hkjTaskImages.forEach(i -> i.setHkjTask(this));
+            hkjTaskImages.forEach(i -> i.setTask(this));
         }
         this.images = hkjTaskImages;
     }
@@ -318,13 +319,13 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public HkjTask addImages(HkjTaskImage hkjTaskImage) {
         this.images.add(hkjTaskImage);
-        hkjTaskImage.setHkjTask(this);
+        hkjTaskImage.setTask(this);
         return this;
     }
 
     public HkjTask removeImages(HkjTaskImage hkjTaskImage) {
         this.images.remove(hkjTaskImage);
-        hkjTaskImage.setHkjTask(null);
+        hkjTaskImage.setTask(null);
         return this;
     }
 
@@ -334,10 +335,10 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public void setMaterials(Set<HkjMaterialUsage> hkjMaterialUsages) {
         if (this.materials != null) {
-            this.materials.forEach(i -> i.setHkjTask(null));
+            this.materials.forEach(i -> i.setTask(null));
         }
         if (hkjMaterialUsages != null) {
-            hkjMaterialUsages.forEach(i -> i.setHkjTask(this));
+            hkjMaterialUsages.forEach(i -> i.setTask(this));
         }
         this.materials = hkjMaterialUsages;
     }
@@ -349,13 +350,13 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public HkjTask addMaterials(HkjMaterialUsage hkjMaterialUsage) {
         this.materials.add(hkjMaterialUsage);
-        hkjMaterialUsage.setHkjTask(this);
+        hkjMaterialUsage.setTask(this);
         return this;
     }
 
     public HkjTask removeMaterials(HkjMaterialUsage hkjMaterialUsage) {
         this.materials.remove(hkjMaterialUsage);
-        hkjMaterialUsage.setHkjTask(null);
+        hkjMaterialUsage.setTask(null);
         return this;
     }
 

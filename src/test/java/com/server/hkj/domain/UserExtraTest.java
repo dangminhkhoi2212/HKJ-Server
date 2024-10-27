@@ -32,18 +32,18 @@ class UserExtraTest {
 
         userExtra.addSalarys(hkjSalaryBack);
         assertThat(userExtra.getSalarys()).containsOnly(hkjSalaryBack);
-        assertThat(hkjSalaryBack.getUserExtra()).isEqualTo(userExtra);
+        assertThat(hkjSalaryBack.getEmployee()).isEqualTo(userExtra);
 
         userExtra.removeSalarys(hkjSalaryBack);
         assertThat(userExtra.getSalarys()).doesNotContain(hkjSalaryBack);
-        assertThat(hkjSalaryBack.getUserExtra()).isNull();
+        assertThat(hkjSalaryBack.getEmployee()).isNull();
 
         userExtra.salarys(new HashSet<>(Set.of(hkjSalaryBack)));
         assertThat(userExtra.getSalarys()).containsOnly(hkjSalaryBack);
-        assertThat(hkjSalaryBack.getUserExtra()).isEqualTo(userExtra);
+        assertThat(hkjSalaryBack.getEmployee()).isEqualTo(userExtra);
 
         userExtra.setSalarys(new HashSet<>());
         assertThat(userExtra.getSalarys()).doesNotContain(hkjSalaryBack);
-        assertThat(hkjSalaryBack.getUserExtra()).isNull();
+        assertThat(hkjSalaryBack.getEmployee()).isNull();
     }
 }

@@ -11,7 +11,7 @@ export interface IHkjSalary {
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  userExtra?: IUserExtra | null;
+  employee?: IUserExtra | null;
 }
 
 export const defaultValue: Readonly<IHkjSalary> = {

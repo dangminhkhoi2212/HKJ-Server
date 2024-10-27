@@ -1,5 +1,6 @@
 package com.server.hkj.domain;
 
+import static com.server.hkj.domain.HkjCategoryTestSamples.*;
 import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
 import static com.server.hkj.domain.HkjOrderImageTestSamples.*;
 import static com.server.hkj.domain.HkjOrderTestSamples.*;
@@ -35,19 +36,19 @@ class HkjOrderTest {
 
         hkjOrder.addOrderImages(hkjOrderImageBack);
         assertThat(hkjOrder.getOrderImages()).containsOnly(hkjOrderImageBack);
-        assertThat(hkjOrderImageBack.getHkjOrder()).isEqualTo(hkjOrder);
+        assertThat(hkjOrderImageBack.getOrder()).isEqualTo(hkjOrder);
 
         hkjOrder.removeOrderImages(hkjOrderImageBack);
         assertThat(hkjOrder.getOrderImages()).doesNotContain(hkjOrderImageBack);
-        assertThat(hkjOrderImageBack.getHkjOrder()).isNull();
+        assertThat(hkjOrderImageBack.getOrder()).isNull();
 
         hkjOrder.orderImages(new HashSet<>(Set.of(hkjOrderImageBack)));
         assertThat(hkjOrder.getOrderImages()).containsOnly(hkjOrderImageBack);
-        assertThat(hkjOrderImageBack.getHkjOrder()).isEqualTo(hkjOrder);
+        assertThat(hkjOrderImageBack.getOrder()).isEqualTo(hkjOrder);
 
         hkjOrder.setOrderImages(new HashSet<>());
         assertThat(hkjOrder.getOrderImages()).doesNotContain(hkjOrderImageBack);
-        assertThat(hkjOrderImageBack.getHkjOrder()).isNull();
+        assertThat(hkjOrderImageBack.getOrder()).isNull();
     }
 
     @Test
@@ -84,5 +85,17 @@ class HkjOrderTest {
 
         hkjOrder.project(null);
         assertThat(hkjOrder.getProject()).isNull();
+    }
+
+    @Test
+    void categoryTest() {
+        HkjOrder hkjOrder = getHkjOrderRandomSampleGenerator();
+        HkjCategory hkjCategoryBack = getHkjCategoryRandomSampleGenerator();
+
+        hkjOrder.setCategory(hkjCategoryBack);
+        assertThat(hkjOrder.getCategory()).isEqualTo(hkjCategoryBack);
+
+        hkjOrder.category(null);
+        assertThat(hkjOrder.getCategory()).isNull();
     }
 }

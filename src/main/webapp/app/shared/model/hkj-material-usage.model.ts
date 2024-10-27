@@ -16,7 +16,7 @@ export interface IHkjMaterialUsage {
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
   material?: IHkjMaterial | null;
-  hkjTask?: IHkjTask | null;
+  task?: IHkjTask | null;
 }
 
 export const defaultValue: Readonly<IHkjMaterialUsage> = {

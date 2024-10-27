@@ -61,13 +61,13 @@ public class HkjOrderAsserts {
             .satisfies(e ->
                 assertThat(e.getTotalPrice()).as("check totalPrice").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getTotalPrice())
             )
+            .satisfies(e -> assertThat(e.getBudget()).as("check budget").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getBudget()))
             .satisfies(e ->
                 assertThat(e.getDepositAmount())
                     .as("check depositAmount")
                     .usingComparator(bigDecimalCompareTo)
                     .isEqualTo(actual.getDepositAmount())
             )
-            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
@@ -82,6 +82,7 @@ public class HkjOrderAsserts {
             .as("Verify HkjOrder relationships")
             .satisfies(e -> assertThat(e.getCustomer()).as("check customer").isEqualTo(actual.getCustomer()))
             .satisfies(e -> assertThat(e.getJewelry()).as("check jewelry").isEqualTo(actual.getJewelry()))
-            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()));
+            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()))
+            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()));
     }
 }

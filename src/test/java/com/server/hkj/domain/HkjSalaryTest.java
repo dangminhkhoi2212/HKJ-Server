@@ -24,14 +24,14 @@ class HkjSalaryTest {
     }
 
     @Test
-    void userExtraTest() {
+    void employeeTest() {
         HkjSalary hkjSalary = getHkjSalaryRandomSampleGenerator();
         UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
 
-        hkjSalary.setUserExtra(userExtraBack);
-        assertThat(hkjSalary.getUserExtra()).isEqualTo(userExtraBack);
+        hkjSalary.setEmployee(userExtraBack);
+        assertThat(hkjSalary.getEmployee()).isEqualTo(userExtraBack);
 
-        hkjSalary.userExtra(null);
-        assertThat(hkjSalary.getUserExtra()).isNull();
+        hkjSalary.employee(null);
+        assertThat(hkjSalary.getEmployee()).isNull();
     }
 }

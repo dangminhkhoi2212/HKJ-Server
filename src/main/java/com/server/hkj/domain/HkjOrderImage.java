@@ -40,8 +40,8 @@ public class HkjOrderImage extends AbstractAuditingEntity<Long> implements Seria
     private boolean isPersisted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "orderImages", "customer", "jewelry", "project" }, allowSetters = true)
-    private HkjOrder hkjOrder;
+    @JsonIgnoreProperties(value = { "orderImages", "customer", "jewelry", "project", "category" }, allowSetters = true)
+    private HkjOrder order;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -125,16 +125,16 @@ public class HkjOrderImage extends AbstractAuditingEntity<Long> implements Seria
         return this;
     }
 
-    public HkjOrder getHkjOrder() {
-        return this.hkjOrder;
+    public HkjOrder getOrder() {
+        return this.order;
     }
 
-    public void setHkjOrder(HkjOrder hkjOrder) {
-        this.hkjOrder = hkjOrder;
+    public void setOrder(HkjOrder hkjOrder) {
+        this.order = hkjOrder;
     }
 
-    public HkjOrderImage hkjOrder(HkjOrder hkjOrder) {
-        this.setHkjOrder(hkjOrder);
+    public HkjOrderImage order(HkjOrder hkjOrder) {
+        this.setOrder(hkjOrder);
         return this;
     }
 

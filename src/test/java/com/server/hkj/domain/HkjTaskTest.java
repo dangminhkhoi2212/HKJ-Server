@@ -35,19 +35,19 @@ class HkjTaskTest {
 
         hkjTask.addImages(hkjTaskImageBack);
         assertThat(hkjTask.getImages()).containsOnly(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getHkjTask()).isEqualTo(hkjTask);
+        assertThat(hkjTaskImageBack.getTask()).isEqualTo(hkjTask);
 
         hkjTask.removeImages(hkjTaskImageBack);
         assertThat(hkjTask.getImages()).doesNotContain(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getHkjTask()).isNull();
+        assertThat(hkjTaskImageBack.getTask()).isNull();
 
         hkjTask.images(new HashSet<>(Set.of(hkjTaskImageBack)));
         assertThat(hkjTask.getImages()).containsOnly(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getHkjTask()).isEqualTo(hkjTask);
+        assertThat(hkjTaskImageBack.getTask()).isEqualTo(hkjTask);
 
         hkjTask.setImages(new HashSet<>());
         assertThat(hkjTask.getImages()).doesNotContain(hkjTaskImageBack);
-        assertThat(hkjTaskImageBack.getHkjTask()).isNull();
+        assertThat(hkjTaskImageBack.getTask()).isNull();
     }
 
     @Test
@@ -57,19 +57,19 @@ class HkjTaskTest {
 
         hkjTask.addMaterials(hkjMaterialUsageBack);
         assertThat(hkjTask.getMaterials()).containsOnly(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getHkjTask()).isEqualTo(hkjTask);
+        assertThat(hkjMaterialUsageBack.getTask()).isEqualTo(hkjTask);
 
         hkjTask.removeMaterials(hkjMaterialUsageBack);
         assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getHkjTask()).isNull();
+        assertThat(hkjMaterialUsageBack.getTask()).isNull();
 
         hkjTask.materials(new HashSet<>(Set.of(hkjMaterialUsageBack)));
         assertThat(hkjTask.getMaterials()).containsOnly(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getHkjTask()).isEqualTo(hkjTask);
+        assertThat(hkjMaterialUsageBack.getTask()).isEqualTo(hkjTask);
 
         hkjTask.setMaterials(new HashSet<>());
         assertThat(hkjTask.getMaterials()).doesNotContain(hkjMaterialUsageBack);
-        assertThat(hkjMaterialUsageBack.getHkjTask()).isNull();
+        assertThat(hkjMaterialUsageBack.getTask()).isNull();
     }
 
     @Test

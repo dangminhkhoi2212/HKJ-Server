@@ -65,6 +65,6 @@ public class HkjSalaryAsserts {
     public static void assertHkjSalaryUpdatableRelationshipsEquals(HkjSalary expected, HkjSalary actual) {
         assertThat(expected)
             .as("Verify HkjSalary relationships")
-            .satisfies(e -> assertThat(e.getUserExtra()).as("check userExtra").isEqualTo(actual.getUserExtra()));
+            .satisfies(e -> assertThat(e.getEmployee()).as("check employee").isEqualTo(actual.getEmployee()));
     }
 }

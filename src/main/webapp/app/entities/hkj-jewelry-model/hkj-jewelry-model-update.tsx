@@ -114,6 +114,16 @@ export const HkjJewelryModelUpdate = () => {
                 />
               ) : null}
               <ValidatedField
+                label={translate('serverApp.hkjJewelryModel.sku')}
+                id="hkj-jewelry-model-sku"
+                name="sku"
+                data-cy="sku"
+                type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+              />
+              <ValidatedField
                 label={translate('serverApp.hkjJewelryModel.name')}
                 id="hkj-jewelry-model-name"
                 name="name"
@@ -129,6 +139,9 @@ export const HkjJewelryModelUpdate = () => {
                 name="description"
                 data-cy="description"
                 type="text"
+                validate={{
+                  maxLength: { value: 10000, message: translate('entity.validation.maxlength', { max: 10000 }) },
+                }}
               />
               <ValidatedField
                 label={translate('serverApp.hkjJewelryModel.coverImage')}
@@ -178,6 +191,14 @@ export const HkjJewelryModelUpdate = () => {
                 id="hkj-jewelry-model-isDeleted"
                 name="isDeleted"
                 data-cy="isDeleted"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
+                label={translate('serverApp.hkjJewelryModel.isCoverSearch')}
+                id="hkj-jewelry-model-isCoverSearch"
+                name="isCoverSearch"
+                data-cy="isCoverSearch"
                 check
                 type="checkbox"
               />

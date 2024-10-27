@@ -8,6 +8,7 @@ pom.xml skip
 src/main/java/com/server/hkj/service/UserService.java skip
 src/main/java/com/server/hkj/service/mapper/UserMapper.java skip
 src/main/java/com/server/hkj/service/dto/AdminUserDTO.java
+src/main/java/com/server/hkj/web/rest/AccountResource.java skip
 src/main/java/com/server/hkj/security/AuthoritiesConstants.java skip
 src/main/java/com/server/hkj/config/SecurityConfiguration.java skip
 
@@ -32,4 +33,6 @@ src/main/java/com/server/hkj/service/mapper/HkjTemplateMapper.java skip
 src/main/java/com/server/hkj/service/mapper/HkjTemplateMapper.java skip
 
 src/main/java/com/server/hkj/service/mapper/HkjProjectMapper.java skip
-jhipster-jdl.jdl skip
+src/main/java/com/server/hkj/service/mapper/HkjOrderMapper.java
+
+src/jhipster-jdl.jdl skip

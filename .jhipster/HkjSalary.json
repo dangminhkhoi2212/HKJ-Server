@@ -61,7 +61,15 @@
   "jpaMetamodelFiltering": true,
   "name": "HkjSalary",
   "pagination": "pagination",
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "userExtra",
+      "otherEntityRelationshipName": "salarys",
+      "relationshipName": "employee",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "searchEngine": "no",
   "service": "serviceClass"
 }

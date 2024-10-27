@@ -64,7 +64,7 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "images", "materials", "employee", "project" }, allowSetters = true)
-    private HkjTask hkjTask;
+    private HkjTask task;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -226,16 +226,16 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
         return this;
     }
 
-    public HkjTask getHkjTask() {
-        return this.hkjTask;
+    public HkjTask getTask() {
+        return this.task;
     }
 
-    public void setHkjTask(HkjTask hkjTask) {
-        this.hkjTask = hkjTask;
+    public void setTask(HkjTask hkjTask) {
+        this.task = hkjTask;
     }
 
-    public HkjMaterialUsage hkjTask(HkjTask hkjTask) {
-        this.setHkjTask(hkjTask);
+    public HkjMaterialUsage task(HkjTask hkjTask) {
+        this.setTask(hkjTask);
         return this;
     }
 

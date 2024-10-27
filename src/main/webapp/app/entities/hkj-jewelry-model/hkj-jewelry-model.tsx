@@ -114,6 +114,10 @@ export const HkjJewelryModel = () => {
                   <Translate contentKey="serverApp.hkjJewelryModel.id">ID</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                 </th>
+                <th className="hand" onClick={sort('sku')}>
+                  <Translate contentKey="serverApp.hkjJewelryModel.sku">Sku</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('sku')} />
+                </th>
                 <th className="hand" onClick={sort('name')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.name">Name</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
@@ -149,6 +153,10 @@ export const HkjJewelryModel = () => {
                 <th className="hand" onClick={sort('isDeleted')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.isDeleted">Is Deleted</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
+                </th>
+                <th className="hand" onClick={sort('isCoverSearch')}>
+                  <Translate contentKey="serverApp.hkjJewelryModel.isCoverSearch">Is Cover Search</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('isCoverSearch')} />
                 </th>
                 <th className="hand" onClick={sort('active')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.active">Active</Translate>{' '}
@@ -187,6 +195,7 @@ export const HkjJewelryModel = () => {
                       {hkjJewelryModel.id}
                     </Button>
                   </td>
+                  <td>{hkjJewelryModel.sku}</td>
                   <td>{hkjJewelryModel.name}</td>
                   <td>{hkjJewelryModel.description}</td>
                   <td>{hkjJewelryModel.coverImage}</td>
@@ -196,6 +205,7 @@ export const HkjJewelryModel = () => {
                   <td>{hkjJewelryModel.color}</td>
                   <td>{hkjJewelryModel.notes}</td>
                   <td>{hkjJewelryModel.isDeleted ? 'true' : 'false'}</td>
+                  <td>{hkjJewelryModel.isCoverSearch ? 'true' : 'false'}</td>
                   <td>{hkjJewelryModel.active ? 'true' : 'false'}</td>
                   <td>{hkjJewelryModel.createdBy}</td>
                   <td>

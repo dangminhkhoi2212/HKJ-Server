@@ -98,9 +98,9 @@ public class HkjTaskImageQueryService extends QueryService<HkjTaskImage> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjTaskImage_.lastModifiedDate));
             }
-            if (criteria.getHkjTaskId() != null) {
+            if (criteria.getTaskId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getHkjTaskId(), root -> root.join(HkjTaskImage_.hkjTask, JoinType.LEFT).get(HkjTask_.id))
+                    buildSpecification(criteria.getTaskId(), root -> root.join(HkjTaskImage_.task, JoinType.LEFT).get(HkjTask_.id))
                 );
             }
         }

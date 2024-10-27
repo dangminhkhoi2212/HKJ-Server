@@ -41,7 +41,8 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Column(name = "actual_delivery_date")
     private Instant actualDeliveryDate;
 
-    @Column(name = "special_requests")
+    @Size(max = 5000)
+    @Column(name = "special_requests", length = 5000)
     private String specialRequests;
 
     @NotNull
@@ -57,11 +58,11 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Column(name = "total_price", precision = 21, scale = 2)
     private BigDecimal totalPrice;
 
+    @Column(name = "budget", precision = 21, scale = 2)
+    private BigDecimal budget;
+
     @Column(name = "deposit_amount", precision = 21, scale = 2)
     private BigDecimal depositAmount;
-
-    @Column(name = "notes")
-    private String notes;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted;
@@ -73,9 +74,9 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Transient
     private boolean isPersisted;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjOrder")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "hkjOrder" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "order" }, allowSetters = true)
     private Set<HkjOrderImage> orderImages = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -89,6 +90,9 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "tasks", "manager", "category" }, allowSetters = true)
     private HkjProject project;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private HkjCategory category;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -196,6 +200,19 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         this.totalPrice = totalPrice;
     }
 
+    public BigDecimal getBudget() {
+        return this.budget;
+    }
+
+    public HkjOrder budget(BigDecimal budget) {
+        this.setBudget(budget);
+        return this;
+    }
+
+    public void setBudget(BigDecimal budget) {
+        this.budget = budget;
+    }
+
     public BigDecimal getDepositAmount() {
         return this.depositAmount;
     }
@@ -207,19 +224,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public void setDepositAmount(BigDecimal depositAmount) {
         this.depositAmount = depositAmount;
-    }
-
-    public String getNotes() {
-        return this.notes;
-    }
-
-    public HkjOrder notes(String notes) {
-        this.setNotes(notes);
-        return this;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -282,10 +286,10 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public void setOrderImages(Set<HkjOrderImage> hkjOrderImages) {
         if (this.orderImages != null) {
-            this.orderImages.forEach(i -> i.setHkjOrder(null));
+            this.orderImages.forEach(i -> i.setOrder(null));
         }
         if (hkjOrderImages != null) {
-            hkjOrderImages.forEach(i -> i.setHkjOrder(this));
+            hkjOrderImages.forEach(i -> i.setOrder(this));
         }
         this.orderImages = hkjOrderImages;
     }
@@ -297,13 +301,13 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public HkjOrder addOrderImages(HkjOrderImage hkjOrderImage) {
         this.orderImages.add(hkjOrderImage);
-        hkjOrderImage.setHkjOrder(this);
+        hkjOrderImage.setOrder(this);
         return this;
     }
 
     public HkjOrder removeOrderImages(HkjOrderImage hkjOrderImage) {
         this.orderImages.remove(hkjOrderImage);
-        hkjOrderImage.setHkjOrder(null);
+        hkjOrderImage.setOrder(null);
         return this;
     }
 
@@ -346,6 +350,19 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         return this;
     }
 
+    public HkjCategory getCategory() {
+        return this.category;
+    }
+
+    public void setCategory(HkjCategory hkjCategory) {
+        this.category = hkjCategory;
+    }
+
+    public HkjOrder category(HkjCategory hkjCategory) {
+        this.setCategory(hkjCategory);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -377,8 +394,8 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
             ", status='" + getStatus() + "'" +
             ", customerRating=" + getCustomerRating() +
             ", totalPrice=" + getTotalPrice() +
+            ", budget=" + getBudget() +
             ", depositAmount=" + getDepositAmount() +
-            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

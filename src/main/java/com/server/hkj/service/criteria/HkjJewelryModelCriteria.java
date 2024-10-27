@@ -24,6 +24,8 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
+    private StringFilter sku;
+
     private StringFilter name;
 
     private StringFilter description;
@@ -41,6 +43,8 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
     private StringFilter notes;
 
     private BooleanFilter isDeleted;
+
+    private BooleanFilter isCoverSearch;
 
     private BooleanFilter active;
 
@@ -64,6 +68,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     public HkjJewelryModelCriteria(HkjJewelryModelCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
+        this.sku = other.optionalSku().map(StringFilter::copy).orElse(null);
         this.name = other.optionalName().map(StringFilter::copy).orElse(null);
         this.description = other.optionalDescription().map(StringFilter::copy).orElse(null);
         this.coverImage = other.optionalCoverImage().map(StringFilter::copy).orElse(null);
@@ -73,6 +78,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.color = other.optionalColor().map(StringFilter::copy).orElse(null);
         this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
+        this.isCoverSearch = other.optionalIsCoverSearch().map(BooleanFilter::copy).orElse(null);
         this.active = other.optionalActive().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
@@ -106,6 +112,25 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    public StringFilter getSku() {
+        return sku;
+    }
+
+    public Optional<StringFilter> optionalSku() {
+        return Optional.ofNullable(sku);
+    }
+
+    public StringFilter sku() {
+        if (sku == null) {
+            setSku(new StringFilter());
+        }
+        return sku;
+    }
+
+    public void setSku(StringFilter sku) {
+        this.sku = sku;
     }
 
     public StringFilter getName() {
@@ -277,6 +302,25 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     public void setIsDeleted(BooleanFilter isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public BooleanFilter getIsCoverSearch() {
+        return isCoverSearch;
+    }
+
+    public Optional<BooleanFilter> optionalIsCoverSearch() {
+        return Optional.ofNullable(isCoverSearch);
+    }
+
+    public BooleanFilter isCoverSearch() {
+        if (isCoverSearch == null) {
+            setIsCoverSearch(new BooleanFilter());
+        }
+        return isCoverSearch;
+    }
+
+    public void setIsCoverSearch(BooleanFilter isCoverSearch) {
+        this.isCoverSearch = isCoverSearch;
     }
 
     public BooleanFilter getActive() {
@@ -461,6 +505,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         final HkjJewelryModelCriteria that = (HkjJewelryModelCriteria) o;
         return (
             Objects.equals(id, that.id) &&
+            Objects.equals(sku, that.sku) &&
             Objects.equals(name, that.name) &&
             Objects.equals(description, that.description) &&
             Objects.equals(coverImage, that.coverImage) &&
@@ -470,6 +515,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             Objects.equals(color, that.color) &&
             Objects.equals(notes, that.notes) &&
             Objects.equals(isDeleted, that.isDeleted) &&
+            Objects.equals(isCoverSearch, that.isCoverSearch) &&
             Objects.equals(active, that.active) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
@@ -486,6 +532,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
     public int hashCode() {
         return Objects.hash(
             id,
+            sku,
             name,
             description,
             coverImage,
@@ -495,6 +542,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             color,
             notes,
             isDeleted,
+            isCoverSearch,
             active,
             createdBy,
             createdDate,
@@ -512,6 +560,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
     public String toString() {
         return "HkjJewelryModelCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
+            optionalSku().map(f -> "sku=" + f + ", ").orElse("") +
             optionalName().map(f -> "name=" + f + ", ").orElse("") +
             optionalDescription().map(f -> "description=" + f + ", ").orElse("") +
             optionalCoverImage().map(f -> "coverImage=" + f + ", ").orElse("") +
@@ -521,6 +570,7 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             optionalColor().map(f -> "color=" + f + ", ").orElse("") +
             optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
+            optionalIsCoverSearch().map(f -> "isCoverSearch=" + f + ", ").orElse("") +
             optionalActive().map(f -> "active=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +

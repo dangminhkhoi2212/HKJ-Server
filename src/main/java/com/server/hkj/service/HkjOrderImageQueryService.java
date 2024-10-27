@@ -95,10 +95,9 @@ public class HkjOrderImageQueryService extends QueryService<HkjOrderImage> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjOrderImage_.lastModifiedDate));
             }
-            if (criteria.getHkjOrderId() != null) {
+            if (criteria.getOrderId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getHkjOrderId(), root -> root.join(HkjOrderImage_.hkjOrder, JoinType.LEFT).get(HkjOrder_.id)
-                    )
+                    buildSpecification(criteria.getOrderId(), root -> root.join(HkjOrderImage_.order, JoinType.LEFT).get(HkjOrder_.id))
                 );
             }
         }

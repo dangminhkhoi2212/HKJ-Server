@@ -388,24 +388,24 @@ class HkjSalaryResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjSalariesByUserExtraIsEqualToSomething() throws Exception {
-        UserExtra userExtra;
+    void getAllHkjSalariesByEmployeeIsEqualToSomething() throws Exception {
+        UserExtra employee;
         if (TestUtil.findAll(em, UserExtra.class).isEmpty()) {
             hkjSalaryRepository.saveAndFlush(hkjSalary);
-            userExtra = UserExtraResourceIT.createEntity();
+            employee = UserExtraResourceIT.createEntity();
         } else {
-            userExtra = TestUtil.findAll(em, UserExtra.class).get(0);
+            employee = TestUtil.findAll(em, UserExtra.class).get(0);
         }
-        em.persist(userExtra);
+        em.persist(employee);
         em.flush();
-        hkjSalary.setUserExtra(userExtra);
+        hkjSalary.setEmployee(employee);
         hkjSalaryRepository.saveAndFlush(hkjSalary);
-        Long userExtraId = userExtra.getId();
-        // Get all the hkjSalaryList where userExtra equals to userExtraId
-        defaultHkjSalaryShouldBeFound("userExtraId.equals=" + userExtraId);
+        Long employeeId = employee.getId();
+        // Get all the hkjSalaryList where employee equals to employeeId
+        defaultHkjSalaryShouldBeFound("employeeId.equals=" + employeeId);
 
-        // Get all the hkjSalaryList where userExtra equals to (userExtraId + 1)
-        defaultHkjSalaryShouldNotBeFound("userExtraId.equals=" + (userExtraId + 1));
+        // Get all the hkjSalaryList where employee equals to (employeeId + 1)
+        defaultHkjSalaryShouldNotBeFound("employeeId.equals=" + (employeeId + 1));
     }
 
     private void defaultHkjSalaryFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

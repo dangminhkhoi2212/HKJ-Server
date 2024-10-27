@@ -56,9 +56,9 @@ public class HkjOrderCriteria implements Serializable, Criteria {
 
     private BigDecimalFilter totalPrice;
 
-    private BigDecimalFilter depositAmount;
+    private BigDecimalFilter budget;
 
-    private StringFilter notes;
+    private BigDecimalFilter depositAmount;
 
     private BooleanFilter isDeleted;
 
@@ -78,6 +78,8 @@ public class HkjOrderCriteria implements Serializable, Criteria {
 
     private LongFilter projectId;
 
+    private LongFilter categoryId;
+
     private Boolean distinct;
 
     public HkjOrderCriteria() {}
@@ -91,8 +93,8 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.status = other.optionalStatus().map(HkjOrderStatusFilter::copy).orElse(null);
         this.customerRating = other.optionalCustomerRating().map(IntegerFilter::copy).orElse(null);
         this.totalPrice = other.optionalTotalPrice().map(BigDecimalFilter::copy).orElse(null);
+        this.budget = other.optionalBudget().map(BigDecimalFilter::copy).orElse(null);
         this.depositAmount = other.optionalDepositAmount().map(BigDecimalFilter::copy).orElse(null);
-        this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
@@ -102,6 +104,7 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.customerId = other.optionalCustomerId().map(LongFilter::copy).orElse(null);
         this.jewelryId = other.optionalJewelryId().map(LongFilter::copy).orElse(null);
         this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
+        this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -262,6 +265,25 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.totalPrice = totalPrice;
     }
 
+    public BigDecimalFilter getBudget() {
+        return budget;
+    }
+
+    public Optional<BigDecimalFilter> optionalBudget() {
+        return Optional.ofNullable(budget);
+    }
+
+    public BigDecimalFilter budget() {
+        if (budget == null) {
+            setBudget(new BigDecimalFilter());
+        }
+        return budget;
+    }
+
+    public void setBudget(BigDecimalFilter budget) {
+        this.budget = budget;
+    }
+
     public BigDecimalFilter getDepositAmount() {
         return depositAmount;
     }
@@ -279,25 +301,6 @@ public class HkjOrderCriteria implements Serializable, Criteria {
 
     public void setDepositAmount(BigDecimalFilter depositAmount) {
         this.depositAmount = depositAmount;
-    }
-
-    public StringFilter getNotes() {
-        return notes;
-    }
-
-    public Optional<StringFilter> optionalNotes() {
-        return Optional.ofNullable(notes);
-    }
-
-    public StringFilter notes() {
-        if (notes == null) {
-            setNotes(new StringFilter());
-        }
-        return notes;
-    }
-
-    public void setNotes(StringFilter notes) {
-        this.notes = notes;
     }
 
     public BooleanFilter getIsDeleted() {
@@ -471,6 +474,25 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.projectId = projectId;
     }
 
+    public LongFilter getCategoryId() {
+        return categoryId;
+    }
+
+    public Optional<LongFilter> optionalCategoryId() {
+        return Optional.ofNullable(categoryId);
+    }
+
+    public LongFilter categoryId() {
+        if (categoryId == null) {
+            setCategoryId(new LongFilter());
+        }
+        return categoryId;
+    }
+
+    public void setCategoryId(LongFilter categoryId) {
+        this.categoryId = categoryId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -508,8 +530,8 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             Objects.equals(status, that.status) &&
             Objects.equals(customerRating, that.customerRating) &&
             Objects.equals(totalPrice, that.totalPrice) &&
+            Objects.equals(budget, that.budget) &&
             Objects.equals(depositAmount, that.depositAmount) &&
-            Objects.equals(notes, that.notes) &&
             Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
@@ -519,6 +541,7 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             Objects.equals(customerId, that.customerId) &&
             Objects.equals(jewelryId, that.jewelryId) &&
             Objects.equals(projectId, that.projectId) &&
+            Objects.equals(categoryId, that.categoryId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -534,8 +557,8 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             status,
             customerRating,
             totalPrice,
+            budget,
             depositAmount,
-            notes,
             isDeleted,
             createdBy,
             createdDate,
@@ -545,6 +568,7 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             customerId,
             jewelryId,
             projectId,
+            categoryId,
             distinct
         );
     }
@@ -561,8 +585,8 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             optionalStatus().map(f -> "status=" + f + ", ").orElse("") +
             optionalCustomerRating().map(f -> "customerRating=" + f + ", ").orElse("") +
             optionalTotalPrice().map(f -> "totalPrice=" + f + ", ").orElse("") +
+            optionalBudget().map(f -> "budget=" + f + ", ").orElse("") +
             optionalDepositAmount().map(f -> "depositAmount=" + f + ", ").orElse("") +
-            optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
@@ -572,6 +596,7 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             optionalCustomerId().map(f -> "customerId=" + f + ", ").orElse("") +
             optionalJewelryId().map(f -> "jewelryId=" + f + ", ").orElse("") +
             optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
+            optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

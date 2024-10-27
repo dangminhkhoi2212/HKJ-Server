@@ -21,6 +21,7 @@ public class HkjProjectDTO implements Serializable {
 
     private String coverImage;
 
+    @Size(max = 10000)
     private String description;
 
     @NotNull

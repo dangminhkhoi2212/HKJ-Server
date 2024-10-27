@@ -25,8 +25,8 @@
       "status": "Status",
       "customerRating": "Customer Rating",
       "totalPrice": "Total Price",
+      "budget": "Budget",
       "depositAmount": "Deposit Amount",
-      "notes": "Notes",
       "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
@@ -35,7 +35,8 @@
       "orderImages": "Order Images",
       "customer": "Customer",
       "jewelry": "Jewelry",
-      "project": "Project"
+      "project": "Project",
+      "category": "Category"
     }
   }
 }

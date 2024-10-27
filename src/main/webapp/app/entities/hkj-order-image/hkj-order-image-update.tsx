@@ -54,7 +54,7 @@ export const HkjOrderImageUpdate = () => {
     const entity = {
       ...hkjOrderImageEntity,
       ...values,
-      hkjOrder: hkjOrders.find(it => it.id.toString() === values.hkjOrder?.toString()),
+      order: hkjOrders.find(it => it.id.toString() === values.order?.toString()),
     };
 
     if (isNew) {
@@ -74,7 +74,7 @@ export const HkjOrderImageUpdate = () => {
           ...hkjOrderImageEntity,
           createdDate: convertDateTimeFromServer(hkjOrderImageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjOrderImageEntity.lastModifiedDate),
-          hkjOrder: hkjOrderImageEntity?.hkjOrder?.id,
+          order: hkjOrderImageEntity?.order?.id,
         };
 
   return (
@@ -148,10 +148,10 @@ export const HkjOrderImageUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-order-image-hkjOrder"
-                name="hkjOrder"
-                data-cy="hkjOrder"
-                label={translate('serverApp.hkjOrderImage.hkjOrder')}
+                id="hkj-order-image-order"
+                name="order"
+                data-cy="order"
+                label={translate('serverApp.hkjOrderImage.order')}
                 type="select"
               >
                 <option value="" key="0" />

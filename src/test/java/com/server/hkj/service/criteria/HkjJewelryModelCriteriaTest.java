@@ -75,6 +75,7 @@ class HkjJewelryModelCriteriaTest {
 
     private static void setAllFilters(HkjJewelryModelCriteria hkjJewelryModelCriteria) {
         hkjJewelryModelCriteria.id();
+        hkjJewelryModelCriteria.sku();
         hkjJewelryModelCriteria.name();
         hkjJewelryModelCriteria.description();
         hkjJewelryModelCriteria.coverImage();
@@ -84,6 +85,7 @@ class HkjJewelryModelCriteriaTest {
         hkjJewelryModelCriteria.color();
         hkjJewelryModelCriteria.notes();
         hkjJewelryModelCriteria.isDeleted();
+        hkjJewelryModelCriteria.isCoverSearch();
         hkjJewelryModelCriteria.active();
         hkjJewelryModelCriteria.createdBy();
         hkjJewelryModelCriteria.createdDate();
@@ -99,6 +101,7 @@ class HkjJewelryModelCriteriaTest {
         return new Condition<>(
             criteria ->
                 condition.apply(criteria.getId()) &&
+                condition.apply(criteria.getSku()) &&
                 condition.apply(criteria.getName()) &&
                 condition.apply(criteria.getDescription()) &&
                 condition.apply(criteria.getCoverImage()) &&
@@ -108,6 +111,7 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getColor()) &&
                 condition.apply(criteria.getNotes()) &&
                 condition.apply(criteria.getIsDeleted()) &&
+                condition.apply(criteria.getIsCoverSearch()) &&
                 condition.apply(criteria.getActive()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
@@ -128,6 +132,7 @@ class HkjJewelryModelCriteriaTest {
         return new Condition<>(
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
+                condition.apply(criteria.getSku(), copy.getSku()) &&
                 condition.apply(criteria.getName(), copy.getName()) &&
                 condition.apply(criteria.getDescription(), copy.getDescription()) &&
                 condition.apply(criteria.getCoverImage(), copy.getCoverImage()) &&
@@ -137,6 +142,7 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getColor(), copy.getColor()) &&
                 condition.apply(criteria.getNotes(), copy.getNotes()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
+                condition.apply(criteria.getIsCoverSearch(), copy.getIsCoverSearch()) &&
                 condition.apply(criteria.getActive(), copy.getActive()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&

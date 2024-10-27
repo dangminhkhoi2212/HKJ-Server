@@ -4,7 +4,10 @@ import com.server.hkj.domain.HkjJewelryImage;
 import com.server.hkj.domain.HkjJewelryModel;
 import com.server.hkj.service.dto.HkjJewelryImageDTO;
 import com.server.hkj.service.dto.HkjJewelryModelDTO;
-import org.mapstruct.*;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 /**
  * Mapper for the entity {@link HkjJewelryImage} and its DTO {@link HkjJewelryImageDTO}.
@@ -15,7 +18,8 @@ public interface HkjJewelryImageMapper extends EntityMapper<HkjJewelryImageDTO, 
     HkjJewelryImageDTO toDto(HkjJewelryImage s);
 
     @Named("hkjJewelryModelId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    @BeanMapping(ignoreByDefault = false)
+    @Mapping(target = "project", ignore = true)
+    @Mapping(target = "category", ignore = true)
     HkjJewelryModelDTO toDtoHkjJewelryModelId(HkjJewelryModel hkjJewelryModel);
 }

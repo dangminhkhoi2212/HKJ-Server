@@ -4,6 +4,7 @@ import { IHkjProject } from 'app/shared/model/hkj-project.model';
 
 export interface IHkjJewelryModel {
   id?: number;
+  sku?: string;
   name?: string;
   description?: string | null;
   coverImage?: string | null;
@@ -13,6 +14,7 @@ export interface IHkjJewelryModel {
   color?: string | null;
   notes?: string | null;
   isDeleted?: boolean | null;
+  isCoverSearch?: boolean | null;
   active?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
@@ -25,5 +27,6 @@ export interface IHkjJewelryModel {
 export const defaultValue: Readonly<IHkjJewelryModel> = {
   isCustom: false,
   isDeleted: false,
+  isCoverSearch: false,
   active: false,
 };

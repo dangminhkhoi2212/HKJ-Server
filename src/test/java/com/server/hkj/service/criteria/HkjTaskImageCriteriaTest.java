@@ -82,7 +82,7 @@ class HkjTaskImageCriteriaTest {
         hkjTaskImageCriteria.createdDate();
         hkjTaskImageCriteria.lastModifiedBy();
         hkjTaskImageCriteria.lastModifiedDate();
-        hkjTaskImageCriteria.hkjTaskId();
+        hkjTaskImageCriteria.taskId();
         hkjTaskImageCriteria.distinct();
     }
 
@@ -97,7 +97,7 @@ class HkjTaskImageCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getHkjTaskId()) &&
+                condition.apply(criteria.getTaskId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -117,7 +117,7 @@ class HkjTaskImageCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getHkjTaskId(), copy.getHkjTaskId()) &&
+                condition.apply(criteria.getTaskId(), copy.getTaskId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

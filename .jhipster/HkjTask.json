@@ -17,7 +17,9 @@
     },
     {
       "fieldName": "description",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10000"
     },
     {
       "fieldName": "assignedDate",
@@ -102,12 +104,14 @@
   "relationships": [
     {
       "otherEntityName": "hkjTaskImage",
+      "otherEntityRelationshipName": "task",
       "relationshipName": "images",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "hkjMaterialUsage",
+      "otherEntityRelationshipName": "task",
       "relationshipName": "materials",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"

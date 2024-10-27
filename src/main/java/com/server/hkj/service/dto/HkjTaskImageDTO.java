@@ -28,7 +28,7 @@ public class HkjTaskImageDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private HkjTaskDTO hkjTask;
+    private HkjTaskDTO task;
 
     public Long getId() {
         return id;
@@ -94,12 +94,12 @@ public class HkjTaskImageDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public HkjTaskDTO getHkjTask() {
-        return hkjTask;
+    public HkjTaskDTO getTask() {
+        return task;
     }
 
-    public void setHkjTask(HkjTaskDTO hkjTask) {
-        this.hkjTask = hkjTask;
+    public void setTask(HkjTaskDTO task) {
+        this.task = task;
     }
 
     @Override
@@ -135,7 +135,7 @@ public class HkjTaskImageDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", hkjTask=" + getHkjTask() +
+            ", task=" + getTask() +
             "}";
     }
 }

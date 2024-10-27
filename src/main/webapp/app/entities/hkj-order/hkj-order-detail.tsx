@@ -83,17 +83,17 @@ export const HkjOrderDetail = () => {
           </dt>
           <dd>{hkjOrderEntity.totalPrice}</dd>
           <dt>
+            <span id="budget">
+              <Translate contentKey="serverApp.hkjOrder.budget">Budget</Translate>
+            </span>
+          </dt>
+          <dd>{hkjOrderEntity.budget}</dd>
+          <dt>
             <span id="depositAmount">
               <Translate contentKey="serverApp.hkjOrder.depositAmount">Deposit Amount</Translate>
             </span>
           </dt>
           <dd>{hkjOrderEntity.depositAmount}</dd>
-          <dt>
-            <span id="notes">
-              <Translate contentKey="serverApp.hkjOrder.notes">Notes</Translate>
-            </span>
-          </dt>
-          <dd>{hkjOrderEntity.notes}</dd>
           <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjOrder.isDeleted">Is Deleted</Translate>
@@ -142,6 +142,10 @@ export const HkjOrderDetail = () => {
             <Translate contentKey="serverApp.hkjOrder.project">Project</Translate>
           </dt>
           <dd>{hkjOrderEntity.project ? hkjOrderEntity.project.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjOrder.category">Category</Translate>
+          </dt>
+          <dd>{hkjOrderEntity.category ? hkjOrderEntity.category.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-order" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

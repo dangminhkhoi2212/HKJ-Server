@@ -39,7 +39,8 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Column(name = "cover_image")
     private String coverImage;
 
-    @Column(name = "description")
+    @Size(max = 10000)
+    @Column(name = "description", length = 10000)
     private String description;
 
     @NotNull

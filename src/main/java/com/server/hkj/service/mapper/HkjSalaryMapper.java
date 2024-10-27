@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjSalaryMapper extends EntityMapper<HkjSalaryDTO, HkjSalary> {
-    @Mapping(target = "userExtra", source = "userExtra", qualifiedByName = "userExtraId")
+    @Mapping(target = "employee", source = "employee", qualifiedByName = "userExtraId")
     HkjSalaryDTO toDto(HkjSalary s);
 
     @Named("userExtraId")

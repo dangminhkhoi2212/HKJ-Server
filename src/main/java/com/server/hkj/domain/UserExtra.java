@@ -53,9 +53,9 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
     @JoinColumn(unique = true)
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userExtra")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "userExtra" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "employee" }, allowSetters = true)
     private Set<HkjSalary> salarys = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -185,10 +185,10 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
 
     public void setSalarys(Set<HkjSalary> hkjSalaries) {
         if (this.salarys != null) {
-            this.salarys.forEach(i -> i.setUserExtra(null));
+            this.salarys.forEach(i -> i.setEmployee(null));
         }
         if (hkjSalaries != null) {
-            hkjSalaries.forEach(i -> i.setUserExtra(this));
+            hkjSalaries.forEach(i -> i.setEmployee(this));
         }
         this.salarys = hkjSalaries;
     }
@@ -200,13 +200,13 @@ public class UserExtra extends AbstractAuditingEntity<Long> implements Serializa
 
     public UserExtra addSalarys(HkjSalary hkjSalary) {
         this.salarys.add(hkjSalary);
-        hkjSalary.setUserExtra(this);
+        hkjSalary.setEmployee(this);
         return this;
     }
 
     public UserExtra removeSalarys(HkjSalary hkjSalary) {
         this.salarys.remove(hkjSalary);
-        hkjSalary.setUserExtra(null);
+        hkjSalary.setEmployee(null);
         return this;
     }
 

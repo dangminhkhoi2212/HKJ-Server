@@ -18,6 +18,7 @@
         "title": "Hkj Jewelry Model"
       },
       "id": "ID",
+      "sku": "Sku",
       "name": "Name",
       "description": "Description",
       "coverImage": "Cover Image",
@@ -27,6 +28,7 @@
       "color": "Color",
       "notes": "Notes",
       "isDeleted": "Is Deleted",
+      "isCoverSearch": "Is Cover Search",
       "active": "Active",
       "createdBy": "Created By",
       "createdDate": "Created Date",

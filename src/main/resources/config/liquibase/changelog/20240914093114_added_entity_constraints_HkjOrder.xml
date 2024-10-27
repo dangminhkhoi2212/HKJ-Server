@@ -30,5 +30,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="hkj_project"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="hkj_order"
+                                 constraintName="fk_hkj_order__category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_category"
+                                 />
     </changeSet>
 </databaseChangeLog>

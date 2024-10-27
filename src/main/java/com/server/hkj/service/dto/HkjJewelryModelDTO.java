@@ -15,8 +15,12 @@ public class HkjJewelryModelDTO implements Serializable {
     private Long id;
 
     @NotNull
+    private String sku;
+
+    @NotNull
     private String name;
 
+    @Size(max = 10000)
     private String description;
 
     private String coverImage;
@@ -32,6 +36,8 @@ public class HkjJewelryModelDTO implements Serializable {
     private String notes;
 
     private Boolean isDeleted;
+
+    private Boolean isCoverSearch;
 
     private Boolean active;
 
@@ -53,6 +59,14 @@ public class HkjJewelryModelDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
     }
 
     public String getName() {
@@ -125,6 +139,14 @@ public class HkjJewelryModelDTO implements Serializable {
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Boolean getIsCoverSearch() {
+        return isCoverSearch;
+    }
+
+    public void setIsCoverSearch(Boolean isCoverSearch) {
+        this.isCoverSearch = isCoverSearch;
     }
 
     public Boolean getActive() {
@@ -209,6 +231,7 @@ public class HkjJewelryModelDTO implements Serializable {
     public String toString() {
         return "HkjJewelryModelDTO{" +
             "id=" + getId() +
+            ", sku='" + getSku() + "'" +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", coverImage='" + getCoverImage() + "'" +
@@ -218,6 +241,7 @@ public class HkjJewelryModelDTO implements Serializable {
             ", color='" + getColor() + "'" +
             ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
+            ", isCoverSearch='" + getIsCoverSearch() + "'" +
             ", active='" + getActive() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

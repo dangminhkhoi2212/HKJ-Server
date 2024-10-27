@@ -58,7 +58,7 @@ export const HkjSalaryUpdate = () => {
     const entity = {
       ...hkjSalaryEntity,
       ...values,
-      userExtra: userExtras.find(it => it.id.toString() === values.userExtra?.toString()),
+      employee: userExtras.find(it => it.id.toString() === values.employee?.toString()),
     };
 
     if (isNew) {
@@ -80,7 +80,7 @@ export const HkjSalaryUpdate = () => {
           payDate: convertDateTimeFromServer(hkjSalaryEntity.payDate),
           createdDate: convertDateTimeFromServer(hkjSalaryEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjSalaryEntity.lastModifiedDate),
-          userExtra: hkjSalaryEntity?.userExtra?.id,
+          employee: hkjSalaryEntity?.employee?.id,
         };
 
   return (
@@ -169,10 +169,10 @@ export const HkjSalaryUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-salary-userExtra"
-                name="userExtra"
-                data-cy="userExtra"
-                label={translate('serverApp.hkjSalary.userExtra')}
+                id="hkj-salary-employee"
+                name="employee"
+                data-cy="employee"
+                label={translate('serverApp.hkjSalary.employee')}
                 type="select"
               >
                 <option value="" key="0" />

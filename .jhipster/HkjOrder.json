@@ -21,7 +21,9 @@
     },
     {
       "fieldName": "specialRequests",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "5000"
     },
     {
       "fieldName": "status",
@@ -41,12 +43,12 @@
       "fieldType": "BigDecimal"
     },
     {
-      "fieldName": "depositAmount",
+      "fieldName": "budget",
       "fieldType": "BigDecimal"
     },
     {
-      "fieldName": "notes",
-      "fieldType": "String"
+      "fieldName": "depositAmount",
+      "fieldType": "BigDecimal"
     },
     {
       "fieldName": "isDeleted",
@@ -94,6 +96,7 @@
   "relationships": [
     {
       "otherEntityName": "hkjOrderImage",
+      "otherEntityRelationshipName": "order",
       "relationshipName": "orderImages",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
@@ -113,6 +116,12 @@
     {
       "otherEntityName": "hkjProject",
       "relationshipName": "project",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjCategory",
+      "relationshipName": "category",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

@@ -7,13 +7,20 @@
   "enableAudit": true,
   "fields": [
     {
+      "fieldName": "sku",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "description",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10000"
     },
     {
       "fieldName": "coverImage",
@@ -41,6 +48,10 @@
     },
     {
       "fieldName": "isDeleted",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isCoverSearch",
       "fieldType": "Boolean"
     },
     {

@@ -16,7 +16,6 @@ public class HkjOrderTestSamples {
             .id(1L)
             .specialRequests("specialRequests1")
             .customerRating(1)
-            .notes("notes1")
             .createdBy("createdBy1")
             .lastModifiedBy("lastModifiedBy1");
     }
@@ -26,7 +25,6 @@ public class HkjOrderTestSamples {
             .id(2L)
             .specialRequests("specialRequests2")
             .customerRating(2)
-            .notes("notes2")
             .createdBy("createdBy2")
             .lastModifiedBy("lastModifiedBy2");
     }
@@ -36,7 +34,6 @@ public class HkjOrderTestSamples {
             .id(longCount.incrementAndGet())
             .specialRequests(UUID.randomUUID().toString())
             .customerRating(intCount.incrementAndGet())
-            .notes(UUID.randomUUID().toString())
             .createdBy(UUID.randomUUID().toString())
             .lastModifiedBy(UUID.randomUUID().toString());
     }

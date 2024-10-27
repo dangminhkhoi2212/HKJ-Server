@@ -115,9 +115,9 @@ export const HkjMaterialUsageDetail = () => {
           </dt>
           <dd>{hkjMaterialUsageEntity.material ? hkjMaterialUsageEntity.material.id : ''}</dd>
           <dt>
-            <Translate contentKey="serverApp.hkjMaterialUsage.hkjTask">Hkj Task</Translate>
+            <Translate contentKey="serverApp.hkjMaterialUsage.task">Task</Translate>
           </dt>
-          <dd>{hkjMaterialUsageEntity.hkjTask ? hkjMaterialUsageEntity.hkjTask.id : ''}</dd>
+          <dd>{hkjMaterialUsageEntity.task ? hkjMaterialUsageEntity.task.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-material-usage" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

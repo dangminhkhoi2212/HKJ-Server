@@ -12,6 +12,7 @@ public class HkjJewelryModelTestSamples {
     public static HkjJewelryModel getHkjJewelryModelSample1() {
         return new HkjJewelryModel()
             .id(1L)
+            .sku("sku1")
             .name("name1")
             .description("description1")
             .coverImage("coverImage1")
@@ -24,6 +25,7 @@ public class HkjJewelryModelTestSamples {
     public static HkjJewelryModel getHkjJewelryModelSample2() {
         return new HkjJewelryModel()
             .id(2L)
+            .sku("sku2")
             .name("name2")
             .description("description2")
             .coverImage("coverImage2")
@@ -36,6 +38,7 @@ public class HkjJewelryModelTestSamples {
     public static HkjJewelryModel getHkjJewelryModelRandomSampleGenerator() {
         return new HkjJewelryModel()
             .id(longCount.incrementAndGet())
+            .sku(UUID.randomUUID().toString())
             .name(UUID.randomUUID().toString())
             .description(UUID.randomUUID().toString())
             .coverImage(UUID.randomUUID().toString())

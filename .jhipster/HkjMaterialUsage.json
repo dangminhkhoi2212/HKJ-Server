@@ -81,6 +81,13 @@
       "relationshipName": "material",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjTask",
+      "otherEntityRelationshipName": "materials",
+      "relationshipName": "task",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no",

@@ -33,6 +33,12 @@ export const HkjJewelryModelDetail = () => {
           </dt>
           <dd>{hkjJewelryModelEntity.id}</dd>
           <dt>
+            <span id="sku">
+              <Translate contentKey="serverApp.hkjJewelryModel.sku">Sku</Translate>
+            </span>
+          </dt>
+          <dd>{hkjJewelryModelEntity.sku}</dd>
+          <dt>
             <span id="name">
               <Translate contentKey="serverApp.hkjJewelryModel.name">Name</Translate>
             </span>
@@ -86,6 +92,12 @@ export const HkjJewelryModelDetail = () => {
             </span>
           </dt>
           <dd>{hkjJewelryModelEntity.isDeleted ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="isCoverSearch">
+              <Translate contentKey="serverApp.hkjJewelryModel.isCoverSearch">Is Cover Search</Translate>
+            </span>
+          </dt>
+          <dd>{hkjJewelryModelEntity.isCoverSearch ? 'true' : 'false'}</dd>
           <dt>
             <span id="active">
               <Translate contentKey="serverApp.hkjJewelryModel.active">Active</Translate>

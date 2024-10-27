@@ -101,9 +101,9 @@ public class HkjSalaryQueryService extends QueryService<HkjSalary> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjSalary_.lastModifiedDate));
             }
-            if (criteria.getUserExtraId() != null) {
+            if (criteria.getEmployeeId() != null) {
                 specification = specification.and(
-                    buildSpecification(criteria.getUserExtraId(), root -> root.join(HkjSalary_.userExtra, JoinType.LEFT).get(UserExtra_.id))
+                    buildSpecification(criteria.getEmployeeId(), root -> root.join(HkjSalary_.employee, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
         }

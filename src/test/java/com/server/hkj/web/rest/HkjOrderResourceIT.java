@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
+import com.server.hkj.domain.HkjCategory;
 import com.server.hkj.domain.HkjJewelryModel;
 import com.server.hkj.domain.HkjOrder;
 import com.server.hkj.domain.HkjProject;
@@ -66,12 +67,13 @@ class HkjOrderResourceIT {
     private static final BigDecimal UPDATED_TOTAL_PRICE = new BigDecimal(2);
     private static final BigDecimal SMALLER_TOTAL_PRICE = new BigDecimal(1 - 1);
 
+    private static final BigDecimal DEFAULT_BUDGET = new BigDecimal(1);
+    private static final BigDecimal UPDATED_BUDGET = new BigDecimal(2);
+    private static final BigDecimal SMALLER_BUDGET = new BigDecimal(1 - 1);
+
     private static final BigDecimal DEFAULT_DEPOSIT_AMOUNT = new BigDecimal(1);
     private static final BigDecimal UPDATED_DEPOSIT_AMOUNT = new BigDecimal(2);
     private static final BigDecimal SMALLER_DEPOSIT_AMOUNT = new BigDecimal(1 - 1);
-
-    private static final String DEFAULT_NOTES = "AAAAAAAAAA";
-    private static final String UPDATED_NOTES = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
@@ -116,8 +118,8 @@ class HkjOrderResourceIT {
             .status(DEFAULT_STATUS)
             .customerRating(DEFAULT_CUSTOMER_RATING)
             .totalPrice(DEFAULT_TOTAL_PRICE)
+            .budget(DEFAULT_BUDGET)
             .depositAmount(DEFAULT_DEPOSIT_AMOUNT)
-            .notes(DEFAULT_NOTES)
             .isDeleted(DEFAULT_IS_DELETED);
     }
 
@@ -136,8 +138,8 @@ class HkjOrderResourceIT {
             .status(UPDATED_STATUS)
             .customerRating(UPDATED_CUSTOMER_RATING)
             .totalPrice(UPDATED_TOTAL_PRICE)
+            .budget(UPDATED_BUDGET)
             .depositAmount(UPDATED_DEPOSIT_AMOUNT)
-            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
     }
 
@@ -251,8 +253,8 @@ class HkjOrderResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].customerRating").value(hasItem(DEFAULT_CUSTOMER_RATING)))
             .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(sameNumber(DEFAULT_TOTAL_PRICE))))
+            .andExpect(jsonPath("$.[*].budget").value(hasItem(sameNumber(DEFAULT_BUDGET))))
             .andExpect(jsonPath("$.[*].depositAmount").value(hasItem(sameNumber(DEFAULT_DEPOSIT_AMOUNT))))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
@@ -275,8 +277,8 @@ class HkjOrderResourceIT {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.customerRating").value(DEFAULT_CUSTOMER_RATING))
             .andExpect(jsonPath("$.totalPrice").value(sameNumber(DEFAULT_TOTAL_PRICE)))
+            .andExpect(jsonPath("$.budget").value(sameNumber(DEFAULT_BUDGET)))
             .andExpect(jsonPath("$.depositAmount").value(sameNumber(DEFAULT_DEPOSIT_AMOUNT)))
-            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
@@ -652,6 +654,76 @@ class HkjOrderResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjOrdersByBudgetIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
+
+        // Get all the hkjOrderList where budget equals to
+        defaultHkjOrderFiltering("budget.equals=" + DEFAULT_BUDGET, "budget.equals=" + UPDATED_BUDGET);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjOrdersByBudgetIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
+
+        // Get all the hkjOrderList where budget in
+        defaultHkjOrderFiltering("budget.in=" + DEFAULT_BUDGET + "," + UPDATED_BUDGET, "budget.in=" + UPDATED_BUDGET);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjOrdersByBudgetIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
+
+        // Get all the hkjOrderList where budget is not null
+        defaultHkjOrderFiltering("budget.specified=true", "budget.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjOrdersByBudgetIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
+
+        // Get all the hkjOrderList where budget is greater than or equal to
+        defaultHkjOrderFiltering("budget.greaterThanOrEqual=" + DEFAULT_BUDGET, "budget.greaterThanOrEqual=" + UPDATED_BUDGET);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjOrdersByBudgetIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
+
+        // Get all the hkjOrderList where budget is less than or equal to
+        defaultHkjOrderFiltering("budget.lessThanOrEqual=" + DEFAULT_BUDGET, "budget.lessThanOrEqual=" + SMALLER_BUDGET);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjOrdersByBudgetIsLessThanSomething() throws Exception {
+        // Initialize the database
+        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
+
+        // Get all the hkjOrderList where budget is less than
+        defaultHkjOrderFiltering("budget.lessThan=" + UPDATED_BUDGET, "budget.lessThan=" + DEFAULT_BUDGET);
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjOrdersByBudgetIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
+
+        // Get all the hkjOrderList where budget is greater than
+        defaultHkjOrderFiltering("budget.greaterThan=" + SMALLER_BUDGET, "budget.greaterThan=" + DEFAULT_BUDGET);
+    }
+
+    @Test
+    @Transactional
     void getAllHkjOrdersByDepositAmountIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
@@ -730,56 +802,6 @@ class HkjOrderResourceIT {
             "depositAmount.greaterThan=" + SMALLER_DEPOSIT_AMOUNT,
             "depositAmount.greaterThan=" + DEFAULT_DEPOSIT_AMOUNT
         );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByNotesIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where notes equals to
-        defaultHkjOrderFiltering("notes.equals=" + DEFAULT_NOTES, "notes.equals=" + UPDATED_NOTES);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByNotesIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where notes in
-        defaultHkjOrderFiltering("notes.in=" + DEFAULT_NOTES + "," + UPDATED_NOTES, "notes.in=" + UPDATED_NOTES);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByNotesIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where notes is not null
-        defaultHkjOrderFiltering("notes.specified=true", "notes.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByNotesContainsSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where notes contains
-        defaultHkjOrderFiltering("notes.contains=" + DEFAULT_NOTES, "notes.contains=" + UPDATED_NOTES);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByNotesNotContainsSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where notes does not contain
-        defaultHkjOrderFiltering("notes.doesNotContain=" + UPDATED_NOTES, "notes.doesNotContain=" + DEFAULT_NOTES);
     }
 
     @Test
@@ -878,6 +900,28 @@ class HkjOrderResourceIT {
         defaultHkjOrderShouldNotBeFound("projectId.equals=" + (projectId + 1));
     }
 
+    @Test
+    @Transactional
+    void getAllHkjOrdersByCategoryIsEqualToSomething() throws Exception {
+        HkjCategory category;
+        if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
+            hkjOrderRepository.saveAndFlush(hkjOrder);
+            category = HkjCategoryResourceIT.createEntity();
+        } else {
+            category = TestUtil.findAll(em, HkjCategory.class).get(0);
+        }
+        em.persist(category);
+        em.flush();
+        hkjOrder.setCategory(category);
+        hkjOrderRepository.saveAndFlush(hkjOrder);
+        Long categoryId = category.getId();
+        // Get all the hkjOrderList where category equals to categoryId
+        defaultHkjOrderShouldBeFound("categoryId.equals=" + categoryId);
+
+        // Get all the hkjOrderList where category equals to (categoryId + 1)
+        defaultHkjOrderShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
+    }
+
     private void defaultHkjOrderFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjOrderShouldBeFound(shouldBeFound);
         defaultHkjOrderShouldNotBeFound(shouldNotBeFound);
@@ -899,8 +943,8 @@ class HkjOrderResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].customerRating").value(hasItem(DEFAULT_CUSTOMER_RATING)))
             .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(sameNumber(DEFAULT_TOTAL_PRICE))))
+            .andExpect(jsonPath("$.[*].budget").value(hasItem(sameNumber(DEFAULT_BUDGET))))
             .andExpect(jsonPath("$.[*].depositAmount").value(hasItem(sameNumber(DEFAULT_DEPOSIT_AMOUNT))))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
@@ -957,8 +1001,8 @@ class HkjOrderResourceIT {
             .status(UPDATED_STATUS)
             .customerRating(UPDATED_CUSTOMER_RATING)
             .totalPrice(UPDATED_TOTAL_PRICE)
+            .budget(UPDATED_BUDGET)
             .depositAmount(UPDATED_DEPOSIT_AMOUNT)
-            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
         HkjOrderDTO hkjOrderDTO = hkjOrderMapper.toDto(updatedHkjOrder);
 
@@ -1058,7 +1102,7 @@ class HkjOrderResourceIT {
             .specialRequests(UPDATED_SPECIAL_REQUESTS)
             .status(UPDATED_STATUS)
             .customerRating(UPDATED_CUSTOMER_RATING)
-            .notes(UPDATED_NOTES);
+            .depositAmount(UPDATED_DEPOSIT_AMOUNT);
 
         restHkjOrderMockMvc
             .perform(
@@ -1095,8 +1139,8 @@ class HkjOrderResourceIT {
             .status(UPDATED_STATUS)
             .customerRating(UPDATED_CUSTOMER_RATING)
             .totalPrice(UPDATED_TOTAL_PRICE)
+            .budget(UPDATED_BUDGET)
             .depositAmount(UPDATED_DEPOSIT_AMOUNT)
-            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
 
         restHkjOrderMockMvc

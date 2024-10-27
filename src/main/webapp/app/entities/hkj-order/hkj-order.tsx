@@ -141,13 +141,13 @@ export const HkjOrder = () => {
                   <Translate contentKey="serverApp.hkjOrder.totalPrice">Total Price</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('totalPrice')} />
                 </th>
+                <th className="hand" onClick={sort('budget')}>
+                  <Translate contentKey="serverApp.hkjOrder.budget">Budget</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('budget')} />
+                </th>
                 <th className="hand" onClick={sort('depositAmount')}>
                   <Translate contentKey="serverApp.hkjOrder.depositAmount">Deposit Amount</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('depositAmount')} />
-                </th>
-                <th className="hand" onClick={sort('notes')}>
-                  <Translate contentKey="serverApp.hkjOrder.notes">Notes</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
                 </th>
                 <th className="hand" onClick={sort('isDeleted')}>
                   <Translate contentKey="serverApp.hkjOrder.isDeleted">Is Deleted</Translate>{' '}
@@ -178,6 +178,9 @@ export const HkjOrder = () => {
                 <th>
                   <Translate contentKey="serverApp.hkjOrder.project">Project</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjOrder.category">Category</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -206,8 +209,8 @@ export const HkjOrder = () => {
                   </td>
                   <td>{hkjOrder.customerRating}</td>
                   <td>{hkjOrder.totalPrice}</td>
+                  <td>{hkjOrder.budget}</td>
                   <td>{hkjOrder.depositAmount}</td>
-                  <td>{hkjOrder.notes}</td>
                   <td>{hkjOrder.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjOrder.createdBy}</td>
                   <td>{hkjOrder.createdDate ? <TextFormat type="date" value={hkjOrder.createdDate} format={APP_DATE_FORMAT} /> : null}</td>
@@ -220,6 +223,7 @@ export const HkjOrder = () => {
                   <td>{hkjOrder.customer ? <Link to={`/user-extra/${hkjOrder.customer.id}`}>{hkjOrder.customer.id}</Link> : ''}</td>
                   <td>{hkjOrder.jewelry ? <Link to={`/hkj-jewelry-model/${hkjOrder.jewelry.id}`}>{hkjOrder.jewelry.id}</Link> : ''}</td>
                   <td>{hkjOrder.project ? <Link to={`/hkj-project/${hkjOrder.project.id}`}>{hkjOrder.project.id}</Link> : ''}</td>
+                  <td>{hkjOrder.category ? <Link to={`/hkj-category/${hkjOrder.category.id}`}>{hkjOrder.category.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-order/${hkjOrder.id}`} color="info" size="sm" data-cy="entityDetailsButton">

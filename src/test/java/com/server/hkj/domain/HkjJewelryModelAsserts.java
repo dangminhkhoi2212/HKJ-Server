@@ -50,6 +50,7 @@ public class HkjJewelryModelAsserts {
     public static void assertHkjJewelryModelUpdatableFieldsEquals(HkjJewelryModel expected, HkjJewelryModel actual) {
         assertThat(expected)
             .as("Verify HkjJewelryModel relevant properties")
+            .satisfies(e -> assertThat(e.getSku()).as("check sku").isEqualTo(actual.getSku()))
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
             .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
             .satisfies(e -> assertThat(e.getCoverImage()).as("check coverImage").isEqualTo(actual.getCoverImage()))
@@ -59,6 +60,7 @@ public class HkjJewelryModelAsserts {
             .satisfies(e -> assertThat(e.getColor()).as("check color").isEqualTo(actual.getColor()))
             .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()))
+            .satisfies(e -> assertThat(e.getIsCoverSearch()).as("check isCoverSearch").isEqualTo(actual.getIsCoverSearch()))
             .satisfies(e -> assertThat(e.getActive()).as("check active").isEqualTo(actual.getActive()));
     }
 

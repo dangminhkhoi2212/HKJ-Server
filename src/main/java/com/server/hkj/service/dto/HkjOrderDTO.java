@@ -22,6 +22,7 @@ public class HkjOrderDTO implements Serializable {
 
     private Instant actualDeliveryDate;
 
+    @Size(max = 5000)
     private String specialRequests;
 
     @NotNull
@@ -33,9 +34,9 @@ public class HkjOrderDTO implements Serializable {
 
     private BigDecimal totalPrice;
 
-    private BigDecimal depositAmount;
+    private BigDecimal budget;
 
-    private String notes;
+    private BigDecimal depositAmount;
 
     private Boolean isDeleted;
 
@@ -52,6 +53,8 @@ public class HkjOrderDTO implements Serializable {
     private HkjJewelryModelDTO jewelry;
 
     private HkjProjectDTO project;
+
+    private HkjCategoryDTO category;
 
     public Long getId() {
         return id;
@@ -117,20 +120,20 @@ public class HkjOrderDTO implements Serializable {
         this.totalPrice = totalPrice;
     }
 
+    public BigDecimal getBudget() {
+        return budget;
+    }
+
+    public void setBudget(BigDecimal budget) {
+        this.budget = budget;
+    }
+
     public BigDecimal getDepositAmount() {
         return depositAmount;
     }
 
     public void setDepositAmount(BigDecimal depositAmount) {
         this.depositAmount = depositAmount;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -197,6 +200,14 @@ public class HkjOrderDTO implements Serializable {
         this.project = project;
     }
 
+    public HkjCategoryDTO getCategory() {
+        return category;
+    }
+
+    public void setCategory(HkjCategoryDTO category) {
+        this.category = category;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -230,8 +241,8 @@ public class HkjOrderDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", customerRating=" + getCustomerRating() +
             ", totalPrice=" + getTotalPrice() +
+            ", budget=" + getBudget() +
             ", depositAmount=" + getDepositAmount() +
-            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
@@ -240,6 +251,7 @@ public class HkjOrderDTO implements Serializable {
             ", customer=" + getCustomer() +
             ", jewelry=" + getJewelry() +
             ", project=" + getProject() +
+            ", category=" + getCategory() +
             "}";
     }
 }

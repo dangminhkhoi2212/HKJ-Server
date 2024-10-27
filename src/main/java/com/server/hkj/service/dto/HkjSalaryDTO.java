@@ -29,7 +29,7 @@ public class HkjSalaryDTO implements Serializable {
 
     private Instant lastModifiedDate;
 
-    private UserExtraDTO userExtra;
+    private UserExtraDTO employee;
 
     public Long getId() {
         return id;
@@ -103,12 +103,12 @@ public class HkjSalaryDTO implements Serializable {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public UserExtraDTO getUserExtra() {
-        return userExtra;
+    public UserExtraDTO getEmployee() {
+        return employee;
     }
 
-    public void setUserExtra(UserExtraDTO userExtra) {
-        this.userExtra = userExtra;
+    public void setEmployee(UserExtraDTO employee) {
+        this.employee = employee;
     }
 
     @Override
@@ -145,7 +145,7 @@ public class HkjSalaryDTO implements Serializable {
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
-            ", userExtra=" + getUserExtra() +
+            ", employee=" + getEmployee() +
             "}";
     }
 }
