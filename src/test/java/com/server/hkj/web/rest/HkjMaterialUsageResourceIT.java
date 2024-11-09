@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
+import com.server.hkj.domain.HkjJewelryModel;
 import com.server.hkj.domain.HkjMaterial;
 import com.server.hkj.domain.HkjMaterialUsage;
 import com.server.hkj.domain.HkjTask;
@@ -19,8 +20,6 @@ import com.server.hkj.service.dto.HkjMaterialUsageDTO;
 import com.server.hkj.service.mapper.HkjMaterialUsageMapper;
 import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
@@ -41,23 +40,12 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class HkjMaterialUsageResourceIT {
 
-    private static final Integer DEFAULT_QUANTITY = 1;
-    private static final Integer UPDATED_QUANTITY = 2;
-    private static final Integer SMALLER_QUANTITY = 1 - 1;
-
-    private static final Integer DEFAULT_LOSS_QUANTITY = 1;
-    private static final Integer UPDATED_LOSS_QUANTITY = 2;
-    private static final Integer SMALLER_LOSS_QUANTITY = 1 - 1;
-
-    private static final Instant DEFAULT_USAGE_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_USAGE_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Integer DEFAULT_USAGE = 1;
+    private static final Integer UPDATED_USAGE = 2;
+    private static final Integer SMALLER_USAGE = 1 - 1;
 
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
-
-    private static final Float DEFAULT_WEIGHT = 1F;
-    private static final Float UPDATED_WEIGHT = 2F;
-    private static final Float SMALLER_WEIGHT = 1F - 1F;
 
     private static final BigDecimal DEFAULT_PRICE = new BigDecimal(1);
     private static final BigDecimal UPDATED_PRICE = new BigDecimal(2);
@@ -98,14 +86,7 @@ class HkjMaterialUsageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjMaterialUsage createEntity() {
-        return new HkjMaterialUsage()
-            .quantity(DEFAULT_QUANTITY)
-            .lossQuantity(DEFAULT_LOSS_QUANTITY)
-            .usageDate(DEFAULT_USAGE_DATE)
-            .notes(DEFAULT_NOTES)
-            .weight(DEFAULT_WEIGHT)
-            .price(DEFAULT_PRICE)
-            .isDeleted(DEFAULT_IS_DELETED);
+        return new HkjMaterialUsage().usage(DEFAULT_USAGE).notes(DEFAULT_NOTES).price(DEFAULT_PRICE).isDeleted(DEFAULT_IS_DELETED);
     }
 
     /**
@@ -115,14 +96,7 @@ class HkjMaterialUsageResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static HkjMaterialUsage createUpdatedEntity() {
-        return new HkjMaterialUsage()
-            .quantity(UPDATED_QUANTITY)
-            .lossQuantity(UPDATED_LOSS_QUANTITY)
-            .usageDate(UPDATED_USAGE_DATE)
-            .notes(UPDATED_NOTES)
-            .weight(UPDATED_WEIGHT)
-            .price(UPDATED_PRICE)
-            .isDeleted(UPDATED_IS_DELETED);
+        return new HkjMaterialUsage().usage(UPDATED_USAGE).notes(UPDATED_NOTES).price(UPDATED_PRICE).isDeleted(UPDATED_IS_DELETED);
     }
 
     @BeforeEach
@@ -189,44 +163,6 @@ class HkjMaterialUsageResourceIT {
 
     @Test
     @Transactional
-    void checkQuantityIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        hkjMaterialUsage.setQuantity(null);
-
-        // Create the HkjMaterialUsage, which fails.
-        HkjMaterialUsageDTO hkjMaterialUsageDTO = hkjMaterialUsageMapper.toDto(hkjMaterialUsage);
-
-        restHkjMaterialUsageMockMvc
-            .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(hkjMaterialUsageDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkUsageDateIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        hkjMaterialUsage.setUsageDate(null);
-
-        // Create the HkjMaterialUsage, which fails.
-        HkjMaterialUsageDTO hkjMaterialUsageDTO = hkjMaterialUsageMapper.toDto(hkjMaterialUsage);
-
-        restHkjMaterialUsageMockMvc
-            .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(hkjMaterialUsageDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllHkjMaterialUsages() throws Exception {
         // Initialize the database
         insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
@@ -237,11 +173,8 @@ class HkjMaterialUsageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjMaterialUsage.getId().intValue())))
-            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
-            .andExpect(jsonPath("$.[*].lossQuantity").value(hasItem(DEFAULT_LOSS_QUANTITY)))
-            .andExpect(jsonPath("$.[*].usageDate").value(hasItem(DEFAULT_USAGE_DATE.toString())))
+            .andExpect(jsonPath("$.[*].usage").value(hasItem(DEFAULT_USAGE)))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
-            .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
@@ -258,11 +191,8 @@ class HkjMaterialUsageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjMaterialUsage.getId().intValue()))
-            .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
-            .andExpect(jsonPath("$.lossQuantity").value(DEFAULT_LOSS_QUANTITY))
-            .andExpect(jsonPath("$.usageDate").value(DEFAULT_USAGE_DATE.toString()))
+            .andExpect(jsonPath("$.usage").value(DEFAULT_USAGE))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
-            .andExpect(jsonPath("$.weight").value(DEFAULT_WEIGHT.doubleValue()))
             .andExpect(jsonPath("$.price").value(sameNumber(DEFAULT_PRICE)))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
@@ -284,193 +214,72 @@ class HkjMaterialUsageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByQuantityIsEqualToSomething() throws Exception {
+    void getAllHkjMaterialUsagesByUsageIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
 
-        // Get all the hkjMaterialUsageList where quantity equals to
-        defaultHkjMaterialUsageFiltering("quantity.equals=" + DEFAULT_QUANTITY, "quantity.equals=" + UPDATED_QUANTITY);
+        // Get all the hkjMaterialUsageList where usage equals to
+        defaultHkjMaterialUsageFiltering("usage.equals=" + DEFAULT_USAGE, "usage.equals=" + UPDATED_USAGE);
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByQuantityIsInShouldWork() throws Exception {
+    void getAllHkjMaterialUsagesByUsageIsInShouldWork() throws Exception {
         // Initialize the database
         insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
 
-        // Get all the hkjMaterialUsageList where quantity in
-        defaultHkjMaterialUsageFiltering("quantity.in=" + DEFAULT_QUANTITY + "," + UPDATED_QUANTITY, "quantity.in=" + UPDATED_QUANTITY);
+        // Get all the hkjMaterialUsageList where usage in
+        defaultHkjMaterialUsageFiltering("usage.in=" + DEFAULT_USAGE + "," + UPDATED_USAGE, "usage.in=" + UPDATED_USAGE);
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByQuantityIsNullOrNotNull() throws Exception {
+    void getAllHkjMaterialUsagesByUsageIsNullOrNotNull() throws Exception {
         // Initialize the database
         insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
 
-        // Get all the hkjMaterialUsageList where quantity is not null
-        defaultHkjMaterialUsageFiltering("quantity.specified=true", "quantity.specified=false");
+        // Get all the hkjMaterialUsageList where usage is not null
+        defaultHkjMaterialUsageFiltering("usage.specified=true", "usage.specified=false");
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByQuantityIsGreaterThanOrEqualToSomething() throws Exception {
+    void getAllHkjMaterialUsagesByUsageIsGreaterThanOrEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
 
-        // Get all the hkjMaterialUsageList where quantity is greater than or equal to
-        defaultHkjMaterialUsageFiltering(
-            "quantity.greaterThanOrEqual=" + DEFAULT_QUANTITY,
-            "quantity.greaterThanOrEqual=" + UPDATED_QUANTITY
-        );
+        // Get all the hkjMaterialUsageList where usage is greater than or equal to
+        defaultHkjMaterialUsageFiltering("usage.greaterThanOrEqual=" + DEFAULT_USAGE, "usage.greaterThanOrEqual=" + UPDATED_USAGE);
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByQuantityIsLessThanOrEqualToSomething() throws Exception {
+    void getAllHkjMaterialUsagesByUsageIsLessThanOrEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
 
-        // Get all the hkjMaterialUsageList where quantity is less than or equal to
-        defaultHkjMaterialUsageFiltering("quantity.lessThanOrEqual=" + DEFAULT_QUANTITY, "quantity.lessThanOrEqual=" + SMALLER_QUANTITY);
+        // Get all the hkjMaterialUsageList where usage is less than or equal to
+        defaultHkjMaterialUsageFiltering("usage.lessThanOrEqual=" + DEFAULT_USAGE, "usage.lessThanOrEqual=" + SMALLER_USAGE);
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByQuantityIsLessThanSomething() throws Exception {
+    void getAllHkjMaterialUsagesByUsageIsLessThanSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
 
-        // Get all the hkjMaterialUsageList where quantity is less than
-        defaultHkjMaterialUsageFiltering("quantity.lessThan=" + UPDATED_QUANTITY, "quantity.lessThan=" + DEFAULT_QUANTITY);
+        // Get all the hkjMaterialUsageList where usage is less than
+        defaultHkjMaterialUsageFiltering("usage.lessThan=" + UPDATED_USAGE, "usage.lessThan=" + DEFAULT_USAGE);
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialUsagesByQuantityIsGreaterThanSomething() throws Exception {
+    void getAllHkjMaterialUsagesByUsageIsGreaterThanSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
 
-        // Get all the hkjMaterialUsageList where quantity is greater than
-        defaultHkjMaterialUsageFiltering("quantity.greaterThan=" + SMALLER_QUANTITY, "quantity.greaterThan=" + DEFAULT_QUANTITY);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByLossQuantityIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where lossQuantity equals to
-        defaultHkjMaterialUsageFiltering("lossQuantity.equals=" + DEFAULT_LOSS_QUANTITY, "lossQuantity.equals=" + UPDATED_LOSS_QUANTITY);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByLossQuantityIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where lossQuantity in
-        defaultHkjMaterialUsageFiltering(
-            "lossQuantity.in=" + DEFAULT_LOSS_QUANTITY + "," + UPDATED_LOSS_QUANTITY,
-            "lossQuantity.in=" + UPDATED_LOSS_QUANTITY
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByLossQuantityIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where lossQuantity is not null
-        defaultHkjMaterialUsageFiltering("lossQuantity.specified=true", "lossQuantity.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByLossQuantityIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where lossQuantity is greater than or equal to
-        defaultHkjMaterialUsageFiltering(
-            "lossQuantity.greaterThanOrEqual=" + DEFAULT_LOSS_QUANTITY,
-            "lossQuantity.greaterThanOrEqual=" + UPDATED_LOSS_QUANTITY
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByLossQuantityIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where lossQuantity is less than or equal to
-        defaultHkjMaterialUsageFiltering(
-            "lossQuantity.lessThanOrEqual=" + DEFAULT_LOSS_QUANTITY,
-            "lossQuantity.lessThanOrEqual=" + SMALLER_LOSS_QUANTITY
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByLossQuantityIsLessThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where lossQuantity is less than
-        defaultHkjMaterialUsageFiltering(
-            "lossQuantity.lessThan=" + UPDATED_LOSS_QUANTITY,
-            "lossQuantity.lessThan=" + DEFAULT_LOSS_QUANTITY
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByLossQuantityIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where lossQuantity is greater than
-        defaultHkjMaterialUsageFiltering(
-            "lossQuantity.greaterThan=" + SMALLER_LOSS_QUANTITY,
-            "lossQuantity.greaterThan=" + DEFAULT_LOSS_QUANTITY
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByUsageDateIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where usageDate equals to
-        defaultHkjMaterialUsageFiltering("usageDate.equals=" + DEFAULT_USAGE_DATE, "usageDate.equals=" + UPDATED_USAGE_DATE);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByUsageDateIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where usageDate in
-        defaultHkjMaterialUsageFiltering(
-            "usageDate.in=" + DEFAULT_USAGE_DATE + "," + UPDATED_USAGE_DATE,
-            "usageDate.in=" + UPDATED_USAGE_DATE
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByUsageDateIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where usageDate is not null
-        defaultHkjMaterialUsageFiltering("usageDate.specified=true", "usageDate.specified=false");
+        // Get all the hkjMaterialUsageList where usage is greater than
+        defaultHkjMaterialUsageFiltering("usage.greaterThan=" + SMALLER_USAGE, "usage.greaterThan=" + DEFAULT_USAGE);
     }
 
     @Test
@@ -521,76 +330,6 @@ class HkjMaterialUsageResourceIT {
 
         // Get all the hkjMaterialUsageList where notes does not contain
         defaultHkjMaterialUsageFiltering("notes.doesNotContain=" + UPDATED_NOTES, "notes.doesNotContain=" + DEFAULT_NOTES);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByWeightIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where weight equals to
-        defaultHkjMaterialUsageFiltering("weight.equals=" + DEFAULT_WEIGHT, "weight.equals=" + UPDATED_WEIGHT);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByWeightIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where weight in
-        defaultHkjMaterialUsageFiltering("weight.in=" + DEFAULT_WEIGHT + "," + UPDATED_WEIGHT, "weight.in=" + UPDATED_WEIGHT);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByWeightIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where weight is not null
-        defaultHkjMaterialUsageFiltering("weight.specified=true", "weight.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByWeightIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where weight is greater than or equal to
-        defaultHkjMaterialUsageFiltering("weight.greaterThanOrEqual=" + DEFAULT_WEIGHT, "weight.greaterThanOrEqual=" + UPDATED_WEIGHT);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByWeightIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where weight is less than or equal to
-        defaultHkjMaterialUsageFiltering("weight.lessThanOrEqual=" + DEFAULT_WEIGHT, "weight.lessThanOrEqual=" + SMALLER_WEIGHT);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByWeightIsLessThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where weight is less than
-        defaultHkjMaterialUsageFiltering("weight.lessThan=" + UPDATED_WEIGHT, "weight.lessThan=" + DEFAULT_WEIGHT);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialUsagesByWeightIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterialUsage = hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
-
-        // Get all the hkjMaterialUsageList where weight is greater than
-        defaultHkjMaterialUsageFiltering("weight.greaterThan=" + SMALLER_WEIGHT, "weight.greaterThan=" + DEFAULT_WEIGHT);
     }
 
     @Test
@@ -720,6 +459,28 @@ class HkjMaterialUsageResourceIT {
 
     @Test
     @Transactional
+    void getAllHkjMaterialUsagesByJewelryIsEqualToSomething() throws Exception {
+        HkjJewelryModel jewelry;
+        if (TestUtil.findAll(em, HkjJewelryModel.class).isEmpty()) {
+            hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
+            jewelry = HkjJewelryModelResourceIT.createEntity();
+        } else {
+            jewelry = TestUtil.findAll(em, HkjJewelryModel.class).get(0);
+        }
+        em.persist(jewelry);
+        em.flush();
+        hkjMaterialUsage.setJewelry(jewelry);
+        hkjMaterialUsageRepository.saveAndFlush(hkjMaterialUsage);
+        Long jewelryId = jewelry.getId();
+        // Get all the hkjMaterialUsageList where jewelry equals to jewelryId
+        defaultHkjMaterialUsageShouldBeFound("jewelryId.equals=" + jewelryId);
+
+        // Get all the hkjMaterialUsageList where jewelry equals to (jewelryId + 1)
+        defaultHkjMaterialUsageShouldNotBeFound("jewelryId.equals=" + (jewelryId + 1));
+    }
+
+    @Test
+    @Transactional
     void getAllHkjMaterialUsagesByTaskIsEqualToSomething() throws Exception {
         HkjTask task;
         if (TestUtil.findAll(em, HkjTask.class).isEmpty()) {
@@ -754,11 +515,8 @@ class HkjMaterialUsageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjMaterialUsage.getId().intValue())))
-            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
-            .andExpect(jsonPath("$.[*].lossQuantity").value(hasItem(DEFAULT_LOSS_QUANTITY)))
-            .andExpect(jsonPath("$.[*].usageDate").value(hasItem(DEFAULT_USAGE_DATE.toString())))
+            .andExpect(jsonPath("$.[*].usage").value(hasItem(DEFAULT_USAGE)))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
-            .andExpect(jsonPath("$.[*].weight").value(hasItem(DEFAULT_WEIGHT.doubleValue())))
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
@@ -808,14 +566,7 @@ class HkjMaterialUsageResourceIT {
         HkjMaterialUsage updatedHkjMaterialUsage = hkjMaterialUsageRepository.findById(hkjMaterialUsage.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedHkjMaterialUsage are not directly saved in db
         em.detach(updatedHkjMaterialUsage);
-        updatedHkjMaterialUsage
-            .quantity(UPDATED_QUANTITY)
-            .lossQuantity(UPDATED_LOSS_QUANTITY)
-            .usageDate(UPDATED_USAGE_DATE)
-            .notes(UPDATED_NOTES)
-            .weight(UPDATED_WEIGHT)
-            .price(UPDATED_PRICE)
-            .isDeleted(UPDATED_IS_DELETED);
+        updatedHkjMaterialUsage.usage(UPDATED_USAGE).notes(UPDATED_NOTES).price(UPDATED_PRICE).isDeleted(UPDATED_IS_DELETED);
         HkjMaterialUsageDTO hkjMaterialUsageDTO = hkjMaterialUsageMapper.toDto(updatedHkjMaterialUsage);
 
         restHkjMaterialUsageMockMvc
@@ -910,7 +661,7 @@ class HkjMaterialUsageResourceIT {
         HkjMaterialUsage partialUpdatedHkjMaterialUsage = new HkjMaterialUsage();
         partialUpdatedHkjMaterialUsage.setId(hkjMaterialUsage.getId());
 
-        partialUpdatedHkjMaterialUsage.lossQuantity(UPDATED_LOSS_QUANTITY).notes(UPDATED_NOTES);
+        partialUpdatedHkjMaterialUsage.notes(UPDATED_NOTES).isDeleted(UPDATED_IS_DELETED);
 
         restHkjMaterialUsageMockMvc
             .perform(
@@ -942,14 +693,7 @@ class HkjMaterialUsageResourceIT {
         HkjMaterialUsage partialUpdatedHkjMaterialUsage = new HkjMaterialUsage();
         partialUpdatedHkjMaterialUsage.setId(hkjMaterialUsage.getId());
 
-        partialUpdatedHkjMaterialUsage
-            .quantity(UPDATED_QUANTITY)
-            .lossQuantity(UPDATED_LOSS_QUANTITY)
-            .usageDate(UPDATED_USAGE_DATE)
-            .notes(UPDATED_NOTES)
-            .weight(UPDATED_WEIGHT)
-            .price(UPDATED_PRICE)
-            .isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedHkjMaterialUsage.usage(UPDATED_USAGE).notes(UPDATED_NOTES).price(UPDATED_PRICE).isDeleted(UPDATED_IS_DELETED);
 
         restHkjMaterialUsageMockMvc
             .perform(

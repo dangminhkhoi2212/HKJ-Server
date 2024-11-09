@@ -41,7 +41,7 @@ public class HkjTrackSearchImage extends AbstractAuditingEntity<Long> implements
     private UserExtra user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images", "category", "project" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images", "materials", "category", "project", "material", "hkjCart" }, allowSetters = true)
     private HkjJewelryModel jewelry;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

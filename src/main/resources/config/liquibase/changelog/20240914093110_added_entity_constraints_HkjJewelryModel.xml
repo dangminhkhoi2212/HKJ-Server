@@ -23,5 +23,19 @@
                                  referencedColumnNames="id"
                                  referencedTableName="hkj_project"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="material_id"
+                                 baseTableName="hkj_jewelry_model"
+                                 constraintName="fk_hkj_jewelry_model__material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_material"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="hkj_cart_id"
+                                 baseTableName="hkj_jewelry_model"
+                                 constraintName="fk_hkj_jewelry_model__hkj_cart_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_cart"
+                                 />
     </changeSet>
 </databaseChangeLog>

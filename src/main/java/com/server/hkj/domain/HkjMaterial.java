@@ -34,19 +34,11 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
-
-    @NotNull
-    @Column(name = "unit", nullable = false)
+    @Column(name = "unit")
     private String unit;
 
-    @Column(name = "unit_price", precision = 21, scale = 2)
-    private BigDecimal unitPrice;
-
-    @Column(name = "supplier")
-    private String supplier;
+    @Column(name = "price_per_unit", precision = 21, scale = 2)
+    private BigDecimal pricePerUnit;
 
     @Column(name = "cover_image")
     private String coverImage;
@@ -94,19 +86,6 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
         this.name = name;
     }
 
-    public Integer getQuantity() {
-        return this.quantity;
-    }
-
-    public HkjMaterial quantity(Integer quantity) {
-        this.setQuantity(quantity);
-        return this;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public String getUnit() {
         return this.unit;
     }
@@ -120,30 +99,17 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
         this.unit = unit;
     }
 
-    public BigDecimal getUnitPrice() {
-        return this.unitPrice;
+    public BigDecimal getPricePerUnit() {
+        return this.pricePerUnit;
     }
 
-    public HkjMaterial unitPrice(BigDecimal unitPrice) {
-        this.setUnitPrice(unitPrice);
+    public HkjMaterial pricePerUnit(BigDecimal pricePerUnit) {
+        this.setPricePerUnit(pricePerUnit);
         return this;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public String getSupplier() {
-        return this.supplier;
-    }
-
-    public HkjMaterial supplier(String supplier) {
-        this.setSupplier(supplier);
-        return this;
-    }
-
-    public void setSupplier(String supplier) {
-        this.supplier = supplier;
+    public void setPricePerUnit(BigDecimal pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
     }
 
     public String getCoverImage() {
@@ -269,10 +235,8 @@ public class HkjMaterial extends AbstractAuditingEntity<Long> implements Seriali
         return "HkjMaterial{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", quantity=" + getQuantity() +
             ", unit='" + getUnit() + "'" +
-            ", unitPrice=" + getUnitPrice() +
-            ", supplier='" + getSupplier() + "'" +
+            ", pricePerUnit=" + getPricePerUnit() +
             ", coverImage='" + getCoverImage() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

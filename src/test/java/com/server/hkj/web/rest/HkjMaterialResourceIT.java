@@ -40,19 +40,12 @@ class HkjMaterialResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Integer DEFAULT_QUANTITY = 1;
-    private static final Integer UPDATED_QUANTITY = 2;
-    private static final Integer SMALLER_QUANTITY = 1 - 1;
-
     private static final String DEFAULT_UNIT = "AAAAAAAAAA";
     private static final String UPDATED_UNIT = "BBBBBBBBBB";
 
-    private static final BigDecimal DEFAULT_UNIT_PRICE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_UNIT_PRICE = new BigDecimal(2);
-    private static final BigDecimal SMALLER_UNIT_PRICE = new BigDecimal(1 - 1);
-
-    private static final String DEFAULT_SUPPLIER = "AAAAAAAAAA";
-    private static final String UPDATED_SUPPLIER = "BBBBBBBBBB";
+    private static final BigDecimal DEFAULT_PRICE_PER_UNIT = new BigDecimal(1);
+    private static final BigDecimal UPDATED_PRICE_PER_UNIT = new BigDecimal(2);
+    private static final BigDecimal SMALLER_PRICE_PER_UNIT = new BigDecimal(1 - 1);
 
     private static final String DEFAULT_COVER_IMAGE = "AAAAAAAAAA";
     private static final String UPDATED_COVER_IMAGE = "BBBBBBBBBB";
@@ -94,10 +87,8 @@ class HkjMaterialResourceIT {
     public static HkjMaterial createEntity() {
         return new HkjMaterial()
             .name(DEFAULT_NAME)
-            .quantity(DEFAULT_QUANTITY)
             .unit(DEFAULT_UNIT)
-            .unitPrice(DEFAULT_UNIT_PRICE)
-            .supplier(DEFAULT_SUPPLIER)
+            .pricePerUnit(DEFAULT_PRICE_PER_UNIT)
             .coverImage(DEFAULT_COVER_IMAGE)
             .isDeleted(DEFAULT_IS_DELETED);
     }
@@ -111,10 +102,8 @@ class HkjMaterialResourceIT {
     public static HkjMaterial createUpdatedEntity() {
         return new HkjMaterial()
             .name(UPDATED_NAME)
-            .quantity(UPDATED_QUANTITY)
             .unit(UPDATED_UNIT)
-            .unitPrice(UPDATED_UNIT_PRICE)
-            .supplier(UPDATED_SUPPLIER)
+            .pricePerUnit(UPDATED_PRICE_PER_UNIT)
             .coverImage(UPDATED_COVER_IMAGE)
             .isDeleted(UPDATED_IS_DELETED);
     }
@@ -199,44 +188,6 @@ class HkjMaterialResourceIT {
 
     @Test
     @Transactional
-    void checkQuantityIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        hkjMaterial.setQuantity(null);
-
-        // Create the HkjMaterial, which fails.
-        HkjMaterialDTO hkjMaterialDTO = hkjMaterialMapper.toDto(hkjMaterial);
-
-        restHkjMaterialMockMvc
-            .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(hkjMaterialDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkUnitIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        hkjMaterial.setUnit(null);
-
-        // Create the HkjMaterial, which fails.
-        HkjMaterialDTO hkjMaterialDTO = hkjMaterialMapper.toDto(hkjMaterial);
-
-        restHkjMaterialMockMvc
-            .perform(
-                post(ENTITY_API_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(hkjMaterialDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllHkjMaterials() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
@@ -248,10 +199,8 @@ class HkjMaterialResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjMaterial.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
             .andExpect(jsonPath("$.[*].unit").value(hasItem(DEFAULT_UNIT)))
-            .andExpect(jsonPath("$.[*].unitPrice").value(hasItem(sameNumber(DEFAULT_UNIT_PRICE))))
-            .andExpect(jsonPath("$.[*].supplier").value(hasItem(DEFAULT_SUPPLIER)))
+            .andExpect(jsonPath("$.[*].pricePerUnit").value(hasItem(sameNumber(DEFAULT_PRICE_PER_UNIT))))
             .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
@@ -269,10 +218,8 @@ class HkjMaterialResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjMaterial.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY))
             .andExpect(jsonPath("$.unit").value(DEFAULT_UNIT))
-            .andExpect(jsonPath("$.unitPrice").value(sameNumber(DEFAULT_UNIT_PRICE)))
-            .andExpect(jsonPath("$.supplier").value(DEFAULT_SUPPLIER))
+            .andExpect(jsonPath("$.pricePerUnit").value(sameNumber(DEFAULT_PRICE_PER_UNIT)))
             .andExpect(jsonPath("$.coverImage").value(DEFAULT_COVER_IMAGE))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
@@ -344,76 +291,6 @@ class HkjMaterialResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjMaterialsByQuantityIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where quantity equals to
-        defaultHkjMaterialFiltering("quantity.equals=" + DEFAULT_QUANTITY, "quantity.equals=" + UPDATED_QUANTITY);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsByQuantityIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where quantity in
-        defaultHkjMaterialFiltering("quantity.in=" + DEFAULT_QUANTITY + "," + UPDATED_QUANTITY, "quantity.in=" + UPDATED_QUANTITY);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsByQuantityIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where quantity is not null
-        defaultHkjMaterialFiltering("quantity.specified=true", "quantity.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsByQuantityIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where quantity is greater than or equal to
-        defaultHkjMaterialFiltering("quantity.greaterThanOrEqual=" + DEFAULT_QUANTITY, "quantity.greaterThanOrEqual=" + UPDATED_QUANTITY);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsByQuantityIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where quantity is less than or equal to
-        defaultHkjMaterialFiltering("quantity.lessThanOrEqual=" + DEFAULT_QUANTITY, "quantity.lessThanOrEqual=" + SMALLER_QUANTITY);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsByQuantityIsLessThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where quantity is less than
-        defaultHkjMaterialFiltering("quantity.lessThan=" + UPDATED_QUANTITY, "quantity.lessThan=" + DEFAULT_QUANTITY);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsByQuantityIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where quantity is greater than
-        defaultHkjMaterialFiltering("quantity.greaterThan=" + SMALLER_QUANTITY, "quantity.greaterThan=" + DEFAULT_QUANTITY);
-    }
-
-    @Test
-    @Transactional
     void getAllHkjMaterialsByUnitIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
@@ -464,125 +341,84 @@ class HkjMaterialResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjMaterialsByUnitPriceIsEqualToSomething() throws Exception {
+    void getAllHkjMaterialsByPricePerUnitIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
 
-        // Get all the hkjMaterialList where unitPrice equals to
-        defaultHkjMaterialFiltering("unitPrice.equals=" + DEFAULT_UNIT_PRICE, "unitPrice.equals=" + UPDATED_UNIT_PRICE);
+        // Get all the hkjMaterialList where pricePerUnit equals to
+        defaultHkjMaterialFiltering("pricePerUnit.equals=" + DEFAULT_PRICE_PER_UNIT, "pricePerUnit.equals=" + UPDATED_PRICE_PER_UNIT);
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialsByUnitPriceIsInShouldWork() throws Exception {
+    void getAllHkjMaterialsByPricePerUnitIsInShouldWork() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
 
-        // Get all the hkjMaterialList where unitPrice in
-        defaultHkjMaterialFiltering("unitPrice.in=" + DEFAULT_UNIT_PRICE + "," + UPDATED_UNIT_PRICE, "unitPrice.in=" + UPDATED_UNIT_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsByUnitPriceIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where unitPrice is not null
-        defaultHkjMaterialFiltering("unitPrice.specified=true", "unitPrice.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsByUnitPriceIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where unitPrice is greater than or equal to
+        // Get all the hkjMaterialList where pricePerUnit in
         defaultHkjMaterialFiltering(
-            "unitPrice.greaterThanOrEqual=" + DEFAULT_UNIT_PRICE,
-            "unitPrice.greaterThanOrEqual=" + UPDATED_UNIT_PRICE
+            "pricePerUnit.in=" + DEFAULT_PRICE_PER_UNIT + "," + UPDATED_PRICE_PER_UNIT,
+            "pricePerUnit.in=" + UPDATED_PRICE_PER_UNIT
         );
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialsByUnitPriceIsLessThanOrEqualToSomething() throws Exception {
+    void getAllHkjMaterialsByPricePerUnitIsNullOrNotNull() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
 
-        // Get all the hkjMaterialList where unitPrice is less than or equal to
-        defaultHkjMaterialFiltering("unitPrice.lessThanOrEqual=" + DEFAULT_UNIT_PRICE, "unitPrice.lessThanOrEqual=" + SMALLER_UNIT_PRICE);
+        // Get all the hkjMaterialList where pricePerUnit is not null
+        defaultHkjMaterialFiltering("pricePerUnit.specified=true", "pricePerUnit.specified=false");
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialsByUnitPriceIsLessThanSomething() throws Exception {
+    void getAllHkjMaterialsByPricePerUnitIsGreaterThanOrEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
 
-        // Get all the hkjMaterialList where unitPrice is less than
-        defaultHkjMaterialFiltering("unitPrice.lessThan=" + UPDATED_UNIT_PRICE, "unitPrice.lessThan=" + DEFAULT_UNIT_PRICE);
+        // Get all the hkjMaterialList where pricePerUnit is greater than or equal to
+        defaultHkjMaterialFiltering(
+            "pricePerUnit.greaterThanOrEqual=" + DEFAULT_PRICE_PER_UNIT,
+            "pricePerUnit.greaterThanOrEqual=" + UPDATED_PRICE_PER_UNIT
+        );
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialsByUnitPriceIsGreaterThanSomething() throws Exception {
+    void getAllHkjMaterialsByPricePerUnitIsLessThanOrEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
 
-        // Get all the hkjMaterialList where unitPrice is greater than
-        defaultHkjMaterialFiltering("unitPrice.greaterThan=" + SMALLER_UNIT_PRICE, "unitPrice.greaterThan=" + DEFAULT_UNIT_PRICE);
+        // Get all the hkjMaterialList where pricePerUnit is less than or equal to
+        defaultHkjMaterialFiltering(
+            "pricePerUnit.lessThanOrEqual=" + DEFAULT_PRICE_PER_UNIT,
+            "pricePerUnit.lessThanOrEqual=" + SMALLER_PRICE_PER_UNIT
+        );
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialsBySupplierIsEqualToSomething() throws Exception {
+    void getAllHkjMaterialsByPricePerUnitIsLessThanSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
 
-        // Get all the hkjMaterialList where supplier equals to
-        defaultHkjMaterialFiltering("supplier.equals=" + DEFAULT_SUPPLIER, "supplier.equals=" + UPDATED_SUPPLIER);
+        // Get all the hkjMaterialList where pricePerUnit is less than
+        defaultHkjMaterialFiltering("pricePerUnit.lessThan=" + UPDATED_PRICE_PER_UNIT, "pricePerUnit.lessThan=" + DEFAULT_PRICE_PER_UNIT);
     }
 
     @Test
     @Transactional
-    void getAllHkjMaterialsBySupplierIsInShouldWork() throws Exception {
+    void getAllHkjMaterialsByPricePerUnitIsGreaterThanSomething() throws Exception {
         // Initialize the database
         insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
 
-        // Get all the hkjMaterialList where supplier in
-        defaultHkjMaterialFiltering("supplier.in=" + DEFAULT_SUPPLIER + "," + UPDATED_SUPPLIER, "supplier.in=" + UPDATED_SUPPLIER);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsBySupplierIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where supplier is not null
-        defaultHkjMaterialFiltering("supplier.specified=true", "supplier.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsBySupplierContainsSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where supplier contains
-        defaultHkjMaterialFiltering("supplier.contains=" + DEFAULT_SUPPLIER, "supplier.contains=" + UPDATED_SUPPLIER);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjMaterialsBySupplierNotContainsSomething() throws Exception {
-        // Initialize the database
-        insertedHkjMaterial = hkjMaterialRepository.saveAndFlush(hkjMaterial);
-
-        // Get all the hkjMaterialList where supplier does not contain
-        defaultHkjMaterialFiltering("supplier.doesNotContain=" + UPDATED_SUPPLIER, "supplier.doesNotContain=" + DEFAULT_SUPPLIER);
+        // Get all the hkjMaterialList where pricePerUnit is greater than
+        defaultHkjMaterialFiltering(
+            "pricePerUnit.greaterThan=" + SMALLER_PRICE_PER_UNIT,
+            "pricePerUnit.greaterThan=" + DEFAULT_PRICE_PER_UNIT
+        );
     }
 
     @Test
@@ -683,10 +519,8 @@ class HkjMaterialResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjMaterial.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY)))
             .andExpect(jsonPath("$.[*].unit").value(hasItem(DEFAULT_UNIT)))
-            .andExpect(jsonPath("$.[*].unitPrice").value(hasItem(sameNumber(DEFAULT_UNIT_PRICE))))
-            .andExpect(jsonPath("$.[*].supplier").value(hasItem(DEFAULT_SUPPLIER)))
+            .andExpect(jsonPath("$.[*].pricePerUnit").value(hasItem(sameNumber(DEFAULT_PRICE_PER_UNIT))))
             .andExpect(jsonPath("$.[*].coverImage").value(hasItem(DEFAULT_COVER_IMAGE)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
@@ -738,10 +572,8 @@ class HkjMaterialResourceIT {
         em.detach(updatedHkjMaterial);
         updatedHkjMaterial
             .name(UPDATED_NAME)
-            .quantity(UPDATED_QUANTITY)
             .unit(UPDATED_UNIT)
-            .unitPrice(UPDATED_UNIT_PRICE)
-            .supplier(UPDATED_SUPPLIER)
+            .pricePerUnit(UPDATED_PRICE_PER_UNIT)
             .coverImage(UPDATED_COVER_IMAGE)
             .isDeleted(UPDATED_IS_DELETED);
         HkjMaterialDTO hkjMaterialDTO = hkjMaterialMapper.toDto(updatedHkjMaterial);
@@ -836,7 +668,7 @@ class HkjMaterialResourceIT {
         HkjMaterial partialUpdatedHkjMaterial = new HkjMaterial();
         partialUpdatedHkjMaterial.setId(hkjMaterial.getId());
 
-        partialUpdatedHkjMaterial.name(UPDATED_NAME).quantity(UPDATED_QUANTITY).unitPrice(UPDATED_UNIT_PRICE).isDeleted(UPDATED_IS_DELETED);
+        partialUpdatedHkjMaterial.name(UPDATED_NAME).unit(UPDATED_UNIT).coverImage(UPDATED_COVER_IMAGE);
 
         restHkjMaterialMockMvc
             .perform(
@@ -870,10 +702,8 @@ class HkjMaterialResourceIT {
 
         partialUpdatedHkjMaterial
             .name(UPDATED_NAME)
-            .quantity(UPDATED_QUANTITY)
             .unit(UPDATED_UNIT)
-            .unitPrice(UPDATED_UNIT_PRICE)
-            .supplier(UPDATED_SUPPLIER)
+            .pricePerUnit(UPDATED_PRICE_PER_UNIT)
             .coverImage(UPDATED_COVER_IMAGE)
             .isDeleted(UPDATED_IS_DELETED);
 

@@ -50,11 +50,8 @@ public class HkjMaterialUsageAsserts {
     public static void assertHkjMaterialUsageUpdatableFieldsEquals(HkjMaterialUsage expected, HkjMaterialUsage actual) {
         assertThat(expected)
             .as("Verify HkjMaterialUsage relevant properties")
-            .satisfies(e -> assertThat(e.getQuantity()).as("check quantity").isEqualTo(actual.getQuantity()))
-            .satisfies(e -> assertThat(e.getLossQuantity()).as("check lossQuantity").isEqualTo(actual.getLossQuantity()))
-            .satisfies(e -> assertThat(e.getUsageDate()).as("check usageDate").isEqualTo(actual.getUsageDate()))
+            .satisfies(e -> assertThat(e.getUsage()).as("check usage").isEqualTo(actual.getUsage()))
             .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
-            .satisfies(e -> assertThat(e.getWeight()).as("check weight").isEqualTo(actual.getWeight()))
             .satisfies(e -> assertThat(e.getPrice()).as("check price").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getPrice()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
@@ -69,6 +66,7 @@ public class HkjMaterialUsageAsserts {
         assertThat(expected)
             .as("Verify HkjMaterialUsage relationships")
             .satisfies(e -> assertThat(e.getMaterial()).as("check material").isEqualTo(actual.getMaterial()))
+            .satisfies(e -> assertThat(e.getJewelry()).as("check jewelry").isEqualTo(actual.getJewelry()))
             .satisfies(e -> assertThat(e.getTask()).as("check task").isEqualTo(actual.getTask()));
     }
 }

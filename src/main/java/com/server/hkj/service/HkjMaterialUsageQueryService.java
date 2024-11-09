@@ -80,20 +80,11 @@ public class HkjMaterialUsageQueryService extends QueryService<HkjMaterialUsage>
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), HkjMaterialUsage_.id));
             }
-            if (criteria.getQuantity() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getQuantity(), HkjMaterialUsage_.quantity));
-            }
-            if (criteria.getLossQuantity() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getLossQuantity(), HkjMaterialUsage_.lossQuantity));
-            }
-            if (criteria.getUsageDate() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getUsageDate(), HkjMaterialUsage_.usageDate));
+            if (criteria.getUsage() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getUsage(), HkjMaterialUsage_.usage));
             }
             if (criteria.getNotes() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjMaterialUsage_.notes));
-            }
-            if (criteria.getWeight() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getWeight(), HkjMaterialUsage_.weight));
             }
             if (criteria.getPrice() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPrice(), HkjMaterialUsage_.price));
@@ -119,6 +110,13 @@ public class HkjMaterialUsageQueryService extends QueryService<HkjMaterialUsage>
                 specification = specification.and(
                     buildSpecification(criteria.getMaterialId(), root ->
                         root.join(HkjMaterialUsage_.material, JoinType.LEFT).get(HkjMaterial_.id)
+                    )
+                );
+            }
+            if (criteria.getJewelryId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getJewelryId(), root ->
+                        root.join(HkjMaterialUsage_.jewelry, JoinType.LEFT).get(HkjJewelryModel_.id)
                     )
                 );
             }

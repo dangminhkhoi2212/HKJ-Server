@@ -8,6 +8,7 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
+import { getEntities as getHkjMaterials } from 'app/entities/hkj-material/hkj-material.reducer';
 import { getEntities as getHkjJewelryModels } from 'app/entities/hkj-jewelry-model/hkj-jewelry-model.reducer';
 import { getEntities as getHkjProjects } from 'app/entities/hkj-project/hkj-project.reducer';
 import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
@@ -23,6 +24,7 @@ export const HkjOrderUpdate = () => {
   const isNew = id === undefined;
 
   const userExtras = useAppSelector(state => state.userExtra.entities);
+  const hkjMaterials = useAppSelector(state => state.hkjMaterial.entities);
   const hkjJewelryModels = useAppSelector(state => state.hkjJewelryModel.entities);
   const hkjProjects = useAppSelector(state => state.hkjProject.entities);
   const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
@@ -44,6 +46,7 @@ export const HkjOrderUpdate = () => {
     }
 
     dispatch(getUserExtras({}));
+    dispatch(getHkjMaterials({}));
     dispatch(getHkjJewelryModels({}));
     dispatch(getHkjProjects({}));
     dispatch(getHkjCategories({}));
@@ -68,12 +71,6 @@ export const HkjOrderUpdate = () => {
     if (values.totalPrice !== undefined && typeof values.totalPrice !== 'number') {
       values.totalPrice = Number(values.totalPrice);
     }
-    if (values.budget !== undefined && typeof values.budget !== 'number') {
-      values.budget = Number(values.budget);
-    }
-    if (values.depositAmount !== undefined && typeof values.depositAmount !== 'number') {
-      values.depositAmount = Number(values.depositAmount);
-    }
     values.createdDate = convertDateTimeToServer(values.createdDate);
     values.lastModifiedDate = convertDateTimeToServer(values.lastModifiedDate);
 
@@ -81,6 +78,7 @@ export const HkjOrderUpdate = () => {
       ...hkjOrderEntity,
       ...values,
       customer: userExtras.find(it => it.id.toString() === values.customer?.toString()),
+      material: hkjMaterials.find(it => it.id.toString() === values.material?.toString()),
       jewelry: hkjJewelryModels.find(it => it.id.toString() === values.jewelry?.toString()),
       project: hkjProjects.find(it => it.id.toString() === values.project?.toString()),
       category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
@@ -111,6 +109,7 @@ export const HkjOrderUpdate = () => {
           createdDate: convertDateTimeFromServer(hkjOrderEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjOrderEntity.lastModifiedDate),
           customer: hkjOrderEntity?.customer?.id,
+          material: hkjOrderEntity?.material?.id,
           jewelry: hkjOrderEntity?.jewelry?.id,
           project: hkjOrderEntity?.project?.id,
           category: hkjOrderEntity?.category?.id,
@@ -211,20 +210,6 @@ export const HkjOrderUpdate = () => {
                 type="text"
               />
               <ValidatedField
-                label={translate('serverApp.hkjOrder.budget')}
-                id="hkj-order-budget"
-                name="budget"
-                data-cy="budget"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjOrder.depositAmount')}
-                id="hkj-order-depositAmount"
-                name="depositAmount"
-                data-cy="depositAmount"
-                type="text"
-              />
-              <ValidatedField
                 label={translate('serverApp.hkjOrder.isDeleted')}
                 id="hkj-order-isDeleted"
                 name="isDeleted"
@@ -272,6 +257,22 @@ export const HkjOrderUpdate = () => {
                 <option value="" key="0" />
                 {userExtras
                   ? userExtras.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-order-material"
+                name="material"
+                data-cy="material"
+                label={translate('serverApp.hkjOrder.material')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjMaterials
+                  ? hkjMaterials.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

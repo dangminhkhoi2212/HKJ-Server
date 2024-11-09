@@ -83,18 +83,6 @@ export const HkjOrderDetail = () => {
           </dt>
           <dd>{hkjOrderEntity.totalPrice}</dd>
           <dt>
-            <span id="budget">
-              <Translate contentKey="serverApp.hkjOrder.budget">Budget</Translate>
-            </span>
-          </dt>
-          <dd>{hkjOrderEntity.budget}</dd>
-          <dt>
-            <span id="depositAmount">
-              <Translate contentKey="serverApp.hkjOrder.depositAmount">Deposit Amount</Translate>
-            </span>
-          </dt>
-          <dd>{hkjOrderEntity.depositAmount}</dd>
-          <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjOrder.isDeleted">Is Deleted</Translate>
             </span>
@@ -134,6 +122,10 @@ export const HkjOrderDetail = () => {
             <Translate contentKey="serverApp.hkjOrder.customer">Customer</Translate>
           </dt>
           <dd>{hkjOrderEntity.customer ? hkjOrderEntity.customer.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjOrder.material">Material</Translate>
+          </dt>
+          <dd>{hkjOrderEntity.material ? hkjOrderEntity.material.id : ''}</dd>
           <dt>
             <Translate contentKey="serverApp.hkjOrder.jewelry">Jewelry</Translate>
           </dt>

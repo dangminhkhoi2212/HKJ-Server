@@ -82,8 +82,6 @@ class HkjOrderCriteriaTest {
         hkjOrderCriteria.status();
         hkjOrderCriteria.customerRating();
         hkjOrderCriteria.totalPrice();
-        hkjOrderCriteria.budget();
-        hkjOrderCriteria.depositAmount();
         hkjOrderCriteria.isDeleted();
         hkjOrderCriteria.createdBy();
         hkjOrderCriteria.createdDate();
@@ -91,6 +89,7 @@ class HkjOrderCriteriaTest {
         hkjOrderCriteria.lastModifiedDate();
         hkjOrderCriteria.orderImagesId();
         hkjOrderCriteria.customerId();
+        hkjOrderCriteria.materialId();
         hkjOrderCriteria.jewelryId();
         hkjOrderCriteria.projectId();
         hkjOrderCriteria.categoryId();
@@ -108,8 +107,6 @@ class HkjOrderCriteriaTest {
                 condition.apply(criteria.getStatus()) &&
                 condition.apply(criteria.getCustomerRating()) &&
                 condition.apply(criteria.getTotalPrice()) &&
-                condition.apply(criteria.getBudget()) &&
-                condition.apply(criteria.getDepositAmount()) &&
                 condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
@@ -117,6 +114,7 @@ class HkjOrderCriteriaTest {
                 condition.apply(criteria.getLastModifiedDate()) &&
                 condition.apply(criteria.getOrderImagesId()) &&
                 condition.apply(criteria.getCustomerId()) &&
+                condition.apply(criteria.getMaterialId()) &&
                 condition.apply(criteria.getJewelryId()) &&
                 condition.apply(criteria.getProjectId()) &&
                 condition.apply(criteria.getCategoryId()) &&
@@ -136,8 +134,6 @@ class HkjOrderCriteriaTest {
                 condition.apply(criteria.getStatus(), copy.getStatus()) &&
                 condition.apply(criteria.getCustomerRating(), copy.getCustomerRating()) &&
                 condition.apply(criteria.getTotalPrice(), copy.getTotalPrice()) &&
-                condition.apply(criteria.getBudget(), copy.getBudget()) &&
-                condition.apply(criteria.getDepositAmount(), copy.getDepositAmount()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
@@ -145,6 +141,7 @@ class HkjOrderCriteriaTest {
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
                 condition.apply(criteria.getOrderImagesId(), copy.getOrderImagesId()) &&
                 condition.apply(criteria.getCustomerId(), copy.getCustomerId()) &&
+                condition.apply(criteria.getMaterialId(), copy.getMaterialId()) &&
                 condition.apply(criteria.getJewelryId(), copy.getJewelryId()) &&
                 condition.apply(criteria.getProjectId(), copy.getProjectId()) &&
                 condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&

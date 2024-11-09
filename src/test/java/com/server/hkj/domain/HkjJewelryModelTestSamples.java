@@ -2,12 +2,14 @@ package com.server.hkj.domain;
 
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class HkjJewelryModelTestSamples {
 
     private static final Random random = new Random();
     private static final AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+    private static final AtomicInteger intCount = new AtomicInteger(random.nextInt() + (2 * Short.MAX_VALUE));
 
     public static HkjJewelryModel getHkjJewelryModelSample1() {
         return new HkjJewelryModel()
@@ -16,8 +18,7 @@ public class HkjJewelryModelTestSamples {
             .name("name1")
             .description("description1")
             .coverImage("coverImage1")
-            .color("color1")
-            .notes("notes1")
+            .daysCompleted(1)
             .createdBy("createdBy1")
             .lastModifiedBy("lastModifiedBy1");
     }
@@ -29,8 +30,7 @@ public class HkjJewelryModelTestSamples {
             .name("name2")
             .description("description2")
             .coverImage("coverImage2")
-            .color("color2")
-            .notes("notes2")
+            .daysCompleted(2)
             .createdBy("createdBy2")
             .lastModifiedBy("lastModifiedBy2");
     }
@@ -42,8 +42,7 @@ public class HkjJewelryModelTestSamples {
             .name(UUID.randomUUID().toString())
             .description(UUID.randomUUID().toString())
             .coverImage(UUID.randomUUID().toString())
-            .color(UUID.randomUUID().toString())
-            .notes(UUID.randomUUID().toString())
+            .daysCompleted(intCount.incrementAndGet())
             .createdBy(UUID.randomUUID().toString())
             .lastModifiedBy(UUID.randomUUID().toString());
     }

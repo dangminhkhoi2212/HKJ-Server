@@ -80,17 +80,11 @@ public class HkjMaterialQueryService extends QueryService<HkjMaterial> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), HkjMaterial_.name));
             }
-            if (criteria.getQuantity() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getQuantity(), HkjMaterial_.quantity));
-            }
             if (criteria.getUnit() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getUnit(), HkjMaterial_.unit));
             }
-            if (criteria.getUnitPrice() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getUnitPrice(), HkjMaterial_.unitPrice));
-            }
-            if (criteria.getSupplier() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getSupplier(), HkjMaterial_.supplier));
+            if (criteria.getPricePerUnit() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPricePerUnit(), HkjMaterial_.pricePerUnit));
             }
             if (criteria.getCoverImage() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCoverImage(), HkjMaterial_.coverImage));

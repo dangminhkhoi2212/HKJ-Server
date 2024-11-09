@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
 import { getEntities as getHkjProjects } from 'app/entities/hkj-project/hkj-project.reducer';
+import { getEntities as getHkjMaterials } from 'app/entities/hkj-material/hkj-material.reducer';
+import { getEntities as getHkjCarts } from 'app/entities/hkj-cart/hkj-cart.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-jewelry-model.reducer';
 
 export const HkjJewelryModelUpdate = () => {
@@ -21,6 +23,8 @@ export const HkjJewelryModelUpdate = () => {
 
   const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
   const hkjProjects = useAppSelector(state => state.hkjProject.entities);
+  const hkjMaterials = useAppSelector(state => state.hkjMaterial.entities);
+  const hkjCarts = useAppSelector(state => state.hkjCart.entities);
   const hkjJewelryModelEntity = useAppSelector(state => state.hkjJewelryModel.entity);
   const loading = useAppSelector(state => state.hkjJewelryModel.loading);
   const updating = useAppSelector(state => state.hkjJewelryModel.updating);
@@ -39,6 +43,8 @@ export const HkjJewelryModelUpdate = () => {
 
     dispatch(getHkjCategories({}));
     dispatch(getHkjProjects({}));
+    dispatch(getHkjMaterials({}));
+    dispatch(getHkjCarts({}));
   }, []);
 
   useEffect(() => {
@@ -51,11 +57,11 @@ export const HkjJewelryModelUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
-    if (values.weight !== undefined && typeof values.weight !== 'number') {
-      values.weight = Number(values.weight);
-    }
     if (values.price !== undefined && typeof values.price !== 'number') {
       values.price = Number(values.price);
+    }
+    if (values.daysCompleted !== undefined && typeof values.daysCompleted !== 'number') {
+      values.daysCompleted = Number(values.daysCompleted);
     }
     values.createdDate = convertDateTimeToServer(values.createdDate);
     values.lastModifiedDate = convertDateTimeToServer(values.lastModifiedDate);
@@ -65,6 +71,8 @@ export const HkjJewelryModelUpdate = () => {
       ...values,
       category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
       project: hkjProjects.find(it => it.id.toString() === values.project?.toString()),
+      material: hkjMaterials.find(it => it.id.toString() === values.material?.toString()),
+      hkjCart: hkjCarts.find(it => it.id.toString() === values.hkjCart?.toString()),
     };
 
     if (isNew) {
@@ -86,6 +94,8 @@ export const HkjJewelryModelUpdate = () => {
           lastModifiedDate: convertDateTimeFromServer(hkjJewelryModelEntity.lastModifiedDate),
           category: hkjJewelryModelEntity?.category?.id,
           project: hkjJewelryModelEntity?.project?.id,
+          material: hkjJewelryModelEntity?.material?.id,
+          hkjCart: hkjJewelryModelEntity?.hkjCart?.id,
         };
 
   return (
@@ -151,39 +161,10 @@ export const HkjJewelryModelUpdate = () => {
                 type="text"
               />
               <ValidatedField
-                label={translate('serverApp.hkjJewelryModel.isCustom')}
-                id="hkj-jewelry-model-isCustom"
-                name="isCustom"
-                data-cy="isCustom"
-                check
-                type="checkbox"
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjJewelryModel.weight')}
-                id="hkj-jewelry-model-weight"
-                name="weight"
-                data-cy="weight"
-                type="text"
-              />
-              <ValidatedField
                 label={translate('serverApp.hkjJewelryModel.price')}
                 id="hkj-jewelry-model-price"
                 name="price"
                 data-cy="price"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjJewelryModel.color')}
-                id="hkj-jewelry-model-color"
-                name="color"
-                data-cy="color"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjJewelryModel.notes')}
-                id="hkj-jewelry-model-notes"
-                name="notes"
-                data-cy="notes"
                 type="text"
               />
               <ValidatedField
@@ -209,6 +190,13 @@ export const HkjJewelryModelUpdate = () => {
                 data-cy="active"
                 check
                 type="checkbox"
+              />
+              <ValidatedField
+                label={translate('serverApp.hkjJewelryModel.daysCompleted')}
+                id="hkj-jewelry-model-daysCompleted"
+                name="daysCompleted"
+                data-cy="daysCompleted"
+                type="text"
               />
               <ValidatedField
                 label={translate('serverApp.hkjJewelryModel.createdBy')}
@@ -266,6 +254,38 @@ export const HkjJewelryModelUpdate = () => {
                 <option value="" key="0" />
                 {hkjProjects
                   ? hkjProjects.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-jewelry-model-material"
+                name="material"
+                data-cy="material"
+                label={translate('serverApp.hkjJewelryModel.material')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjMaterials
+                  ? hkjMaterials.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-jewelry-model-hkjCart"
+                name="hkjCart"
+                data-cy="hkjCart"
+                label={translate('serverApp.hkjJewelryModel.hkjCart')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjCarts
+                  ? hkjCarts.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

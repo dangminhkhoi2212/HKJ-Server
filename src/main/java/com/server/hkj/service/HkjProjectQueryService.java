@@ -101,17 +101,11 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             if (criteria.getPriority() != null) {
                 specification = specification.and(buildSpecification(criteria.getPriority(), HkjProject_.priority));
             }
-            if (criteria.getBudget() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getBudget(), HkjProject_.budget));
-            }
             if (criteria.getActualCost() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getActualCost(), HkjProject_.actualCost));
             }
             if (criteria.getQualityCheck() != null) {
                 specification = specification.and(buildSpecification(criteria.getQualityCheck(), HkjProject_.qualityCheck));
-            }
-            if (criteria.getNotes() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjProject_.notes));
             }
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjProject_.isDeleted));
@@ -141,6 +135,12 @@ public class HkjProjectQueryService extends QueryService<HkjProject> {
             if (criteria.getCategoryId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getCategoryId(), root -> root.join(HkjProject_.category, JoinType.LEFT).get(HkjCategory_.id)
+                    )
+                );
+            }
+            if (criteria.getMaterialId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getMaterialId(), root -> root.join(HkjProject_.material, JoinType.LEFT).get(HkjMaterial_.id)
                     )
                 );
             }

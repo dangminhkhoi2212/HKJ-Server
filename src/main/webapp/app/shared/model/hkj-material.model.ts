@@ -3,10 +3,8 @@ import dayjs from 'dayjs';
 export interface IHkjMaterial {
   id?: number;
   name?: string;
-  quantity?: number;
-  unit?: string;
-  unitPrice?: number | null;
-  supplier?: string | null;
+  unit?: string | null;
+  pricePerUnit?: number | null;
   coverImage?: string | null;
   isDeleted?: boolean | null;
   createdBy?: string;

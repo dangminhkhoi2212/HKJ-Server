@@ -17,6 +17,13 @@
                                  referencedTableName="hkj_material"
                                  />
 
+        <addForeignKeyConstraint baseColumnNames="jewelry_id"
+                                 baseTableName="hkj_material_usage"
+                                 constraintName="fk_hkj_material_usage__jewelry_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_jewelry_model"
+                                 />
+
         <addForeignKeyConstraint baseColumnNames="task_id"
                                  baseTableName="hkj_material_usage"
                                  constraintName="fk_hkj_material_usage__task_id"

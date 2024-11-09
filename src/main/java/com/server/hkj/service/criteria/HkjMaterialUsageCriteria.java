@@ -5,7 +5,13 @@ import java.util.Objects;
 import java.util.Optional;
 import org.springdoc.core.annotations.ParameterObject;
 import tech.jhipster.service.Criteria;
-import tech.jhipster.service.filter.*;
+import tech.jhipster.service.filter.BigDecimalFilter;
+import tech.jhipster.service.filter.BooleanFilter;
+import tech.jhipster.service.filter.Filter;
+import tech.jhipster.service.filter.FloatFilter;
+import tech.jhipster.service.filter.InstantFilter;
+import tech.jhipster.service.filter.LongFilter;
+import tech.jhipster.service.filter.StringFilter;
 
 /**
  * Criteria class for the {@link com.server.hkj.domain.HkjMaterialUsage} entity. This class is used
@@ -24,15 +30,9 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private IntegerFilter quantity;
-
-    private IntegerFilter lossQuantity;
-
-    private InstantFilter usageDate;
+    private FloatFilter usage;
 
     private StringFilter notes;
-
-    private FloatFilter weight;
 
     private BigDecimalFilter price;
 
@@ -48,6 +48,8 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
 
     private LongFilter materialId;
 
+    private LongFilter jewelryId;
+
     private LongFilter taskId;
 
     private Boolean distinct;
@@ -56,11 +58,8 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
 
     public HkjMaterialUsageCriteria(HkjMaterialUsageCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
-        this.quantity = other.optionalQuantity().map(IntegerFilter::copy).orElse(null);
-        this.lossQuantity = other.optionalLossQuantity().map(IntegerFilter::copy).orElse(null);
-        this.usageDate = other.optionalUsageDate().map(InstantFilter::copy).orElse(null);
+        this.usage = other.optionalUsage().map(FloatFilter::copy).orElse(null);
         this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
-        this.weight = other.optionalWeight().map(FloatFilter::copy).orElse(null);
         this.price = other.optionalPrice().map(BigDecimalFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
@@ -68,6 +67,7 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
         this.materialId = other.optionalMaterialId().map(LongFilter::copy).orElse(null);
+        this.jewelryId = other.optionalJewelryId().map(LongFilter::copy).orElse(null);
         this.taskId = other.optionalTaskId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -96,61 +96,23 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public IntegerFilter getQuantity() {
-        return quantity;
+    public FloatFilter getUsage() {
+        return usage;
     }
 
-    public Optional<IntegerFilter> optionalQuantity() {
-        return Optional.ofNullable(quantity);
+    public Optional<FloatFilter> optionalUsage() {
+        return Optional.ofNullable(usage);
     }
 
-    public IntegerFilter quantity() {
-        if (quantity == null) {
-            setQuantity(new IntegerFilter());
+    public FloatFilter usage() {
+        if (usage == null) {
+            setUsage(new FloatFilter());
         }
-        return quantity;
+        return usage;
     }
 
-    public void setQuantity(IntegerFilter quantity) {
-        this.quantity = quantity;
-    }
-
-    public IntegerFilter getLossQuantity() {
-        return lossQuantity;
-    }
-
-    public Optional<IntegerFilter> optionalLossQuantity() {
-        return Optional.ofNullable(lossQuantity);
-    }
-
-    public IntegerFilter lossQuantity() {
-        if (lossQuantity == null) {
-            setLossQuantity(new IntegerFilter());
-        }
-        return lossQuantity;
-    }
-
-    public void setLossQuantity(IntegerFilter lossQuantity) {
-        this.lossQuantity = lossQuantity;
-    }
-
-    public InstantFilter getUsageDate() {
-        return usageDate;
-    }
-
-    public Optional<InstantFilter> optionalUsageDate() {
-        return Optional.ofNullable(usageDate);
-    }
-
-    public InstantFilter usageDate() {
-        if (usageDate == null) {
-            setUsageDate(new InstantFilter());
-        }
-        return usageDate;
-    }
-
-    public void setUsageDate(InstantFilter usageDate) {
-        this.usageDate = usageDate;
+    public void setUsage(FloatFilter usage) {
+        this.usage = usage;
     }
 
     public StringFilter getNotes() {
@@ -170,25 +132,6 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
 
     public void setNotes(StringFilter notes) {
         this.notes = notes;
-    }
-
-    public FloatFilter getWeight() {
-        return weight;
-    }
-
-    public Optional<FloatFilter> optionalWeight() {
-        return Optional.ofNullable(weight);
-    }
-
-    public FloatFilter weight() {
-        if (weight == null) {
-            setWeight(new FloatFilter());
-        }
-        return weight;
-    }
-
-    public void setWeight(FloatFilter weight) {
-        this.weight = weight;
     }
 
     public BigDecimalFilter getPrice() {
@@ -324,6 +267,25 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
         this.materialId = materialId;
     }
 
+    public LongFilter getJewelryId() {
+        return jewelryId;
+    }
+
+    public Optional<LongFilter> optionalJewelryId() {
+        return Optional.ofNullable(jewelryId);
+    }
+
+    public LongFilter jewelryId() {
+        if (jewelryId == null) {
+            setJewelryId(new LongFilter());
+        }
+        return jewelryId;
+    }
+
+    public void setJewelryId(LongFilter jewelryId) {
+        this.jewelryId = jewelryId;
+    }
+
     public LongFilter getTaskId() {
         return taskId;
     }
@@ -373,11 +335,8 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
         final HkjMaterialUsageCriteria that = (HkjMaterialUsageCriteria) o;
         return (
             Objects.equals(id, that.id) &&
-            Objects.equals(quantity, that.quantity) &&
-            Objects.equals(lossQuantity, that.lossQuantity) &&
-            Objects.equals(usageDate, that.usageDate) &&
+            Objects.equals(usage, that.usage) &&
             Objects.equals(notes, that.notes) &&
-            Objects.equals(weight, that.weight) &&
             Objects.equals(price, that.price) &&
             Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
@@ -385,6 +344,7 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
             Objects.equals(materialId, that.materialId) &&
+            Objects.equals(jewelryId, that.jewelryId) &&
             Objects.equals(taskId, that.taskId) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -394,11 +354,8 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
     public int hashCode() {
         return Objects.hash(
             id,
-            quantity,
-            lossQuantity,
-            usageDate,
+            usage,
             notes,
-            weight,
             price,
             isDeleted,
             createdBy,
@@ -406,6 +363,7 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
             lastModifiedBy,
             lastModifiedDate,
             materialId,
+            jewelryId,
             taskId,
             distinct
         );
@@ -416,11 +374,8 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
     public String toString() {
         return "HkjMaterialUsageCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
-            optionalQuantity().map(f -> "quantity=" + f + ", ").orElse("") +
-            optionalLossQuantity().map(f -> "lossQuantity=" + f + ", ").orElse("") +
-            optionalUsageDate().map(f -> "usageDate=" + f + ", ").orElse("") +
+            optionalUsage().map(f -> "usage=" + f + ", ").orElse("") +
             optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
-            optionalWeight().map(f -> "weight=" + f + ", ").orElse("") +
             optionalPrice().map(f -> "price=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
@@ -428,6 +383,7 @@ public class HkjMaterialUsageCriteria implements Serializable, Criteria {
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
             optionalMaterialId().map(f -> "materialId=" + f + ", ").orElse("") +
+            optionalJewelryId().map(f -> "jewelryId=" + f + ", ").orElse("") +
             optionalTaskId().map(f -> "taskId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

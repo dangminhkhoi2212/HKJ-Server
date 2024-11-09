@@ -84,7 +84,6 @@ class HkjTaskCriteriaTest {
         hkjTaskCriteria.status();
         hkjTaskCriteria.priority();
         hkjTaskCriteria.point();
-        hkjTaskCriteria.notes();
         hkjTaskCriteria.isDeleted();
         hkjTaskCriteria.createdBy();
         hkjTaskCriteria.createdDate();
@@ -110,7 +109,6 @@ class HkjTaskCriteriaTest {
                 condition.apply(criteria.getStatus()) &&
                 condition.apply(criteria.getPriority()) &&
                 condition.apply(criteria.getPoint()) &&
-                condition.apply(criteria.getNotes()) &&
                 condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
@@ -138,7 +136,6 @@ class HkjTaskCriteriaTest {
                 condition.apply(criteria.getStatus(), copy.getStatus()) &&
                 condition.apply(criteria.getPriority(), copy.getPriority()) &&
                 condition.apply(criteria.getPoint(), copy.getPoint()) &&
-                condition.apply(criteria.getNotes(), copy.getNotes()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&

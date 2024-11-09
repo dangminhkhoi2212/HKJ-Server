@@ -18,11 +18,8 @@
         "title": "Hkj Material Usage"
       },
       "id": "ID",
-      "quantity": "Quantity",
-      "lossQuantity": "Loss Quantity",
-      "usageDate": "Usage Date",
+      "usage": "Usage",
       "notes": "Notes",
-      "weight": "Weight",
       "price": "Price",
       "isDeleted": "Is Deleted",
       "createdBy": "Created By",
@@ -30,6 +27,7 @@
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
       "material": "Material",
+      "jewelry": "Jewelry",
       "task": "Task"
     }
   }

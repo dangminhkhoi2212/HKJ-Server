@@ -15,7 +15,6 @@ public class HkjProjectTestSamples {
             .name("name1")
             .coverImage("coverImage1")
             .description("description1")
-            .notes("notes1")
             .createdBy("createdBy1")
             .lastModifiedBy("lastModifiedBy1");
     }
@@ -26,7 +25,6 @@ public class HkjProjectTestSamples {
             .name("name2")
             .coverImage("coverImage2")
             .description("description2")
-            .notes("notes2")
             .createdBy("createdBy2")
             .lastModifiedBy("lastModifiedBy2");
     }
@@ -37,7 +35,6 @@ public class HkjProjectTestSamples {
             .name(UUID.randomUUID().toString())
             .coverImage(UUID.randomUUID().toString())
             .description(UUID.randomUUID().toString())
-            .notes(UUID.randomUUID().toString())
             .createdBy(UUID.randomUUID().toString())
             .lastModifiedBy(UUID.randomUUID().toString());
     }

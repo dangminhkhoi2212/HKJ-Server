@@ -58,12 +58,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Column(name = "total_price", precision = 21, scale = 2)
     private BigDecimal totalPrice;
 
-    @Column(name = "budget", precision = 21, scale = 2)
-    private BigDecimal budget;
-
-    @Column(name = "deposit_amount", precision = 21, scale = 2)
-    private BigDecimal depositAmount;
-
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
@@ -84,11 +78,15 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     private UserExtra customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images", "category", "project" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
+    private HkjMaterial material;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "images", "materials", "category", "project", "material", "hkjCart" }, allowSetters = true)
     private HkjJewelryModel jewelry;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "tasks", "manager", "category" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tasks", "manager", "category", "material" }, allowSetters = true)
     private HkjProject project;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -200,32 +198,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         this.totalPrice = totalPrice;
     }
 
-    public BigDecimal getBudget() {
-        return this.budget;
-    }
-
-    public HkjOrder budget(BigDecimal budget) {
-        this.setBudget(budget);
-        return this;
-    }
-
-    public void setBudget(BigDecimal budget) {
-        this.budget = budget;
-    }
-
-    public BigDecimal getDepositAmount() {
-        return this.depositAmount;
-    }
-
-    public HkjOrder depositAmount(BigDecimal depositAmount) {
-        this.setDepositAmount(depositAmount);
-        return this;
-    }
-
-    public void setDepositAmount(BigDecimal depositAmount) {
-        this.depositAmount = depositAmount;
-    }
-
     public Boolean getIsDeleted() {
         return this.isDeleted;
     }
@@ -324,6 +296,19 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         return this;
     }
 
+    public HkjMaterial getMaterial() {
+        return this.material;
+    }
+
+    public void setMaterial(HkjMaterial hkjMaterial) {
+        this.material = hkjMaterial;
+    }
+
+    public HkjOrder material(HkjMaterial hkjMaterial) {
+        this.setMaterial(hkjMaterial);
+        return this;
+    }
+
     public HkjJewelryModel getJewelry() {
         return this.jewelry;
     }
@@ -394,8 +379,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
             ", status='" + getStatus() + "'" +
             ", customerRating=" + getCustomerRating() +
             ", totalPrice=" + getTotalPrice() +
-            ", budget=" + getBudget() +
-            ", depositAmount=" + getDepositAmount() +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

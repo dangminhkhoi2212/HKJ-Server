@@ -79,21 +79,21 @@ class HkjJewelryModelCriteriaTest {
         hkjJewelryModelCriteria.name();
         hkjJewelryModelCriteria.description();
         hkjJewelryModelCriteria.coverImage();
-        hkjJewelryModelCriteria.isCustom();
-        hkjJewelryModelCriteria.weight();
         hkjJewelryModelCriteria.price();
-        hkjJewelryModelCriteria.color();
-        hkjJewelryModelCriteria.notes();
         hkjJewelryModelCriteria.isDeleted();
         hkjJewelryModelCriteria.isCoverSearch();
         hkjJewelryModelCriteria.active();
+        hkjJewelryModelCriteria.daysCompleted();
         hkjJewelryModelCriteria.createdBy();
         hkjJewelryModelCriteria.createdDate();
         hkjJewelryModelCriteria.lastModifiedBy();
         hkjJewelryModelCriteria.lastModifiedDate();
         hkjJewelryModelCriteria.imagesId();
+        hkjJewelryModelCriteria.materialsId();
         hkjJewelryModelCriteria.categoryId();
         hkjJewelryModelCriteria.projectId();
+        hkjJewelryModelCriteria.materialId();
+        hkjJewelryModelCriteria.hkjCartId();
         hkjJewelryModelCriteria.distinct();
     }
 
@@ -105,21 +105,21 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getName()) &&
                 condition.apply(criteria.getDescription()) &&
                 condition.apply(criteria.getCoverImage()) &&
-                condition.apply(criteria.getIsCustom()) &&
-                condition.apply(criteria.getWeight()) &&
                 condition.apply(criteria.getPrice()) &&
-                condition.apply(criteria.getColor()) &&
-                condition.apply(criteria.getNotes()) &&
                 condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getIsCoverSearch()) &&
                 condition.apply(criteria.getActive()) &&
+                condition.apply(criteria.getDaysCompleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
                 condition.apply(criteria.getImagesId()) &&
+                condition.apply(criteria.getMaterialsId()) &&
                 condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getProjectId()) &&
+                condition.apply(criteria.getMaterialId()) &&
+                condition.apply(criteria.getHkjCartId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -136,21 +136,21 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getName(), copy.getName()) &&
                 condition.apply(criteria.getDescription(), copy.getDescription()) &&
                 condition.apply(criteria.getCoverImage(), copy.getCoverImage()) &&
-                condition.apply(criteria.getIsCustom(), copy.getIsCustom()) &&
-                condition.apply(criteria.getWeight(), copy.getWeight()) &&
                 condition.apply(criteria.getPrice(), copy.getPrice()) &&
-                condition.apply(criteria.getColor(), copy.getColor()) &&
-                condition.apply(criteria.getNotes(), copy.getNotes()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getIsCoverSearch(), copy.getIsCoverSearch()) &&
                 condition.apply(criteria.getActive(), copy.getActive()) &&
+                condition.apply(criteria.getDaysCompleted(), copy.getDaysCompleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
                 condition.apply(criteria.getImagesId(), copy.getImagesId()) &&
+                condition.apply(criteria.getMaterialsId(), copy.getMaterialsId()) &&
                 condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getProjectId(), copy.getProjectId()) &&
+                condition.apply(criteria.getMaterialId(), copy.getMaterialId()) &&
+                condition.apply(criteria.getHkjCartId(), copy.getHkjCartId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

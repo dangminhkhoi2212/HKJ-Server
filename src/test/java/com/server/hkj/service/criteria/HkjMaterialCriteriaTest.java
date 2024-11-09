@@ -76,10 +76,8 @@ class HkjMaterialCriteriaTest {
     private static void setAllFilters(HkjMaterialCriteria hkjMaterialCriteria) {
         hkjMaterialCriteria.id();
         hkjMaterialCriteria.name();
-        hkjMaterialCriteria.quantity();
         hkjMaterialCriteria.unit();
-        hkjMaterialCriteria.unitPrice();
-        hkjMaterialCriteria.supplier();
+        hkjMaterialCriteria.pricePerUnit();
         hkjMaterialCriteria.coverImage();
         hkjMaterialCriteria.isDeleted();
         hkjMaterialCriteria.createdBy();
@@ -95,10 +93,8 @@ class HkjMaterialCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getName()) &&
-                condition.apply(criteria.getQuantity()) &&
                 condition.apply(criteria.getUnit()) &&
-                condition.apply(criteria.getUnitPrice()) &&
-                condition.apply(criteria.getSupplier()) &&
+                condition.apply(criteria.getPricePerUnit()) &&
                 condition.apply(criteria.getCoverImage()) &&
                 condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
@@ -116,10 +112,8 @@ class HkjMaterialCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getName(), copy.getName()) &&
-                condition.apply(criteria.getQuantity(), copy.getQuantity()) &&
                 condition.apply(criteria.getUnit(), copy.getUnit()) &&
-                condition.apply(criteria.getUnitPrice(), copy.getUnitPrice()) &&
-                condition.apply(criteria.getSupplier(), copy.getSupplier()) &&
+                condition.apply(criteria.getPricePerUnit(), copy.getPricePerUnit()) &&
                 condition.apply(criteria.getCoverImage(), copy.getCoverImage()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&

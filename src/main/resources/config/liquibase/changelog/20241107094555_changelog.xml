@@ -1,0 +1,59 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1730972940603-9">
+        <dropForeignKeyConstraint baseTableName="jewelry_image_vectors" constraintName="jewelry_image_vectors_jewelry_id_fkey"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-1">
+        <addColumn tableName="hkj_jewelry_model">
+            <column name="days_completed" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-2">
+        <addColumn tableName="hkj_cart">
+            <column name="is_deleted" type="boolean"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-3">
+        <addColumn tableName="hkj_material_usage">
+            <column name="jewelry_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-4">
+        <addColumn tableName="hkj_material">
+            <column name="price_per_unit" type="numeric(21, 2)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-5">
+        <addColumn tableName="hkj_cart">
+            <column name="quantity" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-6">
+        <addColumn tableName="hkj_material">
+            <column name="unit" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-7">
+        <addColumn tableName="hkj_material_usage">
+            <column name="usage" type="integer"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-8">
+        <addForeignKeyConstraint baseColumnNames="jewelry_id" baseTableName="hkj_material_usage" constraintName="FKnf6dojox6pco3tvrwoyl14m84" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_jewelry_model" validate="true"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-10">
+        <dropTable tableName="jewelry_image_vectors"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-11">
+        <dropColumn columnName="loss_quantity" tableName="hkj_material_usage"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-12">
+        <dropColumn columnName="quantity" tableName="hkj_material_usage"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-13">
+        <dropColumn columnName="usage_date" tableName="hkj_material_usage"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730972940603-14">
+        <dropColumn columnName="weight" tableName="hkj_material_usage"/>
+    </changeSet>
+</databaseChangeLog>

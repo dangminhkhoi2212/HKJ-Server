@@ -39,29 +39,17 @@ export const HkjMaterialDetail = () => {
           </dt>
           <dd>{hkjMaterialEntity.name}</dd>
           <dt>
-            <span id="quantity">
-              <Translate contentKey="serverApp.hkjMaterial.quantity">Quantity</Translate>
-            </span>
-          </dt>
-          <dd>{hkjMaterialEntity.quantity}</dd>
-          <dt>
             <span id="unit">
               <Translate contentKey="serverApp.hkjMaterial.unit">Unit</Translate>
             </span>
           </dt>
           <dd>{hkjMaterialEntity.unit}</dd>
           <dt>
-            <span id="unitPrice">
-              <Translate contentKey="serverApp.hkjMaterial.unitPrice">Unit Price</Translate>
+            <span id="pricePerUnit">
+              <Translate contentKey="serverApp.hkjMaterial.pricePerUnit">Price Per Unit</Translate>
             </span>
           </dt>
-          <dd>{hkjMaterialEntity.unitPrice}</dd>
-          <dt>
-            <span id="supplier">
-              <Translate contentKey="serverApp.hkjMaterial.supplier">Supplier</Translate>
-            </span>
-          </dt>
-          <dd>{hkjMaterialEntity.supplier}</dd>
+          <dd>{hkjMaterialEntity.pricePerUnit}</dd>
           <dt>
             <span id="coverImage">
               <Translate contentKey="serverApp.hkjMaterial.coverImage">Cover Image</Translate>

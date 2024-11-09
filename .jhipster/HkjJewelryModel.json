@@ -9,7 +9,7 @@
     {
       "fieldName": "sku",
       "fieldType": "String",
-      "fieldValidateRules": ["required", "unique"]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "name",
@@ -27,24 +27,8 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "isCustom",
-      "fieldType": "Boolean"
-    },
-    {
-      "fieldName": "weight",
-      "fieldType": "Double"
-    },
-    {
       "fieldName": "price",
       "fieldType": "BigDecimal"
-    },
-    {
-      "fieldName": "color",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "notes",
-      "fieldType": "String"
     },
     {
       "fieldName": "isDeleted",
@@ -57,6 +41,10 @@
     {
       "fieldName": "active",
       "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "daysCompleted",
+      "fieldType": "Integer"
     },
     {
       "auditField": true,
@@ -106,6 +94,13 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityName": "hkjMaterialUsage",
+      "otherEntityRelationshipName": "jewelry",
+      "relationshipName": "materials",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityName": "hkjCategory",
       "relationshipName": "category",
       "relationshipSide": "left",
@@ -114,6 +109,12 @@
     {
       "otherEntityName": "hkjProject",
       "relationshipName": "project",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjMaterial",
+      "relationshipName": "material",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

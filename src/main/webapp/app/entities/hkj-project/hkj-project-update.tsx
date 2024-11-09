@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
 import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
+import { getEntities as getHkjMaterials } from 'app/entities/hkj-material/hkj-material.reducer';
 import { HkjOrderStatus } from 'app/shared/model/enumerations/hkj-order-status.model';
 import { HkjPriority } from 'app/shared/model/enumerations/hkj-priority.model';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-project.reducer';
@@ -23,6 +24,7 @@ export const HkjProjectUpdate = () => {
 
   const userExtras = useAppSelector(state => state.userExtra.entities);
   const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
+  const hkjMaterials = useAppSelector(state => state.hkjMaterial.entities);
   const hkjProjectEntity = useAppSelector(state => state.hkjProject.entity);
   const loading = useAppSelector(state => state.hkjProject.loading);
   const updating = useAppSelector(state => state.hkjProject.updating);
@@ -43,6 +45,7 @@ export const HkjProjectUpdate = () => {
 
     dispatch(getUserExtras({}));
     dispatch(getHkjCategories({}));
+    dispatch(getHkjMaterials({}));
   }, []);
 
   useEffect(() => {
@@ -58,9 +61,6 @@ export const HkjProjectUpdate = () => {
     values.startDate = convertDateTimeToServer(values.startDate);
     values.expectDate = convertDateTimeToServer(values.expectDate);
     values.endDate = convertDateTimeToServer(values.endDate);
-    if (values.budget !== undefined && typeof values.budget !== 'number') {
-      values.budget = Number(values.budget);
-    }
     if (values.actualCost !== undefined && typeof values.actualCost !== 'number') {
       values.actualCost = Number(values.actualCost);
     }
@@ -72,6 +72,7 @@ export const HkjProjectUpdate = () => {
       ...values,
       manager: userExtras.find(it => it.id.toString() === values.manager?.toString()),
       category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
+      material: hkjMaterials.find(it => it.id.toString() === values.material?.toString()),
     };
 
     if (isNew) {
@@ -101,6 +102,7 @@ export const HkjProjectUpdate = () => {
           lastModifiedDate: convertDateTimeFromServer(hkjProjectEntity.lastModifiedDate),
           manager: hkjProjectEntity?.manager?.id,
           category: hkjProjectEntity?.category?.id,
+          material: hkjProjectEntity?.material?.id,
         };
 
   return (
@@ -209,13 +211,6 @@ export const HkjProjectUpdate = () => {
                 ))}
               </ValidatedField>
               <ValidatedField
-                label={translate('serverApp.hkjProject.budget')}
-                id="hkj-project-budget"
-                name="budget"
-                data-cy="budget"
-                type="text"
-              />
-              <ValidatedField
                 label={translate('serverApp.hkjProject.actualCost')}
                 id="hkj-project-actualCost"
                 name="actualCost"
@@ -229,13 +224,6 @@ export const HkjProjectUpdate = () => {
                 data-cy="qualityCheck"
                 check
                 type="checkbox"
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjProject.notes')}
-                id="hkj-project-notes"
-                name="notes"
-                data-cy="notes"
-                type="text"
               />
               <ValidatedField
                 label={translate('serverApp.hkjProject.isDeleted')}
@@ -301,6 +289,22 @@ export const HkjProjectUpdate = () => {
                 <option value="" key="0" />
                 {hkjCategories
                   ? hkjCategories.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-project-material"
+                name="material"
+                data-cy="material"
+                label={translate('serverApp.hkjProject.material')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjMaterials
+                  ? hkjMaterials.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

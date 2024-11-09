@@ -119,25 +119,13 @@ export const HkjMaterialUsage = () => {
                   <Translate contentKey="serverApp.hkjMaterialUsage.id">ID</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('id')} />
                 </th>
-                <th className="hand" onClick={sort('quantity')}>
-                  <Translate contentKey="serverApp.hkjMaterialUsage.quantity">Quantity</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('quantity')} />
-                </th>
-                <th className="hand" onClick={sort('lossQuantity')}>
-                  <Translate contentKey="serverApp.hkjMaterialUsage.lossQuantity">Loss Quantity</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('lossQuantity')} />
-                </th>
-                <th className="hand" onClick={sort('usageDate')}>
-                  <Translate contentKey="serverApp.hkjMaterialUsage.usageDate">Usage Date</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('usageDate')} />
+                <th className="hand" onClick={sort('usage')}>
+                  <Translate contentKey="serverApp.hkjMaterialUsage.usage">Usage</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('usage')} />
                 </th>
                 <th className="hand" onClick={sort('notes')}>
                   <Translate contentKey="serverApp.hkjMaterialUsage.notes">Notes</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
-                </th>
-                <th className="hand" onClick={sort('weight')}>
-                  <Translate contentKey="serverApp.hkjMaterialUsage.weight">Weight</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('weight')} />
                 </th>
                 <th className="hand" onClick={sort('price')}>
                   <Translate contentKey="serverApp.hkjMaterialUsage.price">Price</Translate>{' '}
@@ -167,6 +155,9 @@ export const HkjMaterialUsage = () => {
                   <Translate contentKey="serverApp.hkjMaterialUsage.material">Material</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  <Translate contentKey="serverApp.hkjMaterialUsage.jewelry">Jewelry</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   <Translate contentKey="serverApp.hkjMaterialUsage.task">Task</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -180,15 +171,8 @@ export const HkjMaterialUsage = () => {
                       {hkjMaterialUsage.id}
                     </Button>
                   </td>
-                  <td>{hkjMaterialUsage.quantity}</td>
-                  <td>{hkjMaterialUsage.lossQuantity}</td>
-                  <td>
-                    {hkjMaterialUsage.usageDate ? (
-                      <TextFormat type="date" value={hkjMaterialUsage.usageDate} format={APP_DATE_FORMAT} />
-                    ) : null}
-                  </td>
+                  <td>{hkjMaterialUsage.usage}</td>
                   <td>{hkjMaterialUsage.notes}</td>
-                  <td>{hkjMaterialUsage.weight}</td>
                   <td>{hkjMaterialUsage.price}</td>
                   <td>{hkjMaterialUsage.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjMaterialUsage.createdBy}</td>
@@ -206,6 +190,13 @@ export const HkjMaterialUsage = () => {
                   <td>
                     {hkjMaterialUsage.material ? (
                       <Link to={`/hkj-material/${hkjMaterialUsage.material.id}`}>{hkjMaterialUsage.material.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {hkjMaterialUsage.jewelry ? (
+                      <Link to={`/hkj-jewelry-model/${hkjMaterialUsage.jewelry.id}`}>{hkjMaterialUsage.jewelry.id}</Link>
                     ) : (
                       ''
                     )}

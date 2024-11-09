@@ -1,0 +1,60 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1730265754034-7">
+        <dropForeignKeyConstraint baseTableName="jewelry_image_vectors" constraintName="jewelry_image_vectors_jewelry_id_fkey"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-1">
+        <addColumn tableName="hkj_jewelry_model">
+            <column name="material_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-2">
+        <addColumn tableName="hkj_order">
+            <column name="material_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-3">
+        <addColumn tableName="hkj_project">
+            <column name="material_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-4">
+        <addForeignKeyConstraint baseColumnNames="material_id" baseTableName="hkj_project" constraintName="FK60j6q5v611ffdyfqry7kvulwo" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_material" validate="true"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-5">
+        <addForeignKeyConstraint baseColumnNames="material_id" baseTableName="hkj_order" constraintName="FK8as0tayqp0nqvx9giiopwydi0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_material" validate="true"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-6">
+        <addForeignKeyConstraint baseColumnNames="material_id" baseTableName="hkj_jewelry_model" constraintName="FKorcoj15yo5t86ffwqrrn5foeb" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_material" validate="true"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-8">
+        <dropUniqueConstraint constraintName="jewelry_image_vectors_image_id_key" tableName="jewelry_image_vectors"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-9">
+        <dropUniqueConstraint constraintName="jewelry_image_vectors_url_key" tableName="jewelry_image_vectors"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-10">
+        <dropUniqueConstraint constraintName="uc_hkj_jewelry_modelsku_col" tableName="hkj_jewelry_model"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-11">
+        <dropTable tableName="jewelry_image_vectors"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-12">
+        <dropColumn columnName="budget" tableName="hkj_order"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-13">
+        <dropColumn columnName="budget" tableName="hkj_project"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-14">
+        <dropColumn columnName="deposit_amount" tableName="hkj_order"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-15">
+        <dropColumn columnName="notes" tableName="hkj_jewelry_model"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-16">
+        <dropColumn columnName="notes" tableName="hkj_project"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730265754034-17">
+        <dropColumn columnName="notes" tableName="hkj_task"/>
+    </changeSet>
+</databaseChangeLog>

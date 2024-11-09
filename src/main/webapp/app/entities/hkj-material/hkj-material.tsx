@@ -117,21 +117,13 @@ export const HkjMaterial = () => {
                   <Translate contentKey="serverApp.hkjMaterial.name">Name</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('name')} />
                 </th>
-                <th className="hand" onClick={sort('quantity')}>
-                  <Translate contentKey="serverApp.hkjMaterial.quantity">Quantity</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('quantity')} />
-                </th>
                 <th className="hand" onClick={sort('unit')}>
                   <Translate contentKey="serverApp.hkjMaterial.unit">Unit</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('unit')} />
                 </th>
-                <th className="hand" onClick={sort('unitPrice')}>
-                  <Translate contentKey="serverApp.hkjMaterial.unitPrice">Unit Price</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('unitPrice')} />
-                </th>
-                <th className="hand" onClick={sort('supplier')}>
-                  <Translate contentKey="serverApp.hkjMaterial.supplier">Supplier</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('supplier')} />
+                <th className="hand" onClick={sort('pricePerUnit')}>
+                  <Translate contentKey="serverApp.hkjMaterial.pricePerUnit">Price Per Unit</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('pricePerUnit')} />
                 </th>
                 <th className="hand" onClick={sort('coverImage')}>
                   <Translate contentKey="serverApp.hkjMaterial.coverImage">Cover Image</Translate>{' '}
@@ -169,10 +161,8 @@ export const HkjMaterial = () => {
                     </Button>
                   </td>
                   <td>{hkjMaterial.name}</td>
-                  <td>{hkjMaterial.quantity}</td>
                   <td>{hkjMaterial.unit}</td>
-                  <td>{hkjMaterial.unitPrice}</td>
-                  <td>{hkjMaterial.supplier}</td>
+                  <td>{hkjMaterial.pricePerUnit}</td>
                   <td>{hkjMaterial.coverImage}</td>
                   <td>{hkjMaterial.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjMaterial.createdBy}</td>

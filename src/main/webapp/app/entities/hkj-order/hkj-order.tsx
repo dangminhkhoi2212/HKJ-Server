@@ -141,14 +141,6 @@ export const HkjOrder = () => {
                   <Translate contentKey="serverApp.hkjOrder.totalPrice">Total Price</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('totalPrice')} />
                 </th>
-                <th className="hand" onClick={sort('budget')}>
-                  <Translate contentKey="serverApp.hkjOrder.budget">Budget</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('budget')} />
-                </th>
-                <th className="hand" onClick={sort('depositAmount')}>
-                  <Translate contentKey="serverApp.hkjOrder.depositAmount">Deposit Amount</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('depositAmount')} />
-                </th>
                 <th className="hand" onClick={sort('isDeleted')}>
                   <Translate contentKey="serverApp.hkjOrder.isDeleted">Is Deleted</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
@@ -171,6 +163,9 @@ export const HkjOrder = () => {
                 </th>
                 <th>
                   <Translate contentKey="serverApp.hkjOrder.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjOrder.material">Material</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   <Translate contentKey="serverApp.hkjOrder.jewelry">Jewelry</Translate> <FontAwesomeIcon icon="sort" />
@@ -209,8 +204,6 @@ export const HkjOrder = () => {
                   </td>
                   <td>{hkjOrder.customerRating}</td>
                   <td>{hkjOrder.totalPrice}</td>
-                  <td>{hkjOrder.budget}</td>
-                  <td>{hkjOrder.depositAmount}</td>
                   <td>{hkjOrder.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjOrder.createdBy}</td>
                   <td>{hkjOrder.createdDate ? <TextFormat type="date" value={hkjOrder.createdDate} format={APP_DATE_FORMAT} /> : null}</td>
@@ -221,6 +214,7 @@ export const HkjOrder = () => {
                     ) : null}
                   </td>
                   <td>{hkjOrder.customer ? <Link to={`/user-extra/${hkjOrder.customer.id}`}>{hkjOrder.customer.id}</Link> : ''}</td>
+                  <td>{hkjOrder.material ? <Link to={`/hkj-material/${hkjOrder.material.id}`}>{hkjOrder.material.id}</Link> : ''}</td>
                   <td>{hkjOrder.jewelry ? <Link to={`/hkj-jewelry-model/${hkjOrder.jewelry.id}`}>{hkjOrder.jewelry.id}</Link> : ''}</td>
                   <td>{hkjOrder.project ? <Link to={`/hkj-project/${hkjOrder.project.id}`}>{hkjOrder.project.id}</Link> : ''}</td>
                   <td>{hkjOrder.category ? <Link to={`/hkj-category/${hkjOrder.category.id}`}>{hkjOrder.category.id}</Link> : ''}</td>

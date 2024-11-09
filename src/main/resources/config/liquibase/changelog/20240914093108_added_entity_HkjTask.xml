@@ -41,9 +41,6 @@
             <column name="point" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="notes" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="is_deleted" type="boolean">
                 <constraints nullable="true" />
             </column>

@@ -17,16 +17,10 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="quantity" type="integer">
-                <constraints nullable="false" />
-            </column>
             <column name="unit" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="unit_price" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
-            <column name="supplier" type="varchar(255)">
+            <column name="price_per_unit" type="decimal(21,2)">
                 <constraints nullable="true" />
             </column>
             <column name="cover_image" type="varchar(255)">

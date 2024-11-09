@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { Translate, ValidatedField, ValidatedForm, isNumber, translate } from 'react-jhipster';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -44,11 +44,8 @@ export const HkjMaterialUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
-    if (values.quantity !== undefined && typeof values.quantity !== 'number') {
-      values.quantity = Number(values.quantity);
-    }
-    if (values.unitPrice !== undefined && typeof values.unitPrice !== 'number') {
-      values.unitPrice = Number(values.unitPrice);
+    if (values.pricePerUnit !== undefined && typeof values.pricePerUnit !== 'number') {
+      values.pricePerUnit = Number(values.pricePerUnit);
     }
     values.createdDate = convertDateTimeToServer(values.createdDate);
     values.lastModifiedDate = convertDateTimeToServer(values.lastModifiedDate);
@@ -113,38 +110,17 @@ export const HkjMaterialUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('serverApp.hkjMaterial.quantity')}
-                id="hkj-material-quantity"
-                name="quantity"
-                data-cy="quantity"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  validate: v => isNumber(v) || translate('entity.validation.number'),
-                }}
-              />
-              <ValidatedField
                 label={translate('serverApp.hkjMaterial.unit')}
                 id="hkj-material-unit"
                 name="unit"
                 data-cy="unit"
                 type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
               />
               <ValidatedField
-                label={translate('serverApp.hkjMaterial.unitPrice')}
-                id="hkj-material-unitPrice"
-                name="unitPrice"
-                data-cy="unitPrice"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjMaterial.supplier')}
-                id="hkj-material-supplier"
-                name="supplier"
-                data-cy="supplier"
+                label={translate('serverApp.hkjMaterial.pricePerUnit')}
+                id="hkj-material-pricePerUnit"
+                name="pricePerUnit"
+                data-cy="pricePerUnit"
                 type="text"
               />
               <ValidatedField

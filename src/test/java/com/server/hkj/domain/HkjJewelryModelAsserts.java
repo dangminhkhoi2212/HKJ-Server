@@ -54,14 +54,11 @@ public class HkjJewelryModelAsserts {
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
             .satisfies(e -> assertThat(e.getDescription()).as("check description").isEqualTo(actual.getDescription()))
             .satisfies(e -> assertThat(e.getCoverImage()).as("check coverImage").isEqualTo(actual.getCoverImage()))
-            .satisfies(e -> assertThat(e.getIsCustom()).as("check isCustom").isEqualTo(actual.getIsCustom()))
-            .satisfies(e -> assertThat(e.getWeight()).as("check weight").isEqualTo(actual.getWeight()))
             .satisfies(e -> assertThat(e.getPrice()).as("check price").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getPrice()))
-            .satisfies(e -> assertThat(e.getColor()).as("check color").isEqualTo(actual.getColor()))
-            .satisfies(e -> assertThat(e.getNotes()).as("check notes").isEqualTo(actual.getNotes()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()))
             .satisfies(e -> assertThat(e.getIsCoverSearch()).as("check isCoverSearch").isEqualTo(actual.getIsCoverSearch()))
-            .satisfies(e -> assertThat(e.getActive()).as("check active").isEqualTo(actual.getActive()));
+            .satisfies(e -> assertThat(e.getActive()).as("check active").isEqualTo(actual.getActive()))
+            .satisfies(e -> assertThat(e.getDaysCompleted()).as("check daysCompleted").isEqualTo(actual.getDaysCompleted()));
     }
 
     /**
@@ -74,6 +71,8 @@ public class HkjJewelryModelAsserts {
         assertThat(expected)
             .as("Verify HkjJewelryModel relationships")
             .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
-            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()));
+            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()))
+            .satisfies(e -> assertThat(e.getMaterial()).as("check material").isEqualTo(actual.getMaterial()))
+            .satisfies(e -> assertThat(e.getHkjCart()).as("check hkjCart").isEqualTo(actual.getHkjCart()));
     }
 }

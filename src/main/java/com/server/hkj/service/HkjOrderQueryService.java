@@ -100,12 +100,6 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
             if (criteria.getTotalPrice() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getTotalPrice(), HkjOrder_.totalPrice));
             }
-            if (criteria.getBudget() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getBudget(), HkjOrder_.budget));
-            }
-            if (criteria.getDepositAmount() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getDepositAmount(), HkjOrder_.depositAmount));
-            }
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjOrder_.isDeleted));
             }
@@ -131,6 +125,11 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
             if (criteria.getCustomerId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getCustomerId(), root -> root.join(HkjOrder_.customer, JoinType.LEFT).get(UserExtra_.id))
+                );
+            }
+            if (criteria.getMaterialId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getMaterialId(), root -> root.join(HkjOrder_.material, JoinType.LEFT).get(HkjMaterial_.id))
                 );
             }
             if (criteria.getJewelryId() != null) {

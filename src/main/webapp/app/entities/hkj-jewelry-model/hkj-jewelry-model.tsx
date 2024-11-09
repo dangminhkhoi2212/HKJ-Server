@@ -130,25 +130,9 @@ export const HkjJewelryModel = () => {
                   <Translate contentKey="serverApp.hkjJewelryModel.coverImage">Cover Image</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('coverImage')} />
                 </th>
-                <th className="hand" onClick={sort('isCustom')}>
-                  <Translate contentKey="serverApp.hkjJewelryModel.isCustom">Is Custom</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('isCustom')} />
-                </th>
-                <th className="hand" onClick={sort('weight')}>
-                  <Translate contentKey="serverApp.hkjJewelryModel.weight">Weight</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('weight')} />
-                </th>
                 <th className="hand" onClick={sort('price')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.price">Price</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('price')} />
-                </th>
-                <th className="hand" onClick={sort('color')}>
-                  <Translate contentKey="serverApp.hkjJewelryModel.color">Color</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('color')} />
-                </th>
-                <th className="hand" onClick={sort('notes')}>
-                  <Translate contentKey="serverApp.hkjJewelryModel.notes">Notes</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('notes')} />
                 </th>
                 <th className="hand" onClick={sort('isDeleted')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.isDeleted">Is Deleted</Translate>{' '}
@@ -161,6 +145,10 @@ export const HkjJewelryModel = () => {
                 <th className="hand" onClick={sort('active')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.active">Active</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('active')} />
+                </th>
+                <th className="hand" onClick={sort('daysCompleted')}>
+                  <Translate contentKey="serverApp.hkjJewelryModel.daysCompleted">Days Completed</Translate>{' '}
+                  <FontAwesomeIcon icon={getSortIconByFieldName('daysCompleted')} />
                 </th>
                 <th className="hand" onClick={sort('createdBy')}>
                   <Translate contentKey="serverApp.hkjJewelryModel.createdBy">Created By</Translate>{' '}
@@ -184,6 +172,12 @@ export const HkjJewelryModel = () => {
                 <th>
                   <Translate contentKey="serverApp.hkjJewelryModel.project">Project</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjJewelryModel.material">Material</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjJewelryModel.hkjCart">Hkj Cart</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -199,14 +193,11 @@ export const HkjJewelryModel = () => {
                   <td>{hkjJewelryModel.name}</td>
                   <td>{hkjJewelryModel.description}</td>
                   <td>{hkjJewelryModel.coverImage}</td>
-                  <td>{hkjJewelryModel.isCustom ? 'true' : 'false'}</td>
-                  <td>{hkjJewelryModel.weight}</td>
                   <td>{hkjJewelryModel.price}</td>
-                  <td>{hkjJewelryModel.color}</td>
-                  <td>{hkjJewelryModel.notes}</td>
                   <td>{hkjJewelryModel.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjJewelryModel.isCoverSearch ? 'true' : 'false'}</td>
                   <td>{hkjJewelryModel.active ? 'true' : 'false'}</td>
+                  <td>{hkjJewelryModel.daysCompleted}</td>
                   <td>{hkjJewelryModel.createdBy}</td>
                   <td>
                     {hkjJewelryModel.createdDate ? (
@@ -229,6 +220,20 @@ export const HkjJewelryModel = () => {
                   <td>
                     {hkjJewelryModel.project ? (
                       <Link to={`/hkj-project/${hkjJewelryModel.project.id}`}>{hkjJewelryModel.project.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {hkjJewelryModel.material ? (
+                      <Link to={`/hkj-material/${hkjJewelryModel.material.id}`}>{hkjJewelryModel.material.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {hkjJewelryModel.hkjCart ? (
+                      <Link to={`/hkj-cart/${hkjJewelryModel.hkjCart.id}`}>{hkjJewelryModel.hkjCart.id}</Link>
                     ) : (
                       ''
                     )}

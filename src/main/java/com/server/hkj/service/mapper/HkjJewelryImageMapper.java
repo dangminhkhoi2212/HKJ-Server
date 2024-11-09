@@ -19,7 +19,8 @@ public interface HkjJewelryImageMapper extends EntityMapper<HkjJewelryImageDTO, 
 
     @Named("hkjJewelryModelId")
     @BeanMapping(ignoreByDefault = false)
-    @Mapping(target = "project", ignore = true)
-    @Mapping(target = "category", ignore = true)
+    @Mapping(target = "category", source = "category")
+    @Mapping(target = "project", source = "project")
+    @Mapping(target = "hkjCart", source = "hkjCart")
     HkjJewelryModelDTO toDtoHkjJewelryModelId(HkjJewelryModel hkjJewelryModel);
 }

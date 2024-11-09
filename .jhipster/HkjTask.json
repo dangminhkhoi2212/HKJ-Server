@@ -55,10 +55,6 @@
       "fieldValidateRulesMin": "0"
     },
     {
-      "fieldName": "notes",
-      "fieldType": "String"
-    },
-    {
       "fieldName": "isDeleted",
       "fieldType": "Boolean"
     },

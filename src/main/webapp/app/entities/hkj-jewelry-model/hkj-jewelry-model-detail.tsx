@@ -57,35 +57,11 @@ export const HkjJewelryModelDetail = () => {
           </dt>
           <dd>{hkjJewelryModelEntity.coverImage}</dd>
           <dt>
-            <span id="isCustom">
-              <Translate contentKey="serverApp.hkjJewelryModel.isCustom">Is Custom</Translate>
-            </span>
-          </dt>
-          <dd>{hkjJewelryModelEntity.isCustom ? 'true' : 'false'}</dd>
-          <dt>
-            <span id="weight">
-              <Translate contentKey="serverApp.hkjJewelryModel.weight">Weight</Translate>
-            </span>
-          </dt>
-          <dd>{hkjJewelryModelEntity.weight}</dd>
-          <dt>
             <span id="price">
               <Translate contentKey="serverApp.hkjJewelryModel.price">Price</Translate>
             </span>
           </dt>
           <dd>{hkjJewelryModelEntity.price}</dd>
-          <dt>
-            <span id="color">
-              <Translate contentKey="serverApp.hkjJewelryModel.color">Color</Translate>
-            </span>
-          </dt>
-          <dd>{hkjJewelryModelEntity.color}</dd>
-          <dt>
-            <span id="notes">
-              <Translate contentKey="serverApp.hkjJewelryModel.notes">Notes</Translate>
-            </span>
-          </dt>
-          <dd>{hkjJewelryModelEntity.notes}</dd>
           <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjJewelryModel.isDeleted">Is Deleted</Translate>
@@ -104,6 +80,12 @@ export const HkjJewelryModelDetail = () => {
             </span>
           </dt>
           <dd>{hkjJewelryModelEntity.active ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="daysCompleted">
+              <Translate contentKey="serverApp.hkjJewelryModel.daysCompleted">Days Completed</Translate>
+            </span>
+          </dt>
+          <dd>{hkjJewelryModelEntity.daysCompleted}</dd>
           <dt>
             <span id="createdBy">
               <Translate contentKey="serverApp.hkjJewelryModel.createdBy">Created By</Translate>
@@ -144,6 +126,14 @@ export const HkjJewelryModelDetail = () => {
             <Translate contentKey="serverApp.hkjJewelryModel.project">Project</Translate>
           </dt>
           <dd>{hkjJewelryModelEntity.project ? hkjJewelryModelEntity.project.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjJewelryModel.material">Material</Translate>
+          </dt>
+          <dd>{hkjJewelryModelEntity.material ? hkjJewelryModelEntity.material.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjJewelryModel.hkjCart">Hkj Cart</Translate>
+          </dt>
+          <dd>{hkjJewelryModelEntity.hkjCart ? hkjJewelryModelEntity.hkjCart.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-jewelry-model" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

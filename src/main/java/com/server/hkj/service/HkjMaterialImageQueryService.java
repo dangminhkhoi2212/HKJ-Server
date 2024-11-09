@@ -1,9 +1,7 @@
 package com.server.hkj.service;
 
-// for static metamodels
+import com.server.hkj.domain.*; // for static metamodels
 import com.server.hkj.domain.HkjMaterialImage;
-import com.server.hkj.domain.HkjMaterialImage_;
-import com.server.hkj.domain.HkjMaterial_;
 import com.server.hkj.repository.HkjMaterialImageRepository;
 import com.server.hkj.service.criteria.HkjMaterialImageCriteria;
 import com.server.hkj.service.dto.HkjMaterialImageDTO;

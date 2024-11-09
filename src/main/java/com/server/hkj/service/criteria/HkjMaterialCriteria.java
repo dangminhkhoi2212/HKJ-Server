@@ -26,13 +26,9 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
-    private IntegerFilter quantity;
-
     private StringFilter unit;
 
-    private BigDecimalFilter unitPrice;
-
-    private StringFilter supplier;
+    private BigDecimalFilter pricePerUnit;
 
     private StringFilter coverImage;
 
@@ -55,10 +51,8 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
     public HkjMaterialCriteria(HkjMaterialCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.name = other.optionalName().map(StringFilter::copy).orElse(null);
-        this.quantity = other.optionalQuantity().map(IntegerFilter::copy).orElse(null);
         this.unit = other.optionalUnit().map(StringFilter::copy).orElse(null);
-        this.unitPrice = other.optionalUnitPrice().map(BigDecimalFilter::copy).orElse(null);
-        this.supplier = other.optionalSupplier().map(StringFilter::copy).orElse(null);
+        this.pricePerUnit = other.optionalPricePerUnit().map(BigDecimalFilter::copy).orElse(null);
         this.coverImage = other.optionalCoverImage().map(StringFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
@@ -112,25 +106,6 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         this.name = name;
     }
 
-    public IntegerFilter getQuantity() {
-        return quantity;
-    }
-
-    public Optional<IntegerFilter> optionalQuantity() {
-        return Optional.ofNullable(quantity);
-    }
-
-    public IntegerFilter quantity() {
-        if (quantity == null) {
-            setQuantity(new IntegerFilter());
-        }
-        return quantity;
-    }
-
-    public void setQuantity(IntegerFilter quantity) {
-        this.quantity = quantity;
-    }
-
     public StringFilter getUnit() {
         return unit;
     }
@@ -150,42 +125,23 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         this.unit = unit;
     }
 
-    public BigDecimalFilter getUnitPrice() {
-        return unitPrice;
+    public BigDecimalFilter getPricePerUnit() {
+        return pricePerUnit;
     }
 
-    public Optional<BigDecimalFilter> optionalUnitPrice() {
-        return Optional.ofNullable(unitPrice);
+    public Optional<BigDecimalFilter> optionalPricePerUnit() {
+        return Optional.ofNullable(pricePerUnit);
     }
 
-    public BigDecimalFilter unitPrice() {
-        if (unitPrice == null) {
-            setUnitPrice(new BigDecimalFilter());
+    public BigDecimalFilter pricePerUnit() {
+        if (pricePerUnit == null) {
+            setPricePerUnit(new BigDecimalFilter());
         }
-        return unitPrice;
+        return pricePerUnit;
     }
 
-    public void setUnitPrice(BigDecimalFilter unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
-    public StringFilter getSupplier() {
-        return supplier;
-    }
-
-    public Optional<StringFilter> optionalSupplier() {
-        return Optional.ofNullable(supplier);
-    }
-
-    public StringFilter supplier() {
-        if (supplier == null) {
-            setSupplier(new StringFilter());
-        }
-        return supplier;
-    }
-
-    public void setSupplier(StringFilter supplier) {
-        this.supplier = supplier;
+    public void setPricePerUnit(BigDecimalFilter pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
     }
 
     public StringFilter getCoverImage() {
@@ -352,10 +308,8 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(name, that.name) &&
-            Objects.equals(quantity, that.quantity) &&
             Objects.equals(unit, that.unit) &&
-            Objects.equals(unitPrice, that.unitPrice) &&
-            Objects.equals(supplier, that.supplier) &&
+            Objects.equals(pricePerUnit, that.pricePerUnit) &&
             Objects.equals(coverImage, that.coverImage) &&
             Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
@@ -372,10 +326,8 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         return Objects.hash(
             id,
             name,
-            quantity,
             unit,
-            unitPrice,
-            supplier,
+            pricePerUnit,
             coverImage,
             isDeleted,
             createdBy,
@@ -393,10 +345,8 @@ public class HkjMaterialCriteria implements Serializable, Criteria {
         return "HkjMaterialCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalName().map(f -> "name=" + f + ", ").orElse("") +
-            optionalQuantity().map(f -> "quantity=" + f + ", ").orElse("") +
             optionalUnit().map(f -> "unit=" + f + ", ").orElse("") +
-            optionalUnitPrice().map(f -> "unitPrice=" + f + ", ").orElse("") +
-            optionalSupplier().map(f -> "supplier=" + f + ", ").orElse("") +
+            optionalPricePerUnit().map(f -> "pricePerUnit=" + f + ", ").orElse("") +
             optionalCoverImage().map(f -> "coverImage=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +

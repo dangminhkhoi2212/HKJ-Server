@@ -63,17 +63,11 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Column(name = "priority", nullable = false)
     private HkjPriority priority;
 
-    @Column(name = "budget", precision = 21, scale = 2)
-    private BigDecimal budget;
-
     @Column(name = "actual_cost", precision = 21, scale = 2)
     private BigDecimal actualCost;
 
     @Column(name = "quality_check")
     private Boolean qualityCheck;
-
-    @Column(name = "notes")
-    private String notes;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted;
@@ -96,6 +90,10 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     @ManyToOne(fetch = FetchType.LAZY)
     private HkjCategory category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
+    private HkjMaterial material;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -216,19 +214,6 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         this.priority = priority;
     }
 
-    public BigDecimal getBudget() {
-        return this.budget;
-    }
-
-    public HkjProject budget(BigDecimal budget) {
-        this.setBudget(budget);
-        return this;
-    }
-
-    public void setBudget(BigDecimal budget) {
-        this.budget = budget;
-    }
-
     public BigDecimal getActualCost() {
         return this.actualCost;
     }
@@ -253,19 +238,6 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
 
     public void setQualityCheck(Boolean qualityCheck) {
         this.qualityCheck = qualityCheck;
-    }
-
-    public String getNotes() {
-        return this.notes;
-    }
-
-    public HkjProject notes(String notes) {
-        this.setNotes(notes);
-        return this;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -379,6 +351,19 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return this;
     }
 
+    public HkjMaterial getMaterial() {
+        return this.material;
+    }
+
+    public void setMaterial(HkjMaterial hkjMaterial) {
+        this.material = hkjMaterial;
+    }
+
+    public HkjProject material(HkjMaterial hkjMaterial) {
+        this.setMaterial(hkjMaterial);
+        return this;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -411,10 +396,8 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
             ", endDate='" + getEndDate() + "'" +
             ", status='" + getStatus() + "'" +
             ", priority='" + getPriority() + "'" +
-            ", budget=" + getBudget() +
             ", actualCost=" + getActualCost() +
             ", qualityCheck='" + getQualityCheck() + "'" +
-            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

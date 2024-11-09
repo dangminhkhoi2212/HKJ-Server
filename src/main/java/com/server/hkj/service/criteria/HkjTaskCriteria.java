@@ -78,8 +78,6 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     private IntegerFilter point;
 
-    private StringFilter notes;
-
     private BooleanFilter isDeleted;
 
     private StringFilter createdBy;
@@ -113,7 +111,6 @@ public class HkjTaskCriteria implements Serializable, Criteria {
         this.status = other.optionalStatus().map(HkjOrderStatusFilter::copy).orElse(null);
         this.priority = other.optionalPriority().map(HkjPriorityFilter::copy).orElse(null);
         this.point = other.optionalPoint().map(IntegerFilter::copy).orElse(null);
-        this.notes = other.optionalNotes().map(StringFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
@@ -319,25 +316,6 @@ public class HkjTaskCriteria implements Serializable, Criteria {
 
     public void setPoint(IntegerFilter point) {
         this.point = point;
-    }
-
-    public StringFilter getNotes() {
-        return notes;
-    }
-
-    public Optional<StringFilter> optionalNotes() {
-        return Optional.ofNullable(notes);
-    }
-
-    public StringFilter notes() {
-        if (notes == null) {
-            setNotes(new StringFilter());
-        }
-        return notes;
-    }
-
-    public void setNotes(StringFilter notes) {
-        this.notes = notes;
     }
 
     public BooleanFilter getIsDeleted() {
@@ -550,7 +528,6 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             Objects.equals(status, that.status) &&
             Objects.equals(priority, that.priority) &&
             Objects.equals(point, that.point) &&
-            Objects.equals(notes, that.notes) &&
             Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
@@ -577,7 +554,6 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             status,
             priority,
             point,
-            notes,
             isDeleted,
             createdBy,
             createdDate,
@@ -605,7 +581,6 @@ public class HkjTaskCriteria implements Serializable, Criteria {
             optionalStatus().map(f -> "status=" + f + ", ").orElse("") +
             optionalPriority().map(f -> "priority=" + f + ", ").orElse("") +
             optionalPoint().map(f -> "point=" + f + ", ").orElse("") +
-            optionalNotes().map(f -> "notes=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +

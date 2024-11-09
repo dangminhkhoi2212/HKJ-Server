@@ -14,6 +14,7 @@ src/main/java/com/server/hkj/config/SecurityConfiguration.java skip
 
 src/main/java/com/server/hkj/service/dto/UserExtraDTO.java skip
 src/main/java/com/server/hkj/repository/UserExtraRepository.java skip
+
 src/main/java/com/server/hkj/service/mapper/UserExtraMapper.java skip
 src/main/java/com/server/hkj/web/rest/UserExtraResource.java skip
 src/main/java/com/server/hkj/service/UserExtraService.java skip
@@ -33,6 +34,7 @@ src/main/java/com/server/hkj/service/mapper/HkjTemplateMapper.java skip
 src/main/java/com/server/hkj/service/mapper/HkjTemplateMapper.java skip
 
 src/main/java/com/server/hkj/service/mapper/HkjProjectMapper.java skip
-src/main/java/com/server/hkj/service/mapper/HkjOrderMapper.java
-
+src/main/java/com/server/hkj/service/mapper/HkjOrderMapper.java skip
+src/main/java/com/server/hkj/service/mapper/HkjJewelryModelMapper.java skip
+src/main/java/com/server/hkj/service/mapper/HkjJewelryImageMapper.java skip
 src/jhipster-jdl.jdl skip

@@ -1,6 +1,5 @@
 package com.server.hkj.service.dto;
 
-import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -14,17 +13,9 @@ public class HkjMaterialUsageDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
-    private Integer quantity;
-
-    private Integer lossQuantity;
-
-    @NotNull
-    private Instant usageDate;
+    private Float usage;
 
     private String notes;
-
-    private Float weight;
 
     private BigDecimal price;
 
@@ -40,6 +31,8 @@ public class HkjMaterialUsageDTO implements Serializable {
 
     private HkjMaterialDTO material;
 
+    private HkjJewelryModelDTO jewelry;
+
     private HkjTaskDTO task;
 
     public Long getId() {
@@ -50,28 +43,12 @@ public class HkjMaterialUsageDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Float getUsage() {
+        return usage;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Integer getLossQuantity() {
-        return lossQuantity;
-    }
-
-    public void setLossQuantity(Integer lossQuantity) {
-        this.lossQuantity = lossQuantity;
-    }
-
-    public Instant getUsageDate() {
-        return usageDate;
-    }
-
-    public void setUsageDate(Instant usageDate) {
-        this.usageDate = usageDate;
+    public void setUsage(Float usage) {
+        this.usage = usage;
     }
 
     public String getNotes() {
@@ -80,14 +57,6 @@ public class HkjMaterialUsageDTO implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public Float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
     }
 
     public BigDecimal getPrice() {
@@ -146,6 +115,14 @@ public class HkjMaterialUsageDTO implements Serializable {
         this.material = material;
     }
 
+    public HkjJewelryModelDTO getJewelry() {
+        return jewelry;
+    }
+
+    public void setJewelry(HkjJewelryModelDTO jewelry) {
+        this.jewelry = jewelry;
+    }
+
     public HkjTaskDTO getTask() {
         return task;
     }
@@ -180,11 +157,8 @@ public class HkjMaterialUsageDTO implements Serializable {
     public String toString() {
         return "HkjMaterialUsageDTO{" +
             "id=" + getId() +
-            ", quantity=" + getQuantity() +
-            ", lossQuantity=" + getLossQuantity() +
-            ", usageDate='" + getUsageDate() + "'" +
+            ", usage=" + getUsage() +
             ", notes='" + getNotes() + "'" +
-            ", weight=" + getWeight() +
             ", price=" + getPrice() +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
@@ -192,6 +166,7 @@ public class HkjMaterialUsageDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", material=" + getMaterial() +
+            ", jewelry=" + getJewelry() +
             ", task=" + getTask() +
             "}";
     }

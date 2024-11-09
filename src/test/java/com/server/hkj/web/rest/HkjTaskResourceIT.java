@@ -69,9 +69,6 @@ class HkjTaskResourceIT {
     private static final Integer UPDATED_POINT = 1;
     private static final Integer SMALLER_POINT = 0 - 1;
 
-    private static final String DEFAULT_NOTES = "AAAAAAAAAA";
-    private static final String UPDATED_NOTES = "BBBBBBBBBB";
-
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
 
@@ -117,7 +114,6 @@ class HkjTaskResourceIT {
             .status(DEFAULT_STATUS)
             .priority(DEFAULT_PRIORITY)
             .point(DEFAULT_POINT)
-            .notes(DEFAULT_NOTES)
             .isDeleted(DEFAULT_IS_DELETED);
     }
 
@@ -138,7 +134,6 @@ class HkjTaskResourceIT {
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
             .point(UPDATED_POINT)
-            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
     }
 
@@ -305,7 +300,6 @@ class HkjTaskResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY.toString())))
             .andExpect(jsonPath("$.[*].point").value(hasItem(DEFAULT_POINT)))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
@@ -330,7 +324,6 @@ class HkjTaskResourceIT {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.priority").value(DEFAULT_PRIORITY.toString()))
             .andExpect(jsonPath("$.point").value(DEFAULT_POINT))
-            .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
@@ -730,56 +723,6 @@ class HkjTaskResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjTasksByNotesIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
-
-        // Get all the hkjTaskList where notes equals to
-        defaultHkjTaskFiltering("notes.equals=" + DEFAULT_NOTES, "notes.equals=" + UPDATED_NOTES);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjTasksByNotesIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
-
-        // Get all the hkjTaskList where notes in
-        defaultHkjTaskFiltering("notes.in=" + DEFAULT_NOTES + "," + UPDATED_NOTES, "notes.in=" + UPDATED_NOTES);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjTasksByNotesIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
-
-        // Get all the hkjTaskList where notes is not null
-        defaultHkjTaskFiltering("notes.specified=true", "notes.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjTasksByNotesContainsSomething() throws Exception {
-        // Initialize the database
-        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
-
-        // Get all the hkjTaskList where notes contains
-        defaultHkjTaskFiltering("notes.contains=" + DEFAULT_NOTES, "notes.contains=" + UPDATED_NOTES);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjTasksByNotesNotContainsSomething() throws Exception {
-        // Initialize the database
-        insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
-
-        // Get all the hkjTaskList where notes does not contain
-        defaultHkjTaskFiltering("notes.doesNotContain=" + UPDATED_NOTES, "notes.doesNotContain=" + DEFAULT_NOTES);
-    }
-
-    @Test
-    @Transactional
     void getAllHkjTasksByIsDeletedIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjTask = hkjTaskRepository.saveAndFlush(hkjTask);
@@ -875,7 +818,6 @@ class HkjTaskResourceIT {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY.toString())))
             .andExpect(jsonPath("$.[*].point").value(hasItem(DEFAULT_POINT)))
-            .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
@@ -934,7 +876,6 @@ class HkjTaskResourceIT {
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
             .point(UPDATED_POINT)
-            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
         HkjTaskDTO hkjTaskDTO = hkjTaskMapper.toDto(updatedHkjTask);
 
@@ -1028,7 +969,7 @@ class HkjTaskResourceIT {
         HkjTask partialUpdatedHkjTask = new HkjTask();
         partialUpdatedHkjTask.setId(hkjTask.getId());
 
-        partialUpdatedHkjTask.coverImage(UPDATED_COVER_IMAGE).assignedDate(UPDATED_ASSIGNED_DATE).notes(UPDATED_NOTES);
+        partialUpdatedHkjTask.coverImage(UPDATED_COVER_IMAGE).assignedDate(UPDATED_ASSIGNED_DATE).isDeleted(UPDATED_IS_DELETED);
 
         restHkjTaskMockMvc
             .perform(
@@ -1067,7 +1008,6 @@ class HkjTaskResourceIT {
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
             .point(UPDATED_POINT)
-            .notes(UPDATED_NOTES)
             .isDeleted(UPDATED_IS_DELETED);
 
         restHkjTaskMockMvc

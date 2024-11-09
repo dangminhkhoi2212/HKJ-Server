@@ -12,22 +12,12 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "quantity",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "unit",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "unitPrice",
-      "fieldType": "BigDecimal"
-    },
-    {
-      "fieldName": "supplier",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "pricePerUnit",
+      "fieldType": "BigDecimal"
     },
     {
       "fieldName": "coverImage",

@@ -2,6 +2,7 @@ package com.server.hkj.domain;
 
 import static com.server.hkj.domain.HkjCategoryTestSamples.*;
 import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
+import static com.server.hkj.domain.HkjMaterialTestSamples.*;
 import static com.server.hkj.domain.HkjOrderImageTestSamples.*;
 import static com.server.hkj.domain.HkjOrderTestSamples.*;
 import static com.server.hkj.domain.HkjProjectTestSamples.*;
@@ -61,6 +62,18 @@ class HkjOrderTest {
 
         hkjOrder.customer(null);
         assertThat(hkjOrder.getCustomer()).isNull();
+    }
+
+    @Test
+    void materialTest() {
+        HkjOrder hkjOrder = getHkjOrderRandomSampleGenerator();
+        HkjMaterial hkjMaterialBack = getHkjMaterialRandomSampleGenerator();
+
+        hkjOrder.setMaterial(hkjMaterialBack);
+        assertThat(hkjOrder.getMaterial()).isEqualTo(hkjMaterialBack);
+
+        hkjOrder.material(null);
+        assertThat(hkjOrder.getMaterial()).isNull();
     }
 
     @Test

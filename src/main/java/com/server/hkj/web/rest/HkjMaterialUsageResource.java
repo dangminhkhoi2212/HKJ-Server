@@ -6,8 +6,6 @@ import com.server.hkj.service.HkjMaterialUsageService;
 import com.server.hkj.service.criteria.HkjMaterialUsageCriteria;
 import com.server.hkj.service.dto.HkjMaterialUsageDTO;
 import com.server.hkj.web.rest.errors.BadRequestAlertException;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -64,7 +62,7 @@ public class HkjMaterialUsageResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<HkjMaterialUsageDTO> createHkjMaterialUsage(@Valid @RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO)
+    public ResponseEntity<HkjMaterialUsageDTO> createHkjMaterialUsage(@RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO)
         throws URISyntaxException {
         LOG.debug("REST request to save HkjMaterialUsage : {}", hkjMaterialUsageDTO);
         if (hkjMaterialUsageDTO.getId() != null) {
@@ -89,7 +87,7 @@ public class HkjMaterialUsageResource {
     @PutMapping("/{id}")
     public ResponseEntity<HkjMaterialUsageDTO> updateHkjMaterialUsage(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO
+        @RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to update HkjMaterialUsage : {}, {}", id, hkjMaterialUsageDTO);
         if (hkjMaterialUsageDTO.getId() == null) {
@@ -123,7 +121,7 @@ public class HkjMaterialUsageResource {
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<HkjMaterialUsageDTO> partialUpdateHkjMaterialUsage(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO
+        @RequestBody HkjMaterialUsageDTO hkjMaterialUsageDTO
     ) throws URISyntaxException {
         LOG.debug("REST request to partial update HkjMaterialUsage partially : {}, {}", id, hkjMaterialUsageDTO);
         if (hkjMaterialUsageDTO.getId() == null) {

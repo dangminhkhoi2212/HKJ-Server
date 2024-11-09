@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { IHkjCategory } from 'app/shared/model/hkj-category.model';
+import { IHkjMaterial } from 'app/shared/model/hkj-material.model';
 import { HkjOrderStatus } from 'app/shared/model/enumerations/hkj-order-status.model';
 import { HkjPriority } from 'app/shared/model/enumerations/hkj-priority.model';
 
@@ -14,10 +15,8 @@ export interface IHkjProject {
   endDate?: dayjs.Dayjs | null;
   status?: keyof typeof HkjOrderStatus;
   priority?: keyof typeof HkjPriority;
-  budget?: number | null;
   actualCost?: number | null;
   qualityCheck?: boolean | null;
-  notes?: string | null;
   isDeleted?: boolean | null;
   createdBy?: string;
   createdDate?: dayjs.Dayjs;
@@ -25,6 +24,7 @@ export interface IHkjProject {
   lastModifiedDate?: dayjs.Dayjs;
   manager?: IUserExtra | null;
   category?: IHkjCategory | null;
+  material?: IHkjMaterial | null;
 }
 
 export const defaultValue: Readonly<IHkjProject> = {

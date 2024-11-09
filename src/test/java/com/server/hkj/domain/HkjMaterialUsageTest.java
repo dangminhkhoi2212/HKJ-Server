@@ -1,5 +1,6 @@
 package com.server.hkj.domain;
 
+import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
 import static com.server.hkj.domain.HkjMaterialTestSamples.*;
 import static com.server.hkj.domain.HkjMaterialUsageTestSamples.*;
 import static com.server.hkj.domain.HkjTaskTestSamples.*;
@@ -34,6 +35,18 @@ class HkjMaterialUsageTest {
 
         hkjMaterialUsage.material(null);
         assertThat(hkjMaterialUsage.getMaterial()).isNull();
+    }
+
+    @Test
+    void jewelryTest() {
+        HkjMaterialUsage hkjMaterialUsage = getHkjMaterialUsageRandomSampleGenerator();
+        HkjJewelryModel hkjJewelryModelBack = getHkjJewelryModelRandomSampleGenerator();
+
+        hkjMaterialUsage.setJewelry(hkjJewelryModelBack);
+        assertThat(hkjMaterialUsage.getJewelry()).isEqualTo(hkjJewelryModelBack);
+
+        hkjMaterialUsage.jewelry(null);
+        assertThat(hkjMaterialUsage.getJewelry()).isNull();
     }
 
     @Test

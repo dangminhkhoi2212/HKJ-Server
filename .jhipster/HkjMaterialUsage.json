@@ -7,26 +7,12 @@
   "enableAudit": true,
   "fields": [
     {
-      "fieldName": "quantity",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "lossQuantity",
-      "fieldType": "Integer"
-    },
-    {
-      "fieldName": "usageDate",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
+      "fieldName": "usage",
+      "fieldType": "Float"
     },
     {
       "fieldName": "notes",
       "fieldType": "String"
-    },
-    {
-      "fieldName": "weight",
-      "fieldType": "Float"
     },
     {
       "fieldName": "price",
@@ -80,6 +66,13 @@
       "otherEntityName": "hkjMaterial",
       "relationshipName": "material",
       "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjJewelryModel",
+      "otherEntityRelationshipName": "materials",
+      "relationshipName": "jewelry",
+      "relationshipSide": "right",
       "relationshipType": "many-to-one"
     },
     {

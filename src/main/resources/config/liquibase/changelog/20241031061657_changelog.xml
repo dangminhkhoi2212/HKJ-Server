@@ -1,0 +1,40 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1730355595263-1">
+        <createTable tableName="hkj_cart">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="hkj_cartPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="customer_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730355595263-2">
+        <addColumn tableName="hkj_jewelry_model">
+            <column name="hkj_cart_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730355595263-3">
+        <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="hkj_cart" constraintName="FKap7qdfpeax8ise969fjnpq9io" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user_extra" validate="true"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730355595263-4">
+        <addForeignKeyConstraint baseColumnNames="hkj_cart_id" baseTableName="hkj_jewelry_model" constraintName="FKqntsiyeow31l153f0g5b580fj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_cart" validate="true"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730355595263-5">
+        <dropColumn columnName="quantity" tableName="hkj_material"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730355595263-6">
+        <dropColumn columnName="supplier" tableName="hkj_material"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730355595263-7">
+        <dropColumn columnName="unit" tableName="hkj_material"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1730355595263-8">
+        <dropColumn columnName="unit_price" tableName="hkj_material"/>
+    </changeSet>
+</databaseChangeLog>

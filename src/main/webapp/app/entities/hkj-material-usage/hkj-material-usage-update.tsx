@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { Translate, ValidatedField, ValidatedForm, isNumber, translate } from 'react-jhipster';
+import { Translate, ValidatedField, ValidatedForm, translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getHkjMaterials } from 'app/entities/hkj-material/hkj-material.reducer';
+import { getEntities as getHkjJewelryModels } from 'app/entities/hkj-jewelry-model/hkj-jewelry-model.reducer';
 import { getEntities as getHkjTasks } from 'app/entities/hkj-task/hkj-task.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-material-usage.reducer';
 
@@ -20,6 +21,7 @@ export const HkjMaterialUsageUpdate = () => {
   const isNew = id === undefined;
 
   const hkjMaterials = useAppSelector(state => state.hkjMaterial.entities);
+  const hkjJewelryModels = useAppSelector(state => state.hkjJewelryModel.entities);
   const hkjTasks = useAppSelector(state => state.hkjTask.entities);
   const hkjMaterialUsageEntity = useAppSelector(state => state.hkjMaterialUsage.entity);
   const loading = useAppSelector(state => state.hkjMaterialUsage.loading);
@@ -38,6 +40,7 @@ export const HkjMaterialUsageUpdate = () => {
     }
 
     dispatch(getHkjMaterials({}));
+    dispatch(getHkjJewelryModels({}));
     dispatch(getHkjTasks({}));
   }, []);
 
@@ -51,15 +54,8 @@ export const HkjMaterialUsageUpdate = () => {
     if (values.id !== undefined && typeof values.id !== 'number') {
       values.id = Number(values.id);
     }
-    if (values.quantity !== undefined && typeof values.quantity !== 'number') {
-      values.quantity = Number(values.quantity);
-    }
-    if (values.lossQuantity !== undefined && typeof values.lossQuantity !== 'number') {
-      values.lossQuantity = Number(values.lossQuantity);
-    }
-    values.usageDate = convertDateTimeToServer(values.usageDate);
-    if (values.weight !== undefined && typeof values.weight !== 'number') {
-      values.weight = Number(values.weight);
+    if (values.usage !== undefined && typeof values.usage !== 'number') {
+      values.usage = Number(values.usage);
     }
     if (values.price !== undefined && typeof values.price !== 'number') {
       values.price = Number(values.price);
@@ -71,6 +67,7 @@ export const HkjMaterialUsageUpdate = () => {
       ...hkjMaterialUsageEntity,
       ...values,
       material: hkjMaterials.find(it => it.id.toString() === values.material?.toString()),
+      jewelry: hkjJewelryModels.find(it => it.id.toString() === values.jewelry?.toString()),
       task: hkjTasks.find(it => it.id.toString() === values.task?.toString()),
     };
 
@@ -84,16 +81,15 @@ export const HkjMaterialUsageUpdate = () => {
   const defaultValues = () =>
     isNew
       ? {
-          usageDate: displayDefaultDateTime(),
           createdDate: displayDefaultDateTime(),
           lastModifiedDate: displayDefaultDateTime(),
         }
       : {
           ...hkjMaterialUsageEntity,
-          usageDate: convertDateTimeFromServer(hkjMaterialUsageEntity.usageDate),
           createdDate: convertDateTimeFromServer(hkjMaterialUsageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjMaterialUsageEntity.lastModifiedDate),
           material: hkjMaterialUsageEntity?.material?.id,
+          jewelry: hkjMaterialUsageEntity?.jewelry?.id,
           task: hkjMaterialUsageEntity?.task?.id,
         };
 
@@ -123,46 +119,17 @@ export const HkjMaterialUsageUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('serverApp.hkjMaterialUsage.quantity')}
-                id="hkj-material-usage-quantity"
-                name="quantity"
-                data-cy="quantity"
+                label={translate('serverApp.hkjMaterialUsage.usage')}
+                id="hkj-material-usage-usage"
+                name="usage"
+                data-cy="usage"
                 type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  validate: v => isNumber(v) || translate('entity.validation.number'),
-                }}
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjMaterialUsage.lossQuantity')}
-                id="hkj-material-usage-lossQuantity"
-                name="lossQuantity"
-                data-cy="lossQuantity"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjMaterialUsage.usageDate')}
-                id="hkj-material-usage-usageDate"
-                name="usageDate"
-                data-cy="usageDate"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
               />
               <ValidatedField
                 label={translate('serverApp.hkjMaterialUsage.notes')}
                 id="hkj-material-usage-notes"
                 name="notes"
                 data-cy="notes"
-                type="text"
-              />
-              <ValidatedField
-                label={translate('serverApp.hkjMaterialUsage.weight')}
-                id="hkj-material-usage-weight"
-                name="weight"
-                data-cy="weight"
                 type="text"
               />
               <ValidatedField
@@ -220,6 +187,22 @@ export const HkjMaterialUsageUpdate = () => {
                 <option value="" key="0" />
                 {hkjMaterials
                   ? hkjMaterials.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-material-usage-jewelry"
+                name="jewelry"
+                data-cy="jewelry"
+                label={translate('serverApp.hkjMaterialUsage.jewelry')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjJewelryModels
+                  ? hkjJewelryModels.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

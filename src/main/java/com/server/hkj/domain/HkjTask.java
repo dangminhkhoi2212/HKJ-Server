@@ -68,9 +68,6 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     @Column(name = "point")
     private Integer point;
 
-    @Column(name = "notes")
-    private String notes;
-
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
@@ -88,7 +85,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "task")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "material", "task" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "material", "jewelry", "task" }, allowSetters = true)
     private Set<HkjMaterialUsage> materials = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -96,7 +93,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     private UserExtra employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "tasks", "manager", "category" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tasks", "manager", "category", "material" }, allowSetters = true)
     private HkjProject project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -229,19 +226,6 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
 
     public void setPoint(Integer point) {
         this.point = point;
-    }
-
-    public String getNotes() {
-        return this.notes;
-    }
-
-    public HkjTask notes(String notes) {
-        this.setNotes(notes);
-        return this;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -419,7 +403,6 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
             ", status='" + getStatus() + "'" +
             ", priority='" + getPriority() + "'" +
             ", point=" + getPoint() +
-            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

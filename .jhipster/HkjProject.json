@@ -47,20 +47,12 @@
       "fieldValues": "LOW,MEDIUM,HIGH"
     },
     {
-      "fieldName": "budget",
-      "fieldType": "BigDecimal"
-    },
-    {
       "fieldName": "actualCost",
       "fieldType": "BigDecimal"
     },
     {
       "fieldName": "qualityCheck",
       "fieldType": "Boolean"
-    },
-    {
-      "fieldName": "notes",
-      "fieldType": "String"
     },
     {
       "fieldName": "isDeleted",
@@ -122,6 +114,12 @@
     {
       "otherEntityName": "hkjCategory",
       "relationshipName": "category",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjMaterial",
+      "relationshipName": "material",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

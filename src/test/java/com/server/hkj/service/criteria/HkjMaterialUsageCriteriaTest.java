@@ -75,11 +75,8 @@ class HkjMaterialUsageCriteriaTest {
 
     private static void setAllFilters(HkjMaterialUsageCriteria hkjMaterialUsageCriteria) {
         hkjMaterialUsageCriteria.id();
-        hkjMaterialUsageCriteria.quantity();
-        hkjMaterialUsageCriteria.lossQuantity();
-        hkjMaterialUsageCriteria.usageDate();
+        hkjMaterialUsageCriteria.usage();
         hkjMaterialUsageCriteria.notes();
-        hkjMaterialUsageCriteria.weight();
         hkjMaterialUsageCriteria.price();
         hkjMaterialUsageCriteria.isDeleted();
         hkjMaterialUsageCriteria.createdBy();
@@ -87,6 +84,7 @@ class HkjMaterialUsageCriteriaTest {
         hkjMaterialUsageCriteria.lastModifiedBy();
         hkjMaterialUsageCriteria.lastModifiedDate();
         hkjMaterialUsageCriteria.materialId();
+        hkjMaterialUsageCriteria.jewelryId();
         hkjMaterialUsageCriteria.taskId();
         hkjMaterialUsageCriteria.distinct();
     }
@@ -95,11 +93,8 @@ class HkjMaterialUsageCriteriaTest {
         return new Condition<>(
             criteria ->
                 condition.apply(criteria.getId()) &&
-                condition.apply(criteria.getQuantity()) &&
-                condition.apply(criteria.getLossQuantity()) &&
-                condition.apply(criteria.getUsageDate()) &&
+                condition.apply(criteria.getUsage()) &&
                 condition.apply(criteria.getNotes()) &&
-                condition.apply(criteria.getWeight()) &&
                 condition.apply(criteria.getPrice()) &&
                 condition.apply(criteria.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy()) &&
@@ -107,6 +102,7 @@ class HkjMaterialUsageCriteriaTest {
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
                 condition.apply(criteria.getMaterialId()) &&
+                condition.apply(criteria.getJewelryId()) &&
                 condition.apply(criteria.getTaskId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
@@ -120,11 +116,8 @@ class HkjMaterialUsageCriteriaTest {
         return new Condition<>(
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
-                condition.apply(criteria.getQuantity(), copy.getQuantity()) &&
-                condition.apply(criteria.getLossQuantity(), copy.getLossQuantity()) &&
-                condition.apply(criteria.getUsageDate(), copy.getUsageDate()) &&
+                condition.apply(criteria.getUsage(), copy.getUsage()) &&
                 condition.apply(criteria.getNotes(), copy.getNotes()) &&
-                condition.apply(criteria.getWeight(), copy.getWeight()) &&
                 condition.apply(criteria.getPrice(), copy.getPrice()) &&
                 condition.apply(criteria.getIsDeleted(), copy.getIsDeleted()) &&
                 condition.apply(criteria.getCreatedBy(), copy.getCreatedBy()) &&
@@ -132,6 +125,7 @@ class HkjMaterialUsageCriteriaTest {
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
                 condition.apply(criteria.getMaterialId(), copy.getMaterialId()) &&
+                condition.apply(criteria.getJewelryId(), copy.getJewelryId()) &&
                 condition.apply(criteria.getTaskId(), copy.getTaskId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"

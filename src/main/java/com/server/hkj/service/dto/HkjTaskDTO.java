@@ -41,8 +41,6 @@ public class HkjTaskDTO implements Serializable {
     @Max(value = 100)
     private Integer point;
 
-    private String notes;
-
     private Boolean isDeleted;
 
     private String createdBy;
@@ -137,14 +135,6 @@ public class HkjTaskDTO implements Serializable {
         this.point = point;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
     public Boolean getIsDeleted() {
         return isDeleted;
     }
@@ -236,7 +226,6 @@ public class HkjTaskDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", priority='" + getPriority() + "'" +
             ", point=" + getPoint() +
-            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

@@ -89,20 +89,8 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
             if (criteria.getCoverImage() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCoverImage(), HkjJewelryModel_.coverImage));
             }
-            if (criteria.getIsCustom() != null) {
-                specification = specification.and(buildSpecification(criteria.getIsCustom(), HkjJewelryModel_.isCustom));
-            }
-            if (criteria.getWeight() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getWeight(), HkjJewelryModel_.weight));
-            }
             if (criteria.getPrice() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPrice(), HkjJewelryModel_.price));
-            }
-            if (criteria.getColor() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getColor(), HkjJewelryModel_.color));
-            }
-            if (criteria.getNotes() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getNotes(), HkjJewelryModel_.notes));
             }
             if (criteria.getIsDeleted() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsDeleted(), HkjJewelryModel_.isDeleted));
@@ -112,6 +100,9 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
             }
             if (criteria.getActive() != null) {
                 specification = specification.and(buildSpecification(criteria.getActive(), HkjJewelryModel_.active));
+            }
+            if (criteria.getDaysCompleted() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getDaysCompleted(), HkjJewelryModel_.daysCompleted));
             }
             if (criteria.getCreatedBy() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getCreatedBy(), HkjJewelryModel_.createdBy));
@@ -134,6 +125,13 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
                     )
                 );
             }
+            if (criteria.getMaterialsId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getMaterialsId(), root ->
+                        root.join(HkjJewelryModel_.materials, JoinType.LEFT).get(HkjMaterialUsage_.id)
+                    )
+                );
+            }
             if (criteria.getCategoryId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getCategoryId(), root ->
@@ -146,6 +144,18 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
                     buildSpecification(criteria.getProjectId(), root ->
                         root.join(HkjJewelryModel_.project, JoinType.LEFT).get(HkjProject_.id)
                     )
+                );
+            }
+            if (criteria.getMaterialId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getMaterialId(), root ->
+                        root.join(HkjJewelryModel_.material, JoinType.LEFT).get(HkjMaterial_.id)
+                    )
+                );
+            }
+            if (criteria.getHkjCartId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getHkjCartId(), root -> root.join(HkjJewelryModel_.hkjCart, JoinType.LEFT).get(HkjCart_.id))
                 );
             }
         }

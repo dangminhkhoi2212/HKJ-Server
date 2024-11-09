@@ -1,8 +1,11 @@
 package com.server.hkj.domain;
 
+import static com.server.hkj.domain.HkjCartTestSamples.*;
 import static com.server.hkj.domain.HkjCategoryTestSamples.*;
 import static com.server.hkj.domain.HkjJewelryImageTestSamples.*;
 import static com.server.hkj.domain.HkjJewelryModelTestSamples.*;
+import static com.server.hkj.domain.HkjMaterialTestSamples.*;
+import static com.server.hkj.domain.HkjMaterialUsageTestSamples.*;
 import static com.server.hkj.domain.HkjProjectTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -50,6 +53,28 @@ class HkjJewelryModelTest {
     }
 
     @Test
+    void materialsTest() {
+        HkjJewelryModel hkjJewelryModel = getHkjJewelryModelRandomSampleGenerator();
+        HkjMaterialUsage hkjMaterialUsageBack = getHkjMaterialUsageRandomSampleGenerator();
+
+        hkjJewelryModel.addMaterials(hkjMaterialUsageBack);
+        assertThat(hkjJewelryModel.getMaterials()).containsOnly(hkjMaterialUsageBack);
+        assertThat(hkjMaterialUsageBack.getJewelry()).isEqualTo(hkjJewelryModel);
+
+        hkjJewelryModel.removeMaterials(hkjMaterialUsageBack);
+        assertThat(hkjJewelryModel.getMaterials()).doesNotContain(hkjMaterialUsageBack);
+        assertThat(hkjMaterialUsageBack.getJewelry()).isNull();
+
+        hkjJewelryModel.materials(new HashSet<>(Set.of(hkjMaterialUsageBack)));
+        assertThat(hkjJewelryModel.getMaterials()).containsOnly(hkjMaterialUsageBack);
+        assertThat(hkjMaterialUsageBack.getJewelry()).isEqualTo(hkjJewelryModel);
+
+        hkjJewelryModel.setMaterials(new HashSet<>());
+        assertThat(hkjJewelryModel.getMaterials()).doesNotContain(hkjMaterialUsageBack);
+        assertThat(hkjMaterialUsageBack.getJewelry()).isNull();
+    }
+
+    @Test
     void categoryTest() {
         HkjJewelryModel hkjJewelryModel = getHkjJewelryModelRandomSampleGenerator();
         HkjCategory hkjCategoryBack = getHkjCategoryRandomSampleGenerator();
@@ -71,5 +96,29 @@ class HkjJewelryModelTest {
 
         hkjJewelryModel.project(null);
         assertThat(hkjJewelryModel.getProject()).isNull();
+    }
+
+    @Test
+    void materialTest() {
+        HkjJewelryModel hkjJewelryModel = getHkjJewelryModelRandomSampleGenerator();
+        HkjMaterial hkjMaterialBack = getHkjMaterialRandomSampleGenerator();
+
+        hkjJewelryModel.setMaterial(hkjMaterialBack);
+        assertThat(hkjJewelryModel.getMaterial()).isEqualTo(hkjMaterialBack);
+
+        hkjJewelryModel.material(null);
+        assertThat(hkjJewelryModel.getMaterial()).isNull();
+    }
+
+    @Test
+    void hkjCartTest() {
+        HkjJewelryModel hkjJewelryModel = getHkjJewelryModelRandomSampleGenerator();
+        HkjCart hkjCartBack = getHkjCartRandomSampleGenerator();
+
+        hkjJewelryModel.setHkjCart(hkjCartBack);
+        assertThat(hkjJewelryModel.getHkjCart()).isEqualTo(hkjCartBack);
+
+        hkjJewelryModel.hkjCart(null);
+        assertThat(hkjJewelryModel.getHkjCart()).isNull();
     }
 }

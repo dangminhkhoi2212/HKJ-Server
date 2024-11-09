@@ -31,7 +31,7 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     private Long id;
 
     @NotNull
-    @Column(name = "sku", nullable = false, unique = true)
+    @Column(name = "sku", nullable = false)
     private String sku;
 
     @NotNull
@@ -45,20 +45,8 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @Column(name = "cover_image")
     private String coverImage;
 
-    @Column(name = "is_custom")
-    private Boolean isCustom;
-
-    @Column(name = "weight")
-    private Double weight;
-
     @Column(name = "price", precision = 21, scale = 2)
     private BigDecimal price;
-
-    @Column(name = "color")
-    private String color;
-
-    @Column(name = "notes")
-    private String notes;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted;
@@ -68,6 +56,9 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     @Column(name = "active")
     private Boolean active;
+
+    @Column(name = "days_completed")
+    private Integer daysCompleted;
 
     // Inherited createdBy definition
     // Inherited createdDate definition
@@ -81,12 +72,25 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     @JsonIgnoreProperties(value = { "jewelryModel" }, allowSetters = true)
     private Set<HkjJewelryImage> images = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jewelry")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "material", "jewelry", "task" }, allowSetters = true)
+    private Set<HkjMaterialUsage> materials = new HashSet<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     private HkjCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "tasks", "manager", "category" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tasks", "manager", "category", "material" }, allowSetters = true)
     private HkjProject project;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
+    private HkjMaterial material;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "products", "customer" }, allowSetters = true)
+    private HkjCart hkjCart;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -155,32 +159,6 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
         this.coverImage = coverImage;
     }
 
-    public Boolean getIsCustom() {
-        return this.isCustom;
-    }
-
-    public HkjJewelryModel isCustom(Boolean isCustom) {
-        this.setIsCustom(isCustom);
-        return this;
-    }
-
-    public void setIsCustom(Boolean isCustom) {
-        this.isCustom = isCustom;
-    }
-
-    public Double getWeight() {
-        return this.weight;
-    }
-
-    public HkjJewelryModel weight(Double weight) {
-        this.setWeight(weight);
-        return this;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
     public BigDecimal getPrice() {
         return this.price;
     }
@@ -192,32 +170,6 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public String getColor() {
-        return this.color;
-    }
-
-    public HkjJewelryModel color(String color) {
-        this.setColor(color);
-        return this;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getNotes() {
-        return this.notes;
-    }
-
-    public HkjJewelryModel notes(String notes) {
-        this.setNotes(notes);
-        return this;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -257,6 +209,19 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Integer getDaysCompleted() {
+        return this.daysCompleted;
+    }
+
+    public HkjJewelryModel daysCompleted(Integer daysCompleted) {
+        this.setDaysCompleted(daysCompleted);
+        return this;
+    }
+
+    public void setDaysCompleted(Integer daysCompleted) {
+        this.daysCompleted = daysCompleted;
     }
 
     // Inherited createdBy methods
@@ -331,6 +296,37 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
         return this;
     }
 
+    public Set<HkjMaterialUsage> getMaterials() {
+        return this.materials;
+    }
+
+    public void setMaterials(Set<HkjMaterialUsage> hkjMaterialUsages) {
+        if (this.materials != null) {
+            this.materials.forEach(i -> i.setJewelry(null));
+        }
+        if (hkjMaterialUsages != null) {
+            hkjMaterialUsages.forEach(i -> i.setJewelry(this));
+        }
+        this.materials = hkjMaterialUsages;
+    }
+
+    public HkjJewelryModel materials(Set<HkjMaterialUsage> hkjMaterialUsages) {
+        this.setMaterials(hkjMaterialUsages);
+        return this;
+    }
+
+    public HkjJewelryModel addMaterials(HkjMaterialUsage hkjMaterialUsage) {
+        this.materials.add(hkjMaterialUsage);
+        hkjMaterialUsage.setJewelry(this);
+        return this;
+    }
+
+    public HkjJewelryModel removeMaterials(HkjMaterialUsage hkjMaterialUsage) {
+        this.materials.remove(hkjMaterialUsage);
+        hkjMaterialUsage.setJewelry(null);
+        return this;
+    }
+
     public HkjCategory getCategory() {
         return this.category;
     }
@@ -354,6 +350,32 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     public HkjJewelryModel project(HkjProject hkjProject) {
         this.setProject(hkjProject);
+        return this;
+    }
+
+    public HkjMaterial getMaterial() {
+        return this.material;
+    }
+
+    public void setMaterial(HkjMaterial hkjMaterial) {
+        this.material = hkjMaterial;
+    }
+
+    public HkjJewelryModel material(HkjMaterial hkjMaterial) {
+        this.setMaterial(hkjMaterial);
+        return this;
+    }
+
+    public HkjCart getHkjCart() {
+        return this.hkjCart;
+    }
+
+    public void setHkjCart(HkjCart hkjCart) {
+        this.hkjCart = hkjCart;
+    }
+
+    public HkjJewelryModel hkjCart(HkjCart hkjCart) {
+        this.setHkjCart(hkjCart);
         return this;
     }
 
@@ -385,14 +407,11 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
             ", coverImage='" + getCoverImage() + "'" +
-            ", isCustom='" + getIsCustom() + "'" +
-            ", weight=" + getWeight() +
             ", price=" + getPrice() +
-            ", color='" + getColor() + "'" +
-            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", isCoverSearch='" + getIsCoverSearch() + "'" +
             ", active='" + getActive() + "'" +
+            ", daysCompleted=" + getDaysCompleted() +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +

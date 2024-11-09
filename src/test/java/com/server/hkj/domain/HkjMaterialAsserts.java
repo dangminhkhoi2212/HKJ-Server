@@ -51,12 +51,13 @@ public class HkjMaterialAsserts {
         assertThat(expected)
             .as("Verify HkjMaterial relevant properties")
             .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
-            .satisfies(e -> assertThat(e.getQuantity()).as("check quantity").isEqualTo(actual.getQuantity()))
             .satisfies(e -> assertThat(e.getUnit()).as("check unit").isEqualTo(actual.getUnit()))
             .satisfies(e ->
-                assertThat(e.getUnitPrice()).as("check unitPrice").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getUnitPrice())
+                assertThat(e.getPricePerUnit())
+                    .as("check pricePerUnit")
+                    .usingComparator(bigDecimalCompareTo)
+                    .isEqualTo(actual.getPricePerUnit())
             )
-            .satisfies(e -> assertThat(e.getSupplier()).as("check supplier").isEqualTo(actual.getSupplier()))
             .satisfies(e -> assertThat(e.getCoverImage()).as("check coverImage").isEqualTo(actual.getCoverImage()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }

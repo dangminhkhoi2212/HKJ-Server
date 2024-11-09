@@ -91,12 +91,6 @@ export const HkjTaskDetail = () => {
           </dt>
           <dd>{hkjTaskEntity.point}</dd>
           <dt>
-            <span id="notes">
-              <Translate contentKey="serverApp.hkjTask.notes">Notes</Translate>
-            </span>
-          </dt>
-          <dd>{hkjTaskEntity.notes}</dd>
-          <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjTask.isDeleted">Is Deleted</Translate>
             </span>

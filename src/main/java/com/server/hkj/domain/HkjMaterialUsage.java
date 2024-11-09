@@ -1,8 +1,18 @@
 package com.server.hkj.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PostPersist;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -28,22 +38,11 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
     @Column(name = "id")
     private Long id;
 
-    @NotNull
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
-
-    @Column(name = "loss_quantity")
-    private Integer lossQuantity;
-
-    @NotNull
-    @Column(name = "usage_date", nullable = false)
-    private Instant usageDate;
+    @Column(name = "usage")
+    private Float usage;
 
     @Column(name = "notes")
     private String notes;
-
-    @Column(name = "weight")
-    private Float weight;
 
     @Column(name = "price", precision = 21, scale = 2)
     private BigDecimal price;
@@ -61,6 +60,10 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
     private HkjMaterial material;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "images", "materials", "category", "project", "material", "hkjCart" }, allowSetters = true)
+    private HkjJewelryModel jewelry;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "images", "materials", "employee", "project" }, allowSetters = true)
@@ -81,43 +84,17 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
         this.id = id;
     }
 
-    public Integer getQuantity() {
-        return this.quantity;
+    public Float getUsage() {
+        return this.usage;
     }
 
-    public HkjMaterialUsage quantity(Integer quantity) {
-        this.setQuantity(quantity);
+    public HkjMaterialUsage usage(Float usage) {
+        this.setUsage(usage);
         return this;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Integer getLossQuantity() {
-        return this.lossQuantity;
-    }
-
-    public HkjMaterialUsage lossQuantity(Integer lossQuantity) {
-        this.setLossQuantity(lossQuantity);
-        return this;
-    }
-
-    public void setLossQuantity(Integer lossQuantity) {
-        this.lossQuantity = lossQuantity;
-    }
-
-    public Instant getUsageDate() {
-        return this.usageDate;
-    }
-
-    public HkjMaterialUsage usageDate(Instant usageDate) {
-        this.setUsageDate(usageDate);
-        return this;
-    }
-
-    public void setUsageDate(Instant usageDate) {
-        this.usageDate = usageDate;
+    public void setUsage(Float usage) {
+        this.usage = usage;
     }
 
     public String getNotes() {
@@ -131,19 +108,6 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public Float getWeight() {
-        return this.weight;
-    }
-
-    public HkjMaterialUsage weight(Float weight) {
-        this.setWeight(weight);
-        return this;
-    }
-
-    public void setWeight(Float weight) {
-        this.weight = weight;
     }
 
     public BigDecimal getPrice() {
@@ -226,6 +190,19 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
         return this;
     }
 
+    public HkjJewelryModel getJewelry() {
+        return this.jewelry;
+    }
+
+    public void setJewelry(HkjJewelryModel hkjJewelryModel) {
+        this.jewelry = hkjJewelryModel;
+    }
+
+    public HkjMaterialUsage jewelry(HkjJewelryModel hkjJewelryModel) {
+        this.setJewelry(hkjJewelryModel);
+        return this;
+    }
+
     public HkjTask getTask() {
         return this.task;
     }
@@ -263,11 +240,8 @@ public class HkjMaterialUsage extends AbstractAuditingEntity<Long> implements Se
     public String toString() {
         return "HkjMaterialUsage{" +
             "id=" + getId() +
-            ", quantity=" + getQuantity() +
-            ", lossQuantity=" + getLossQuantity() +
-            ", usageDate='" + getUsageDate() + "'" +
+            ", usage=" + getUsage() +
             ", notes='" + getNotes() + "'" +
-            ", weight=" + getWeight() +
             ", price=" + getPrice() +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

@@ -33,39 +33,17 @@ export const HkjMaterialUsageDetail = () => {
           </dt>
           <dd>{hkjMaterialUsageEntity.id}</dd>
           <dt>
-            <span id="quantity">
-              <Translate contentKey="serverApp.hkjMaterialUsage.quantity">Quantity</Translate>
+            <span id="usage">
+              <Translate contentKey="serverApp.hkjMaterialUsage.usage">Usage</Translate>
             </span>
           </dt>
-          <dd>{hkjMaterialUsageEntity.quantity}</dd>
-          <dt>
-            <span id="lossQuantity">
-              <Translate contentKey="serverApp.hkjMaterialUsage.lossQuantity">Loss Quantity</Translate>
-            </span>
-          </dt>
-          <dd>{hkjMaterialUsageEntity.lossQuantity}</dd>
-          <dt>
-            <span id="usageDate">
-              <Translate contentKey="serverApp.hkjMaterialUsage.usageDate">Usage Date</Translate>
-            </span>
-          </dt>
-          <dd>
-            {hkjMaterialUsageEntity.usageDate ? (
-              <TextFormat value={hkjMaterialUsageEntity.usageDate} type="date" format={APP_DATE_FORMAT} />
-            ) : null}
-          </dd>
+          <dd>{hkjMaterialUsageEntity.usage}</dd>
           <dt>
             <span id="notes">
               <Translate contentKey="serverApp.hkjMaterialUsage.notes">Notes</Translate>
             </span>
           </dt>
           <dd>{hkjMaterialUsageEntity.notes}</dd>
-          <dt>
-            <span id="weight">
-              <Translate contentKey="serverApp.hkjMaterialUsage.weight">Weight</Translate>
-            </span>
-          </dt>
-          <dd>{hkjMaterialUsageEntity.weight}</dd>
           <dt>
             <span id="price">
               <Translate contentKey="serverApp.hkjMaterialUsage.price">Price</Translate>
@@ -114,6 +92,10 @@ export const HkjMaterialUsageDetail = () => {
             <Translate contentKey="serverApp.hkjMaterialUsage.material">Material</Translate>
           </dt>
           <dd>{hkjMaterialUsageEntity.material ? hkjMaterialUsageEntity.material.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjMaterialUsage.jewelry">Jewelry</Translate>
+          </dt>
+          <dd>{hkjMaterialUsageEntity.jewelry ? hkjMaterialUsageEntity.jewelry.id : ''}</dd>
           <dt>
             <Translate contentKey="serverApp.hkjMaterialUsage.task">Task</Translate>
           </dt>

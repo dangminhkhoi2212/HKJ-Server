@@ -34,10 +34,6 @@ public class HkjOrderDTO implements Serializable {
 
     private BigDecimal totalPrice;
 
-    private BigDecimal budget;
-
-    private BigDecimal depositAmount;
-
     private Boolean isDeleted;
 
     private String createdBy;
@@ -49,6 +45,8 @@ public class HkjOrderDTO implements Serializable {
     private Instant lastModifiedDate;
 
     private UserExtraDTO customer;
+
+    private HkjMaterialDTO material;
 
     private HkjJewelryModelDTO jewelry;
 
@@ -120,22 +118,6 @@ public class HkjOrderDTO implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public BigDecimal getBudget() {
-        return budget;
-    }
-
-    public void setBudget(BigDecimal budget) {
-        this.budget = budget;
-    }
-
-    public BigDecimal getDepositAmount() {
-        return depositAmount;
-    }
-
-    public void setDepositAmount(BigDecimal depositAmount) {
-        this.depositAmount = depositAmount;
-    }
-
     public Boolean getIsDeleted() {
         return isDeleted;
     }
@@ -182,6 +164,14 @@ public class HkjOrderDTO implements Serializable {
 
     public void setCustomer(UserExtraDTO customer) {
         this.customer = customer;
+    }
+
+    public HkjMaterialDTO getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(HkjMaterialDTO material) {
+        this.material = material;
     }
 
     public HkjJewelryModelDTO getJewelry() {
@@ -241,14 +231,13 @@ public class HkjOrderDTO implements Serializable {
             ", status='" + getStatus() + "'" +
             ", customerRating=" + getCustomerRating() +
             ", totalPrice=" + getTotalPrice() +
-            ", budget=" + getBudget() +
-            ", depositAmount=" + getDepositAmount() +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", customer=" + getCustomer() +
+            ", material=" + getMaterial() +
             ", jewelry=" + getJewelry() +
             ", project=" + getProject() +
             ", category=" + getCategory() +

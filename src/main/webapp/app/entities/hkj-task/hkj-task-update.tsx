@@ -220,7 +220,6 @@ export const HkjTaskUpdate = () => {
                   validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
               />
-              <ValidatedField label={translate('serverApp.hkjTask.notes')} id="hkj-task-notes" name="notes" data-cy="notes" type="text" />
               <ValidatedField
                 label={translate('serverApp.hkjTask.isDeleted')}
                 id="hkj-task-isDeleted"

@@ -37,13 +37,9 @@ public class HkjProjectDTO implements Serializable {
     @NotNull
     private HkjPriority priority;
 
-    private BigDecimal budget;
-
     private BigDecimal actualCost;
 
     private Boolean qualityCheck;
-
-    private String notes;
 
     private Boolean isDeleted;
 
@@ -58,6 +54,8 @@ public class HkjProjectDTO implements Serializable {
     private UserExtraDTO manager;
 
     private HkjCategoryDTO category;
+
+    private HkjMaterialDTO material;
 
     public Long getId() {
         return id;
@@ -131,14 +129,6 @@ public class HkjProjectDTO implements Serializable {
         this.priority = priority;
     }
 
-    public BigDecimal getBudget() {
-        return budget;
-    }
-
-    public void setBudget(BigDecimal budget) {
-        this.budget = budget;
-    }
-
     public BigDecimal getActualCost() {
         return actualCost;
     }
@@ -153,14 +143,6 @@ public class HkjProjectDTO implements Serializable {
 
     public void setQualityCheck(Boolean qualityCheck) {
         this.qualityCheck = qualityCheck;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
     }
 
     public Boolean getIsDeleted() {
@@ -219,6 +201,14 @@ public class HkjProjectDTO implements Serializable {
         this.category = category;
     }
 
+    public HkjMaterialDTO getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(HkjMaterialDTO material) {
+        this.material = material;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -253,10 +243,8 @@ public class HkjProjectDTO implements Serializable {
             ", endDate='" + getEndDate() + "'" +
             ", status='" + getStatus() + "'" +
             ", priority='" + getPriority() + "'" +
-            ", budget=" + getBudget() +
             ", actualCost=" + getActualCost() +
             ", qualityCheck='" + getQualityCheck() + "'" +
-            ", notes='" + getNotes() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
@@ -264,6 +252,7 @@ public class HkjProjectDTO implements Serializable {
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", manager=" + getManager() +
             ", category=" + getCategory() +
+            ", material=" + getMaterial() +
             "}";
     }
 }

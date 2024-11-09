@@ -18,7 +18,6 @@ public class HkjTaskTestSamples {
             .coverImage("coverImage1")
             .description("description1")
             .point(1)
-            .notes("notes1")
             .createdBy("createdBy1")
             .lastModifiedBy("lastModifiedBy1");
     }
@@ -30,7 +29,6 @@ public class HkjTaskTestSamples {
             .coverImage("coverImage2")
             .description("description2")
             .point(2)
-            .notes("notes2")
             .createdBy("createdBy2")
             .lastModifiedBy("lastModifiedBy2");
     }
@@ -42,7 +40,6 @@ public class HkjTaskTestSamples {
             .coverImage(UUID.randomUUID().toString())
             .description(UUID.randomUUID().toString())
             .point(intCount.incrementAndGet())
-            .notes(UUID.randomUUID().toString())
             .createdBy(UUID.randomUUID().toString())
             .lastModifiedBy(UUID.randomUUID().toString());
     }

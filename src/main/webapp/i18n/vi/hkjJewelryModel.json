@@ -22,21 +22,21 @@
       "name": "Name",
       "description": "Description",
       "coverImage": "Cover Image",
-      "isCustom": "Is Custom",
-      "weight": "Weight",
       "price": "Price",
-      "color": "Color",
-      "notes": "Notes",
       "isDeleted": "Is Deleted",
       "isCoverSearch": "Is Cover Search",
       "active": "Active",
+      "daysCompleted": "Days Completed",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
       "images": "Images",
+      "materials": "Materials",
       "category": "Category",
-      "project": "Project"
+      "project": "Project",
+      "material": "Material",
+      "hkjCart": "Hkj Cart"
     }
   }
 }
