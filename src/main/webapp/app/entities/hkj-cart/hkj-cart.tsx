@@ -140,6 +140,9 @@ export const HkjCart = () => {
                 <th>
                   <Translate contentKey="serverApp.hkjCart.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="serverApp.hkjCart.product">Product</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -160,6 +163,7 @@ export const HkjCart = () => {
                     {hkjCart.lastModifiedDate ? <TextFormat type="date" value={hkjCart.lastModifiedDate} format={APP_DATE_FORMAT} /> : null}
                   </td>
                   <td>{hkjCart.customer ? <Link to={`/user-extra/${hkjCart.customer.id}`}>{hkjCart.customer.id}</Link> : ''}</td>
+                  <td>{hkjCart.product ? <Link to={`/hkj-jewelry-model/${hkjCart.product.id}`}>{hkjCart.product.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-cart/${hkjCart.id}`} color="info" size="sm" data-cy="entityDetailsButton">

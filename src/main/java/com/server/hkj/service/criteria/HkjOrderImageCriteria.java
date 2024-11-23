@@ -36,7 +36,7 @@ public class HkjOrderImageCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter orderId;
+    private LongFilter orderItemId;
 
     private Boolean distinct;
 
@@ -50,7 +50,7 @@ public class HkjOrderImageCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.orderId = other.optionalOrderId().map(LongFilter::copy).orElse(null);
+        this.orderItemId = other.optionalOrderItemId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -192,23 +192,23 @@ public class HkjOrderImageCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getOrderId() {
-        return orderId;
+    public LongFilter getOrderItemId() {
+        return orderItemId;
     }
 
-    public Optional<LongFilter> optionalOrderId() {
-        return Optional.ofNullable(orderId);
+    public Optional<LongFilter> optionalOrderItemId() {
+        return Optional.ofNullable(orderItemId);
     }
 
-    public LongFilter orderId() {
-        if (orderId == null) {
-            setOrderId(new LongFilter());
+    public LongFilter orderItemId() {
+        if (orderItemId == null) {
+            setOrderItemId(new LongFilter());
         }
-        return orderId;
+        return orderItemId;
     }
 
-    public void setOrderId(LongFilter orderId) {
-        this.orderId = orderId;
+    public void setOrderItemId(LongFilter orderItemId) {
+        this.orderItemId = orderItemId;
     }
 
     public Boolean getDistinct() {
@@ -247,14 +247,14 @@ public class HkjOrderImageCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(orderId, that.orderId) &&
+            Objects.equals(orderItemId, that.orderItemId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, url, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, orderId, distinct);
+        return Objects.hash(id, url, isDeleted, createdBy, createdDate, lastModifiedBy, lastModifiedDate, orderItemId, distinct);
     }
 
     // prettier-ignore
@@ -268,7 +268,7 @@ public class HkjOrderImageCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalOrderId().map(f -> "orderId=" + f + ", ").orElse("") +
+            optionalOrderItemId().map(f -> "orderItemId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

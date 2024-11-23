@@ -6,7 +6,6 @@ import com.server.hkj.domain.enumeration.HkjPriority;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -63,12 +62,6 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @Column(name = "priority", nullable = false)
     private HkjPriority priority;
 
-    @Column(name = "actual_cost", precision = 21, scale = 2)
-    private BigDecimal actualCost;
-
-    @Column(name = "quality_check")
-    private Boolean qualityCheck;
-
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
@@ -87,13 +80,6 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
     private UserExtra manager;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private HkjCategory category;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
-    private HkjMaterial material;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -214,32 +200,6 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         this.priority = priority;
     }
 
-    public BigDecimal getActualCost() {
-        return this.actualCost;
-    }
-
-    public HkjProject actualCost(BigDecimal actualCost) {
-        this.setActualCost(actualCost);
-        return this;
-    }
-
-    public void setActualCost(BigDecimal actualCost) {
-        this.actualCost = actualCost;
-    }
-
-    public Boolean getQualityCheck() {
-        return this.qualityCheck;
-    }
-
-    public HkjProject qualityCheck(Boolean qualityCheck) {
-        this.setQualityCheck(qualityCheck);
-        return this;
-    }
-
-    public void setQualityCheck(Boolean qualityCheck) {
-        this.qualityCheck = qualityCheck;
-    }
-
     public Boolean getIsDeleted() {
         return this.isDeleted;
     }
@@ -338,32 +298,6 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
         return this;
     }
 
-    public HkjCategory getCategory() {
-        return this.category;
-    }
-
-    public void setCategory(HkjCategory hkjCategory) {
-        this.category = hkjCategory;
-    }
-
-    public HkjProject category(HkjCategory hkjCategory) {
-        this.setCategory(hkjCategory);
-        return this;
-    }
-
-    public HkjMaterial getMaterial() {
-        return this.material;
-    }
-
-    public void setMaterial(HkjMaterial hkjMaterial) {
-        this.material = hkjMaterial;
-    }
-
-    public HkjProject material(HkjMaterial hkjMaterial) {
-        this.setMaterial(hkjMaterial);
-        return this;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -396,8 +330,6 @@ public class HkjProject extends AbstractAuditingEntity<Long> implements Serializ
             ", endDate='" + getEndDate() + "'" +
             ", status='" + getStatus() + "'" +
             ", priority='" + getPriority() + "'" +
-            ", actualCost=" + getActualCost() +
-            ", qualityCheck='" + getQualityCheck() + "'" +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +

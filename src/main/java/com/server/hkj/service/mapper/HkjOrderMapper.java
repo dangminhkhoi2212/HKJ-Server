@@ -23,9 +23,6 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface HkjOrderMapper extends EntityMapper<HkjOrderDTO, HkjOrder> {
     @Mapping(target = "customer", source = "customer", qualifiedByName = "userExtraId")
-    @Mapping(target = "jewelry", source = "jewelry", qualifiedByName = "hkjJewelryModelId")
-    @Mapping(target = "project", source = "project", qualifiedByName = "hkjProjectId")
-    @Mapping(target = "category", source = "category", qualifiedByName = "hkjCategoryId")
     HkjOrderDTO toDto(HkjOrder s);
 
     @Named("userExtraId")

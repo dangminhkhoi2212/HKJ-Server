@@ -1,0 +1,24 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1732352231382-1">
+        <addColumn tableName="hkj_order">
+            <column name="category_id" type="bigint" />
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1732352231382-2">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="hkj_order"
+            constraintName="FKlhe5rx14p61w7ohebt7aelbjg" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_category"
+            validate="true" />
+    </changeSet>
+
+    <changeSet author="WINDOWS (generated)" id="1732352231382-4">
+        <dropColumn columnName="notes" tableName="hkj_order" />
+    </changeSet>
+</databaseChangeLog>

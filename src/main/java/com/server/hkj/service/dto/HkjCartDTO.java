@@ -26,6 +26,8 @@ public class HkjCartDTO implements Serializable {
 
     private UserExtraDTO customer;
 
+    private HkjJewelryModelDTO product;
+
     public Long getId() {
         return id;
     }
@@ -90,6 +92,14 @@ public class HkjCartDTO implements Serializable {
         this.customer = customer;
     }
 
+    public HkjJewelryModelDTO getProduct() {
+        return product;
+    }
+
+    public void setProduct(HkjJewelryModelDTO product) {
+        this.product = product;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -123,6 +133,7 @@ public class HkjCartDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", customer=" + getCustomer() +
+            ", product=" + getProduct() +
             "}";
     }
 }

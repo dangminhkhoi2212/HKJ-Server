@@ -59,12 +59,6 @@
             <column name="project_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="material_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="hkj_cart_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="hkj_jewelry_model" columnName="created_date" columnDataType="${datetimeType}"/>

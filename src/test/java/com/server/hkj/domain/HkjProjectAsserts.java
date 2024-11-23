@@ -1,6 +1,5 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.AssertUtils.bigDecimalCompareTo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HkjProjectAsserts {
@@ -58,10 +57,6 @@ public class HkjProjectAsserts {
             .satisfies(e -> assertThat(e.getEndDate()).as("check endDate").isEqualTo(actual.getEndDate()))
             .satisfies(e -> assertThat(e.getStatus()).as("check status").isEqualTo(actual.getStatus()))
             .satisfies(e -> assertThat(e.getPriority()).as("check priority").isEqualTo(actual.getPriority()))
-            .satisfies(e ->
-                assertThat(e.getActualCost()).as("check actualCost").usingComparator(bigDecimalCompareTo).isEqualTo(actual.getActualCost())
-            )
-            .satisfies(e -> assertThat(e.getQualityCheck()).as("check qualityCheck").isEqualTo(actual.getQualityCheck()))
             .satisfies(e -> assertThat(e.getIsDeleted()).as("check isDeleted").isEqualTo(actual.getIsDeleted()));
     }
 
@@ -74,8 +69,6 @@ public class HkjProjectAsserts {
     public static void assertHkjProjectUpdatableRelationshipsEquals(HkjProject expected, HkjProject actual) {
         assertThat(expected)
             .as("Verify HkjProject relationships")
-            .satisfies(e -> assertThat(e.getManager()).as("check manager").isEqualTo(actual.getManager()))
-            .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
-            .satisfies(e -> assertThat(e.getMaterial()).as("check material").isEqualTo(actual.getMaterial()));
+            .satisfies(e -> assertThat(e.getManager()).as("check manager").isEqualTo(actual.getManager()));
     }
 }

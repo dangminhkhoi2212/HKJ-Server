@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
 import com.server.hkj.domain.HkjCart;
+import com.server.hkj.domain.HkjJewelryModel;
 import com.server.hkj.domain.UserExtra;
 import com.server.hkj.repository.HkjCartRepository;
 import com.server.hkj.service.dto.HkjCartDTO;
@@ -312,6 +313,28 @@ class HkjCartResourceIT {
 
         // Get all the hkjCartList where customer equals to (customerId + 1)
         defaultHkjCartShouldNotBeFound("customerId.equals=" + (customerId + 1));
+    }
+
+    @Test
+    @Transactional
+    void getAllHkjCartsByProductIsEqualToSomething() throws Exception {
+        HkjJewelryModel product;
+        if (TestUtil.findAll(em, HkjJewelryModel.class).isEmpty()) {
+            hkjCartRepository.saveAndFlush(hkjCart);
+            product = HkjJewelryModelResourceIT.createEntity();
+        } else {
+            product = TestUtil.findAll(em, HkjJewelryModel.class).get(0);
+        }
+        em.persist(product);
+        em.flush();
+        hkjCart.setProduct(product);
+        hkjCartRepository.saveAndFlush(hkjCart);
+        Long productId = product.getId();
+        // Get all the hkjCartList where product equals to productId
+        defaultHkjCartShouldBeFound("productId.equals=" + productId);
+
+        // Get all the hkjCartList where product equals to (productId + 1)
+        defaultHkjCartShouldNotBeFound("productId.equals=" + (productId + 1));
     }
 
     private void defaultHkjCartFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

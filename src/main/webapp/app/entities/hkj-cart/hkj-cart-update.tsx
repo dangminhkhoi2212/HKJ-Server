@@ -8,6 +8,7 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getUserExtras } from 'app/entities/user-extra/user-extra.reducer';
+import { getEntities as getHkjJewelryModels } from 'app/entities/hkj-jewelry-model/hkj-jewelry-model.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-cart.reducer';
 
 export const HkjCartUpdate = () => {
@@ -19,6 +20,7 @@ export const HkjCartUpdate = () => {
   const isNew = id === undefined;
 
   const userExtras = useAppSelector(state => state.userExtra.entities);
+  const hkjJewelryModels = useAppSelector(state => state.hkjJewelryModel.entities);
   const hkjCartEntity = useAppSelector(state => state.hkjCart.entity);
   const loading = useAppSelector(state => state.hkjCart.loading);
   const updating = useAppSelector(state => state.hkjCart.updating);
@@ -36,6 +38,7 @@ export const HkjCartUpdate = () => {
     }
 
     dispatch(getUserExtras({}));
+    dispatch(getHkjJewelryModels({}));
   }, []);
 
   useEffect(() => {
@@ -58,6 +61,7 @@ export const HkjCartUpdate = () => {
       ...hkjCartEntity,
       ...values,
       customer: userExtras.find(it => it.id.toString() === values.customer?.toString()),
+      product: hkjJewelryModels.find(it => it.id.toString() === values.product?.toString()),
     };
 
     if (isNew) {
@@ -78,6 +82,7 @@ export const HkjCartUpdate = () => {
           createdDate: convertDateTimeFromServer(hkjCartEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjCartEntity.lastModifiedDate),
           customer: hkjCartEntity?.customer?.id,
+          product: hkjCartEntity?.product?.id,
         };
 
   return (
@@ -160,6 +165,22 @@ export const HkjCartUpdate = () => {
                 <option value="" key="0" />
                 {userExtras
                   ? userExtras.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField
+                id="hkj-cart-product"
+                name="product"
+                data-cy="product"
+                label={translate('serverApp.hkjCart.product')}
+                type="select"
+              >
+                <option value="" key="0" />
+                {hkjJewelryModels
+                  ? hkjJewelryModels.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

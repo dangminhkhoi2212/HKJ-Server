@@ -1,6 +1,6 @@
 package com.server.hkj.service.criteria;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -89,11 +89,9 @@ class HkjJewelryModelCriteriaTest {
         hkjJewelryModelCriteria.lastModifiedBy();
         hkjJewelryModelCriteria.lastModifiedDate();
         hkjJewelryModelCriteria.imagesId();
-        hkjJewelryModelCriteria.materialsId();
+        hkjJewelryModelCriteria.materialId();
         hkjJewelryModelCriteria.categoryId();
         hkjJewelryModelCriteria.projectId();
-        hkjJewelryModelCriteria.materialId();
-        hkjJewelryModelCriteria.hkjCartId();
         hkjJewelryModelCriteria.distinct();
     }
 
@@ -115,11 +113,9 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
                 condition.apply(criteria.getImagesId()) &&
-                condition.apply(criteria.getMaterialsId()) &&
+                condition.apply(criteria.getMaterialId()) &&
                 condition.apply(criteria.getCategoryId()) &&
                 condition.apply(criteria.getProjectId()) &&
-                condition.apply(criteria.getMaterialId()) &&
-                condition.apply(criteria.getHkjCartId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -146,11 +142,9 @@ class HkjJewelryModelCriteriaTest {
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
                 condition.apply(criteria.getImagesId(), copy.getImagesId()) &&
-                condition.apply(criteria.getMaterialsId(), copy.getMaterialsId()) &&
+                condition.apply(criteria.getMaterialId(), copy.getMaterialId()) &&
                 condition.apply(criteria.getCategoryId(), copy.getCategoryId()) &&
                 condition.apply(criteria.getProjectId(), copy.getProjectId()) &&
-                condition.apply(criteria.getMaterialId(), copy.getMaterialId()) &&
-                condition.apply(criteria.getHkjCartId(), copy.getHkjCartId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

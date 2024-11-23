@@ -78,6 +78,10 @@ export const HkjCartDetail = () => {
             <Translate contentKey="serverApp.hkjCart.customer">Customer</Translate>
           </dt>
           <dd>{hkjCartEntity.customer ? hkjCartEntity.customer.id : ''}</dd>
+          <dt>
+            <Translate contentKey="serverApp.hkjCart.product">Product</Translate>
+          </dt>
+          <dd>{hkjCartEntity.product ? hkjCartEntity.product.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-cart" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

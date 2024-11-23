@@ -95,15 +95,14 @@ public class HkjCartQueryService extends QueryService<HkjCart> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjCart_.lastModifiedDate));
             }
-            if (criteria.getProductId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getProductId(), root -> root.join(HkjCart_.products, JoinType.LEFT).get(HkjJewelryModel_.id)
-                    )
-                );
-            }
             if (criteria.getCustomerId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getCustomerId(), root -> root.join(HkjCart_.customer, JoinType.LEFT).get(UserExtra_.id))
+                );
+            }
+            if (criteria.getProductId() != null) {
+                specification = specification.and(
+                    buildSpecification(criteria.getProductId(), root -> root.join(HkjCart_.product, JoinType.LEFT).get(HkjJewelryModel_.id))
                 );
             }
         }

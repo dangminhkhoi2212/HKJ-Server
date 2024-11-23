@@ -2,7 +2,6 @@ package com.server.hkj.web.rest;
 
 import static com.server.hkj.domain.HkjProjectAsserts.*;
 import static com.server.hkj.web.rest.TestUtil.createUpdateProxyForBean;
-import static com.server.hkj.web.rest.TestUtil.sameNumber;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -11,8 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjCategory;
-import com.server.hkj.domain.HkjMaterial;
 import com.server.hkj.domain.HkjProject;
 import com.server.hkj.domain.UserExtra;
 import com.server.hkj.domain.enumeration.HkjOrderStatus;
@@ -21,7 +18,6 @@ import com.server.hkj.repository.HkjProjectRepository;
 import com.server.hkj.service.dto.HkjProjectDTO;
 import com.server.hkj.service.mapper.HkjProjectMapper;
 import jakarta.persistence.EntityManager;
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
@@ -68,13 +64,6 @@ class HkjProjectResourceIT {
     private static final HkjPriority DEFAULT_PRIORITY = HkjPriority.LOW;
     private static final HkjPriority UPDATED_PRIORITY = HkjPriority.MEDIUM;
 
-    private static final BigDecimal DEFAULT_ACTUAL_COST = new BigDecimal(1);
-    private static final BigDecimal UPDATED_ACTUAL_COST = new BigDecimal(2);
-    private static final BigDecimal SMALLER_ACTUAL_COST = new BigDecimal(1 - 1);
-
-    private static final Boolean DEFAULT_QUALITY_CHECK = false;
-    private static final Boolean UPDATED_QUALITY_CHECK = true;
-
     private static final Boolean DEFAULT_IS_DELETED = false;
     private static final Boolean UPDATED_IS_DELETED = true;
 
@@ -119,8 +108,6 @@ class HkjProjectResourceIT {
             .endDate(DEFAULT_END_DATE)
             .status(DEFAULT_STATUS)
             .priority(DEFAULT_PRIORITY)
-            .actualCost(DEFAULT_ACTUAL_COST)
-            .qualityCheck(DEFAULT_QUALITY_CHECK)
             .isDeleted(DEFAULT_IS_DELETED);
     }
 
@@ -140,8 +127,6 @@ class HkjProjectResourceIT {
             .endDate(UPDATED_END_DATE)
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
-            .actualCost(UPDATED_ACTUAL_COST)
-            .qualityCheck(UPDATED_QUALITY_CHECK)
             .isDeleted(UPDATED_IS_DELETED);
     }
 
@@ -290,8 +275,6 @@ class HkjProjectResourceIT {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY.toString())))
-            .andExpect(jsonPath("$.[*].actualCost").value(hasItem(sameNumber(DEFAULT_ACTUAL_COST))))
-            .andExpect(jsonPath("$.[*].qualityCheck").value(hasItem(DEFAULT_QUALITY_CHECK.booleanValue())))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
 
@@ -315,8 +298,6 @@ class HkjProjectResourceIT {
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
             .andExpect(jsonPath("$.priority").value(DEFAULT_PRIORITY.toString()))
-            .andExpect(jsonPath("$.actualCost").value(sameNumber(DEFAULT_ACTUAL_COST)))
-            .andExpect(jsonPath("$.qualityCheck").value(DEFAULT_QUALITY_CHECK.booleanValue()))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
 
@@ -649,118 +630,6 @@ class HkjProjectResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjProjectsByActualCostIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where actualCost equals to
-        defaultHkjProjectFiltering("actualCost.equals=" + DEFAULT_ACTUAL_COST, "actualCost.equals=" + UPDATED_ACTUAL_COST);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByActualCostIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where actualCost in
-        defaultHkjProjectFiltering(
-            "actualCost.in=" + DEFAULT_ACTUAL_COST + "," + UPDATED_ACTUAL_COST,
-            "actualCost.in=" + UPDATED_ACTUAL_COST
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByActualCostIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where actualCost is not null
-        defaultHkjProjectFiltering("actualCost.specified=true", "actualCost.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByActualCostIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where actualCost is greater than or equal to
-        defaultHkjProjectFiltering(
-            "actualCost.greaterThanOrEqual=" + DEFAULT_ACTUAL_COST,
-            "actualCost.greaterThanOrEqual=" + UPDATED_ACTUAL_COST
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByActualCostIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where actualCost is less than or equal to
-        defaultHkjProjectFiltering(
-            "actualCost.lessThanOrEqual=" + DEFAULT_ACTUAL_COST,
-            "actualCost.lessThanOrEqual=" + SMALLER_ACTUAL_COST
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByActualCostIsLessThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where actualCost is less than
-        defaultHkjProjectFiltering("actualCost.lessThan=" + UPDATED_ACTUAL_COST, "actualCost.lessThan=" + DEFAULT_ACTUAL_COST);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByActualCostIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where actualCost is greater than
-        defaultHkjProjectFiltering("actualCost.greaterThan=" + SMALLER_ACTUAL_COST, "actualCost.greaterThan=" + DEFAULT_ACTUAL_COST);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByQualityCheckIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where qualityCheck equals to
-        defaultHkjProjectFiltering("qualityCheck.equals=" + DEFAULT_QUALITY_CHECK, "qualityCheck.equals=" + UPDATED_QUALITY_CHECK);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByQualityCheckIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where qualityCheck in
-        defaultHkjProjectFiltering(
-            "qualityCheck.in=" + DEFAULT_QUALITY_CHECK + "," + UPDATED_QUALITY_CHECK,
-            "qualityCheck.in=" + UPDATED_QUALITY_CHECK
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByQualityCheckIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
-
-        // Get all the hkjProjectList where qualityCheck is not null
-        defaultHkjProjectFiltering("qualityCheck.specified=true", "qualityCheck.specified=false");
-    }
-
-    @Test
-    @Transactional
     void getAllHkjProjectsByIsDeletedIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjProject = hkjProjectRepository.saveAndFlush(hkjProject);
@@ -811,50 +680,6 @@ class HkjProjectResourceIT {
         defaultHkjProjectShouldNotBeFound("managerId.equals=" + (managerId + 1));
     }
 
-    @Test
-    @Transactional
-    void getAllHkjProjectsByCategoryIsEqualToSomething() throws Exception {
-        HkjCategory category;
-        if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
-            hkjProjectRepository.saveAndFlush(hkjProject);
-            category = HkjCategoryResourceIT.createEntity();
-        } else {
-            category = TestUtil.findAll(em, HkjCategory.class).get(0);
-        }
-        em.persist(category);
-        em.flush();
-        hkjProject.setCategory(category);
-        hkjProjectRepository.saveAndFlush(hkjProject);
-        Long categoryId = category.getId();
-        // Get all the hkjProjectList where category equals to categoryId
-        defaultHkjProjectShouldBeFound("categoryId.equals=" + categoryId);
-
-        // Get all the hkjProjectList where category equals to (categoryId + 1)
-        defaultHkjProjectShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjProjectsByMaterialIsEqualToSomething() throws Exception {
-        HkjMaterial material;
-        if (TestUtil.findAll(em, HkjMaterial.class).isEmpty()) {
-            hkjProjectRepository.saveAndFlush(hkjProject);
-            material = HkjMaterialResourceIT.createEntity();
-        } else {
-            material = TestUtil.findAll(em, HkjMaterial.class).get(0);
-        }
-        em.persist(material);
-        em.flush();
-        hkjProject.setMaterial(material);
-        hkjProjectRepository.saveAndFlush(hkjProject);
-        Long materialId = material.getId();
-        // Get all the hkjProjectList where material equals to materialId
-        defaultHkjProjectShouldBeFound("materialId.equals=" + materialId);
-
-        // Get all the hkjProjectList where material equals to (materialId + 1)
-        defaultHkjProjectShouldNotBeFound("materialId.equals=" + (materialId + 1));
-    }
-
     private void defaultHkjProjectFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjProjectShouldBeFound(shouldBeFound);
         defaultHkjProjectShouldNotBeFound(shouldNotBeFound);
@@ -877,8 +702,6 @@ class HkjProjectResourceIT {
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
             .andExpect(jsonPath("$.[*].priority").value(hasItem(DEFAULT_PRIORITY.toString())))
-            .andExpect(jsonPath("$.[*].actualCost").value(hasItem(sameNumber(DEFAULT_ACTUAL_COST))))
-            .andExpect(jsonPath("$.[*].qualityCheck").value(hasItem(DEFAULT_QUALITY_CHECK.booleanValue())))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
         // Check, that the count call also returns 1
@@ -936,8 +759,6 @@ class HkjProjectResourceIT {
             .endDate(UPDATED_END_DATE)
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
-            .actualCost(UPDATED_ACTUAL_COST)
-            .qualityCheck(UPDATED_QUALITY_CHECK)
             .isDeleted(UPDATED_IS_DELETED);
         HkjProjectDTO hkjProjectDTO = hkjProjectMapper.toDto(updatedHkjProject);
 
@@ -1031,11 +852,7 @@ class HkjProjectResourceIT {
         HkjProject partialUpdatedHkjProject = new HkjProject();
         partialUpdatedHkjProject.setId(hkjProject.getId());
 
-        partialUpdatedHkjProject
-            .description(UPDATED_DESCRIPTION)
-            .endDate(UPDATED_END_DATE)
-            .status(UPDATED_STATUS)
-            .qualityCheck(UPDATED_QUALITY_CHECK);
+        partialUpdatedHkjProject.description(UPDATED_DESCRIPTION).endDate(UPDATED_END_DATE).status(UPDATED_STATUS);
 
         restHkjProjectMockMvc
             .perform(
@@ -1076,8 +893,6 @@ class HkjProjectResourceIT {
             .endDate(UPDATED_END_DATE)
             .status(UPDATED_STATUS)
             .priority(UPDATED_PRIORITY)
-            .actualCost(UPDATED_ACTUAL_COST)
-            .qualityCheck(UPDATED_QUALITY_CHECK)
             .isDeleted(UPDATED_IS_DELETED);
 
         restHkjProjectMockMvc

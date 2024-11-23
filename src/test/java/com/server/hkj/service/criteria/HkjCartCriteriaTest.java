@@ -81,8 +81,8 @@ class HkjCartCriteriaTest {
         hkjCartCriteria.createdDate();
         hkjCartCriteria.lastModifiedBy();
         hkjCartCriteria.lastModifiedDate();
-        hkjCartCriteria.productId();
         hkjCartCriteria.customerId();
+        hkjCartCriteria.productId();
         hkjCartCriteria.distinct();
     }
 
@@ -96,8 +96,8 @@ class HkjCartCriteriaTest {
                 condition.apply(criteria.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate()) &&
-                condition.apply(criteria.getProductId()) &&
                 condition.apply(criteria.getCustomerId()) &&
+                condition.apply(criteria.getProductId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -113,8 +113,8 @@ class HkjCartCriteriaTest {
                 condition.apply(criteria.getCreatedDate(), copy.getCreatedDate()) &&
                 condition.apply(criteria.getLastModifiedBy(), copy.getLastModifiedBy()) &&
                 condition.apply(criteria.getLastModifiedDate(), copy.getLastModifiedDate()) &&
-                condition.apply(criteria.getProductId(), copy.getProductId()) &&
                 condition.apply(criteria.getCustomerId(), copy.getCustomerId()) &&
+                condition.apply(criteria.getProductId(), copy.getProductId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

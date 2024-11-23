@@ -88,14 +88,8 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
             if (criteria.getActualDeliveryDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getActualDeliveryDate(), HkjOrder_.actualDeliveryDate));
             }
-            if (criteria.getSpecialRequests() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getSpecialRequests(), HkjOrder_.specialRequests));
-            }
             if (criteria.getStatus() != null) {
                 specification = specification.and(buildSpecification(criteria.getStatus(), HkjOrder_.status));
-            }
-            if (criteria.getCustomerRating() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getCustomerRating(), HkjOrder_.customerRating));
             }
             if (criteria.getTotalPrice() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getTotalPrice(), HkjOrder_.totalPrice));
@@ -115,37 +109,14 @@ public class HkjOrderQueryService extends QueryService<HkjOrder> {
             if (criteria.getLastModifiedDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getLastModifiedDate(), HkjOrder_.lastModifiedDate));
             }
-            if (criteria.getOrderImagesId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getOrderImagesId(), root ->
-                        root.join(HkjOrder_.orderImages, JoinType.LEFT).get(HkjOrderImage_.id)
-                    )
-                );
-            }
             if (criteria.getCustomerId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getCustomerId(), root -> root.join(HkjOrder_.customer, JoinType.LEFT).get(UserExtra_.id))
                 );
             }
-            if (criteria.getMaterialId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getMaterialId(), root -> root.join(HkjOrder_.material, JoinType.LEFT).get(HkjMaterial_.id))
-                );
-            }
-            if (criteria.getJewelryId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getJewelryId(), root -> root.join(HkjOrder_.jewelry, JoinType.LEFT).get(HkjJewelryModel_.id)
-                    )
-                );
-            }
             if (criteria.getProjectId() != null) {
                 specification = specification.and(
                     buildSpecification(criteria.getProjectId(), root -> root.join(HkjOrder_.project, JoinType.LEFT).get(HkjProject_.id))
-                );
-            }
-            if (criteria.getCategoryId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getCategoryId(), root -> root.join(HkjOrder_.category, JoinType.LEFT).get(HkjCategory_.id))
                 );
             }
         }

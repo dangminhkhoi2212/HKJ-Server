@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
@@ -41,14 +39,13 @@ public class HkjCart extends AbstractAuditingEntity<Long> implements Serializabl
     @Transient
     private boolean isPersisted;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hkjCart")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "images", "materials", "category", "project", "material", "hkjCart" }, allowSetters = true)
-    private Set<HkjJewelryModel> products = new HashSet<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
     private UserExtra customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "images", "materials", "category", "project" }, allowSetters = true)
+    private HkjJewelryModel product;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -132,37 +129,6 @@ public class HkjCart extends AbstractAuditingEntity<Long> implements Serializabl
         return this;
     }
 
-    public Set<HkjJewelryModel> getProducts() {
-        return this.products;
-    }
-
-    public void setProducts(Set<HkjJewelryModel> hkjJewelryModels) {
-        if (this.products != null) {
-            this.products.forEach(i -> i.setHkjCart(null));
-        }
-        if (hkjJewelryModels != null) {
-            hkjJewelryModels.forEach(i -> i.setHkjCart(this));
-        }
-        this.products = hkjJewelryModels;
-    }
-
-    public HkjCart products(Set<HkjJewelryModel> hkjJewelryModels) {
-        this.setProducts(hkjJewelryModels);
-        return this;
-    }
-
-    public HkjCart addProduct(HkjJewelryModel hkjJewelryModel) {
-        this.products.add(hkjJewelryModel);
-        hkjJewelryModel.setHkjCart(this);
-        return this;
-    }
-
-    public HkjCart removeProduct(HkjJewelryModel hkjJewelryModel) {
-        this.products.remove(hkjJewelryModel);
-        hkjJewelryModel.setHkjCart(null);
-        return this;
-    }
-
     public UserExtra getCustomer() {
         return this.customer;
     }
@@ -173,6 +139,19 @@ public class HkjCart extends AbstractAuditingEntity<Long> implements Serializabl
 
     public HkjCart customer(UserExtra userExtra) {
         this.setCustomer(userExtra);
+        return this;
+    }
+
+    public HkjJewelryModel getProduct() {
+        return this.product;
+    }
+
+    public void setProduct(HkjJewelryModel hkjJewelryModel) {
+        this.product = hkjJewelryModel;
+    }
+
+    public HkjCart product(HkjJewelryModel hkjJewelryModel) {
+        this.setProduct(hkjJewelryModel);
         return this;
     }
 

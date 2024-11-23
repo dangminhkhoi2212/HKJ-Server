@@ -1,11 +1,20 @@
 package com.server.hkj.service;
 
-import com.server.hkj.domain.*; // for static metamodels
+// for static metamodels
+import com.server.hkj.domain.HkjCategory_;
+import com.server.hkj.domain.HkjJewelryImage_;
 import com.server.hkj.domain.HkjJewelryModel;
+import com.server.hkj.domain.HkjJewelryModel_;
+import com.server.hkj.domain.HkjMaterial;
+import com.server.hkj.domain.HkjMaterialUsage;
+import com.server.hkj.domain.HkjMaterialUsage_;
+import com.server.hkj.domain.HkjMaterial_;
+import com.server.hkj.domain.HkjProject_;
 import com.server.hkj.repository.HkjJewelryModelRepository;
 import com.server.hkj.service.criteria.HkjJewelryModelCriteria;
 import com.server.hkj.service.dto.HkjJewelryModelDTO;
 import com.server.hkj.service.mapper.HkjJewelryModelMapper;
+import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +24,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tech.jhipster.service.QueryService;
+import tech.jhipster.service.filter.LongFilter;
 
 /**
  * Service for executing complex queries for {@link HkjJewelryModel} entities in the database.
@@ -125,12 +135,8 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
                     )
                 );
             }
-            if (criteria.getMaterialsId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getMaterialsId(), root ->
-                        root.join(HkjJewelryModel_.materials, JoinType.LEFT).get(HkjMaterialUsage_.id)
-                    )
-                );
+            if (criteria.getMaterialId() != null) {
+                specification = specification.and(buildMaterialIdSpecification(criteria.getMaterialId()));
             }
             if (criteria.getCategoryId() != null) {
                 specification = specification.and(
@@ -146,19 +152,24 @@ public class HkjJewelryModelQueryService extends QueryService<HkjJewelryModel> {
                     )
                 );
             }
-            if (criteria.getMaterialId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getMaterialId(), root ->
-                        root.join(HkjJewelryModel_.material, JoinType.LEFT).get(HkjMaterial_.id)
-                    )
-                );
-            }
-            if (criteria.getHkjCartId() != null) {
-                specification = specification.and(
-                    buildSpecification(criteria.getHkjCartId(), root -> root.join(HkjJewelryModel_.hkjCart, JoinType.LEFT).get(HkjCart_.id))
-                );
-            }
         }
         return specification;
+    }
+
+    public static Specification<HkjJewelryModel> buildMaterialIdSpecification(LongFilter materialId) {
+        return (root, query, criteriaBuilder) -> {
+            if (materialId == null || materialId.getEquals() == null) {
+                return null;
+            }
+
+            // Join from HkjJewelryModel to HkjMaterialUsage
+            Join<HkjJewelryModel, HkjMaterialUsage> jewelryMaterialUsageJoin = root.join(HkjJewelryModel_.materials, JoinType.LEFT);
+
+            // Join from HkjMaterialUsage to HkjMaterial
+            Join<HkjMaterialUsage, HkjMaterial> materialJoin = jewelryMaterialUsageJoin.join(HkjMaterialUsage_.material, JoinType.LEFT);
+
+            // Filter based on materialId
+            return criteriaBuilder.equal(materialJoin.get(HkjMaterial_.id), materialId.getEquals());
+        };
     }
 }

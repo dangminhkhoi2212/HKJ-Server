@@ -145,14 +145,6 @@ export const HkjProject = () => {
                   <Translate contentKey="serverApp.hkjProject.priority">Priority</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('priority')} />
                 </th>
-                <th className="hand" onClick={sort('actualCost')}>
-                  <Translate contentKey="serverApp.hkjProject.actualCost">Actual Cost</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('actualCost')} />
-                </th>
-                <th className="hand" onClick={sort('qualityCheck')}>
-                  <Translate contentKey="serverApp.hkjProject.qualityCheck">Quality Check</Translate>{' '}
-                  <FontAwesomeIcon icon={getSortIconByFieldName('qualityCheck')} />
-                </th>
                 <th className="hand" onClick={sort('isDeleted')}>
                   <Translate contentKey="serverApp.hkjProject.isDeleted">Is Deleted</Translate>{' '}
                   <FontAwesomeIcon icon={getSortIconByFieldName('isDeleted')} />
@@ -175,12 +167,6 @@ export const HkjProject = () => {
                 </th>
                 <th>
                   <Translate contentKey="serverApp.hkjProject.manager">Manager</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="serverApp.hkjProject.category">Category</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="serverApp.hkjProject.material">Material</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -207,8 +193,6 @@ export const HkjProject = () => {
                   <td>
                     <Translate contentKey={`serverApp.HkjPriority.${hkjProject.priority}`} />
                   </td>
-                  <td>{hkjProject.actualCost}</td>
-                  <td>{hkjProject.qualityCheck ? 'true' : 'false'}</td>
                   <td>{hkjProject.isDeleted ? 'true' : 'false'}</td>
                   <td>{hkjProject.createdBy}</td>
                   <td>
@@ -221,8 +205,6 @@ export const HkjProject = () => {
                     ) : null}
                   </td>
                   <td>{hkjProject.manager ? <Link to={`/user-extra/${hkjProject.manager.id}`}>{hkjProject.manager.id}</Link> : ''}</td>
-                  <td>{hkjProject.category ? <Link to={`/hkj-category/${hkjProject.category.id}`}>{hkjProject.category.id}</Link> : ''}</td>
-                  <td>{hkjProject.material ? <Link to={`/hkj-material/${hkjProject.material.id}`}>{hkjProject.material.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/hkj-project/${hkjProject.id}`} color="info" size="sm" data-cy="entityDetailsButton">

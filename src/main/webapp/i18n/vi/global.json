@@ -27,7 +27,8 @@
         "hkjOrderImage": "Hkj Order Image",
         "hkjMaterialImage": "Hkj Material Image",
         "hkjTrackSearchImage": "Hkj Track Search Image",
-        "hkjCart": "Hkj Cart"
+        "hkjCart": "Hkj Cart",
+        "hkjOrderItem": "Hkj Order Item"
       },
       "account": {
         "main": "Tài khoản",

@@ -20,23 +20,10 @@
       "fieldType": "Instant"
     },
     {
-      "fieldName": "specialRequests",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "5000"
-    },
-    {
       "fieldName": "status",
       "fieldType": "HkjOrderStatus",
       "fieldValidateRules": ["required"],
       "fieldValues": "NEW,IN_PROCESS,COMPLETED,DELIVERED,LATED,CANCEL"
-    },
-    {
-      "fieldName": "customerRating",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["min", "max"],
-      "fieldValidateRulesMax": "5",
-      "fieldValidateRulesMin": "1"
     },
     {
       "fieldName": "totalPrice",
@@ -87,39 +74,14 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjOrderImage",
-      "otherEntityRelationshipName": "order",
-      "relationshipName": "orderImages",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "userExtra",
       "relationshipName": "customer",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
-      "otherEntityName": "hkjMaterial",
-      "relationshipName": "material",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "hkjJewelryModel",
-      "relationshipName": "jewelry",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
       "otherEntityName": "hkjProject",
       "relationshipName": "project",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "hkjCategory",
-      "relationshipName": "category",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

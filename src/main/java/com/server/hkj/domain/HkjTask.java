@@ -93,7 +93,7 @@ public class HkjTask extends AbstractAuditingEntity<Long> implements Serializabl
     private UserExtra employee;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "tasks", "manager", "category", "material" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tasks", "manager" }, allowSetters = true)
     private HkjProject project;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

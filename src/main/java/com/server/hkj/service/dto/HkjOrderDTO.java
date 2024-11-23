@@ -22,15 +22,8 @@ public class HkjOrderDTO implements Serializable {
 
     private Instant actualDeliveryDate;
 
-    @Size(max = 5000)
-    private String specialRequests;
-
     @NotNull
     private HkjOrderStatus status;
-
-    @Min(value = 1)
-    @Max(value = 5)
-    private Integer customerRating;
 
     private BigDecimal totalPrice;
 
@@ -46,13 +39,7 @@ public class HkjOrderDTO implements Serializable {
 
     private UserExtraDTO customer;
 
-    private HkjMaterialDTO material;
-
-    private HkjJewelryModelDTO jewelry;
-
     private HkjProjectDTO project;
-
-    private HkjCategoryDTO category;
 
     public Long getId() {
         return id;
@@ -86,28 +73,12 @@ public class HkjOrderDTO implements Serializable {
         this.actualDeliveryDate = actualDeliveryDate;
     }
 
-    public String getSpecialRequests() {
-        return specialRequests;
-    }
-
-    public void setSpecialRequests(String specialRequests) {
-        this.specialRequests = specialRequests;
-    }
-
     public HkjOrderStatus getStatus() {
         return status;
     }
 
     public void setStatus(HkjOrderStatus status) {
         this.status = status;
-    }
-
-    public Integer getCustomerRating() {
-        return customerRating;
-    }
-
-    public void setCustomerRating(Integer customerRating) {
-        this.customerRating = customerRating;
     }
 
     public BigDecimal getTotalPrice() {
@@ -166,36 +137,12 @@ public class HkjOrderDTO implements Serializable {
         this.customer = customer;
     }
 
-    public HkjMaterialDTO getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(HkjMaterialDTO material) {
-        this.material = material;
-    }
-
-    public HkjJewelryModelDTO getJewelry() {
-        return jewelry;
-    }
-
-    public void setJewelry(HkjJewelryModelDTO jewelry) {
-        this.jewelry = jewelry;
-    }
-
     public HkjProjectDTO getProject() {
         return project;
     }
 
     public void setProject(HkjProjectDTO project) {
         this.project = project;
-    }
-
-    public HkjCategoryDTO getCategory() {
-        return category;
-    }
-
-    public void setCategory(HkjCategoryDTO category) {
-        this.category = category;
     }
 
     @Override
@@ -227,9 +174,7 @@ public class HkjOrderDTO implements Serializable {
             ", orderDate='" + getOrderDate() + "'" +
             ", expectedDeliveryDate='" + getExpectedDeliveryDate() + "'" +
             ", actualDeliveryDate='" + getActualDeliveryDate() + "'" +
-            ", specialRequests='" + getSpecialRequests() + "'" +
             ", status='" + getStatus() + "'" +
-            ", customerRating=" + getCustomerRating() +
             ", totalPrice=" + getTotalPrice() +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +
@@ -237,10 +182,7 @@ public class HkjOrderDTO implements Serializable {
             ", lastModifiedBy='" + getLastModifiedBy() + "'" +
             ", lastModifiedDate='" + getLastModifiedDate() + "'" +
             ", customer=" + getCustomer() +
-            ", material=" + getMaterial() +
-            ", jewelry=" + getJewelry() +
             ", project=" + getProject() +
-            ", category=" + getCategory() +
             "}";
     }
 }

@@ -12,9 +12,9 @@
     <changeSet id="20240914093118-1" author="jhipster">
         <createTable tableName="hkj_material_usage">
             <column name="id" type="bigint">
-                <constraints primaryKey="true" nullable="false" />
+                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="usage" type="float">
+            <column name="usage" type="${floatType}">
                 <constraints nullable="true" />
             </column>
             <column name="notes" type="varchar(255)">
@@ -49,10 +49,8 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="hkj_material_usage" columnName="created_date"
-            columnDataType="${datetimeType}" />
-        <dropDefaultValue tableName="hkj_material_usage" columnName="last_modified_date"
-            columnDataType="${datetimeType}" />
+        <dropDefaultValue tableName="hkj_material_usage" columnName="created_date" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="hkj_material_usage" columnName="last_modified_date" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

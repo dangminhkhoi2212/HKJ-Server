@@ -1,7 +1,7 @@
 package com.server.hkj.domain;
 
 import static com.server.hkj.domain.HkjOrderImageTestSamples.*;
-import static com.server.hkj.domain.HkjOrderTestSamples.*;
+import static com.server.hkj.domain.HkjOrderItemTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
@@ -24,14 +24,14 @@ class HkjOrderImageTest {
     }
 
     @Test
-    void orderTest() {
+    void orderItemTest() {
         HkjOrderImage hkjOrderImage = getHkjOrderImageRandomSampleGenerator();
-        HkjOrder hkjOrderBack = getHkjOrderRandomSampleGenerator();
+        HkjOrderItem hkjOrderItemBack = getHkjOrderItemRandomSampleGenerator();
 
-        hkjOrderImage.setOrder(hkjOrderBack);
-        assertThat(hkjOrderImage.getOrder()).isEqualTo(hkjOrderBack);
+        hkjOrderImage.setOrderItem(hkjOrderItemBack);
+        assertThat(hkjOrderImage.getOrderItem()).isEqualTo(hkjOrderItemBack);
 
-        hkjOrderImage.order(null);
-        assertThat(hkjOrderImage.getOrder()).isNull();
+        hkjOrderImage.orderItem(null);
+        assertThat(hkjOrderImage.getOrderItem()).isNull();
     }
 }

@@ -36,5 +36,11 @@ src/main/java/com/server/hkj/service/mapper/HkjTemplateMapper.java skip
 src/main/java/com/server/hkj/service/mapper/HkjProjectMapper.java skip
 src/main/java/com/server/hkj/service/mapper/HkjOrderMapper.java skip
 src/main/java/com/server/hkj/service/mapper/HkjJewelryModelMapper.java skip
+src/test/java/com/server/hkj/service/criteria/HkjJewelryModelCriteriaTest.java skip
+src/main/java/com/server/hkj/service/criteria/HkjJewelryModelCriteria.java skip
+src/main/java/com/server/hkj/service/HkjJewelryModelQueryService.java skip
 src/main/java/com/server/hkj/service/mapper/HkjJewelryImageMapper.java skip
+
+src/main/java/com/server/hkj/service/mapper/HkjProjectMapper.java skip
+src/main/java/com/server/hkj/service/mapper/HkjCartMapper.java skip
 src/jhipster-jdl.jdl skip

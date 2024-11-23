@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity HkjOrderItem.
+    -->
+    <changeSet id="20241112030139-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="material_id"
+                                 baseTableName="hkj_order_item"
+                                 constraintName="fk_hkj_order_item__material_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_material"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="order_id"
+                                 baseTableName="hkj_order_item"
+                                 constraintName="fk_hkj_order_item__order_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_order"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="hkj_order_item"
+                                 constraintName="fk_hkj_order_item__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_jewelry_model"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="category_id"
+                                 baseTableName="hkj_order_item"
+                                 constraintName="fk_hkj_order_item__category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_category"
+                                 />
+    </changeSet>
+</databaseChangeLog>

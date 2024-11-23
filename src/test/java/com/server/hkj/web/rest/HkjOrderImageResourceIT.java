@@ -10,8 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjOrder;
 import com.server.hkj.domain.HkjOrderImage;
+import com.server.hkj.domain.HkjOrderItem;
 import com.server.hkj.repository.HkjOrderImageRepository;
 import com.server.hkj.service.dto.HkjOrderImageDTO;
 import com.server.hkj.service.mapper.HkjOrderImageMapper;
@@ -281,24 +281,24 @@ class HkjOrderImageResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjOrderImagesByOrderIsEqualToSomething() throws Exception {
-        HkjOrder order;
-        if (TestUtil.findAll(em, HkjOrder.class).isEmpty()) {
+    void getAllHkjOrderImagesByOrderItemIsEqualToSomething() throws Exception {
+        HkjOrderItem orderItem;
+        if (TestUtil.findAll(em, HkjOrderItem.class).isEmpty()) {
             hkjOrderImageRepository.saveAndFlush(hkjOrderImage);
-            order = HkjOrderResourceIT.createEntity();
+            orderItem = HkjOrderItemResourceIT.createEntity();
         } else {
-            order = TestUtil.findAll(em, HkjOrder.class).get(0);
+            orderItem = TestUtil.findAll(em, HkjOrderItem.class).get(0);
         }
-        em.persist(order);
+        em.persist(orderItem);
         em.flush();
-        hkjOrderImage.setOrder(order);
+        hkjOrderImage.setOrderItem(orderItem);
         hkjOrderImageRepository.saveAndFlush(hkjOrderImage);
-        Long orderId = order.getId();
-        // Get all the hkjOrderImageList where order equals to orderId
-        defaultHkjOrderImageShouldBeFound("orderId.equals=" + orderId);
+        Long orderItemId = orderItem.getId();
+        // Get all the hkjOrderImageList where orderItem equals to orderItemId
+        defaultHkjOrderImageShouldBeFound("orderItemId.equals=" + orderItemId);
 
-        // Get all the hkjOrderImageList where order equals to (orderId + 1)
-        defaultHkjOrderImageShouldNotBeFound("orderId.equals=" + (orderId + 1));
+        // Get all the hkjOrderImageList where orderItem equals to (orderItemId + 1)
+        defaultHkjOrderImageShouldNotBeFound("orderItemId.equals=" + (orderItemId + 1));
     }
 
     private void defaultHkjOrderImageFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

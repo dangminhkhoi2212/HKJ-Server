@@ -54,10 +54,9 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjOrder",
-      "otherEntityRelationshipName": "orderImages",
-      "relationshipName": "order",
-      "relationshipSide": "right",
+      "otherEntityName": "hkjOrderItem",
+      "relationshipName": "orderItem",
+      "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }
   ],

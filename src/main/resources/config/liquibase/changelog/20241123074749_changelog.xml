@@ -1,0 +1,41 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1732348196581-3">
+        <dropForeignKeyConstraint baseTableName="hkj_project"
+            constraintName="FK60j6q5v611ffdyfqry7kvulwo" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1732348196581-4">
+        <dropForeignKeyConstraint baseTableName="hkj_project"
+            constraintName="FKt6al6236dqst67rkcvg09qojh" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1732348196581-1">
+        <addColumn tableName="hkj_order">
+            <column name="project_id" type="bigint" />
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1732348196581-2">
+        <addForeignKeyConstraint baseColumnNames="project_id" baseTableName="hkj_order"
+            constraintName="FKd6oibume292edgayscfnbacia" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_project"
+            validate="true" />
+    </changeSet>
+
+    <changeSet author="WINDOWS (generated)" id="1732348196581-6">
+        <dropColumn columnName="actual_cost" tableName="hkj_project" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1732348196581-7">
+        <dropColumn columnName="category_id" tableName="hkj_project" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1732348196581-8">
+        <dropColumn columnName="material_id" tableName="hkj_project" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1732348196581-9">
+        <dropColumn columnName="quality_check" tableName="hkj_project" />
+    </changeSet>
+</databaseChangeLog>

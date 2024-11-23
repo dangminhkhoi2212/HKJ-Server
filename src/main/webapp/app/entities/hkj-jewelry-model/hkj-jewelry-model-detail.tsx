@@ -126,14 +126,6 @@ export const HkjJewelryModelDetail = () => {
             <Translate contentKey="serverApp.hkjJewelryModel.project">Project</Translate>
           </dt>
           <dd>{hkjJewelryModelEntity.project ? hkjJewelryModelEntity.project.id : ''}</dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjJewelryModel.material">Material</Translate>
-          </dt>
-          <dd>{hkjJewelryModelEntity.material ? hkjJewelryModelEntity.material.id : ''}</dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjJewelryModel.hkjCart">Hkj Cart</Translate>
-          </dt>
-          <dd>{hkjJewelryModelEntity.hkjCart ? hkjJewelryModelEntity.hkjCart.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-jewelry-model" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

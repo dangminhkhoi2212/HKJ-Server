@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { getEntities as getHkjOrders } from 'app/entities/hkj-order/hkj-order.reducer';
+import { getEntities as getHkjOrderItems } from 'app/entities/hkj-order-item/hkj-order-item.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-order-image.reducer';
 
 export const HkjOrderImageUpdate = () => {
@@ -18,7 +18,7 @@ export const HkjOrderImageUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const hkjOrders = useAppSelector(state => state.hkjOrder.entities);
+  const hkjOrderItems = useAppSelector(state => state.hkjOrderItem.entities);
   const hkjOrderImageEntity = useAppSelector(state => state.hkjOrderImage.entity);
   const loading = useAppSelector(state => state.hkjOrderImage.loading);
   const updating = useAppSelector(state => state.hkjOrderImage.updating);
@@ -35,7 +35,7 @@ export const HkjOrderImageUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getHkjOrders({}));
+    dispatch(getHkjOrderItems({}));
   }, []);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export const HkjOrderImageUpdate = () => {
     const entity = {
       ...hkjOrderImageEntity,
       ...values,
-      order: hkjOrders.find(it => it.id.toString() === values.order?.toString()),
+      orderItem: hkjOrderItems.find(it => it.id.toString() === values.orderItem?.toString()),
     };
 
     if (isNew) {
@@ -74,7 +74,7 @@ export const HkjOrderImageUpdate = () => {
           ...hkjOrderImageEntity,
           createdDate: convertDateTimeFromServer(hkjOrderImageEntity.createdDate),
           lastModifiedDate: convertDateTimeFromServer(hkjOrderImageEntity.lastModifiedDate),
-          order: hkjOrderImageEntity?.order?.id,
+          orderItem: hkjOrderImageEntity?.orderItem?.id,
         };
 
   return (
@@ -148,15 +148,15 @@ export const HkjOrderImageUpdate = () => {
                 placeholder="YYYY-MM-DD HH:mm"
               />
               <ValidatedField
-                id="hkj-order-image-order"
-                name="order"
-                data-cy="order"
-                label={translate('serverApp.hkjOrderImage.order')}
+                id="hkj-order-image-orderItem"
+                name="orderItem"
+                data-cy="orderItem"
+                label={translate('serverApp.hkjOrderImage.orderItem')}
                 type="select"
               >
                 <option value="" key="0" />
-                {hkjOrders
-                  ? hkjOrders.map(otherEntity => (
+                {hkjOrderItems
+                  ? hkjOrderItems.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

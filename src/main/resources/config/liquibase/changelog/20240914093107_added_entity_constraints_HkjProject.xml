@@ -16,19 +16,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="user_extra"
                                  />
-
-        <addForeignKeyConstraint baseColumnNames="category_id"
-                                 baseTableName="hkj_project"
-                                 constraintName="fk_hkj_project__category_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="hkj_category"
-                                 />
-
-        <addForeignKeyConstraint baseColumnNames="material_id"
-                                 baseTableName="hkj_project"
-                                 constraintName="fk_hkj_project__material_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="hkj_material"
-                                 />
     </changeSet>
 </databaseChangeLog>

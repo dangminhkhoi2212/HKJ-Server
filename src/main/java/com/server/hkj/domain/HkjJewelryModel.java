@@ -81,16 +81,8 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
     private HkjCategory category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "tasks", "manager", "category", "material" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tasks", "manager" }, allowSetters = true)
     private HkjProject project;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
-    private HkjMaterial material;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "products", "customer" }, allowSetters = true)
-    private HkjCart hkjCart;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -350,32 +342,6 @@ public class HkjJewelryModel extends AbstractAuditingEntity<Long> implements Ser
 
     public HkjJewelryModel project(HkjProject hkjProject) {
         this.setProject(hkjProject);
-        return this;
-    }
-
-    public HkjMaterial getMaterial() {
-        return this.material;
-    }
-
-    public void setMaterial(HkjMaterial hkjMaterial) {
-        this.material = hkjMaterial;
-    }
-
-    public HkjJewelryModel material(HkjMaterial hkjMaterial) {
-        this.setMaterial(hkjMaterial);
-        return this;
-    }
-
-    public HkjCart getHkjCart() {
-        return this.hkjCart;
-    }
-
-    public void setHkjCart(HkjCart hkjCart) {
-        this.hkjCart = hkjCart;
-    }
-
-    public HkjJewelryModel hkjCart(HkjCart hkjCart) {
-        this.setHkjCart(hkjCart);
         return this;
     }
 

@@ -11,9 +11,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjCategory;
-import com.server.hkj.domain.HkjJewelryModel;
-import com.server.hkj.domain.HkjMaterial;
 import com.server.hkj.domain.HkjOrder;
 import com.server.hkj.domain.HkjProject;
 import com.server.hkj.domain.UserExtra;
@@ -54,15 +51,8 @@ class HkjOrderResourceIT {
     private static final Instant DEFAULT_ACTUAL_DELIVERY_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_ACTUAL_DELIVERY_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final String DEFAULT_SPECIAL_REQUESTS = "AAAAAAAAAA";
-    private static final String UPDATED_SPECIAL_REQUESTS = "BBBBBBBBBB";
-
     private static final HkjOrderStatus DEFAULT_STATUS = HkjOrderStatus.NEW;
     private static final HkjOrderStatus UPDATED_STATUS = HkjOrderStatus.IN_PROCESS;
-
-    private static final Integer DEFAULT_CUSTOMER_RATING = 1;
-    private static final Integer UPDATED_CUSTOMER_RATING = 2;
-    private static final Integer SMALLER_CUSTOMER_RATING = 1 - 1;
 
     private static final BigDecimal DEFAULT_TOTAL_PRICE = new BigDecimal(1);
     private static final BigDecimal UPDATED_TOTAL_PRICE = new BigDecimal(2);
@@ -107,9 +97,7 @@ class HkjOrderResourceIT {
             .orderDate(DEFAULT_ORDER_DATE)
             .expectedDeliveryDate(DEFAULT_EXPECTED_DELIVERY_DATE)
             .actualDeliveryDate(DEFAULT_ACTUAL_DELIVERY_DATE)
-            .specialRequests(DEFAULT_SPECIAL_REQUESTS)
             .status(DEFAULT_STATUS)
-            .customerRating(DEFAULT_CUSTOMER_RATING)
             .totalPrice(DEFAULT_TOTAL_PRICE)
             .isDeleted(DEFAULT_IS_DELETED);
     }
@@ -125,9 +113,7 @@ class HkjOrderResourceIT {
             .orderDate(UPDATED_ORDER_DATE)
             .expectedDeliveryDate(UPDATED_EXPECTED_DELIVERY_DATE)
             .actualDeliveryDate(UPDATED_ACTUAL_DELIVERY_DATE)
-            .specialRequests(UPDATED_SPECIAL_REQUESTS)
             .status(UPDATED_STATUS)
-            .customerRating(UPDATED_CUSTOMER_RATING)
             .totalPrice(UPDATED_TOTAL_PRICE)
             .isDeleted(UPDATED_IS_DELETED);
     }
@@ -238,9 +224,7 @@ class HkjOrderResourceIT {
             .andExpect(jsonPath("$.[*].orderDate").value(hasItem(DEFAULT_ORDER_DATE.toString())))
             .andExpect(jsonPath("$.[*].expectedDeliveryDate").value(hasItem(DEFAULT_EXPECTED_DELIVERY_DATE.toString())))
             .andExpect(jsonPath("$.[*].actualDeliveryDate").value(hasItem(DEFAULT_ACTUAL_DELIVERY_DATE.toString())))
-            .andExpect(jsonPath("$.[*].specialRequests").value(hasItem(DEFAULT_SPECIAL_REQUESTS)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].customerRating").value(hasItem(DEFAULT_CUSTOMER_RATING)))
             .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(sameNumber(DEFAULT_TOTAL_PRICE))))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
     }
@@ -260,9 +244,7 @@ class HkjOrderResourceIT {
             .andExpect(jsonPath("$.orderDate").value(DEFAULT_ORDER_DATE.toString()))
             .andExpect(jsonPath("$.expectedDeliveryDate").value(DEFAULT_EXPECTED_DELIVERY_DATE.toString()))
             .andExpect(jsonPath("$.actualDeliveryDate").value(DEFAULT_ACTUAL_DELIVERY_DATE.toString()))
-            .andExpect(jsonPath("$.specialRequests").value(DEFAULT_SPECIAL_REQUESTS))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
-            .andExpect(jsonPath("$.customerRating").value(DEFAULT_CUSTOMER_RATING))
             .andExpect(jsonPath("$.totalPrice").value(sameNumber(DEFAULT_TOTAL_PRICE)))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
     }
@@ -386,68 +368,6 @@ class HkjOrderResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjOrdersBySpecialRequestsIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where specialRequests equals to
-        defaultHkjOrderFiltering(
-            "specialRequests.equals=" + DEFAULT_SPECIAL_REQUESTS,
-            "specialRequests.equals=" + UPDATED_SPECIAL_REQUESTS
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersBySpecialRequestsIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where specialRequests in
-        defaultHkjOrderFiltering(
-            "specialRequests.in=" + DEFAULT_SPECIAL_REQUESTS + "," + UPDATED_SPECIAL_REQUESTS,
-            "specialRequests.in=" + UPDATED_SPECIAL_REQUESTS
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersBySpecialRequestsIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where specialRequests is not null
-        defaultHkjOrderFiltering("specialRequests.specified=true", "specialRequests.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersBySpecialRequestsContainsSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where specialRequests contains
-        defaultHkjOrderFiltering(
-            "specialRequests.contains=" + DEFAULT_SPECIAL_REQUESTS,
-            "specialRequests.contains=" + UPDATED_SPECIAL_REQUESTS
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersBySpecialRequestsNotContainsSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where specialRequests does not contain
-        defaultHkjOrderFiltering(
-            "specialRequests.doesNotContain=" + UPDATED_SPECIAL_REQUESTS,
-            "specialRequests.doesNotContain=" + DEFAULT_SPECIAL_REQUESTS
-        );
-    }
-
-    @Test
-    @Transactional
     void getAllHkjOrdersByStatusIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
@@ -474,91 +394,6 @@ class HkjOrderResourceIT {
 
         // Get all the hkjOrderList where status is not null
         defaultHkjOrderFiltering("status.specified=true", "status.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByCustomerRatingIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where customerRating equals to
-        defaultHkjOrderFiltering("customerRating.equals=" + DEFAULT_CUSTOMER_RATING, "customerRating.equals=" + UPDATED_CUSTOMER_RATING);
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByCustomerRatingIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where customerRating in
-        defaultHkjOrderFiltering(
-            "customerRating.in=" + DEFAULT_CUSTOMER_RATING + "," + UPDATED_CUSTOMER_RATING,
-            "customerRating.in=" + UPDATED_CUSTOMER_RATING
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByCustomerRatingIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where customerRating is not null
-        defaultHkjOrderFiltering("customerRating.specified=true", "customerRating.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByCustomerRatingIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where customerRating is greater than or equal to
-        defaultHkjOrderFiltering(
-            "customerRating.greaterThanOrEqual=" + DEFAULT_CUSTOMER_RATING,
-            "customerRating.greaterThanOrEqual=" + (DEFAULT_CUSTOMER_RATING + 1)
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByCustomerRatingIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where customerRating is less than or equal to
-        defaultHkjOrderFiltering(
-            "customerRating.lessThanOrEqual=" + DEFAULT_CUSTOMER_RATING,
-            "customerRating.lessThanOrEqual=" + SMALLER_CUSTOMER_RATING
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByCustomerRatingIsLessThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where customerRating is less than
-        defaultHkjOrderFiltering(
-            "customerRating.lessThan=" + (DEFAULT_CUSTOMER_RATING + 1),
-            "customerRating.lessThan=" + DEFAULT_CUSTOMER_RATING
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByCustomerRatingIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        insertedHkjOrder = hkjOrderRepository.saveAndFlush(hkjOrder);
-
-        // Get all the hkjOrderList where customerRating is greater than
-        defaultHkjOrderFiltering(
-            "customerRating.greaterThan=" + SMALLER_CUSTOMER_RATING,
-            "customerRating.greaterThan=" + DEFAULT_CUSTOMER_RATING
-        );
     }
 
     @Test
@@ -691,50 +526,6 @@ class HkjOrderResourceIT {
 
     @Test
     @Transactional
-    void getAllHkjOrdersByMaterialIsEqualToSomething() throws Exception {
-        HkjMaterial material;
-        if (TestUtil.findAll(em, HkjMaterial.class).isEmpty()) {
-            hkjOrderRepository.saveAndFlush(hkjOrder);
-            material = HkjMaterialResourceIT.createEntity();
-        } else {
-            material = TestUtil.findAll(em, HkjMaterial.class).get(0);
-        }
-        em.persist(material);
-        em.flush();
-        hkjOrder.setMaterial(material);
-        hkjOrderRepository.saveAndFlush(hkjOrder);
-        Long materialId = material.getId();
-        // Get all the hkjOrderList where material equals to materialId
-        defaultHkjOrderShouldBeFound("materialId.equals=" + materialId);
-
-        // Get all the hkjOrderList where material equals to (materialId + 1)
-        defaultHkjOrderShouldNotBeFound("materialId.equals=" + (materialId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjOrdersByJewelryIsEqualToSomething() throws Exception {
-        HkjJewelryModel jewelry;
-        if (TestUtil.findAll(em, HkjJewelryModel.class).isEmpty()) {
-            hkjOrderRepository.saveAndFlush(hkjOrder);
-            jewelry = HkjJewelryModelResourceIT.createEntity();
-        } else {
-            jewelry = TestUtil.findAll(em, HkjJewelryModel.class).get(0);
-        }
-        em.persist(jewelry);
-        em.flush();
-        hkjOrder.setJewelry(jewelry);
-        hkjOrderRepository.saveAndFlush(hkjOrder);
-        Long jewelryId = jewelry.getId();
-        // Get all the hkjOrderList where jewelry equals to jewelryId
-        defaultHkjOrderShouldBeFound("jewelryId.equals=" + jewelryId);
-
-        // Get all the hkjOrderList where jewelry equals to (jewelryId + 1)
-        defaultHkjOrderShouldNotBeFound("jewelryId.equals=" + (jewelryId + 1));
-    }
-
-    @Test
-    @Transactional
     void getAllHkjOrdersByProjectIsEqualToSomething() throws Exception {
         HkjProject project;
         if (TestUtil.findAll(em, HkjProject.class).isEmpty()) {
@@ -755,28 +546,6 @@ class HkjOrderResourceIT {
         defaultHkjOrderShouldNotBeFound("projectId.equals=" + (projectId + 1));
     }
 
-    @Test
-    @Transactional
-    void getAllHkjOrdersByCategoryIsEqualToSomething() throws Exception {
-        HkjCategory category;
-        if (TestUtil.findAll(em, HkjCategory.class).isEmpty()) {
-            hkjOrderRepository.saveAndFlush(hkjOrder);
-            category = HkjCategoryResourceIT.createEntity();
-        } else {
-            category = TestUtil.findAll(em, HkjCategory.class).get(0);
-        }
-        em.persist(category);
-        em.flush();
-        hkjOrder.setCategory(category);
-        hkjOrderRepository.saveAndFlush(hkjOrder);
-        Long categoryId = category.getId();
-        // Get all the hkjOrderList where category equals to categoryId
-        defaultHkjOrderShouldBeFound("categoryId.equals=" + categoryId);
-
-        // Get all the hkjOrderList where category equals to (categoryId + 1)
-        defaultHkjOrderShouldNotBeFound("categoryId.equals=" + (categoryId + 1));
-    }
-
     private void defaultHkjOrderFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
         defaultHkjOrderShouldBeFound(shouldBeFound);
         defaultHkjOrderShouldNotBeFound(shouldNotBeFound);
@@ -794,9 +563,7 @@ class HkjOrderResourceIT {
             .andExpect(jsonPath("$.[*].orderDate").value(hasItem(DEFAULT_ORDER_DATE.toString())))
             .andExpect(jsonPath("$.[*].expectedDeliveryDate").value(hasItem(DEFAULT_EXPECTED_DELIVERY_DATE.toString())))
             .andExpect(jsonPath("$.[*].actualDeliveryDate").value(hasItem(DEFAULT_ACTUAL_DELIVERY_DATE.toString())))
-            .andExpect(jsonPath("$.[*].specialRequests").value(hasItem(DEFAULT_SPECIAL_REQUESTS)))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
-            .andExpect(jsonPath("$.[*].customerRating").value(hasItem(DEFAULT_CUSTOMER_RATING)))
             .andExpect(jsonPath("$.[*].totalPrice").value(hasItem(sameNumber(DEFAULT_TOTAL_PRICE))))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
 
@@ -850,9 +617,7 @@ class HkjOrderResourceIT {
             .orderDate(UPDATED_ORDER_DATE)
             .expectedDeliveryDate(UPDATED_EXPECTED_DELIVERY_DATE)
             .actualDeliveryDate(UPDATED_ACTUAL_DELIVERY_DATE)
-            .specialRequests(UPDATED_SPECIAL_REQUESTS)
             .status(UPDATED_STATUS)
-            .customerRating(UPDATED_CUSTOMER_RATING)
             .totalPrice(UPDATED_TOTAL_PRICE)
             .isDeleted(UPDATED_IS_DELETED);
         HkjOrderDTO hkjOrderDTO = hkjOrderMapper.toDto(updatedHkjOrder);
@@ -950,9 +715,9 @@ class HkjOrderResourceIT {
         partialUpdatedHkjOrder
             .orderDate(UPDATED_ORDER_DATE)
             .actualDeliveryDate(UPDATED_ACTUAL_DELIVERY_DATE)
-            .specialRequests(UPDATED_SPECIAL_REQUESTS)
             .status(UPDATED_STATUS)
-            .customerRating(UPDATED_CUSTOMER_RATING);
+            .totalPrice(UPDATED_TOTAL_PRICE)
+            .isDeleted(UPDATED_IS_DELETED);
 
         restHkjOrderMockMvc
             .perform(
@@ -985,9 +750,7 @@ class HkjOrderResourceIT {
             .orderDate(UPDATED_ORDER_DATE)
             .expectedDeliveryDate(UPDATED_EXPECTED_DELIVERY_DATE)
             .actualDeliveryDate(UPDATED_ACTUAL_DELIVERY_DATE)
-            .specialRequests(UPDATED_SPECIAL_REQUESTS)
             .status(UPDATED_STATUS)
-            .customerRating(UPDATED_CUSTOMER_RATING)
             .totalPrice(UPDATED_TOTAL_PRICE)
             .isDeleted(UPDATED_IS_DELETED);
 

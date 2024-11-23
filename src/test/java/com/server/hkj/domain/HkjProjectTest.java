@@ -1,7 +1,5 @@
 package com.server.hkj.domain;
 
-import static com.server.hkj.domain.HkjCategoryTestSamples.*;
-import static com.server.hkj.domain.HkjMaterialTestSamples.*;
 import static com.server.hkj.domain.HkjProjectTestSamples.*;
 import static com.server.hkj.domain.HkjTaskTestSamples.*;
 import static com.server.hkj.domain.UserExtraTestSamples.*;
@@ -60,29 +58,5 @@ class HkjProjectTest {
 
         hkjProject.manager(null);
         assertThat(hkjProject.getManager()).isNull();
-    }
-
-    @Test
-    void categoryTest() {
-        HkjProject hkjProject = getHkjProjectRandomSampleGenerator();
-        HkjCategory hkjCategoryBack = getHkjCategoryRandomSampleGenerator();
-
-        hkjProject.setCategory(hkjCategoryBack);
-        assertThat(hkjProject.getCategory()).isEqualTo(hkjCategoryBack);
-
-        hkjProject.category(null);
-        assertThat(hkjProject.getCategory()).isNull();
-    }
-
-    @Test
-    void materialTest() {
-        HkjProject hkjProject = getHkjProjectRandomSampleGenerator();
-        HkjMaterial hkjMaterialBack = getHkjMaterialRandomSampleGenerator();
-
-        hkjProject.setMaterial(hkjMaterialBack);
-        assertThat(hkjProject.getMaterial()).isEqualTo(hkjMaterialBack);
-
-        hkjProject.material(null);
-        assertThat(hkjProject.getMaterial()).isNull();
     }
 }

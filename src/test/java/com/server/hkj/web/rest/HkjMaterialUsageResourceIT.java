@@ -40,9 +40,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class HkjMaterialUsageResourceIT {
 
-    private static final Integer DEFAULT_USAGE = 1;
-    private static final Integer UPDATED_USAGE = 2;
-    private static final Integer SMALLER_USAGE = 1 - 1;
+    private static final Float DEFAULT_USAGE = 1F;
+    private static final Float UPDATED_USAGE = 2F;
+    private static final Float SMALLER_USAGE = 1F - 1F;
 
     private static final String DEFAULT_NOTES = "AAAAAAAAAA";
     private static final String UPDATED_NOTES = "BBBBBBBBBB";
@@ -173,7 +173,7 @@ class HkjMaterialUsageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjMaterialUsage.getId().intValue())))
-            .andExpect(jsonPath("$.[*].usage").value(hasItem(DEFAULT_USAGE)))
+            .andExpect(jsonPath("$.[*].usage").value(hasItem(DEFAULT_USAGE.doubleValue())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));
@@ -191,7 +191,7 @@ class HkjMaterialUsageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(hkjMaterialUsage.getId().intValue()))
-            .andExpect(jsonPath("$.usage").value(DEFAULT_USAGE))
+            .andExpect(jsonPath("$.usage").value(DEFAULT_USAGE.doubleValue()))
             .andExpect(jsonPath("$.notes").value(DEFAULT_NOTES))
             .andExpect(jsonPath("$.price").value(sameNumber(DEFAULT_PRICE)))
             .andExpect(jsonPath("$.isDeleted").value(DEFAULT_IS_DELETED.booleanValue()));
@@ -515,7 +515,7 @@ class HkjMaterialUsageResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hkjMaterialUsage.getId().intValue())))
-            .andExpect(jsonPath("$.[*].usage").value(hasItem(DEFAULT_USAGE)))
+            .andExpect(jsonPath("$.[*].usage").value(hasItem(DEFAULT_USAGE.doubleValue())))
             .andExpect(jsonPath("$.[*].notes").value(hasItem(DEFAULT_NOTES)))
             .andExpect(jsonPath("$.[*].price").value(hasItem(sameNumber(DEFAULT_PRICE))))
             .andExpect(jsonPath("$.[*].isDeleted").value(hasItem(DEFAULT_IS_DELETED.booleanValue())));

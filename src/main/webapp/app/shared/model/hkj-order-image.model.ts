@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { IHkjOrder } from 'app/shared/model/hkj-order.model';
+import { IHkjOrderItem } from 'app/shared/model/hkj-order-item.model';
 
 export interface IHkjOrderImage {
   id?: number;
@@ -9,7 +9,7 @@ export interface IHkjOrderImage {
   createdDate?: dayjs.Dayjs;
   lastModifiedBy?: string;
   lastModifiedDate?: dayjs.Dayjs;
-  order?: IHkjOrder | null;
+  orderItem?: IHkjOrderItem | null;
 }
 
 export const defaultValue: Readonly<IHkjOrderImage> = {

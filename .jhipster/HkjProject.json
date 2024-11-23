@@ -47,14 +47,6 @@
       "fieldValues": "LOW,MEDIUM,HIGH"
     },
     {
-      "fieldName": "actualCost",
-      "fieldType": "BigDecimal"
-    },
-    {
-      "fieldName": "qualityCheck",
-      "fieldType": "Boolean"
-    },
-    {
       "fieldName": "isDeleted",
       "fieldType": "Boolean"
     },
@@ -108,18 +100,6 @@
     {
       "otherEntityName": "userExtra",
       "relationshipName": "manager",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "hkjCategory",
-      "relationshipName": "category",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "hkjMaterial",
-      "relationshipName": "material",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

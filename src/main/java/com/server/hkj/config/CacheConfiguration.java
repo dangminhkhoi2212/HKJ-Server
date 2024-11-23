@@ -69,7 +69,6 @@ public class CacheConfiguration {
             createCache(cm, com.server.hkj.domain.HkjTaskImage.class.getName());
             createCache(cm, com.server.hkj.domain.HkjTempImage.class.getName());
             createCache(cm, com.server.hkj.domain.HkjOrder.class.getName());
-            createCache(cm, com.server.hkj.domain.HkjOrder.class.getName() + ".orderImages");
             createCache(cm, com.server.hkj.domain.HkjTemplate.class.getName());
             createCache(cm, com.server.hkj.domain.HkjTemplate.class.getName() + ".steps");
             createCache(cm, com.server.hkj.domain.HkjTemplateStep.class.getName());
@@ -80,7 +79,7 @@ public class CacheConfiguration {
             createCache(cm, com.server.hkj.domain.HkjMaterialImage.class.getName());
             createCache(cm, com.server.hkj.domain.HkjTrackSearchImage.class.getName());
             createCache(cm, com.server.hkj.domain.HkjCart.class.getName());
-            createCache(cm, com.server.hkj.domain.HkjCart.class.getName() + ".products");
+            createCache(cm, com.server.hkj.domain.HkjOrderItem.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

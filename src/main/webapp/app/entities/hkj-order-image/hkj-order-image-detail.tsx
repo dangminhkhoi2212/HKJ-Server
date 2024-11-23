@@ -77,9 +77,9 @@ export const HkjOrderImageDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <Translate contentKey="serverApp.hkjOrderImage.order">Order</Translate>
+            <Translate contentKey="serverApp.hkjOrderImage.orderItem">Order Item</Translate>
           </dt>
-          <dd>{hkjOrderImageEntity.order ? hkjOrderImageEntity.order.id : ''}</dd>
+          <dd>{hkjOrderImageEntity.orderItem ? hkjOrderImageEntity.orderItem.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-order-image" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -24,8 +24,8 @@
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "product": "Product",
-      "customer": "Customer"
+      "customer": "Customer",
+      "product": "Product"
     }
   }
 }

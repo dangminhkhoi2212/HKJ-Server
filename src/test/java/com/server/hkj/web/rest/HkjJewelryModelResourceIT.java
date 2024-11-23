@@ -11,10 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.server.hkj.IntegrationTest;
-import com.server.hkj.domain.HkjCart;
 import com.server.hkj.domain.HkjCategory;
 import com.server.hkj.domain.HkjJewelryModel;
-import com.server.hkj.domain.HkjMaterial;
 import com.server.hkj.domain.HkjProject;
 import com.server.hkj.repository.HkjJewelryModelRepository;
 import com.server.hkj.service.dto.HkjJewelryModelDTO;
@@ -802,50 +800,6 @@ class HkjJewelryModelResourceIT {
 
         // Get all the hkjJewelryModelList where project equals to (projectId + 1)
         defaultHkjJewelryModelShouldNotBeFound("projectId.equals=" + (projectId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjJewelryModelsByMaterialIsEqualToSomething() throws Exception {
-        HkjMaterial material;
-        if (TestUtil.findAll(em, HkjMaterial.class).isEmpty()) {
-            hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
-            material = HkjMaterialResourceIT.createEntity();
-        } else {
-            material = TestUtil.findAll(em, HkjMaterial.class).get(0);
-        }
-        em.persist(material);
-        em.flush();
-        hkjJewelryModel.setMaterial(material);
-        hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
-        Long materialId = material.getId();
-        // Get all the hkjJewelryModelList where material equals to materialId
-        defaultHkjJewelryModelShouldBeFound("materialId.equals=" + materialId);
-
-        // Get all the hkjJewelryModelList where material equals to (materialId + 1)
-        defaultHkjJewelryModelShouldNotBeFound("materialId.equals=" + (materialId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllHkjJewelryModelsByHkjCartIsEqualToSomething() throws Exception {
-        HkjCart hkjCart;
-        if (TestUtil.findAll(em, HkjCart.class).isEmpty()) {
-            hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
-            hkjCart = HkjCartResourceIT.createEntity();
-        } else {
-            hkjCart = TestUtil.findAll(em, HkjCart.class).get(0);
-        }
-        em.persist(hkjCart);
-        em.flush();
-        hkjJewelryModel.setHkjCart(hkjCart);
-        hkjJewelryModelRepository.saveAndFlush(hkjJewelryModel);
-        Long hkjCartId = hkjCart.getId();
-        // Get all the hkjJewelryModelList where hkjCart equals to hkjCartId
-        defaultHkjJewelryModelShouldBeFound("hkjCartId.equals=" + hkjCartId);
-
-        // Get all the hkjJewelryModelList where hkjCart equals to (hkjCartId + 1)
-        defaultHkjJewelryModelShouldNotBeFound("hkjCartId.equals=" + (hkjCartId + 1));
     }
 
     private void defaultHkjJewelryModelFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {

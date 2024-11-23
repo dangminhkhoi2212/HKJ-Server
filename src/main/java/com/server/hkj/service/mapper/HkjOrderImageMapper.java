@@ -1,9 +1,9 @@
 package com.server.hkj.service.mapper;
 
-import com.server.hkj.domain.HkjOrder;
 import com.server.hkj.domain.HkjOrderImage;
-import com.server.hkj.service.dto.HkjOrderDTO;
+import com.server.hkj.domain.HkjOrderItem;
 import com.server.hkj.service.dto.HkjOrderImageDTO;
+import com.server.hkj.service.dto.HkjOrderItemDTO;
 import org.mapstruct.*;
 
 /**
@@ -11,11 +11,11 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface HkjOrderImageMapper extends EntityMapper<HkjOrderImageDTO, HkjOrderImage> {
-    @Mapping(target = "order", source = "order", qualifiedByName = "hkjOrderId")
+    @Mapping(target = "orderItem", source = "orderItem", qualifiedByName = "hkjOrderItemId")
     HkjOrderImageDTO toDto(HkjOrderImage s);
 
-    @Named("hkjOrderId")
+    @Named("hkjOrderItemId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    HkjOrderDTO toDtoHkjOrderId(HkjOrder hkjOrder);
+    HkjOrderItemDTO toDtoHkjOrderItemId(HkjOrderItem hkjOrderItem);
 }

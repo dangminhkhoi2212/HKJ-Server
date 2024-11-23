@@ -54,14 +54,14 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "hkjJewelryModel",
-      "relationshipName": "product",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "userExtra",
       "relationshipName": "customer",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "hkjJewelryModel",
+      "relationshipName": "product",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }

@@ -76,10 +76,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
 
     private HkjPriorityFilter priority;
 
-    private BigDecimalFilter actualCost;
-
-    private BooleanFilter qualityCheck;
-
     private BooleanFilter isDeleted;
 
     private StringFilter createdBy;
@@ -93,10 +89,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
     private LongFilter tasksId;
 
     private LongFilter managerId;
-
-    private LongFilter categoryId;
-
-    private LongFilter materialId;
 
     private Boolean distinct;
 
@@ -112,8 +104,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.endDate = other.optionalEndDate().map(InstantFilter::copy).orElse(null);
         this.status = other.optionalStatus().map(HkjOrderStatusFilter::copy).orElse(null);
         this.priority = other.optionalPriority().map(HkjPriorityFilter::copy).orElse(null);
-        this.actualCost = other.optionalActualCost().map(BigDecimalFilter::copy).orElse(null);
-        this.qualityCheck = other.optionalQualityCheck().map(BooleanFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
@@ -121,8 +111,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
         this.tasksId = other.optionalTasksId().map(LongFilter::copy).orElse(null);
         this.managerId = other.optionalManagerId().map(LongFilter::copy).orElse(null);
-        this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
-        this.materialId = other.optionalMaterialId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -302,44 +290,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.priority = priority;
     }
 
-    public BigDecimalFilter getActualCost() {
-        return actualCost;
-    }
-
-    public Optional<BigDecimalFilter> optionalActualCost() {
-        return Optional.ofNullable(actualCost);
-    }
-
-    public BigDecimalFilter actualCost() {
-        if (actualCost == null) {
-            setActualCost(new BigDecimalFilter());
-        }
-        return actualCost;
-    }
-
-    public void setActualCost(BigDecimalFilter actualCost) {
-        this.actualCost = actualCost;
-    }
-
-    public BooleanFilter getQualityCheck() {
-        return qualityCheck;
-    }
-
-    public Optional<BooleanFilter> optionalQualityCheck() {
-        return Optional.ofNullable(qualityCheck);
-    }
-
-    public BooleanFilter qualityCheck() {
-        if (qualityCheck == null) {
-            setQualityCheck(new BooleanFilter());
-        }
-        return qualityCheck;
-    }
-
-    public void setQualityCheck(BooleanFilter qualityCheck) {
-        this.qualityCheck = qualityCheck;
-    }
-
     public BooleanFilter getIsDeleted() {
         return isDeleted;
     }
@@ -473,44 +423,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
         this.managerId = managerId;
     }
 
-    public LongFilter getCategoryId() {
-        return categoryId;
-    }
-
-    public Optional<LongFilter> optionalCategoryId() {
-        return Optional.ofNullable(categoryId);
-    }
-
-    public LongFilter categoryId() {
-        if (categoryId == null) {
-            setCategoryId(new LongFilter());
-        }
-        return categoryId;
-    }
-
-    public void setCategoryId(LongFilter categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public LongFilter getMaterialId() {
-        return materialId;
-    }
-
-    public Optional<LongFilter> optionalMaterialId() {
-        return Optional.ofNullable(materialId);
-    }
-
-    public LongFilter materialId() {
-        if (materialId == null) {
-            setMaterialId(new LongFilter());
-        }
-        return materialId;
-    }
-
-    public void setMaterialId(LongFilter materialId) {
-        this.materialId = materialId;
-    }
-
     public Boolean getDistinct() {
         return distinct;
     }
@@ -549,8 +461,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             Objects.equals(endDate, that.endDate) &&
             Objects.equals(status, that.status) &&
             Objects.equals(priority, that.priority) &&
-            Objects.equals(actualCost, that.actualCost) &&
-            Objects.equals(qualityCheck, that.qualityCheck) &&
             Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
@@ -558,8 +468,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
             Objects.equals(tasksId, that.tasksId) &&
             Objects.equals(managerId, that.managerId) &&
-            Objects.equals(categoryId, that.categoryId) &&
-            Objects.equals(materialId, that.materialId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -576,8 +484,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             endDate,
             status,
             priority,
-            actualCost,
-            qualityCheck,
             isDeleted,
             createdBy,
             createdDate,
@@ -585,8 +491,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             lastModifiedDate,
             tasksId,
             managerId,
-            categoryId,
-            materialId,
             distinct
         );
     }
@@ -604,8 +508,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             optionalEndDate().map(f -> "endDate=" + f + ", ").orElse("") +
             optionalStatus().map(f -> "status=" + f + ", ").orElse("") +
             optionalPriority().map(f -> "priority=" + f + ", ").orElse("") +
-            optionalActualCost().map(f -> "actualCost=" + f + ", ").orElse("") +
-            optionalQualityCheck().map(f -> "qualityCheck=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
@@ -613,8 +515,6 @@ public class HkjProjectCriteria implements Serializable, Criteria {
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
             optionalTasksId().map(f -> "tasksId=" + f + ", ").orElse("") +
             optionalManagerId().map(f -> "managerId=" + f + ", ").orElse("") +
-            optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
-            optionalMaterialId().map(f -> "materialId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

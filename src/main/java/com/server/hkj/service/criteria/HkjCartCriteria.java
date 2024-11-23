@@ -36,9 +36,9 @@ public class HkjCartCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter productId;
-
     private LongFilter customerId;
+
+    private LongFilter productId;
 
     private Boolean distinct;
 
@@ -52,8 +52,8 @@ public class HkjCartCriteria implements Serializable, Criteria {
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.productId = other.optionalProductId().map(LongFilter::copy).orElse(null);
         this.customerId = other.optionalCustomerId().map(LongFilter::copy).orElse(null);
+        this.productId = other.optionalProductId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -195,25 +195,6 @@ public class HkjCartCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getProductId() {
-        return productId;
-    }
-
-    public Optional<LongFilter> optionalProductId() {
-        return Optional.ofNullable(productId);
-    }
-
-    public LongFilter productId() {
-        if (productId == null) {
-            setProductId(new LongFilter());
-        }
-        return productId;
-    }
-
-    public void setProductId(LongFilter productId) {
-        this.productId = productId;
-    }
-
     public LongFilter getCustomerId() {
         return customerId;
     }
@@ -231,6 +212,25 @@ public class HkjCartCriteria implements Serializable, Criteria {
 
     public void setCustomerId(LongFilter customerId) {
         this.customerId = customerId;
+    }
+
+    public LongFilter getProductId() {
+        return productId;
+    }
+
+    public Optional<LongFilter> optionalProductId() {
+        return Optional.ofNullable(productId);
+    }
+
+    public LongFilter productId() {
+        if (productId == null) {
+            setProductId(new LongFilter());
+        }
+        return productId;
+    }
+
+    public void setProductId(LongFilter productId) {
+        this.productId = productId;
     }
 
     public Boolean getDistinct() {
@@ -269,8 +269,8 @@ public class HkjCartCriteria implements Serializable, Criteria {
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(productId, that.productId) &&
             Objects.equals(customerId, that.customerId) &&
+            Objects.equals(productId, that.productId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -285,8 +285,8 @@ public class HkjCartCriteria implements Serializable, Criteria {
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
-            productId,
             customerId,
+            productId,
             distinct
         );
     }
@@ -302,8 +302,8 @@ public class HkjCartCriteria implements Serializable, Criteria {
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalProductId().map(f -> "productId=" + f + ", ").orElse("") +
             optionalCustomerId().map(f -> "customerId=" + f + ", ").orElse("") +
+            optionalProductId().map(f -> "productId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

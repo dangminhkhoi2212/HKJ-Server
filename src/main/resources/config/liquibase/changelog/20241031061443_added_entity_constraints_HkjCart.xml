@@ -16,5 +16,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="user_extra"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="product_id"
+                                 baseTableName="hkj_cart"
+                                 constraintName="fk_hkj_cart__product_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="hkj_jewelry_model"
+                                 />
     </changeSet>
 </databaseChangeLog>

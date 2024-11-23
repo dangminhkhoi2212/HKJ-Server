@@ -26,17 +26,13 @@
       "endDate": "End Date",
       "status": "Status",
       "priority": "Priority",
-      "actualCost": "Actual Cost",
-      "qualityCheck": "Quality Check",
       "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
       "tasks": "Tasks",
-      "manager": "Manager",
-      "category": "Category",
-      "material": "Material"
+      "manager": "Manager"
     }
   }
 }

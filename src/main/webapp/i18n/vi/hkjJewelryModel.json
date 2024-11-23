@@ -34,9 +34,7 @@
       "images": "Images",
       "materials": "Materials",
       "category": "Category",
-      "project": "Project",
-      "material": "Material",
-      "hkjCart": "Hkj Cart"
+      "project": "Project"
     }
   }
 }

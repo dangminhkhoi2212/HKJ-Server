@@ -21,21 +21,15 @@
       "orderDate": "Order Date",
       "expectedDeliveryDate": "Expected Delivery Date",
       "actualDeliveryDate": "Actual Delivery Date",
-      "specialRequests": "Special Requests",
       "status": "Status",
-      "customerRating": "Customer Rating",
       "totalPrice": "Total Price",
       "isDeleted": "Is Deleted",
       "createdBy": "Created By",
       "createdDate": "Created Date",
       "lastModifiedBy": "Last Modified By",
       "lastModifiedDate": "Last Modified Date",
-      "orderImages": "Order Images",
       "customer": "Customer",
-      "material": "Material",
-      "jewelry": "Jewelry",
-      "project": "Project",
-      "category": "Category"
+      "project": "Project"
     }
   }
 }

@@ -1,0 +1,106 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1731381862230-11">
+        <dropForeignKeyConstraint baseTableName="hkj_order"
+            constraintName="FK3ecj198vuhg4dtruqueodb1yk" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-12">
+        <dropForeignKeyConstraint baseTableName="hkj_order"
+            constraintName="FK8as0tayqp0nqvx9giiopwydi0" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-13">
+        <dropForeignKeyConstraint baseTableName="hkj_order_image"
+            constraintName="FKk03avcj7atusr0ijuh03er57n" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-14">
+        <dropForeignKeyConstraint baseTableName="hkj_order"
+            constraintName="FKlhe5rx14p61w7ohebt7aelbjg" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-15">
+        <dropForeignKeyConstraint baseTableName="hkj_order"
+            constraintName="fk_hkj_order__project_id" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-1">
+        <addColumn tableName="hkj_order_item">
+            <column name="category_id" type="bigint" />
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-2">
+        <addColumn tableName="hkj_order_item">
+            <column name="material_id" type="bigint" />
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-3">
+        <addColumn tableName="hkj_order_item">
+            <column name="order_id" type="bigint" />
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-4">
+        <addColumn tableName="hkj_order_image">
+            <column name="order_item_id" type="bigint" />
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-5">
+        <addColumn tableName="hkj_order_item">
+            <column name="product_id" type="bigint" />
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-6">
+        <addForeignKeyConstraint baseColumnNames="material_id" baseTableName="hkj_order_item"
+            constraintName="FK4dxyxe1xfhd3soecth2uq8l1e" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_material"
+            validate="true" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-7">
+        <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="hkj_order_item"
+            constraintName="FK9twge6ogc0bqrxub08vynjcc8" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id"
+            referencedTableName="hkj_jewelry_model" validate="true" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-8">
+        <addForeignKeyConstraint baseColumnNames="order_item_id" baseTableName="hkj_order_image"
+            constraintName="FKf6aym6959egx8ko1dogavrmbh" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id"
+            referencedTableName="hkj_order_item" validate="true" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-9">
+        <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="hkj_order_item"
+            constraintName="FKfu1bhdq53pt1977npx4vapgni" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_order"
+            validate="true" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-10">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="hkj_order_item"
+            constraintName="FKk74dd1nw2vhl7u8lg0yjhh9js" deferrable="false"
+            initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_category"
+            validate="true" />
+    </changeSet>
+
+    <changeSet author="WINDOWS (generated)" id="1731381862230-17">
+        <dropColumn columnName="category_id" tableName="hkj_order" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-18">
+        <dropColumn columnName="jewelry_id" tableName="hkj_order" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-19">
+        <dropColumn columnName="material_id" tableName="hkj_order" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-20">
+        <dropColumn columnName="order_id" tableName="hkj_order_image" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-21">
+        <dropColumn columnName="project_id" tableName="hkj_order" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-22">
+        <dropColumn columnName="quantity" tableName="hkj_order" />
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731381862230-23">
+        <dropColumn columnName="special_requests" tableName="hkj_order" />
+    </changeSet>
+</databaseChangeLog>

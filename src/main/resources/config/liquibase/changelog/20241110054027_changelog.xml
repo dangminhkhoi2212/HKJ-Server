@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="WINDOWS (generated)" id="1731217352927-4">
+        <dropForeignKeyConstraint baseTableName="hkj_jewelry_model" constraintName="FKorcoj15yo5t86ffwqrrn5foeb"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731217352927-5">
+        <dropForeignKeyConstraint baseTableName="hkj_jewelry_model" constraintName="FKqntsiyeow31l153f0g5b580fj"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731217352927-1">
+        <addColumn tableName="hkj_order">
+            <column name="notes" type="varchar(5000)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731217352927-2">
+        <addColumn tableName="hkj_cart">
+            <column name="product_id" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731217352927-3">
+        <addForeignKeyConstraint baseColumnNames="product_id" baseTableName="hkj_cart" constraintName="FKs5jma4s41w6787o1mb3ltyhf3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="hkj_jewelry_model" validate="true"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731217352927-6">
+        <dropColumn columnName="hkj_cart_id" tableName="hkj_jewelry_model"/>
+    </changeSet>
+    <changeSet author="WINDOWS (generated)" id="1731217352927-7">
+        <dropColumn columnName="material_id" tableName="hkj_jewelry_model"/>
+    </changeSet>
+</databaseChangeLog>

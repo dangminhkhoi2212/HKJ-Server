@@ -9,8 +9,6 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntities as getHkjCategories } from 'app/entities/hkj-category/hkj-category.reducer';
 import { getEntities as getHkjProjects } from 'app/entities/hkj-project/hkj-project.reducer';
-import { getEntities as getHkjMaterials } from 'app/entities/hkj-material/hkj-material.reducer';
-import { getEntities as getHkjCarts } from 'app/entities/hkj-cart/hkj-cart.reducer';
 import { createEntity, getEntity, reset, updateEntity } from './hkj-jewelry-model.reducer';
 
 export const HkjJewelryModelUpdate = () => {
@@ -23,8 +21,6 @@ export const HkjJewelryModelUpdate = () => {
 
   const hkjCategories = useAppSelector(state => state.hkjCategory.entities);
   const hkjProjects = useAppSelector(state => state.hkjProject.entities);
-  const hkjMaterials = useAppSelector(state => state.hkjMaterial.entities);
-  const hkjCarts = useAppSelector(state => state.hkjCart.entities);
   const hkjJewelryModelEntity = useAppSelector(state => state.hkjJewelryModel.entity);
   const loading = useAppSelector(state => state.hkjJewelryModel.loading);
   const updating = useAppSelector(state => state.hkjJewelryModel.updating);
@@ -43,8 +39,6 @@ export const HkjJewelryModelUpdate = () => {
 
     dispatch(getHkjCategories({}));
     dispatch(getHkjProjects({}));
-    dispatch(getHkjMaterials({}));
-    dispatch(getHkjCarts({}));
   }, []);
 
   useEffect(() => {
@@ -71,8 +65,6 @@ export const HkjJewelryModelUpdate = () => {
       ...values,
       category: hkjCategories.find(it => it.id.toString() === values.category?.toString()),
       project: hkjProjects.find(it => it.id.toString() === values.project?.toString()),
-      material: hkjMaterials.find(it => it.id.toString() === values.material?.toString()),
-      hkjCart: hkjCarts.find(it => it.id.toString() === values.hkjCart?.toString()),
     };
 
     if (isNew) {
@@ -94,8 +86,6 @@ export const HkjJewelryModelUpdate = () => {
           lastModifiedDate: convertDateTimeFromServer(hkjJewelryModelEntity.lastModifiedDate),
           category: hkjJewelryModelEntity?.category?.id,
           project: hkjJewelryModelEntity?.project?.id,
-          material: hkjJewelryModelEntity?.material?.id,
-          hkjCart: hkjJewelryModelEntity?.hkjCart?.id,
         };
 
   return (
@@ -254,38 +244,6 @@ export const HkjJewelryModelUpdate = () => {
                 <option value="" key="0" />
                 {hkjProjects
                   ? hkjProjects.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="hkj-jewelry-model-material"
-                name="material"
-                data-cy="material"
-                label={translate('serverApp.hkjJewelryModel.material')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {hkjMaterials
-                  ? hkjMaterials.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="hkj-jewelry-model-hkjCart"
-                name="hkjCart"
-                data-cy="hkjCart"
-                label={translate('serverApp.hkjJewelryModel.hkjCart')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {hkjCarts
-                  ? hkjCarts.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

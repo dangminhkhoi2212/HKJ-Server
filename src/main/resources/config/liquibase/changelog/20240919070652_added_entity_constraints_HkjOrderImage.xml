@@ -10,11 +10,11 @@
     -->
     <changeSet id="20240919070652-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="order_id"
+        <addForeignKeyConstraint baseColumnNames="order_item_id"
                                  baseTableName="hkj_order_image"
-                                 constraintName="fk_hkj_order_image__order_id"
+                                 constraintName="fk_hkj_order_image__order_item_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="hkj_order"
+                                 referencedTableName="hkj_order_item"
                                  />
     </changeSet>
 </databaseChangeLog>

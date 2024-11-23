@@ -6,8 +6,6 @@ import static com.server.hkj.domain.UserExtraTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.server.hkj.web.rest.TestUtil;
-import java.util.HashSet;
-import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class HkjCartTest {
@@ -27,28 +25,6 @@ class HkjCartTest {
     }
 
     @Test
-    void productTest() {
-        HkjCart hkjCart = getHkjCartRandomSampleGenerator();
-        HkjJewelryModel hkjJewelryModelBack = getHkjJewelryModelRandomSampleGenerator();
-
-        hkjCart.addProduct(hkjJewelryModelBack);
-        assertThat(hkjCart.getProducts()).containsOnly(hkjJewelryModelBack);
-        assertThat(hkjJewelryModelBack.getHkjCart()).isEqualTo(hkjCart);
-
-        hkjCart.removeProduct(hkjJewelryModelBack);
-        assertThat(hkjCart.getProducts()).doesNotContain(hkjJewelryModelBack);
-        assertThat(hkjJewelryModelBack.getHkjCart()).isNull();
-
-        hkjCart.products(new HashSet<>(Set.of(hkjJewelryModelBack)));
-        assertThat(hkjCart.getProducts()).containsOnly(hkjJewelryModelBack);
-        assertThat(hkjJewelryModelBack.getHkjCart()).isEqualTo(hkjCart);
-
-        hkjCart.setProducts(new HashSet<>());
-        assertThat(hkjCart.getProducts()).doesNotContain(hkjJewelryModelBack);
-        assertThat(hkjJewelryModelBack.getHkjCart()).isNull();
-    }
-
-    @Test
     void customerTest() {
         HkjCart hkjCart = getHkjCartRandomSampleGenerator();
         UserExtra userExtraBack = getUserExtraRandomSampleGenerator();
@@ -58,5 +34,17 @@ class HkjCartTest {
 
         hkjCart.customer(null);
         assertThat(hkjCart.getCustomer()).isNull();
+    }
+
+    @Test
+    void productTest() {
+        HkjCart hkjCart = getHkjCartRandomSampleGenerator();
+        HkjJewelryModel hkjJewelryModelBack = getHkjJewelryModelRandomSampleGenerator();
+
+        hkjCart.setProduct(hkjJewelryModelBack);
+        assertThat(hkjCart.getProduct()).isEqualTo(hkjJewelryModelBack);
+
+        hkjCart.product(null);
+        assertThat(hkjCart.getProduct()).isNull();
     }
 }

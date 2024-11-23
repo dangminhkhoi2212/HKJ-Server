@@ -59,23 +59,11 @@ export const HkjOrderDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <span id="specialRequests">
-              <Translate contentKey="serverApp.hkjOrder.specialRequests">Special Requests</Translate>
-            </span>
-          </dt>
-          <dd>{hkjOrderEntity.specialRequests}</dd>
-          <dt>
             <span id="status">
               <Translate contentKey="serverApp.hkjOrder.status">Status</Translate>
             </span>
           </dt>
           <dd>{hkjOrderEntity.status}</dd>
-          <dt>
-            <span id="customerRating">
-              <Translate contentKey="serverApp.hkjOrder.customerRating">Customer Rating</Translate>
-            </span>
-          </dt>
-          <dd>{hkjOrderEntity.customerRating}</dd>
           <dt>
             <span id="totalPrice">
               <Translate contentKey="serverApp.hkjOrder.totalPrice">Total Price</Translate>
@@ -123,21 +111,9 @@ export const HkjOrderDetail = () => {
           </dt>
           <dd>{hkjOrderEntity.customer ? hkjOrderEntity.customer.id : ''}</dd>
           <dt>
-            <Translate contentKey="serverApp.hkjOrder.material">Material</Translate>
-          </dt>
-          <dd>{hkjOrderEntity.material ? hkjOrderEntity.material.id : ''}</dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjOrder.jewelry">Jewelry</Translate>
-          </dt>
-          <dd>{hkjOrderEntity.jewelry ? hkjOrderEntity.jewelry.id : ''}</dd>
-          <dt>
             <Translate contentKey="serverApp.hkjOrder.project">Project</Translate>
           </dt>
           <dd>{hkjOrderEntity.project ? hkjOrderEntity.project.id : ''}</dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjOrder.category">Category</Translate>
-          </dt>
-          <dd>{hkjOrderEntity.category ? hkjOrderEntity.category.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-order" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

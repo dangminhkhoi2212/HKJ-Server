@@ -172,12 +172,6 @@ export const HkjJewelryModel = () => {
                 <th>
                   <Translate contentKey="serverApp.hkjJewelryModel.project">Project</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="serverApp.hkjJewelryModel.material">Material</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="serverApp.hkjJewelryModel.hkjCart">Hkj Cart</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th />
               </tr>
             </thead>
@@ -220,20 +214,6 @@ export const HkjJewelryModel = () => {
                   <td>
                     {hkjJewelryModel.project ? (
                       <Link to={`/hkj-project/${hkjJewelryModel.project.id}`}>{hkjJewelryModel.project.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {hkjJewelryModel.material ? (
-                      <Link to={`/hkj-material/${hkjJewelryModel.material.id}`}>{hkjJewelryModel.material.id}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {hkjJewelryModel.hkjCart ? (
-                      <Link to={`/hkj-cart/${hkjJewelryModel.hkjCart.id}`}>{hkjJewelryModel.hkjCart.id}</Link>
                     ) : (
                       ''
                     )}

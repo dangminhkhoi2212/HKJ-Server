@@ -5,7 +5,13 @@ import java.util.Objects;
 import java.util.Optional;
 import org.springdoc.core.annotations.ParameterObject;
 import tech.jhipster.service.Criteria;
-import tech.jhipster.service.filter.*;
+import tech.jhipster.service.filter.BigDecimalFilter;
+import tech.jhipster.service.filter.BooleanFilter;
+import tech.jhipster.service.filter.Filter;
+import tech.jhipster.service.filter.InstantFilter;
+import tech.jhipster.service.filter.IntegerFilter;
+import tech.jhipster.service.filter.LongFilter;
+import tech.jhipster.service.filter.StringFilter;
 
 /**
  * Criteria class for the {@link com.server.hkj.domain.HkjJewelryModel} entity. This class is used
@@ -52,15 +58,11 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     private LongFilter imagesId;
 
-    private LongFilter materialsId;
+    private LongFilter materialId;
 
     private LongFilter categoryId;
 
     private LongFilter projectId;
-
-    private LongFilter materialId;
-
-    private LongFilter hkjCartId;
 
     private Boolean distinct;
 
@@ -82,11 +84,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
         this.imagesId = other.optionalImagesId().map(LongFilter::copy).orElse(null);
-        this.materialsId = other.optionalMaterialsId().map(LongFilter::copy).orElse(null);
+        this.materialId = other.optionalMaterialId().map(LongFilter::copy).orElse(null);
         this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
         this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
-        this.materialId = other.optionalMaterialId().map(LongFilter::copy).orElse(null);
-        this.hkjCartId = other.optionalHkjCartId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -380,23 +380,23 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
         this.imagesId = imagesId;
     }
 
-    public LongFilter getMaterialsId() {
-        return materialsId;
+    public LongFilter getMaterialId() {
+        return materialId;
     }
 
-    public Optional<LongFilter> optionalMaterialsId() {
-        return Optional.ofNullable(materialsId);
+    public Optional<LongFilter> optionalMaterialId() {
+        return Optional.ofNullable(materialId);
     }
 
-    public LongFilter materialsId() {
-        if (materialsId == null) {
-            setMaterialsId(new LongFilter());
+    public LongFilter materialId() {
+        if (materialId == null) {
+            setMaterialId(new LongFilter());
         }
-        return materialsId;
+        return materialId;
     }
 
-    public void setMaterialsId(LongFilter materialsId) {
-        this.materialsId = materialsId;
+    public void setMaterialId(LongFilter materialId) {
+        this.materialId = materialId;
     }
 
     public LongFilter getCategoryId() {
@@ -435,44 +435,6 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
 
     public void setProjectId(LongFilter projectId) {
         this.projectId = projectId;
-    }
-
-    public LongFilter getMaterialId() {
-        return materialId;
-    }
-
-    public Optional<LongFilter> optionalMaterialId() {
-        return Optional.ofNullable(materialId);
-    }
-
-    public LongFilter materialId() {
-        if (materialId == null) {
-            setMaterialId(new LongFilter());
-        }
-        return materialId;
-    }
-
-    public void setMaterialId(LongFilter materialId) {
-        this.materialId = materialId;
-    }
-
-    public LongFilter getHkjCartId() {
-        return hkjCartId;
-    }
-
-    public Optional<LongFilter> optionalHkjCartId() {
-        return Optional.ofNullable(hkjCartId);
-    }
-
-    public LongFilter hkjCartId() {
-        if (hkjCartId == null) {
-            setHkjCartId(new LongFilter());
-        }
-        return hkjCartId;
-    }
-
-    public void setHkjCartId(LongFilter hkjCartId) {
-        this.hkjCartId = hkjCartId;
     }
 
     public Boolean getDistinct() {
@@ -519,11 +481,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
             Objects.equals(imagesId, that.imagesId) &&
-            Objects.equals(materialsId, that.materialsId) &&
+            Objects.equals(materialId, that.materialId) &&
             Objects.equals(categoryId, that.categoryId) &&
             Objects.equals(projectId, that.projectId) &&
-            Objects.equals(materialId, that.materialId) &&
-            Objects.equals(hkjCartId, that.hkjCartId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -546,11 +506,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             lastModifiedBy,
             lastModifiedDate,
             imagesId,
-            materialsId,
+            materialId,
             categoryId,
             projectId,
-            materialId,
-            hkjCartId,
             distinct
         );
     }
@@ -574,11 +532,9 @@ public class HkjJewelryModelCriteria implements Serializable, Criteria {
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
             optionalImagesId().map(f -> "imagesId=" + f + ", ").orElse("") +
-            optionalMaterialsId().map(f -> "materialsId=" + f + ", ").orElse("") +
+            optionalMaterialId().map(f -> "materialId=" + f + ", ").orElse("") +
             optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
             optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
-            optionalMaterialId().map(f -> "materialId=" + f + ", ").orElse("") +
-            optionalHkjCartId().map(f -> "hkjCartId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

@@ -7,8 +7,6 @@ import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
@@ -41,19 +39,10 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Column(name = "actual_delivery_date")
     private Instant actualDeliveryDate;
 
-    @Size(max = 5000)
-    @Column(name = "special_requests", length = 5000)
-    private String specialRequests;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private HkjOrderStatus status;
-
-    @Min(value = 1)
-    @Max(value = 5)
-    @Column(name = "customer_rating")
-    private Integer customerRating;
 
     @Column(name = "total_price", precision = 21, scale = 2)
     private BigDecimal totalPrice;
@@ -68,29 +57,13 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
     @Transient
     private boolean isPersisted;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "order" }, allowSetters = true)
-    private Set<HkjOrderImage> orderImages = new HashSet<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "user", "salarys" }, allowSetters = true)
     private UserExtra customer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images" }, allowSetters = true)
-    private HkjMaterial material;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "images", "materials", "category", "project", "material", "hkjCart" }, allowSetters = true)
-    private HkjJewelryModel jewelry;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "tasks", "manager", "category", "material" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tasks", "manager" }, allowSetters = true)
     private HkjProject project;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private HkjCategory category;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -146,19 +119,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         this.actualDeliveryDate = actualDeliveryDate;
     }
 
-    public String getSpecialRequests() {
-        return this.specialRequests;
-    }
-
-    public HkjOrder specialRequests(String specialRequests) {
-        this.setSpecialRequests(specialRequests);
-        return this;
-    }
-
-    public void setSpecialRequests(String specialRequests) {
-        this.specialRequests = specialRequests;
-    }
-
     public HkjOrderStatus getStatus() {
         return this.status;
     }
@@ -170,19 +130,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public void setStatus(HkjOrderStatus status) {
         this.status = status;
-    }
-
-    public Integer getCustomerRating() {
-        return this.customerRating;
-    }
-
-    public HkjOrder customerRating(Integer customerRating) {
-        this.setCustomerRating(customerRating);
-        return this;
-    }
-
-    public void setCustomerRating(Integer customerRating) {
-        this.customerRating = customerRating;
     }
 
     public BigDecimal getTotalPrice() {
@@ -252,37 +199,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         return this;
     }
 
-    public Set<HkjOrderImage> getOrderImages() {
-        return this.orderImages;
-    }
-
-    public void setOrderImages(Set<HkjOrderImage> hkjOrderImages) {
-        if (this.orderImages != null) {
-            this.orderImages.forEach(i -> i.setOrder(null));
-        }
-        if (hkjOrderImages != null) {
-            hkjOrderImages.forEach(i -> i.setOrder(this));
-        }
-        this.orderImages = hkjOrderImages;
-    }
-
-    public HkjOrder orderImages(Set<HkjOrderImage> hkjOrderImages) {
-        this.setOrderImages(hkjOrderImages);
-        return this;
-    }
-
-    public HkjOrder addOrderImages(HkjOrderImage hkjOrderImage) {
-        this.orderImages.add(hkjOrderImage);
-        hkjOrderImage.setOrder(this);
-        return this;
-    }
-
-    public HkjOrder removeOrderImages(HkjOrderImage hkjOrderImage) {
-        this.orderImages.remove(hkjOrderImage);
-        hkjOrderImage.setOrder(null);
-        return this;
-    }
-
     public UserExtra getCustomer() {
         return this.customer;
     }
@@ -296,32 +212,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
         return this;
     }
 
-    public HkjMaterial getMaterial() {
-        return this.material;
-    }
-
-    public void setMaterial(HkjMaterial hkjMaterial) {
-        this.material = hkjMaterial;
-    }
-
-    public HkjOrder material(HkjMaterial hkjMaterial) {
-        this.setMaterial(hkjMaterial);
-        return this;
-    }
-
-    public HkjJewelryModel getJewelry() {
-        return this.jewelry;
-    }
-
-    public void setJewelry(HkjJewelryModel hkjJewelryModel) {
-        this.jewelry = hkjJewelryModel;
-    }
-
-    public HkjOrder jewelry(HkjJewelryModel hkjJewelryModel) {
-        this.setJewelry(hkjJewelryModel);
-        return this;
-    }
-
     public HkjProject getProject() {
         return this.project;
     }
@@ -332,19 +222,6 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
 
     public HkjOrder project(HkjProject hkjProject) {
         this.setProject(hkjProject);
-        return this;
-    }
-
-    public HkjCategory getCategory() {
-        return this.category;
-    }
-
-    public void setCategory(HkjCategory hkjCategory) {
-        this.category = hkjCategory;
-    }
-
-    public HkjOrder category(HkjCategory hkjCategory) {
-        this.setCategory(hkjCategory);
         return this;
     }
 
@@ -375,9 +252,7 @@ public class HkjOrder extends AbstractAuditingEntity<Long> implements Serializab
             ", orderDate='" + getOrderDate() + "'" +
             ", expectedDeliveryDate='" + getExpectedDeliveryDate() + "'" +
             ", actualDeliveryDate='" + getActualDeliveryDate() + "'" +
-            ", specialRequests='" + getSpecialRequests() + "'" +
             ", status='" + getStatus() + "'" +
-            ", customerRating=" + getCustomerRating() +
             ", totalPrice=" + getTotalPrice() +
             ", isDeleted='" + getIsDeleted() + "'" +
             ", createdBy='" + getCreatedBy() + "'" +

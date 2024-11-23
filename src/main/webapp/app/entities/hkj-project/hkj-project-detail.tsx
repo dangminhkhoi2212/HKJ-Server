@@ -85,18 +85,6 @@ export const HkjProjectDetail = () => {
           </dt>
           <dd>{hkjProjectEntity.priority}</dd>
           <dt>
-            <span id="actualCost">
-              <Translate contentKey="serverApp.hkjProject.actualCost">Actual Cost</Translate>
-            </span>
-          </dt>
-          <dd>{hkjProjectEntity.actualCost}</dd>
-          <dt>
-            <span id="qualityCheck">
-              <Translate contentKey="serverApp.hkjProject.qualityCheck">Quality Check</Translate>
-            </span>
-          </dt>
-          <dd>{hkjProjectEntity.qualityCheck ? 'true' : 'false'}</dd>
-          <dt>
             <span id="isDeleted">
               <Translate contentKey="serverApp.hkjProject.isDeleted">Is Deleted</Translate>
             </span>
@@ -136,14 +124,6 @@ export const HkjProjectDetail = () => {
             <Translate contentKey="serverApp.hkjProject.manager">Manager</Translate>
           </dt>
           <dd>{hkjProjectEntity.manager ? hkjProjectEntity.manager.id : ''}</dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjProject.category">Category</Translate>
-          </dt>
-          <dd>{hkjProjectEntity.category ? hkjProjectEntity.category.id : ''}</dd>
-          <dt>
-            <Translate contentKey="serverApp.hkjProject.material">Material</Translate>
-          </dt>
-          <dd>{hkjProjectEntity.material ? hkjProjectEntity.material.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/hkj-project" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

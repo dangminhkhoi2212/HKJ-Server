@@ -62,6 +62,7 @@ public class HkjCartAsserts {
     public static void assertHkjCartUpdatableRelationshipsEquals(HkjCart expected, HkjCart actual) {
         assertThat(expected)
             .as("Verify HkjCart relationships")
-            .satisfies(e -> assertThat(e.getCustomer()).as("check customer").isEqualTo(actual.getCustomer()));
+            .satisfies(e -> assertThat(e.getCustomer()).as("check customer").isEqualTo(actual.getCustomer()))
+            .satisfies(e -> assertThat(e.getProduct()).as("check product").isEqualTo(actual.getProduct()));
     }
 }

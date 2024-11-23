@@ -19,7 +19,6 @@ import org.mapstruct.Named;
 @Mapper(componentModel = "spring")
 public interface HkjProjectMapper extends EntityMapper<HkjProjectDTO, HkjProject> {
     @Mapping(target = "manager", source = "manager", qualifiedByName = "userExtraId")
-    @Mapping(target = "category", source = "category", qualifiedByName = "hkjCategoryId")
     HkjProjectDTO toDto(HkjProject s);
 
     @Named("userExtraId")

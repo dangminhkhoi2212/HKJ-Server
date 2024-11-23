@@ -48,11 +48,7 @@ public class HkjOrderCriteria implements Serializable, Criteria {
 
     private InstantFilter actualDeliveryDate;
 
-    private StringFilter specialRequests;
-
     private HkjOrderStatusFilter status;
-
-    private IntegerFilter customerRating;
 
     private BigDecimalFilter totalPrice;
 
@@ -66,17 +62,9 @@ public class HkjOrderCriteria implements Serializable, Criteria {
 
     private InstantFilter lastModifiedDate;
 
-    private LongFilter orderImagesId;
-
     private LongFilter customerId;
 
-    private LongFilter materialId;
-
-    private LongFilter jewelryId;
-
     private LongFilter projectId;
-
-    private LongFilter categoryId;
 
     private Boolean distinct;
 
@@ -87,21 +75,15 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.orderDate = other.optionalOrderDate().map(InstantFilter::copy).orElse(null);
         this.expectedDeliveryDate = other.optionalExpectedDeliveryDate().map(InstantFilter::copy).orElse(null);
         this.actualDeliveryDate = other.optionalActualDeliveryDate().map(InstantFilter::copy).orElse(null);
-        this.specialRequests = other.optionalSpecialRequests().map(StringFilter::copy).orElse(null);
         this.status = other.optionalStatus().map(HkjOrderStatusFilter::copy).orElse(null);
-        this.customerRating = other.optionalCustomerRating().map(IntegerFilter::copy).orElse(null);
         this.totalPrice = other.optionalTotalPrice().map(BigDecimalFilter::copy).orElse(null);
         this.isDeleted = other.optionalIsDeleted().map(BooleanFilter::copy).orElse(null);
         this.createdBy = other.optionalCreatedBy().map(StringFilter::copy).orElse(null);
         this.createdDate = other.optionalCreatedDate().map(InstantFilter::copy).orElse(null);
         this.lastModifiedBy = other.optionalLastModifiedBy().map(StringFilter::copy).orElse(null);
         this.lastModifiedDate = other.optionalLastModifiedDate().map(InstantFilter::copy).orElse(null);
-        this.orderImagesId = other.optionalOrderImagesId().map(LongFilter::copy).orElse(null);
         this.customerId = other.optionalCustomerId().map(LongFilter::copy).orElse(null);
-        this.materialId = other.optionalMaterialId().map(LongFilter::copy).orElse(null);
-        this.jewelryId = other.optionalJewelryId().map(LongFilter::copy).orElse(null);
         this.projectId = other.optionalProjectId().map(LongFilter::copy).orElse(null);
-        this.categoryId = other.optionalCategoryId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -186,25 +168,6 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.actualDeliveryDate = actualDeliveryDate;
     }
 
-    public StringFilter getSpecialRequests() {
-        return specialRequests;
-    }
-
-    public Optional<StringFilter> optionalSpecialRequests() {
-        return Optional.ofNullable(specialRequests);
-    }
-
-    public StringFilter specialRequests() {
-        if (specialRequests == null) {
-            setSpecialRequests(new StringFilter());
-        }
-        return specialRequests;
-    }
-
-    public void setSpecialRequests(StringFilter specialRequests) {
-        this.specialRequests = specialRequests;
-    }
-
     public HkjOrderStatusFilter getStatus() {
         return status;
     }
@@ -222,25 +185,6 @@ public class HkjOrderCriteria implements Serializable, Criteria {
 
     public void setStatus(HkjOrderStatusFilter status) {
         this.status = status;
-    }
-
-    public IntegerFilter getCustomerRating() {
-        return customerRating;
-    }
-
-    public Optional<IntegerFilter> optionalCustomerRating() {
-        return Optional.ofNullable(customerRating);
-    }
-
-    public IntegerFilter customerRating() {
-        if (customerRating == null) {
-            setCustomerRating(new IntegerFilter());
-        }
-        return customerRating;
-    }
-
-    public void setCustomerRating(IntegerFilter customerRating) {
-        this.customerRating = customerRating;
     }
 
     public BigDecimalFilter getTotalPrice() {
@@ -357,25 +301,6 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.lastModifiedDate = lastModifiedDate;
     }
 
-    public LongFilter getOrderImagesId() {
-        return orderImagesId;
-    }
-
-    public Optional<LongFilter> optionalOrderImagesId() {
-        return Optional.ofNullable(orderImagesId);
-    }
-
-    public LongFilter orderImagesId() {
-        if (orderImagesId == null) {
-            setOrderImagesId(new LongFilter());
-        }
-        return orderImagesId;
-    }
-
-    public void setOrderImagesId(LongFilter orderImagesId) {
-        this.orderImagesId = orderImagesId;
-    }
-
     public LongFilter getCustomerId() {
         return customerId;
     }
@@ -395,44 +320,6 @@ public class HkjOrderCriteria implements Serializable, Criteria {
         this.customerId = customerId;
     }
 
-    public LongFilter getMaterialId() {
-        return materialId;
-    }
-
-    public Optional<LongFilter> optionalMaterialId() {
-        return Optional.ofNullable(materialId);
-    }
-
-    public LongFilter materialId() {
-        if (materialId == null) {
-            setMaterialId(new LongFilter());
-        }
-        return materialId;
-    }
-
-    public void setMaterialId(LongFilter materialId) {
-        this.materialId = materialId;
-    }
-
-    public LongFilter getJewelryId() {
-        return jewelryId;
-    }
-
-    public Optional<LongFilter> optionalJewelryId() {
-        return Optional.ofNullable(jewelryId);
-    }
-
-    public LongFilter jewelryId() {
-        if (jewelryId == null) {
-            setJewelryId(new LongFilter());
-        }
-        return jewelryId;
-    }
-
-    public void setJewelryId(LongFilter jewelryId) {
-        this.jewelryId = jewelryId;
-    }
-
     public LongFilter getProjectId() {
         return projectId;
     }
@@ -450,25 +337,6 @@ public class HkjOrderCriteria implements Serializable, Criteria {
 
     public void setProjectId(LongFilter projectId) {
         this.projectId = projectId;
-    }
-
-    public LongFilter getCategoryId() {
-        return categoryId;
-    }
-
-    public Optional<LongFilter> optionalCategoryId() {
-        return Optional.ofNullable(categoryId);
-    }
-
-    public LongFilter categoryId() {
-        if (categoryId == null) {
-            setCategoryId(new LongFilter());
-        }
-        return categoryId;
-    }
-
-    public void setCategoryId(LongFilter categoryId) {
-        this.categoryId = categoryId;
     }
 
     public Boolean getDistinct() {
@@ -504,21 +372,15 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             Objects.equals(orderDate, that.orderDate) &&
             Objects.equals(expectedDeliveryDate, that.expectedDeliveryDate) &&
             Objects.equals(actualDeliveryDate, that.actualDeliveryDate) &&
-            Objects.equals(specialRequests, that.specialRequests) &&
             Objects.equals(status, that.status) &&
-            Objects.equals(customerRating, that.customerRating) &&
             Objects.equals(totalPrice, that.totalPrice) &&
             Objects.equals(isDeleted, that.isDeleted) &&
             Objects.equals(createdBy, that.createdBy) &&
             Objects.equals(createdDate, that.createdDate) &&
             Objects.equals(lastModifiedBy, that.lastModifiedBy) &&
             Objects.equals(lastModifiedDate, that.lastModifiedDate) &&
-            Objects.equals(orderImagesId, that.orderImagesId) &&
             Objects.equals(customerId, that.customerId) &&
-            Objects.equals(materialId, that.materialId) &&
-            Objects.equals(jewelryId, that.jewelryId) &&
             Objects.equals(projectId, that.projectId) &&
-            Objects.equals(categoryId, that.categoryId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -530,21 +392,15 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             orderDate,
             expectedDeliveryDate,
             actualDeliveryDate,
-            specialRequests,
             status,
-            customerRating,
             totalPrice,
             isDeleted,
             createdBy,
             createdDate,
             lastModifiedBy,
             lastModifiedDate,
-            orderImagesId,
             customerId,
-            materialId,
-            jewelryId,
             projectId,
-            categoryId,
             distinct
         );
     }
@@ -557,21 +413,15 @@ public class HkjOrderCriteria implements Serializable, Criteria {
             optionalOrderDate().map(f -> "orderDate=" + f + ", ").orElse("") +
             optionalExpectedDeliveryDate().map(f -> "expectedDeliveryDate=" + f + ", ").orElse("") +
             optionalActualDeliveryDate().map(f -> "actualDeliveryDate=" + f + ", ").orElse("") +
-            optionalSpecialRequests().map(f -> "specialRequests=" + f + ", ").orElse("") +
             optionalStatus().map(f -> "status=" + f + ", ").orElse("") +
-            optionalCustomerRating().map(f -> "customerRating=" + f + ", ").orElse("") +
             optionalTotalPrice().map(f -> "totalPrice=" + f + ", ").orElse("") +
             optionalIsDeleted().map(f -> "isDeleted=" + f + ", ").orElse("") +
             optionalCreatedBy().map(f -> "createdBy=" + f + ", ").orElse("") +
             optionalCreatedDate().map(f -> "createdDate=" + f + ", ").orElse("") +
             optionalLastModifiedBy().map(f -> "lastModifiedBy=" + f + ", ").orElse("") +
             optionalLastModifiedDate().map(f -> "lastModifiedDate=" + f + ", ").orElse("") +
-            optionalOrderImagesId().map(f -> "orderImagesId=" + f + ", ").orElse("") +
             optionalCustomerId().map(f -> "customerId=" + f + ", ").orElse("") +
-            optionalMaterialId().map(f -> "materialId=" + f + ", ").orElse("") +
-            optionalJewelryId().map(f -> "jewelryId=" + f + ", ").orElse("") +
             optionalProjectId().map(f -> "projectId=" + f + ", ").orElse("") +
-            optionalCategoryId().map(f -> "categoryId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

@@ -18,6 +18,7 @@ import hkjOrderImage from 'app/entities/hkj-order-image/hkj-order-image.reducer'
 import hkjMaterialImage from 'app/entities/hkj-material-image/hkj-material-image.reducer';
 import hkjTrackSearchImage from 'app/entities/hkj-track-search-image/hkj-track-search-image.reducer';
 import hkjCart from 'app/entities/hkj-cart/hkj-cart.reducer';
+import hkjOrderItem from 'app/entities/hkj-order-item/hkj-order-item.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 const entitiesReducers = {
@@ -41,6 +42,7 @@ const entitiesReducers = {
   hkjMaterialImage,
   hkjTrackSearchImage,
   hkjCart,
+  hkjOrderItem,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
 };
 

@@ -71,8 +71,6 @@ public class HkjJewelryModelAsserts {
         assertThat(expected)
             .as("Verify HkjJewelryModel relationships")
             .satisfies(e -> assertThat(e.getCategory()).as("check category").isEqualTo(actual.getCategory()))
-            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()))
-            .satisfies(e -> assertThat(e.getMaterial()).as("check material").isEqualTo(actual.getMaterial()))
-            .satisfies(e -> assertThat(e.getHkjCart()).as("check hkjCart").isEqualTo(actual.getHkjCart()));
+            .satisfies(e -> assertThat(e.getProject()).as("check project").isEqualTo(actual.getProject()));
     }
 }
