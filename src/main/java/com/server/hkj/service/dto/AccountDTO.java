@@ -46,7 +46,9 @@ public class AccountDTO {
     @Size(min = 10, max = 10)
     private String phone;
 
-    private boolean activated;
+    private boolean active;
+
+    private boolean isDeleted;
 
     private String address;
 

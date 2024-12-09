@@ -8,7 +8,10 @@ import com.server.hkj.service.dto.HkjJewelryModelDTO;
 import com.server.hkj.service.dto.HkjMaterialDTO;
 import com.server.hkj.service.dto.HkjMaterialUsageDTO;
 import com.server.hkj.service.dto.HkjTaskDTO;
-import org.mapstruct.*;
+import org.mapstruct.BeanMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 /**
  * Mapper for the entity {@link HkjMaterialUsage} and its DTO {@link HkjMaterialUsageDTO}.
@@ -23,6 +26,9 @@ public interface HkjMaterialUsageMapper extends EntityMapper<HkjMaterialUsageDTO
     @Named("hkjMaterialId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "unit", source = "unit")
+    @Mapping(target = "pricePerUnit", source = "pricePerUnit")
     HkjMaterialDTO toDtoHkjMaterialId(HkjMaterial hkjMaterial);
 
     @Named("hkjJewelryModelId")

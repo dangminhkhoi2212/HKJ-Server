@@ -24,7 +24,7 @@ public interface AccountMapper extends EntityMapper<AccountDTO, UserExtra> {
     @Mapping(source = "user.lastName", target = "lastName")
     @Mapping(source = "user.email", target = "email")
     @Mapping(source = "user.imageUrl", target = "imageUrl")
-    @Mapping(source = "user.activated", target = "activated")
+    @Mapping(source = "active", target = "active")
     @Mapping(source = "user.langKey", target = "langKey")
     @Mapping(source = "user.createdBy", target = "createdBy")
     @Mapping(source = "user.createdDate", target = "createdDate")

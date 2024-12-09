@@ -28,15 +28,15 @@ public interface UserExtraRepository extends JpaRepository<UserExtra, Long>, Jpa
         SELECT ux FROM UserExtra ux
         JOIN ux.user u
         JOIN u.authorities a
-        LEFT JOIN HkjHire h ON h.employee.id = ux.id
-        WHERE a.name = :role AND h.id IS NULL
+        JOIN HkjHire h ON h.employee.id = ux.id
+        WHERE a.name = :role
         """,
         countQuery = """
         SELECT COUNT(ux) FROM UserExtra ux
         JOIN ux.user u
         JOIN u.authorities a
         LEFT JOIN HkjHire h ON h.employee.id = ux.id
-        WHERE a.name = :role AND h.id IS NULL
+        WHERE a.name = :role
         """
     )
     Page<UserExtra> getAllByRoleAndNotInHire(Pageable pageable, String role);
