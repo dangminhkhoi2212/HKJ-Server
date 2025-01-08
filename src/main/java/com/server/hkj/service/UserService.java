@@ -73,11 +73,11 @@ public class UserService {
     public void updateUser(User user) {
         Optional<User> existingUser = userRepository.findById(user.getId());
         if (existingUser.isPresent()) {
-            User newUser = userMapper.partialUpdate(existingUser.get(), user);
+            User newUser = userMapper.partialUpdate(existingUser.orElseGet(null), user);
             userRepository.save(newUser);
             log.debug("Changed Information for User: {}", newUser);
             clearUserCaches(newUser);
-            clearUserCaches(existingUser.get());
+            clearUserCaches(existingUser.orElseGet(null));
         }
     }
 
@@ -117,7 +117,7 @@ public class UserService {
         Optional<UserExtra> userExtraOptional = userExtraRepository.findOneByUserLogin(login);
         UserExtra userExtra;
         if (userExtraOptional.isPresent()) {
-            userExtra = userExtraOptional.get();
+            userExtra = userExtraOptional.orElseThrow();
         } else {
             userExtra = new UserExtra();
             userExtra.setUser(user);
@@ -170,10 +170,10 @@ public class UserService {
 
         Optional<User> existingUser = userRepository.findOneByLogin(user.getLogin());
         if (existingUser.isPresent()) {
-            User dbUser = existingUser.get();
+            User dbUser = existingUser.orElseGet(null);
             userRepository.save(userMapper.partialUpdate(dbUser, user));
             if (details.get("updated_at") != null) {
-                Instant dbModifiedDate = existingUser.get().getLastModifiedDate();
+                Instant dbModifiedDate = existingUser.orElseThrow().getLastModifiedDate();
                 Instant idpModifiedDate = details.get("updated_at") instanceof Instant
                     ? (Instant) details.get("updated_at")
                     : Instant.ofEpochSecond((Integer) details.get("updated_at"));

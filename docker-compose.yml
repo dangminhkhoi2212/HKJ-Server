@@ -1,0 +1,29 @@
+# This configuration is intended for development purpose only
+services:
+  keycloak:
+    extends:
+      file: ./src/main/docker/keycloak.yml
+      service: keycloak
+
+    networks:
+      - app-network
+  app:
+    image: server
+    environment:
+      - _JAVA_OPTIONS=-Xmx512m -Xms256m
+      - SPRING_PROFILES_ACTIVE=prod,api-docs
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?user=postgres.idjqfqnlknncdwemqlnf&password=GTeXmTaNk1jeeOyi&prepareThreshold=0
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_OIDC_ISSUER_URI=http://keycloak:9080/realms/jhipster
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_ID=web_app
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_OIDC_CLIENT_SECRET=web_app
+    ports:
+      - '8080:8080'
+    networks:
+      - app-network
+    depends_on:
+      keycloak:
+        condition: service_healthy
+networks:
+  app-network:
+    driver: bridge
+    name: app-network

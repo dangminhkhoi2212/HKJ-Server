@@ -99,7 +99,7 @@ class UserServiceIT {
         assertThat(userDTO.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
         assertThat(userDTO.getLastName()).isEqualTo(DEFAULT_LASTNAME);
         assertThat(userDTO.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(userDTO.isActivated()).isTrue();
+        assertThat(userDTO.isActive()).isTrue();
         assertThat(userDTO.getLangKey()).isEqualTo(Constants.DEFAULT_LANGUAGE);
         assertThat(userDTO.getImageUrl()).isEqualTo(DEFAULT_IMAGEURL);
         assertThat(userDTO.getAuthorities()).contains(AuthoritiesConstants.ANONYMOUS);

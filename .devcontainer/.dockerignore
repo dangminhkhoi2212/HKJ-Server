@@ -1,0 +1,57 @@
+# Dependency directories
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Version control
+.git
+.gitignore
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# Testing
+coverage/
+.nyc_output/
+
+# Backup files
+*.bak
+*.gzip
+
+# Temporary files
+*.tmp
+*.temp
+
+# Docker specific
+Dockerfile
+docker-compose.yml
+
+# JHipster specific
+target/
+.gradle/
+build/
+
+# Miscellaneous
+.cache/
+.npm/
